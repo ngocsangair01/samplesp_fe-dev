@@ -112,7 +112,6 @@ table {
   align-items: center; /* 👈 Căn giữa theo chiều dọc */
   padding: 0.75rem 1rem;
   border-bottom: 1px solid #e5e7eb;
-  background: #f9fafb;
   border-radius: 0.75rem 0.75rem 0 0;
 
   .title {
@@ -125,7 +124,7 @@ table {
   }
 
   .create-btn {
-    background: #2563eb;
+    background: #dc2626;
     color: white;
     padding: 0.5rem 1rem;
     border: none;
@@ -137,8 +136,16 @@ table {
     transition: background 0.2s ease, transform 0.1s ease;
 
     &:hover {
-      background: #1e40af;
+      background: #dc2626;
       transform: scale(1.05);
     }
+  }
+
+    .text {
+    font-size: 1rem;
+    color: #111827;
+    margin: 0;
+    display: flex;
+    align-items: center;
   }
 }

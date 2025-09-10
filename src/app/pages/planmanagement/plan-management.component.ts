@@ -37,6 +37,10 @@ export class PlanManagementComponent implements OnInit {
   totalRecords = 0;
   loading = false;
 
+  pageSizeOptions = [10, 20, 50, 100];
+  pageSize = 10;
+  currentPage = 1;
+
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -51,7 +55,9 @@ export class PlanManagementComponent implements OnInit {
       startDate: [''],
       endDate: [''],
       assignerUnit: [''],
-      updatedBy: ['']
+      updatedBy: [''],
+      pageSize: [10],
+      page: [1]
     });
 
     this.search();
@@ -60,7 +66,14 @@ export class PlanManagementComponent implements OnInit {
   search(): void {
     this.loading = true;
     const url = `${environment.apiBaseUrl}/v1/plan/search`;
-    this.http.post<DataTableResults<PlanBean>>(url, this.searchForm.value)
+
+    const params = {
+      ...this.searchForm.value,
+      page: this.currentPage,
+      pageSize: this.searchForm.value.pageSize
+    };
+
+    this.http.post<DataTableResults<PlanBean>>(url, params)
       .subscribe({
         next: (res) => {
           this.plans = res.data || [];
@@ -73,6 +86,22 @@ export class PlanManagementComponent implements OnInit {
         }
       });
   }
+
+  onPageSizeChange(): void {
+    this.currentPage = 1;
+    this.search();
+  }
+
+  nextPage(): void {
+      this.currentPage++;
+      this.search();
+  }
+
+  prevPage(): void {
+      this.currentPage--;
+      this.search();
+  }
+
   createPlan(): void {
     this.router.navigate(['/plan/create']);
   }

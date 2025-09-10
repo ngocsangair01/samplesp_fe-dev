@@ -2,7 +2,11 @@
   <!-- Form tìm kiếm -->
   <form [formGroup]="searchForm">
     <input formControlName="planName" type="text" placeholder="Tên kế hoạch" />
-    <input formControlName="planType" type="text" placeholder="Loại kế hoạch" />
+    <select formControlName="planType" type="text" placeholder="Loại kế hoạch">
+      <option value="">Tất cả</option>
+      <option value="ARTY_WORK_PLAN">Kế hoạch công tác Đảng</option>
+      <option value="RESOLUTION">Nghị quyết</option>
+    </select>
     <select formControlName="status">
       <option value="">Tất cả</option>
       <option value="DRAFT">Dự thảo</option>
@@ -25,11 +29,30 @@
   <div class="table-container">
     <div class="table-header">
       <p class="title">Danh sách kế hoạch</p>
-      <button class="create-btn" (click)="createPlan()">+ Tạo mới kế hoạch</button>
+      <button class="create-btn" (click)="createPlan()">Tạo kế hoạch</button>
     </div>
+    <div class="table-header">
+      <p class="text">Tất cả danh sách: {{ plans.length }}</p>
+
+      <div class="flex items-center gap-2">
+        <label for="pageSize" class="text-sm font-medium">Hiển thị:</label>
+        <select id="pageSize" [(ngModel)]="pageSize" (change)="onPageSizeChange()" class="border rounded p-1">
+          <option *ngFor="let size of pageSizeOptions" [value]="size">
+            {{ size }}
+          </option>
+        </select>
+      </div>
+      <div class="pagination-controls">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">&lt;</button>
+        <span>{{ currentPage }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage * pageSize >= totalRecords">&gt;</button>
+      </div>
+    </div>
+
     <table>
       <thead>
         <tr>
+          <th>Thao tác</th>
           <th>STT</th>
           <th>Tên kế hoạch</th>
           <th>Loại kế hoạch</th>
@@ -43,6 +66,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let plan of plans; let i = index">
+          <td>...</td>
           <td>{{ i + 1 }}</td>
           <td>{{ plan.planName }}</td>
           <td>{{ plan.planType }}</td>
