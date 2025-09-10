@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 interface PlanBean {
   planId: number;
@@ -35,7 +36,7 @@ export class PlanManagementComponent implements OnInit {
   totalRecords = 0;
   loading = false;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {}
+  constructor(private fb: FormBuilder, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.searchForm = this.fb.group({
@@ -53,7 +54,8 @@ export class PlanManagementComponent implements OnInit {
 
   search(): void {
     this.loading = true;
-    this.http.post<DataTableResults<PlanBean>>('/v1/plan/search', this.searchForm.value)
+    const url = `${environment.apiBaseUrl}/v1/plan/search`;
+    this.http.post<DataTableResults<PlanBean>>(url, this.searchForm.value)
       .subscribe({
         next: (res) => {
           this.plans = res.data || [];
