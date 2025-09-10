@@ -1,6 +1,144 @@
+// Container
+:host {
+  display: block;
+  background: #f9fafb;
+  padding: 1rem;
+  min-height: 100vh;
+}
+
+// Form tìm kiếm
+form {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+  input,
+  select {
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+    }
+  }
+
+  .button-group {
+    grid-column: span 4;
+    display: flex;
+    justify-content: center; /* 👈 Đưa nút ra giữa */
+    gap: 0.75rem;
+
+    button {
+      padding: 0.5rem 1.5rem;
+      font-size: 0.9rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.1s ease;
+
+      &.search {
+        background: #dc2626;
+        color: white;
+        border: none;
+
+        &:hover {
+          background: #b91c1c;
+          transform: scale(1.05);
+        }
+      }
+
+      &.reset {
+        background: #e5e7eb;
+        border: none;
+
+        &:hover {
+          background: #d1d5db;
+          transform: scale(1.03);
+        }
+      }
+    }
+  }
+}
+
+// Danh sách kế hoạch
+.table-container {
+  margin-top: 1.5rem;
+  background: white;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
 table {
-  border-spacing: 0;
-  th, td {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+
+  thead {
+    background: #f3f4f6;
+    font-weight: 600;
     text-align: left;
+  }
+
+  th,
+  td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+  }
+
+  tbody tr:hover {
+    background: #f9fafb;
+  }
+
+  td[colspan] {
+    text-align: center;
+    color: #9ca3af;
+    font-style: italic;
+  }
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between; /* Text trái, nút phải */
+  align-items: center; /* 👈 Căn giữa theo chiều dọc */
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+  border-radius: 0.75rem 0.75rem 0 0;
+
+  .title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .create-btn {
+    background: #2563eb;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center; /* 👈 Căn giữa chữ trong nút */
+    transition: background 0.2s ease, transform 0.1s ease;
+
+    &:hover {
+      background: #1e40af;
+      transform: scale(1.05);
+    }
   }
 }

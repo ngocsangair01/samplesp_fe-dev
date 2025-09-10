@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 interface PlanBean {
   planId: number;
@@ -36,7 +37,11 @@ export class PlanManagementComponent implements OnInit {
   totalRecords = 0;
   loading = false;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.searchForm = this.fb.group({
@@ -68,9 +73,7 @@ export class PlanManagementComponent implements OnInit {
         }
       });
   }
-
-  reset(): void {
-    this.searchForm.reset();
-    this.search();
+  createPlan(): void {
+    this.router.navigate(['/plan/create']);
   }
 }
