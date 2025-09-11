@@ -61,7 +61,7 @@ export const CONTENT_ROUTES: Routes = [
   }, {
     path: 'admin',
     loadChildren: './modules/admin/admin.module#AdminModule'
-    
+
   }, {
     path: 'reward',
     loadChildren: './modules/reward/reward.module#RewardModule'
@@ -86,5 +86,8 @@ export const CONTENT_ROUTES: Routes = [
   }, {
     path: 'commit-to-comply-tet',
     loadChildren: './modules/commit-to-comply-tet/commit-to-comply-tet.module#CommitToComplyTetModule'
+  }, {
+    path: 'plan-management',
+    loadChildren: './modules/plan-management/plan-management.module#PlanManagementModule'
   }
 ];
