@@ -8,11 +8,10 @@ export const routes: Routes = [
     path: '',
     redirectTo: '/plan-management',
     pathMatch: 'full',
-    children: []
   },
   {
-    path: 'category',
-    loadChildren: './category/plan-management-category.module#PlanManagementCategoryModule'
+    path:'plan-work-management',
+    loadChildren: './plan-work-management/plan-work-management.module#PlanWorkManagementModule'
   }
 ];
 
