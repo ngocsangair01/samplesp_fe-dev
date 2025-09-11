@@ -1,0 +1,56 @@
+<div [ngClass]="isShowVertical?'panel panel-default display-max-vertical-height':'panel panel-default'">
+    <div class="panel-heading vt-relative vt-panel-heading-table" *ngIf="title">
+        <strong translate>
+<!--            <img *ngIf="isShowVertical && !isShowHideVertical" alt="next" class="img-fluid icon-show-hide-search" src="./../../../../../../assets/images/home/Mask_Group_24371.png"  (click)="closeBasicSearch()">-->
+            {{title}}
+        </strong>
+        <div class="show-btn-right-header">
+            <div *ngTemplateOutlet="btnHeaderTemplate"></div>
+        </div>
+    </div>
+    <div class="panel-body panel-table table-container">
+        <p-table #ptable [columns]="columnsConfig" [value]="resultList.data" [lazy]="true"
+            (onLazyLoad)="onLazyLoad($event)" [paginator]="resultList.data && resultList.data.length" [rows]="changeRow"
+            [totalRecords]="resultList.recordsTotal" [scrollable]="true" selectionMode="multiple"
+            [(selection)]="selectedRows" (onRowSelect)="onSelectChange()" (onRowUnselect)="onSelectChange()"
+            [lazyLoadOnInit]="false" styleClass="controlOverflow"
+            tableStyleClass="table table-wrapper table-hover table-striped b-t b-b" [resizableColumns]="true" class="table-view">
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                    <col *ngFor="let col of columns" [style.width]="col.width">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th class="vt-align-center" *ngFor="let col of columns" pSortableColumn={{col.sortable}}
+                        pResizableColumn>
+                        {{col.header | translate}}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                <tr [pSelectableRow]="rowData">
+                    <ng-container *ngTemplateOutlet="optionTemplate || default; context:{ $implicit: rowData, rowIndex:rowIndex}"></ng-container>
+
+                    
+                    <ng-template #default>
+                        <ng-container *ngTemplateOutlet="actionButtonTemplate; context:{ $implicit: rowData, rowIndex:rowIndex}" ></ng-container>
+                        <td class="vt-align-center">{{rowIndex + 1}}</td>
+                        <td *ngFor="let fieldName of fieldNames" class="ui-resizable-column" [title]="rowData[fieldName]">
+                            {{ rowData[fieldName] }}
+                        </td>
+                    </ng-template>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr class="emptymessage">
+                    <td [attr.colspan]="3" [innerHTML]="'app.noRecords' | translate">
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+                <table-footer (changeRow)="onTablePageChange($event)" [resultList]="resultList"></table-footer>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

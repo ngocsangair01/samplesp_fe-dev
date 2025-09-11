@@ -1,0 +1,6 @@
+<div *ngIf="hasPermission('action.view')" >
+  <relative-abroad-search></relative-abroad-search>
+</div>
+<div *ngIf="!hasPermission('action.view')">
+  {{'common.haveNoPermission' | translate}}
+</div>

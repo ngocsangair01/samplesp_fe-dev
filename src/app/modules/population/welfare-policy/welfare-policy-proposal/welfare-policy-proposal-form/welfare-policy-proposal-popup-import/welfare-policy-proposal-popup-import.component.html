@@ -1,0 +1,45 @@
+<div class="info">
+  <div class="panel panel-default" style="margin-bottom: unset">
+    <form id="formSave" [formGroup]="formSave">
+      <div class="panel-heading vt-relative">
+        <strong>
+          <span class="ml-2 title-info">{{'label.welfare.policy.proposal.headerEdit' |translate}}</span>
+        </strong>
+      </div>
+      <div class="panel-body padding-xl ui-g">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right">
+            {{'common.button.icon.ImportData' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <file-chooser
+                    [property]="f['fileImport']"
+                    validMaxSize="50"
+                    htmlId="fileImport"
+                    validType="xlsx, xls">
+            </file-chooser>
+            <app-control-messages [control]="f['fileImport']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right">
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <a class="text-link" (click)="processDownloadTemplate();">
+              <span><i class="fa fa-download"></i> Tải về file biểu mẫu</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="dataError">
+    <import-error [data]="dataError"></import-error>
+  </div>
+  <div class="panel-footer vt-area-button">
+    <button type="submit" (click)="importData()" class="btn btn-sm vt-btn btn-submit"
+            [innerHTML]="'common.button.import' | translate"></button>
+    <button type="button"  class="btn btn-sm vt-btn"  (click)="activeModal.close()"
+            [innerHTML]="'common.button.out' | translate"></button>
+  </div>
+</div>

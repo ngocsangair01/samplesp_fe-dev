@@ -1,0 +1,127 @@
+<div class="info">
+  <div class="panel panel-default">
+    <form id="formSave" [formGroup]="formSave">
+      <div class="panel-heading vt-relative">
+        <strong>
+          <span class="ml-2 title-info">{{'label.welfare.policy.proposal.headerEdit' |translate}}</span>
+        </strong>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="listArea" [ngClass]="isShowVertical?'display-list-vertical':''"
+     [ngStyle]="{'width': isShowVertical && !isShowHideVertical ? '100%' : '','height': isShowVertical && !isShowHideVertical ? '85vh' : ''}">
+  <div [ngClass]="isShowVertical?'panel panel-default display-max-vertical-height':'panel panel-default'">
+    <div class="panel-body panel-table table-container">
+      <p-table
+          #ptable
+          [value]="allowanceProposalBOList.controls"
+          [paginator]="true"
+          [(first)]="firstRowIndex"
+          [rows]="pageSize"
+          [totalRecords]="allowanceProposalBOList.length"
+          [scrollable]="true"
+          [resizableColumns]="true"
+          class="custom-table"
+          tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+          styleClass="controlOverflow"
+      >
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col style="width: 50px;">
+            <col style="width: 50px;">
+            <col style="width: 50px;" style="display:none;">
+            <col style="width: 150px;">
+            <col style="width: 150px;">
+            <col style="width: 150px;">
+            <col style="width: 150px;">
+            <col style="width: 150px;">
+            <col style="width: 150px;">
+            <col style="width: 150px;">
+            <col style="width: 150px;">
+            <col style="width: 150px;">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn translate>common.table.index</th>
+            <th pResizableColumn translate>common.button.chose</th>
+            <th pResizableColumn style="display:none;">
+            <th pResizableColumn translate>decide.rewardPropose.label.name</th>
+            <th pResizableColumn translate>subsidizedSuggest.label.subsidizedPeriodId</th>
+            <th pResizableColumn translate>subsidizedPeriod.label.decisionOrgId</th>
+            <th pResizableColumn translate>label.welfare.policy.proposal.spendingOrg1</th>
+            <th pResizableColumn translate>label.welfare.policy.category.organizationModel</th>
+            <th pResizableColumn translate>decide.rewardPropose.label.year</th>
+            <th pResizableColumn translate>label.welfare.policy.proposal.signer</th>
+            <th pResizableColumn translate>label.welfare.policy.proposal.total</th>
+            <th pResizableColumn translate>common.label.status</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-index="rowIndex">
+          <tr [formGroup]="item">
+            <td class="vt-align-center">{{index}}</td>
+            <td class="vt-align-center" *ngIf="item.value.allowanceProposalId">
+              <input type="checkbox" name="isCheck"
+                     formControlName="isCheck"
+                     [value]="1"/>
+            </td>
+            <td class="vt-align-center" style="display:none;">{{item.value.allowanceProposalId}}</td>
+            <td class="vt-align-left" [title]="item.value.name">{{item.value.name}}</td>
+            <td class="vt-align-left" [title]="item.value.allowancePeriod">{{item.value.allowancePeriod}}</td>
+            <td class="vt-align-left" [title]="item.value.proposeOrg">{{item.value.proposeOrg}}</td>
+            <td class="vt-align-left" [title]="item.value.approveOrg">{{item.value.approveOrg}}</td>
+            <td class="vt-align-left " [title]="item.value.orgType">
+              <div *ngIf="item.value.orgType === 1" >Tổ chức Đảng</div>
+              <div *ngIf="item.value.orgType === 2" >Tổ chức Công đoàn</div>
+              <div *ngIf="item.value.orgType === 3" >Tổ chức Phụ nữ</div>
+              <div *ngIf="item.value.orgType === 4" >Tổ chức Thanh niên</div>
+              <div *ngIf="item.value.orgType === 5" >Chính quyền</div>
+            </td>
+            <td class="vt-align-left " [title]="item.value.year">{{item.value.year}}</td>
+            <td class="vt-align-left " [title]="item.value.employeeProposal">{{item.value.employeeProposal}}</td>
+            <td class="vt-align-left " [title]="item.value.amountTotal">{{item.value.amountTotal}}</td>
+            <td class="vt-align-left " [title]="item.value.status">
+              <div *ngIf="item.value.status === 0" >Dự thảo</div>
+              <div *ngIf="item.value.status === 1" >Chờ xét chọn</div>
+              <div *ngIf="item.value.status === 2" >Đang xét chọn</div>
+              <div *ngIf="item.value.status === 3" >Bị từ chối</div>
+              <div *ngIf="item.value.status === 4" >Đang trình ký</div>
+              <div *ngIf="item.value.status === 5" >Đã xét chọn</div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr class="emptymessage">
+            <td [attr.colspan]="12" [innerHTML]="'app.noRecords' | translate">
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft" >
+          <div class="table-footer-sumary">
+              <span *ngIf="allowanceProposalBOList.length < pageSize && allowanceProposalBOList.length > 0">
+                {{'common.tableSumary.find' | translate}} {{allowanceProposalBOList.length}}, {{'common.tableSumary.showAll' | translate}}
+              </span>
+            <span *ngIf="allowanceProposalBOList.length >= pageSize && firstRowIndex+pageSize <= allowanceProposalBOList.length">
+                {{'common.tableSumary.find' | translate}} {{allowanceProposalBOList.length}}, {{'common.tableSumary.showFrom' | translate}}
+              {{firstRowIndex + 1}} {{'common.tableSumary.showTo' | translate}}
+              {{firstRowIndex + pageSize}}
+              </span>
+            <span *ngIf="allowanceProposalBOList.length >= pageSize && firstRowIndex+pageSize > allowanceProposalBOList.length">
+                {{'common.tableSumary.find' | translate}} {{allowanceProposalBOList.length}}, {{'common.tableSumary.showFrom' | translate}}
+              {{firstRowIndex + 1}} {{'common.tableSumary.showTo' | translate}}
+              {{allowanceProposalBOList.length}}
+              </span>
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <div class="panel-footer vt-area-button">
+    <button type="submit" (click)="addRequest()" class="btn btn-sm vt-btn btn-submit"
+            [innerHTML]="'common.button.icon.save' | translate"></button>
+    <button type="button"  class="btn btn-sm vt-btn"  (click)="activeModal.close()"
+            [innerHTML]="'common.button.out' | translate"></button>
+  </div>
+</div>

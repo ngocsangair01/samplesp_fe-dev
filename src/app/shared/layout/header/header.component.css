@@ -1,0 +1,477 @@
+/*Start Page Demo*/
+.logo-container {
+    width: 300px;
+    position: absolute;
+    z-index: 1;
+    left: 52px;
+    top: 1px;
+}
+
+.pageDemo {
+    width: 60px;
+    height: 50px;
+    padding: 8px;
+}
+
+.pageDemo, .pageDemoMenu, .pageDemoContent, .pageDemoHeader {
+    display: block;
+}
+
+.pageDemoHeader {
+    height: 6px;
+    margin-bottom: 2px;
+    float: right;
+    width: 33px;
+}
+
+.pageDemoMenu {
+    height: 34px;
+    float: left;
+    width: 9px;
+    background-color: #4d394b;
+}
+
+.pageDemoContent {
+    border: #e9e9e9 solid 1px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    float: right;
+    width: 33px;
+    height: 26px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.pageDemo.page0 .pageDemoHeader {
+    background-color: #e6272e;
+}
+
+.pageDemo.page2 .pageDemoHeader {
+    background-color: #31c0be;
+}
+
+.pageDemo.page4 .pageDemoHeader {
+    background-color: #00adca;
+}
+
+.pageDemo.page3 .pageDemoHeader {
+    background-color: #609e3b;
+}
+
+.pageDemo.page1 .pageDemoHeader {
+    background-color: #3f51b5;
+}
+
+.pageDemo.page1 .pageDemoMenu {
+    background-color: #222d32;
+}
+
+.pageDemo.page2 .pageDemoMenu {
+    background-color: #eee;
+}
+
+.pageDemo.page4 .pageDemoMenu {
+    background-color: #222d32;
+}
+
+.pageDemo.page3 .pageDemoMenu {
+    background-color: #4d394b;
+}
+
+.pageDemo.page0 .pageDemoMenu {
+    background-color: #b21921;
+}
+
+.select-theme {
+    width: 150px;
+}
+
+.icon-checked {
+    color: var(--primary-color);
+    padding-top: 5px;
+}
+
+.select-theme {
+    min-width: 120px !important;
+}
+
+.icon-bar {
+    width: 40px;
+    color: #000;
+}
+
+.left-nav-bar {
+    font-size: 10px;
+}
+
+.left-nav-bar .header-title {
+    font-size: 10px;
+    font-family: 'PFBeauSansPro',Arial, "Lato", "Helvetica Neue", sans-serif !important;
+    color: var(--color-nav) !important;
+}
+
+.logo-icon {
+    cursor: pointer;
+    height: 38px;
+    margin-top: -4px;
+    margin-left: 10px;
+}
+
+.row-header {
+    display: flex;
+    margin-left: 16px;
+    align-items: center;
+}
+
+.menu-title {
+    color: rgba(78,3,0,1);
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 400;
+    height: 40px;
+}
+
+.item {
+    display: none;
+}
+
+.item:nth-child(-n+6) {
+    display: block;
+}
+
+.list-style {
+    list-style: none;
+}
+
+.popup-more {
+    display: none;
+    position: absolute;
+    background-color: #FFFFFF;
+    width: 250px;
+    border: 1px solid #c0c6cc52;
+    border-radius: 10px;
+}
+
+
+.list-style:hover .popup-more {
+    display: block;
+}
+
+.item:hover .popup-more {
+    display: block;
+}
+
+.h-30 {
+    height: 30px;
+}
+
+.left-option {
+    padding: 5px 15px;
+}
+
+.input-search {
+    border-radius: 0px 8px 8px 0;
+    border: 2px solid #c0c6cc;
+    border-left: none;
+    width: 220px !important;
+    height: 32px !important;
+}
+
+.search-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    padding-bottom: 10px;
+}
+
+.icon-search {
+    border-radius: 8px 0px 0px 8px;
+    border: 2px solid #c0c6cc;
+    border-right: none;
+    height: 32px !important;
+}
+
+.search-box {
+    padding: 10px 16px;
+}
+
+.label-pupop {
+    font-size: 14px;
+    color: #313949;
+    font-family: "PFBeauSansPro";
+    font-weight: 400;
+    padding-bottom: 5px;
+}
+
+
+.dropdown-toggle::after {
+    display: none;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+}
+
+.dropdown-menu {
+    border-radius: 10px;
+}
+
+.card-user {
+    width: 279px;
+    height: 410px;
+    padding-top: 10px;
+    padding-left: 26px;
+    padding-right: 26px;
+}
+
+.image-user {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    border-radius: 50%;
+    overflow: hidden;
+    /*margin-top: 5px;*/
+    margin-left: 10px;
+}
+
+.image-avatar {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    left: 0px;
+    top: 0px;
+    display: inline-block;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.user-name {
+    text-align: left;
+    font-family: 'PFBeauSansPro';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: rgba(38, 38, 38, 1);
+}
+
+.user-type {
+    text-align: left;
+    font-family: "PFBeauSansPro";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    color: rgba(98, 104, 127, 1);
+}
+
+.divider-user {
+    color: rgba(228, 230, 239, 1);
+    width: 279px;
+    margin-left: -26px;
+}
+
+.card-info {
+    margin-left: -28px;
+    margin-bottom: 22px;
+}
+
+.info-icon-ava {
+    width: 24px;
+    height: 24px;
+    overflow: visible;
+}
+
+.user-title {
+    white-space: nowrap;
+    text-align: left;
+    font-family: 'PFBeauSansPro';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    color: #62687F;
+    padding-top: 1px;
+}
+
+.info-label {
+    width: 87px;
+    height: 23px;
+    overflow: visible;
+    padding: 3px 12px 3px 10px;
+    background-color: rgba(51, 140, 240, 1);
+    border-radius: 5px;
+    text-align: center;
+    font-family: 'PFBeauSansPro';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 1);
+}
+
+.user-info {
+    text-align: left;
+    font-family: 'PFBeauSansPro';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    color: #313949;
+    margin-left: 15px;
+    margin-top: 8px;
+}
+
+.logout {
+    text-align: left;
+    font-family: 'PFBeauSansPro';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    color: rgba(63, 66, 84, 1);
+    cursor: pointer;
+}
+
+.card-notify {
+    width: 360px;
+    max-height: 380px;
+    overflow: scroll;
+    overflow-x: hidden;
+    padding-top: 10px;
+    padding-left: 26px;
+    padding-right: 26px;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    margin-left: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.notify-title {
+    text-align: left;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    color: rgba(38, 38, 38, 1);
+}
+
+.divider-notify {
+    color: rgba(228, 230, 239, 1);
+    width: 360px;
+    margin-left: -26px;
+}
+
+.card-noti {
+    margin-left: -14px;
+    margin-bottom: 18px;
+}
+
+.notify-icon {
+    width: 36px;
+    height: 36px;
+    overflow: visible;
+}
+
+.notify-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    overflow: hidden !important;
+    text-align: left;
+    font-family: "PFBeauSansPro";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    color: rgba(98, 104, 127, 1);
+}
+
+.notify-type {
+    text-align: left;
+    font-family: "PFBeauSansPro";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    color: rgba(51, 140, 240, 1);
+}
+
+.time-icon {
+    width: 13.333px;
+    height: 13.334px;
+    overflow: visible;
+    margin-top: -3px;
+}
+
+.notify-time {
+    text-align: left;
+    font-family: "PFBeauSansPro";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    color: rgba(98, 104, 127, 1);
+    margin-left: 5px;
+}
+
+.header-title-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#label:hover {
+    color: #1f1e1e;
+    cursor: pointer;
+}
+/* mobile*/
+@media (min-width: 374px) and (max-width: 576px){
+    .header-title {
+        display: none;
+    }
+    .logo-icon {
+        height: 30px !important;
+        margin-top: 5px !important;
+    }
+    .header-mobile {
+        display: flex;
+        justify-content: right;
+        align-items: center;
+    }
+    :host ::ng-deep .ui-dropdown  {
+        width: 38% !important;
+        margin-top: 3px;
+    }
+    .left-option {
+        padding: 3px 12px !important;
+    }
+}
+@media (min-width: 577px) and (max-width: 767px){
+
+}
+@media (min-width: 768px) and (max-width: 1024px){
+    .logo-icon {
+        height: 36px !important;
+        margin-left: 6px;
+    }
+    .header-title {
+        font-size: 10px !important;
+    }
+    .menu-title {
+        font-size: 12px !important;
+    }
+}
+@media (min-width: 992px) {
+
+}
+@media (min-width: 1200px) {
+
+}
+@media (min-width: 1400px) {
+
+}
+

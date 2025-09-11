@@ -1,0 +1,248 @@
+<div *ngIf="hasPermission('action.view')">
+    <div [ngClass]="isShowVertical?'show-title':''">
+    <div id="searchPage" [ngStyle]="{'width': isShowVertical && !isShowHideVertical ? '0%' : '', 'min-width': isShowVertical && !isShowHideVertical ? '0%' : ''}"
+         [ngClass]="isShowVertical?'display-search-vertical':'display-search-not-vertical'">
+        <div id="searchArea" [ngClass]="isShowVertical?'display-max-vertical-height':''">
+            <div [ngClass]="isShowVertical?'panel panel-default unset-margin-bottom-vertical display-max-vertical':'panel panel-default'">
+                <form [formGroup]="formSearch" id="formSearch">
+                    <button type="submit" class="btn btn-sm vt-btn btn-submit" (click)="search()" style="display: none"
+                            [innerHTML]="'common.button.icon.search' | translate"></button>
+                    <div style="overflow: unset"
+                         [ngClass]="isBasicSearch?'panel-heading':'panel-heading vt-border-hide-search'">
+                        <a *ngIf="!isShowVertical"
+                           style="color: #202123; font-weight: 600; font-size: 16px; height: 40px"
+                           (click)="pressLabelSearchBasic()">
+                            <div *ngIf="isBasicSearch && !isShowVertical"
+                                 style="height: 100%; padding: 9px 20px 9px 15px;">
+                                <i class="fa fa-caret-down"></i>
+                                {{'common.label.hideBasicSearch' | translate}}
+                            </div>
+                            <div *ngIf="!isBasicSearch && !isShowVertical"
+                                 style="height: 100%; padding: 9px 20px 9px 15px;">
+                                <i class="fa fa-caret-right"></i>
+                                {{'common.label.showBasicSearch' | translate}}
+                            </div>
+                        </a>
+                        <span *ngIf="isShowVertical"
+                              style="color: #202123; font-weight: 600; font-size: 16px; height: 40px; padding-left: 10px; padding-top: 10px;">
+<!--                            <img alt="back" class="img-fluid icon-show-hide-search" src="./../../../../../../assets/images/home/Mask_Group_24370.png" (click)="closeBasicSearch()">-->
+                            {{'common.label.showBasicSearch' | translate}}
+                        </span>
+                        <div *ngIf="isBasicSearch" class="show-btn-right-header">
+                            <div ngbDropdown class="d-inline-block">
+                                <button class="btn btn-sm vt-btn"
+                                        ngbDropdownToggle>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         width="14" height="14" viewBox="0 0 24 24">
+                                        <defs>
+                                            <clipPath id="clip-path">
+                                                <rect id="Rectangle_11011" data-name="Rectangle 11011" width="24"
+                                                      height="24" transform="translate(1621 24)" fill="#000"
+                                                      stroke="#fff" stroke-width="1"/>
+                                            </clipPath>
+                                        </defs>
+                                        <g id="Mask_Group_19451" data-name="Mask Group 19451"
+                                           transform="translate(-1621 -24)" clip-path="url(#clip-path)">
+                                            <g id="setting-2" transform="translate(1619.606 22.614)">
+                                                <path id="Path_63716" data-name="Path 63716"
+                                                      d="M13.383,17.565a4.182,4.182,0,1,1,4.182-4.182A4.184,4.184,0,0,1,13.383,17.565Zm0-6.691a2.509,2.509,0,1,0,2.509,2.509A2.513,2.513,0,0,0,13.383,10.874Z"
+                                                      fill="#000"/>
+                                                <path id="Path_63717" data-name="Path 63717"
+                                                      d="M16.963,24.747a3.033,3.033,0,0,1-.7-.089,2.739,2.739,0,0,1-1.639-1.238l-.134-.223c-.658-1.138-1.561-1.138-2.219,0l-.123.212a2.674,2.674,0,0,1-1.639,1.249,2.611,2.611,0,0,1-2.041-.279l-1.918-1.1a2.955,2.955,0,0,1-1.093-4.037,1.492,1.492,0,0,0,.223-1.405,1.486,1.486,0,0,0-1.327-.513,2.96,2.96,0,0,1-2.955-2.955V12.4A2.96,2.96,0,0,1,4.349,9.446a1.486,1.486,0,0,0,1.327-.513,1.462,1.462,0,0,0-.223-1.405,2.968,2.968,0,0,1-.29-2.242,2.877,2.877,0,0,1,1.383-1.8l1.929-1.1a2.7,2.7,0,0,1,3.68.97l.134.223c.658,1.138,1.561,1.138,2.219,0l.123-.212a2.692,2.692,0,0,1,3.691-.97l1.918,1.1a2.955,2.955,0,0,1,1.093,4.037,1.492,1.492,0,0,0-.223,1.405,1.486,1.486,0,0,0,1.327.513,2.96,2.96,0,0,1,2.955,2.955v1.963a2.96,2.96,0,0,1-2.955,2.955,1.486,1.486,0,0,0-1.327.513,1.462,1.462,0,0,0,.223,1.405,2.918,2.918,0,0,1,.29,2.242,2.877,2.877,0,0,1-1.383,1.8l-1.929,1.1a2.775,2.775,0,0,1-1.349.357Zm-3.58-4.126a3.039,3.039,0,0,1,2.554,1.729l.123.212a1.022,1.022,0,0,0,1.383.368l1.929-1.115a1.29,1.29,0,0,0,.48-1.751,3.062,3.062,0,0,1-.223-3.078,3.047,3.047,0,0,1,2.777-1.349,1.276,1.276,0,0,0,1.283-1.283V12.39a1.283,1.283,0,0,0-1.283-1.283,3.047,3.047,0,0,1-2.777-1.349,3.062,3.062,0,0,1,.223-3.078,1.275,1.275,0,0,0,.123-.97,1.3,1.3,0,0,0-.591-.781l-1.929-1.1a1.026,1.026,0,0,0-1.405.368l-.123.212a3.039,3.039,0,0,1-2.554,1.729,3.039,3.039,0,0,1-2.554-1.729L10.7,4.182a1.024,1.024,0,0,0-1.383-.357L7.383,4.941A1.29,1.29,0,0,0,6.9,6.691,3.062,3.062,0,0,1,7.126,9.77a3.047,3.047,0,0,1-2.777,1.349A1.276,1.276,0,0,0,3.067,12.4v1.963a1.283,1.283,0,0,0,1.283,1.283A3.047,3.047,0,0,1,7.126,17,3.062,3.062,0,0,1,6.9,20.074a1.275,1.275,0,0,0-.123.97,1.3,1.3,0,0,0,.591.781l1.929,1.1a.986.986,0,0,0,.77.112,1.058,1.058,0,0,0,.636-.48l.123-.212a3.061,3.061,0,0,1,2.554-1.729Z"
+                                                      fill="#000"/>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </button>
+                                <div ngbDropdownMenu class="vt-dropdown-menu">
+                                    <button class="dropdown-item" (click)="showFormSearch(false)"
+                                            [innerHTML]="'common.button.header.actShowFollowRow' | translate"></button>
+                                    <button class="dropdown-item" (click)="showFormSearch(true)"
+                                            [innerHTML]="'common.button.header.actShowFollowColumn' | translate"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="isBasicSearch" class="vt-border-side-bottom">
+                        <div [ngClass]="{'panel-body padding-xl padding-body-search vt-display-block': isShowVertical}">
+                            <a *ngIf="isShowVertical"
+                               style="color: #202123; font-weight: 600; font-size: 14px; height: 40px"
+                               (click)="pressLabelSearchBasicDiv()">
+                                <div *ngIf="isBasicDivSearch && isShowVertical"
+                                     style="padding: 9px 20px 9px 15px;">
+                                    <i class="fa fa-caret-down"></i>
+                                    {{'common.label.basicSearch' | translate}}
+                                </div>
+                                <div *ngIf="!isBasicDivSearch && isShowVertical"
+                                     style="padding: 9px 20px 9px 15px;">
+                                    <i class="fa fa-caret-right"></i>
+                                    {{'common.label.basicSearch' | translate}}
+                                </div>
+                            </a>
+                            <div *ngIf="(isBasicDivSearch && isShowVertical) || !isShowVertical"
+                                    [ngClass]="isShowVertical?'':'ui-g vt-row'">
+                                <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-6 rows'">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="formSearch.controls.isCode"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'label.welfare.policy.category.code' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                            *ngIf="(formSearch.controls.isCode.value && isShowVertical) || !isShowVertical">
+                                        <input type="text" class="form form-control" name="code" formControlName="code">
+                                    </div>
+                                </div>
+                                <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-6 rows'">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="formSearch.controls.isName"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'label.welfare.policy.category.name' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                            *ngIf="(formSearch.controls.isName.value && isShowVertical) || !isShowVertical">
+                                        <input type="text" class="form form-control" name="name" formControlName="name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="(isBasicDivSearch && isShowVertical) || !isShowVertical"
+                                    [ngClass]="isShowVertical?'':'ui-g vt-row'">
+                                <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-6 rows'">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="formSearch.controls.isType"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'label.welfare.policy.category.type' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                            *ngIf="(formSearch.controls.isType.value && isShowVertical) || !isShowVertical">
+                                        <p-dropdown [optionLabel]="'name'" [formControl]="formSearch.controls.type"
+                                                    [options]="typeOptions" [placeholder]="'placeholder.all' | translate" [showClear]="true" ></p-dropdown>
+                                    </div>
+                                </div>
+                                <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-6 rows'">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="formSearch.controls.isObjectType"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'label.welfare.policy.category.objectType' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                            *ngIf="(formSearch.controls.isObjectType.value && isShowVertical) || !isShowVertical">
+                                        <p-dropdown [optionLabel]="'name'" [formControl]="formSearch.controls.objectType"
+                                                    [options]="objectTypeOptions" [placeholder]="'placeholder.all' | translate" [showClear]="true" ></p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="(isBasicDivSearch && isShowVertical) || !isShowVertical"
+                                    [ngClass]="isShowVertical?'':'ui-g vt-row'">
+                                <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-6 rows'">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="formSearch.controls.isEffectiveStartDate"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'label.welfare.policy.category.validFromDate' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                            *ngIf="(formSearch.controls.isEffectiveStartDate.value && isShowVertical) || !isShowVertical">
+                                        <date-picker [property]="formSearch.controls.effectiveStartDate"></date-picker>
+                                    </div>
+                                </div>
+                                <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-6 rows'">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="formSearch.controls.isEffectiveEndDate"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'label.welfare.policy.category.validToDate' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                            *ngIf="(formSearch.controls.isEffectiveEndDate.value && isShowVertical) || !isShowVertical">
+                                        <date-picker [property]="formSearch.controls.effectiveEndDate"></date-picker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="isBasicSearch" class="panel-footer vt-area-button">
+                        <button type="submit" class="btn btn-sm vt-btn btn-submit" (click)="search()"
+                                [innerHTML]="'common.button.icon.search' | translate"></button>
+                        <button *ngIf="isShowVertical" type="submit" class="btn btn-sm vt-btn "
+                                (click)="showFormSearch(false)"
+                                [innerHTML]="'common.button.icon.out' | translate"></button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <div id="listArea" [ngClass]="isShowVertical?'display-list-vertical':''"
+         [ngStyle]="{'width': isShowVertical && !isShowHideVertical ? '100%' : '','height': isShowVertical && !isShowHideVertical ? '85vh' : ''}">
+        <div [ngClass]="isShowVertical?'panel panel-default display-max-vertical-height':'panel panel-default'">
+            <table-view (lazyLoad)="search($event)" [optionTemplate]="optionTemplate" [title]="'label.welfare.policy.category.listData'"
+                        [columnsConfig]="tableColumnsConfig" [resultList]="resultList" [btnHeaderTemplate]="btnHeaderTemplate"
+                        [isShowVertical]="isShowVertical"
+                        [isShowHideVertical]="isShowHideVertical">
+                <ng-template #btnHeaderTemplate>
+                    <button type="submit" class="btn btn-sm vt-btn btn-submit" (click)="navigateToCreatePage()"
+                            [innerHTML]="'common.button.icon.addNew' | translate"></button>
+                </ng-template>
+                <ng-template #optionTemplate let-rowData let-rowIndex="rowIndex">
+                    <td class="vt-align-center" style="overflow: inherit !important;">
+                        <div ngbDropdown class="d-inline-block">
+                            <div ngbDropdownToggle class="vt-action-hover">
+                                <img class="menu-icon" src="./../../../assets/images/home/Icon.svg">
+                            </div>
+                            <div ngbDropdownMenu class="vt-border-radius">
+                                <!-- Xem chi tiết -->
+                                <button class="dropdown-item"
+                                        (click)="navigateToViewPage(rowData)"
+                                        [innerHTML]="'common.button.table.viewdropdown' | translate">
+                                </button>
+                                <!-- Sửa -->
+                                <button class="dropdown-item"
+                                        (click)="navigateToUpdatePage(rowData)"
+                                        [innerHTML]="'common.button.table.acteditdropdown' | translate">
+                                </button>
+                                <!-- Xóa -->
+                                <button class="dropdown-item"
+                                        (click)="deleteWelfarePolicy(rowData)"
+                                        [innerHTML]="'common.button.icon.delete' | translate">
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="vt-align-center">{{rowIndex + 1}}</td>
+                    <td class="vt-align-left">{{rowData.code}}</td>
+                    <td class="vt-align-left">{{rowData.name}}</td>
+                    <td class="vt-align-left">
+                        <span *ngIf="rowData.type === 1">Phúc lợi</span>
+                        <span *ngIf="rowData.type === 2">Hỗ trợ</span>
+                        <span *ngIf="rowData.type === 3">Trợ cấp bệnh</span>
+                    </td>
+                    <td class="vt-align-left">
+                        <span *ngIf="rowData.objectType === 1">Bản thân</span>
+                        <span *ngIf="rowData.objectType === 2">Thân nhân</span>
+                    </td>
+                    <td class="vt-align-left">{{rowData.description}}</td>
+                    <td class="vt-align-left">
+                        <span [innerHTML]="rowData.policyDocument"></span>
+                    </td>
+                    <td class="vt-align-center">{{rowData.effectiveStartDate | date: 'dd/MM/yyyy'}}</td>
+                    <td class="vt-align-center">{{rowData.effectiveEndDate | date: 'dd/MM/yyyy'}}</td>
+                </ng-template>
+            </table-view>
+
+        </div>
+    </div>
+</div>
+</div>
+<div *ngIf="!hasPermission('action.view')" translate>
+    common.haveNoPermission
+</div>

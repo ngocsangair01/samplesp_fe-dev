@@ -1,0 +1,139 @@
+<div class="card-form">
+    <div class="clearfix">
+      <div class="left-nav-bar pull-left row-header">
+        <div>
+          <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="previous();">
+          <span class="title">Thêm mới danh sách hưởng trợ cấp</span>
+        </div>
+      </div>
+      <div class="right-nav-bar pull-right left-option">
+          <ul class="header-right sys-ul space-line">
+            <li>
+              <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="previous();" [innerHTML]="'common.button.previous' | translate">
+              </button>
+            </li>
+            <li>
+              <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="save()" [innerHTML]="'common.button.icon.save' | translate">
+              </button>
+            </li>
+          </ul>
+      </div>
+    </div>
+</div>
+<div class="info">
+    <div class="panel panel-default card-info">
+        <div class="panel-heading">
+            <strong>
+                <span class="ml-2 title-info">Thông tin hưởng trợ cấp</span>
+            </strong>
+        </div>
+        <div class="panel-body padding-xl ui-g">
+            <div class="ui-g-8 ui-g-offset-2">
+                <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+                    {{'lable.workprocess.year' | translate}}</label>
+                <div class="ui-g-12 ui-md-8">
+                    <p-dropdown [formControl]="allowanceForm.controls.year" [placeholder]="'placeholder.choose' | translate"
+                        [options]="yearOptions" optionLabel="value"></p-dropdown>
+                    <app-control-messages [control]="allowanceForm.controls.year"></app-control-messages>
+                </div>
+            </div>
+    
+            <div class="ui-g-8 ui-g-offset-2">
+                <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+                    {{'label.allowance.policy' | translate}}</label>
+                <div class="ui-g-12 ui-md-8">
+                    <p-dropdown [formControl]="allowanceForm.controls.catAllowance" optionLabel="name"
+                        [options]="catAllowanceOptions" [placeholder]="'placeholder.choose' | translate"></p-dropdown>
+                    <app-control-messages [control]="allowanceForm.controls.catAllowance"></app-control-messages>
+                </div>
+            </div>
+    
+            <div class="ui-g-8 ui-g-offset-2">
+                <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+                    {{'common.label.employee' | translate}}</label>
+                <div class="ui-g-12 ui-md-8">
+                    <employee-auto-complete #empSelector (onChange)="onChangeEmployee()" [property]="allowanceForm.controls.employee">
+                    </employee-auto-complete>
+                    <app-control-messages [control]="allowanceForm.controls.employee"></app-control-messages>
+                </div>
+            </div>
+    
+            <div class="ui-g-8 ui-g-offset-2">
+                <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+                    {{'common.label.object' | translate}}</label>
+                <div class="ui-g-12 ui-md-8">
+                    <p-dropdown [formControl]="allowanceForm.controls.subject" optionLabel="name" [options]="empTypeOptions"
+                        [placeholder]="'placeholder.choose' | translate" [showClear]="true"></p-dropdown>
+                    <app-control-messages [control]="allowanceForm.controls.subject"></app-control-messages>
+                </div>
+            </div>
+    
+            <div class="ui-g-8 ui-g-offset-2 ">
+                <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+                    {{'common.label.employee.position' | translate}}</label>
+                <div class="ui-g-12 ui-md-8">
+                    <p-autoComplete [formControl]="allowanceForm.controls.position" (completeMethod)="getPosition($event)"
+                        [suggestions]="positionSuggestions" placeholder="Nhập tên chức danh" appendTo="body"
+                        field="positionName" [style]="{padding:0, width: '100%'}"
+                        [inputStyle]="{ minHeight: '28px', width: '100%', borderRadius: '0px' }"></p-autoComplete>
+                    <app-control-messages [control]="allowanceForm.controls.position"></app-control-messages>
+                </div>
+            </div>
+    
+            <div class="ui-g-8 ui-g-offset-2 ">
+                <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+                    {{'common.label.unit' | translate}}</label>
+                <div class="ui-g-12 ui-md-8">
+                    <org-selector #orgSelector [property]="allowanceForm.controls.organization"></org-selector>
+                    <app-control-messages [control]="allowanceForm.controls.organization"></app-control-messages>
+                </div>
+            </div>
+    
+            <div class="ui-g-8 ui-g-offset-2" *ngIf="id!='create-self'">
+                <label class="ui-g-12 ui-md-4  control-label vt-align-left">
+                    {{'label.allowance.relative' | translate}}</label>
+                <div class="ui-g-12 ui-md-8">
+                    <p-dropdown [options]="relationshipOptions" [formControl]="allowanceForm.controls.familyRelationship"
+                        optionLabel="fullname" [placeholder]="'placeholder.choose' | translate" [showClear]="true">
+                    </p-dropdown>
+                    <app-control-messages [control]="allowanceForm.controls.familyRelationship"></app-control-messages>
+                </div>
+            </div>
+    
+            <div class="ui-g-8 ui-g-offset-2">
+                <label class="ui-g-12 ui-md-4  control-label vt-align-left">
+                    {{'common.label.reason' | translate}}</label>
+                <div class="ui-g-12 ui-md-8">
+                    <textarea [formControl]="allowanceForm.controls.reason" class="form-control"></textarea>
+                </div>
+            </div>
+    
+            <div class="ui-g-8 ui-g-offset-2">
+                <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+                    {{'label.allowance.quota' | translate}}</label>
+                <div class="ui-g-12 ui-md-8">
+                    <input [formControl]="allowanceForm.controls.totalAllowance" type="number" class="form-control">
+                    <app-control-messages [control]="allowanceForm.controls.totalAllowance"></app-control-messages>
+                </div>
+            </div>
+    
+            <div class="ui-g-8 ui-g-offset-2">
+                <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+                    {{'label.allowance.time' | translate}}</label>
+                <div class="ui-g-12 ui-md-8">
+                    <date-picker [property]="allowanceForm.controls.decisionDate"></date-picker>
+                    <app-control-messages [control]="allowanceForm.controls.decisionDate"></app-control-messages>
+                </div>
+            </div>
+    
+            <div class="ui-g-8 ui-g-offset-2 ">
+                <label class="ui-g-12 ui-md-4  control-label vt-align-left">
+                    {{'label.commendations.number' | translate}}</label>
+                <div class="ui-g-12 ui-md-8">
+                    <input [formControl]="allowanceForm.controls.decisionNumber" class="form-control">
+                    <app-control-messages [control]="allowanceForm.controls.decisionNumber"></app-control-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

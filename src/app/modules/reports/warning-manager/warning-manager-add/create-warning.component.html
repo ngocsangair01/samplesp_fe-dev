@@ -1,0 +1,144 @@
+<div class="content" *ngIf="hasPermission('action.insert') || hasPermission('action.update')">
+  <div class="panel panel-default">
+    <form id="formSave" [formGroup]="formSave">
+      <div class="panel-heading vt-relative">
+        <strong class="text-u-c">
+          <i class="fa fa-th"></i>&nbsp;
+          <span *ngIf="!formSave.value.warningManagerId && !view">{{'app.warning.action.add_title' | translate}}</span>
+          <span *ngIf="formSave.value.warningManagerId && !view">{{'app.warning.action.edit_title' | translate}}</span>
+          <span *ngIf="formSave.value.warningManagerId && view">{{'app.warning.action.view_title' | translate}}</span>
+        </strong>
+      </div>
+      <div class="panel-body padding-xl ui-g">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'common.label.branch'|translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter [placeHolder]="'common.label.cboMustSelect'" [property]="f['branchCode']"
+              [options]="branchList" optionLabel="parName" optionValue="parCode" (onChange)="changeCodeResource()"
+              [disabled]="view || update">
+            </select-filter>
+            <app-control-messages [control]="f['branchCode']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+            {{'app.warning.status' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <div class="form-check-inline">
+              <label class="i-checks">
+                <input type="radio" formControlName="status" [value]="1" class="form-check-input control-label"
+                  id="radioShow" name="status" [attr.disabled]="view" />
+                <i></i> {{'app.warning.status.show' | translate}}
+              </label>
+            </div>
+            <div class="form-check-inline">
+              <label class="i-checks">
+                <input type="radio" formControlName="status" [value]="2" class="form-check-input control-label"
+                  id="radioHide" name="status" [attr.disabled]="view" />
+                <i></i> {{'app.warning.status.hide' | translate}}
+              </label>
+            </div>
+            <!-- <app-control-messages [control]="f['status']"></app-control-messages> -->
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'app.warning.code' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="text" class="form form-control" formControlName="code" maxlength="100" [attr.disabled]="view || update"
+              (change)="changeCodeResource()">
+          </div>
+          <app-control-messages [control]="f['code']"></app-control-messages>
+          <dynamic-input [property]="f['resourceCode']" [objectId]="f['resourceCode'].value"
+            [labelValue]="'app.warning.resourceCode'"
+            [labelClass]="'ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right'"
+            [inputClass]="'ui-g-12 ui-md-6 ui-lg-3'" [maxLength]="100" [disabled]="true" [disabled]="view">
+          </dynamic-input>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'app.warning.name' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-9">
+            <input type="text" class="form form-control" formControlName="name" maxlength="250" [attr.disabled]="view">
+          </div>
+          <app-control-messages [control]="f['name']"></app-control-messages>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'common.label.config' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-9">
+            <textarea type="text-area" rows="4" class="form-control" formControlName="tableCellWarningInfo"
+             [attr.disabled]="view"></textarea>
+            <app-control-messages [control]="f['tableCellWarningInfo']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'common.label.configSqlAndSystem' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-9">
+            <multi-input-text [property]="f['lstFormSql']" [disabled]="disabledSql" [maxRecord]="6" [required]="true">
+            </multi-input-text>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'app.warning.type' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <div class="form-check-inline">
+              <label class="i-checks">
+                <input (click)="changeUrl(1)" type="radio" formControlName="warningType" [attr.disabled]="view"
+                  [value]="1" class="form-check-input control-label" id="radioExport" name="warningType" />
+                <i></i> {{'app.warning.type.export' | translate}}
+              </label>
+            </div>
+            <div class="form-check-inline">
+              <label class="i-checks">
+                <input (click)="changeUrl(2)" type="radio" formControlName="warningType" [attr.disabled]="view"
+                  [value]="2" class="form-check-input control-label" id="radioNextPage" name="warningType" />
+                <i></i> {{'app.warning.type.nextPage' | translate}}
+              </label>
+            </div>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required" *ngIf="!isStatusExport">
+            {{'app.warning.url' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="!isStatusExport">
+            <input type="text" class="form form-control" formControlName="url" [attr.disabled]="view" maxlength="500">
+          </div>
+          <app-control-messages [control]="f['url']" *ngIf="!isStatusExport"></app-control-messages>
+        </div>
+        <div class="ui-g-12 vt-row" *ngIf="isStatusExport">
+          <div class="ui-g-12 ">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'app.warning.file' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-9">
+              <file-chooser [property]="f['file']" validMaxSize="50" [disabled]="view"
+                validType="xls,xlsx">
+              </file-chooser>
+            </div>
+            <app-control-messages [control]="f['file']"></app-control-messages>
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-12 " *ngIf="isStatusExport">
+        <warning-dynamic-column #column (onRefresh)="syncAlias()" [disable]="view"></warning-dynamic-column>
+      </div>
+      <div class="panel-footer vt-area-button">
+        <button type="submit" (click)="processSaveOrUpdate()" *ngIf="!view" class="btn btn-sm btn-info"
+          [innerHTML]="'common.button.save' | translate"></button>
+        <button type="button" (click)="cancel()" class="btn btn-sm btn-danger"
+          [innerHTML]="'common.button.close' | translate"></button>
+      </div>
+    </form>
+  </div>
+</div>
+<div *ngIf="!hasPermission('action.insert') || !hasPermission('action.update')" translate>
+  common.haveNoPermission
+</div>

@@ -1,0 +1,20 @@
+<div class="footer-wrapper">
+    <div class="table-footer-sumary">
+        <label *ngIf="resultList.recordsTotal < 10 && resultList.recordsTotal > 0">
+            {{'common.tableSumary.findAll' | translate}} : <span class="total-record">{{resultList.recordsTotal}}</span>
+        </label>
+        <label *ngIf="resultList.recordsTotal >= 10">
+            {{'common.tableSumary.findAll' | translate}} : <span class="total-record">{{resultList.recordsTotal}}</span>
+            <!--            , -->
+            <!--            {{parseInt(resultList.first) + resultList.data.length}}-->
+        </label>
+    </div>
+    <div [ngClass]="{'none': totalWidth}" class="item-right">
+        <label id="label">Hiển thị </label>
+<!--        <select [(ngModel)]="rowOptions">-->
+<!--            <option *ngFor="let row of rowOptions" [value]="row"> {{row}}</option>-->
+<!--        </select>-->
+        <p-dropdown [(ngModel)]="selectedRowOption" [options]="rowOptions" optionLabel="label" (onChange)="onChangeOption($event)"> </p-dropdown>
+        <div id="vt-div"> </div>
+    </div>
+</div>

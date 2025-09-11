@@ -1,0 +1,69 @@
+<div class="modal-body">
+  <form id="frmSaveEmpTypeProcess" [formGroup]="formData">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong *ngIf="!isApprove" class="text-u-c"><i class="fa fa-th"></i>
+          <span  translate> transferPartyMembers.reason</span>
+        </strong>
+        <strong *ngIf="isApprove" class="text-u-c"><i class="fa fa-th"></i>
+          <span  translate> transferPartyMembers.approved</span>
+        </strong>
+        <div class="vt-absolute vt-shotcut-button-in-heading">
+          <span (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+            class="btn btn-span btn-sm btn-info btn-close"><i class="fa fa-times"></i></span>
+        </div>
+      </div>
+      <div class="panel-body padding-xl ui-g">
+        <div class="ui-g-12 vt-row" *ngIf="!isApprove">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'transferPartyMembers.reasonDecline' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-9">
+            <textarea type="text"
+              rows="3"
+              name="note"
+              class="form-control"
+              formControlName="note"
+              maxlength="1000"
+              >
+          </textarea>
+            <app-control-messages [control]="f['note']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row" *ngIf="isApprove">
+          <label class="ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right required">
+            {{'transferPartyMembers.approvedDate' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-7">
+            <date-picker [property]="f['approvedDate']" [maxDate]="maxDate" [minDate]="minDate == null ? null : minDate">
+            </date-picker>
+            <app-control-messages [control]="f['approvedDate']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row" *ngIf="isApprove && isLastApprove && partyType == '1'">
+          <label class="ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right required">
+            {{'transferPartyMembers.organizationOld' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-7">
+            <party-org-selector
+              [rootId]="partyOrgId"
+              [property]="f['partyOrgId']"
+              [defaultValue]="true"
+              [isRequiredField]="false"
+              >
+            </party-org-selector>
+            <app-control-messages [control]="f['partyOrgId']"></app-control-messages>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer vt-area-button">
+        <button type="submit" *ngIf="!isApprove" (click)="actionSave()" class="btn btn-sm btn-info"
+          [innerHTML]="'common.button.icon.decline' | translate"></button>
+        <button type="submit" *ngIf="isApprove" (click)="actionSave()" class="btn btn-sm btn-info"
+          [innerHTML]="'common.button.table.actApprove' | translate"></button>
+        <button type="button" (click)="activeModal.close()" class="btn btn-sm btn-danger"
+          [innerHTML]="'common.button.out' | translate"></button>
+      </div>
+    </div>
+  </form>
+</div>

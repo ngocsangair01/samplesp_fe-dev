@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#a2845e"/>
+      <stop offset="1" stop-color="#ac8e68"/>
+    </linearGradient>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_10996" data-name="Rectangle 10996" width="52" height="52" transform="translate(446 945)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Group_19670" data-name="Group 19670" transform="translate(-986 -393)">
+    <rect id="Rectangle_10596" data-name="Rectangle 10596" width="100" height="100" rx="24" transform="translate(986 393)" fill="url(#linear-gradient)"/>
+    <g id="Mask_Group_19466" data-name="Mask Group 19466" transform="translate(564 -528)" clip-path="url(#clip-path)">
+      <g id="box" transform="translate(442.977 941.977)">
+        <path id="Path_63760" data-name="Path 63760" d="M29.023,32.167a1.8,1.8,0,0,1-.919-.242L6.748,19.567a1.821,1.821,0,1,1,1.838-3.144L29.023,28.249,49.34,16.495a1.821,1.821,0,1,1,1.838,3.144L29.967,31.926a2.274,2.274,0,0,1-.943.242Z" fill="#fff"/>
+        <path id="Path_63761" data-name="Path 63761" d="M29.023,54.08a1.827,1.827,0,0,1-1.814-1.814V30.329a1.814,1.814,0,0,1,3.628,0V52.266A1.827,1.827,0,0,1,29.023,54.08Z" fill="#fff"/>
+        <path id="Path_63762" data-name="Path 63762" d="M29.023,55.023a12.425,12.425,0,0,1-5.9-1.379L10.207,46.461a13.164,13.164,0,0,1-6.24-10.618V22.179a13.2,13.2,0,0,1,6.24-10.618L23.122,4.4a13.32,13.32,0,0,1,11.8,0L47.84,11.585A13.164,13.164,0,0,1,54.08,22.2V35.868a13.2,13.2,0,0,1-6.24,10.618L34.925,53.645a12.425,12.425,0,0,1-5.9,1.379Zm0-48.372a8.914,8.914,0,0,0-4.136.919L11.972,14.753A9.722,9.722,0,0,0,7.594,22.2V35.868a9.762,9.762,0,0,0,4.378,7.449L24.887,50.5a9.707,9.707,0,0,0,8.272,0l12.915-7.183a9.722,9.722,0,0,0,4.378-7.449V22.2a9.762,9.762,0,0,0-4.378-7.449L33.159,7.57a8.914,8.914,0,0,0-4.136-.919Z" fill="#fff"/>
+        <path id="Path_63763" data-name="Path 63763" d="M41.119,33.836A1.827,1.827,0,0,1,39.3,32.022V24.234L17.247,11.513a1.8,1.8,0,1,1,1.814-3.12L42.014,21.647a1.82,1.82,0,0,1,.919,1.572v8.852a1.818,1.818,0,0,1-1.814,1.766Z" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

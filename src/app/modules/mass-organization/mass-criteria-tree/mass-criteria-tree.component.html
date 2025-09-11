@@ -1,0 +1,22 @@
+<p-scrollPanel [style]="{width: '100%', height: height + 'px'}" styleClass="custombar2 clearfix">
+  <div>
+    <p-tree
+      [value]="nodes"
+      selectionMode="single"
+      draggableNodes="true"
+      droppableNodes="true"
+      [(selection)]="selectedNode"
+      (onNodeContextMenuSelect)="nodeContextMenuSelect($event)"
+      [contextMenu] = "!isSaveTree ? '' : cm"
+      #tree
+      >
+      <ng-template let-node pTemplate="default">
+        <input type="text" *ngIf="node === editableNode" (blur)="onBlurInputTree(node)" [(ngModel)]="node.label" style="width:100%" class="ui-inputtext" maxlength="500"> 
+        <span (dblclick)="setEditNode(node)" (click)="treeSelectNode(node)" *ngIf="node !== editableNode && node.title" title="{{node.title}}">{{node.label}}</span>
+        <span (dblclick)="setEditNode(node)" (click)="treeSelectNode(node)" *ngIf="node !== editableNode && !node.title">{{node.label}}</span>
+      </ng-template>
+    </p-tree>
+    <p-contextMenu #cm [model]="items" appendTo="body">
+    </p-contextMenu>
+  </div>
+</p-scrollPanel>

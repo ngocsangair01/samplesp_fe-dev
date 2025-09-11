@@ -1,0 +1,1118 @@
+<div [ngClass]="isShowVertical?'show-title':''">
+    <div id="searchPage" [ngStyle]="{'width': isShowVertical && !isShowHideVertical ? '0%' : '', 'min-width': isShowVertical && !isShowHideVertical ? '0%' : ''}"
+         [ngClass]="isShowVertical?'display-search-vertical':'display-search-not-vertical'">
+        <div id="searchArea" [ngClass]="isShowVertical?'display-max-vertical-height':''">
+            <div [ngClass]="isShowVertical?'panel panel-default unset-margin-bottom-vertical display-max-vertical':'panel panel-default'">
+                <form id="formSearch" [formGroup]="formSearch" *ngIf="isShowHideVertical">
+                    <button type="submit" class="btn btn-sm vt-btn btn-submit" (click)="processSearch()" style="display: none"
+                            [innerHTML]="'common.button.icon.search' | translate"></button>
+                    <button type="submit" class="btn btn-sm vt-btn btn-submit" (click)="processSearch()" style="display:none;"
+                            [innerHTML]="'common.button.icon.search' | translate"></button>
+                    <div style="overflow: unset"
+                         [ngClass]="isBasicSearch?'panel-heading':'panel-heading vt-border-hide-search'">
+                        <a *ngIf="!isShowVertical"
+                           style="color: #202123; font-weight: 600; font-size: 16px; height: 40px"
+                           (click)="pressLabelSearchBasic()">
+                            <div *ngIf="isBasicSearch && !isShowVertical"
+                                 style="height: 100%; padding: 9px 20px 9px 15px;">
+                                <i class="fa fa-caret-down"></i>
+                                {{'common.label.hideBasicSearch' | translate}}
+                            </div>
+                            <div *ngIf="!isBasicSearch && !isShowVertical"
+                                 style="height: 100%; padding: 9px 20px 9px 15px;">
+                                <i class="fa fa-caret-right"></i>
+                                {{'common.label.showBasicSearch' | translate}}
+                            </div>
+                        </a>
+                        <span *ngIf="isShowVertical"
+                              style="color: #202123; font-weight: 600; font-size: 16px; height: 40px; padding-left: 10px; padding-top: 10px;">
+                            <img alt="back" class="img-fluid icon-show-hide-search" src="./../../../../../../assets/images/home/Mask_Group_24370.png" (click)="closeBasicSearch()">
+                            {{'common.label.showBasicSearch' | translate}}
+                        </span>
+                        <div *ngIf="isBasicSearch && !isMobileScreen" class="show-btn-right-header">
+                            <div ngbDropdown class="d-inline-block">
+                                <button class="btn btn-sm vt-btn"
+                                        ngbDropdownToggle>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         width="14" height="14" viewBox="0 0 24 24">
+                                        <defs>
+                                            <clipPath id="clip-path">
+                                                <rect id="Rectangle_11011" data-name="Rectangle 11011" width="24"
+                                                      height="24" transform="translate(1621 24)" fill="#000"
+                                                      stroke="#fff" stroke-width="1"/>
+                                            </clipPath>
+                                        </defs>
+                                        <g id="Mask_Group_19451" data-name="Mask Group 19451"
+                                           transform="translate(-1621 -24)" clip-path="url(#clip-path)">
+                                            <g id="setting-2" transform="translate(1619.606 22.614)">
+                                                <path id="Path_63716" data-name="Path 63716"
+                                                      d="M13.383,17.565a4.182,4.182,0,1,1,4.182-4.182A4.184,4.184,0,0,1,13.383,17.565Zm0-6.691a2.509,2.509,0,1,0,2.509,2.509A2.513,2.513,0,0,0,13.383,10.874Z"
+                                                      fill="#000"/>
+                                                <path id="Path_63717" data-name="Path 63717"
+                                                      d="M16.963,24.747a3.033,3.033,0,0,1-.7-.089,2.739,2.739,0,0,1-1.639-1.238l-.134-.223c-.658-1.138-1.561-1.138-2.219,0l-.123.212a2.674,2.674,0,0,1-1.639,1.249,2.611,2.611,0,0,1-2.041-.279l-1.918-1.1a2.955,2.955,0,0,1-1.093-4.037,1.492,1.492,0,0,0,.223-1.405,1.486,1.486,0,0,0-1.327-.513,2.96,2.96,0,0,1-2.955-2.955V12.4A2.96,2.96,0,0,1,4.349,9.446a1.486,1.486,0,0,0,1.327-.513,1.462,1.462,0,0,0-.223-1.405,2.968,2.968,0,0,1-.29-2.242,2.877,2.877,0,0,1,1.383-1.8l1.929-1.1a2.7,2.7,0,0,1,3.68.97l.134.223c.658,1.138,1.561,1.138,2.219,0l.123-.212a2.692,2.692,0,0,1,3.691-.97l1.918,1.1a2.955,2.955,0,0,1,1.093,4.037,1.492,1.492,0,0,0-.223,1.405,1.486,1.486,0,0,0,1.327.513,2.96,2.96,0,0,1,2.955,2.955v1.963a2.96,2.96,0,0,1-2.955,2.955,1.486,1.486,0,0,0-1.327.513,1.462,1.462,0,0,0,.223,1.405,2.918,2.918,0,0,1,.29,2.242,2.877,2.877,0,0,1-1.383,1.8l-1.929,1.1a2.775,2.775,0,0,1-1.349.357Zm-3.58-4.126a3.039,3.039,0,0,1,2.554,1.729l.123.212a1.022,1.022,0,0,0,1.383.368l1.929-1.115a1.29,1.29,0,0,0,.48-1.751,3.062,3.062,0,0,1-.223-3.078,3.047,3.047,0,0,1,2.777-1.349,1.276,1.276,0,0,0,1.283-1.283V12.39a1.283,1.283,0,0,0-1.283-1.283,3.047,3.047,0,0,1-2.777-1.349,3.062,3.062,0,0,1,.223-3.078,1.275,1.275,0,0,0,.123-.97,1.3,1.3,0,0,0-.591-.781l-1.929-1.1a1.026,1.026,0,0,0-1.405.368l-.123.212a3.039,3.039,0,0,1-2.554,1.729,3.039,3.039,0,0,1-2.554-1.729L10.7,4.182a1.024,1.024,0,0,0-1.383-.357L7.383,4.941A1.29,1.29,0,0,0,6.9,6.691,3.062,3.062,0,0,1,7.126,9.77a3.047,3.047,0,0,1-2.777,1.349A1.276,1.276,0,0,0,3.067,12.4v1.963a1.283,1.283,0,0,0,1.283,1.283A3.047,3.047,0,0,1,7.126,17,3.062,3.062,0,0,1,6.9,20.074a1.275,1.275,0,0,0-.123.97,1.3,1.3,0,0,0,.591.781l1.929,1.1a.986.986,0,0,0,.77.112,1.058,1.058,0,0,0,.636-.48l.123-.212a3.061,3.061,0,0,1,2.554-1.729Z"
+                                                      fill="#000"/>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </button>
+                                <div ngbDropdownMenu class="vt-dropdown-menu">
+                                    <button class="dropdown-item" (click)="showFormSearch(false)"
+                                            [innerHTML]="'common.button.header.actShowFollowRow' | translate"></button>
+                                    <button class="dropdown-item" (click)="showFormSearch(true)"
+                                            [innerHTML]="'common.button.header.actShowFollowColumn' | translate"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="isBasicSearch" class="vt-border-side-bottom">
+                        <div [ngClass]="{'panel-body padding-xl padding-body-search vt-display-block': isShowVertical}">
+                            <a *ngIf="isShowVertical"
+                               style="color: #202123; font-weight: 600; font-size: 14px; height: 40px"
+                               (click)="pressLabelSearchBasicDiv()">
+                                <div *ngIf="isBasicDivSearch && isShowVertical"
+                                     style="padding: 9px 20px 9px 15px;">
+                                    <i class="fa fa-caret-down"></i>
+                                    {{'common.label.basicSearch' | translate}}
+                                </div>
+                                <div *ngIf="!isBasicDivSearch && isShowVertical"
+                                     style="padding: 9px 20px 9px 15px;">
+                                    <i class="fa fa-caret-right"></i>
+                                    {{'common.label.basicSearch' | translate}}
+                                </div>
+                            </a>
+                            <div *ngIf="!isMobileScreen">
+                                <div *ngIf="(isBasicDivSearch && isShowVertical) || !isShowVertical"
+                                     [ngClass]="isShowVertical?'':'ui-g vt-row'">
+                                    <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-4 rows'">
+                                        <!--                            <div class="ui-g vt-row">&lt;!&ndash; Row 1 &ndash;&gt;-->
+                                        <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                            <p-checkbox *ngIf="isShowVertical"
+                                                        [formControl]="f['employeeCode']"
+                                                        binary="true"
+                                            ></p-checkbox>
+                                            {{'common.label.partymembersCode' | translate}}
+                                        </label>
+                                        <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                             *ngIf="(f['employeeCode'].value && isShowVertical) || !isShowVertical">
+                                            <input type="text" id="employeeCode" name="employeeCode"
+                                                   formControlName="employeeCode"
+                                                   class="form-control" [autoFocus]="true">
+                                            <app-control-messages [control]="f['employeeCode']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-4 rows'">
+                                        <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                            <p-checkbox *ngIf="isShowVertical"
+                                                        [formControl]="f['employeeName']"
+                                                        binary="true"
+                                            ></p-checkbox>
+                                            {{'profile.label.tdd' | translate}}
+                                        </label>
+                                        <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                             *ngIf="(f['employeeName'].value && isShowVertical) || !isShowVertical">
+                                            <input type="text" formControlName="employeeName" class="form-control">
+                                            <app-control-messages [control]="f['employeeName']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-4 rows'">
+                                        <!-- Row 2 -->
+                                        <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                            <p-checkbox *ngIf="isShowVertical"
+                                                        [formControl]="f['organizationId']"
+                                                        binary="true"
+                                            ></p-checkbox>
+                                            {{'common.label.unit' | translate}}
+                                        </label>
+                                        <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                             *ngIf="(f['organizationId'].value && isShowVertical) || !isShowVertical">
+                                            <org-selector
+                                                    [property]="f['organizationId']"
+                                                    operationKey="action.view"
+                                                    adResourceKey="resource.employeeManager"
+                                                    [defaultValue]="true">
+                                            </org-selector>
+                                            <app-control-messages [control]="f['organizationId']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="(isBasicDivSearch && isShowVertical) || !isShowVertical"
+                                     [ngClass]="isShowVertical?'':'ui-g vt-row'">
+                                    <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-4 rows'">
+                                        <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                            <p-checkbox *ngIf="isShowVertical"
+                                                        [formControl]="f['status']"
+                                                        binary="true"
+                                            ></p-checkbox>
+                                            {{'profile.label.ttnv' | translate}}
+                                        </label>
+                                        <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                             *ngIf="(f['status'].value && isShowVertical) || !isShowVertical">
+                                            <select-filter
+                                                [property]="f['status']"
+                                                [options]="statusList"
+                                                optionLabel="name"
+                                                optionValue="statusId"
+                                                [placeHolder]="'common.label.cboSelectAll'">
+                                            </select-filter>
+                                            <!-- <div class="form-check-inline "
+                                                 [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                                <label class="i-checks">
+                                                    <input type="radio" class="form-check-input control-label"
+                                                           id="employeeStatus_0"
+                                                           value="0" name="status" formControlName="status">
+                                                    <i></i>
+                                                    {{'app.organization.status.all' | translate}}
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline"
+                                                 [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                                <label class="i-checks">
+                                                    <input type="radio" class="form-check-input control-label"
+                                                           id="employeeStatus_1"
+                                                           value="1" name="status" formControlName="status">
+                                                    <i></i>
+                                                    {{'employee.isWorking' | translate}}
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline"
+                                                 [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                                <label class="i-checks">
+                                                    <input type="radio" class="form-check-input control-label"
+                                                           id="employeeStatus_2"
+                                                           value="2" name="status" formControlName="status">
+                                                    <i></i>
+                                                    {{'employee.notWorking' | translate}}
+                                                </label>
+                                            </div> -->
+                                            <app-control-messages [control]="f['status']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-4 rows'">
+                                        <!-- Row 3 -->
+                                        <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                            <p-checkbox *ngIf="isShowVertical"
+                                                        [formControl]="f['mobileNumber']"
+                                                        binary="true"
+                                            ></p-checkbox>
+                                            {{'profile.label.dtdd' | translate}}
+                                        </label>
+                                        <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                             *ngIf="(f['mobileNumber'].value && isShowVertical) || !isShowVertical">
+                                            <input type="text" formControlName="mobileNumber" class="form-control">
+                                            <app-control-messages [control]="f['mobileNumber']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-4 rows'">
+                                        <!-- Row 3 -->
+                                        <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                            <p-checkbox *ngIf="isShowVertical"
+                                                        [formControl]="f['email']"
+                                                        binary="true"
+                                            ></p-checkbox>
+                                            {{'common.label.email' | translate}}
+                                        </label>
+                                        <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                             *ngIf="(f['email'].value && isShowVertical) || !isShowVertical">
+                                            <input type="text" formControlName="email" class="form-control">
+                                            <app-control-messages [control]="f['email']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="(isBasicDivSearch && isShowVertical) || !isShowVertical"
+                                     [ngClass]="isShowVertical?'':'ui-g vt-row'">
+                                    <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-4 rows'">
+                                        <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                            <p-checkbox *ngIf="isShowVertical"
+                                                        [formControl]="f['personalIdNumber']"
+                                                        binary="true"
+                                            ></p-checkbox>
+                                            {{'profile.label.scmnd' | translate}}
+                                        </label>
+                                        <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                             *ngIf="(f['personalIdNumber'].value && isShowVertical) || !isShowVertical">
+                                            <input type="text" formControlName="personalIdNumber" class="form-control">
+                                            <app-control-messages [control]="f['personalIdNumber']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-4 rows'">
+                                        <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                            <p-checkbox *ngIf="isShowVertical"
+                                                        [formControl]="f['passportNumber']"
+                                                        binary="true"
+                                            ></p-checkbox>
+                                            {{'profile.label.shc' | translate}}
+                                        </label>
+                                        <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                             *ngIf="(f['passportNumber'].value && isShowVertical) || !isShowVertical">
+                                            <input type="text" formControlName="passportNumber" class="form-control">
+                                            <app-control-messages [control]="f['passportNumber']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-4 rows'">
+                                        <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                            <p-checkbox *ngIf="isShowVertical"
+                                                        [formControl]="f['positionId']"
+                                                        binary="true"
+                                            ></p-checkbox>
+                                            {{'common.label.title' | translate}}
+                                        </label>
+                                        <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                             *ngIf="(f['positionId'].value && isShowVertical) || !isShowVertical">
+                                            <data-picker [property]="f['positionId']"
+                                                         systemCode="political"
+                                                         operationKey="action.view"
+                                                         adResourceKey="resource.employeeManager"
+                                                         objectBO="PositionBO"
+                                                         codeField="code"
+                                                         nameField="name"
+                                                         selectField="positionId"
+                                                         type="position">
+                                            </data-picker>
+                                            <app-control-messages [control]="f['positionId']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="(isBasicDivSearch && isShowVertical) || !isShowVertical"
+                                     [ngClass]="isShowVertical?'':'ui-g vt-row'">
+                                    <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-4 rows'">
+                                        <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                            <p-checkbox *ngIf="isShowVertical"
+                                                        [formControl]="f['isEmpTypeId']"
+                                                        binary="true"
+                                            ></p-checkbox>
+                                            {{'profile.label.ddt' | translate}}
+                                        </label>
+                                        <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                             *ngIf="(f['isEmpTypeId'].value && isShowVertical) || !isShowVertical">
+                                            <select-filter
+                                                    [property]="f['empTypeId']"
+                                                    [options]="empTypeList"
+                                                    optionLabel="name"
+                                                    optionValue="empTypeId"
+                                                    [placeHolder]="'common.label.cboSelectAll'">
+                                            </select-filter>
+                                            <app-control-messages [control]="f['empTypeId']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-4 rows'">
+                                        <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                            <p-checkbox *ngIf="isShowVertical"
+                                                        [formControl]="f['soldierNumber']"
+                                                        binary="true"
+                                            ></p-checkbox>
+                                            {{'profile.label.shsqqn' | translate}}
+                                        </label>
+                                        <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                             *ngIf="(f['soldierNumber'].value && isShowVertical) || !isShowVertical">
+                                            <input type="text" formControlName="soldierNumber" class="form-control">
+                                            <app-control-messages [control]="f['soldierNumber']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-4 rows'">
+                                        <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                            <p-checkbox *ngIf="isShowVertical"
+                                                        [formControl]="f['taxNumber']"
+                                                        binary="true"
+                                            ></p-checkbox>
+                                            {{'profile.label.mst' | translate}}
+                                        </label>
+                                        <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                             *ngIf="(f['taxNumber'].value && isShowVertical) || !isShowVertical">
+                                            <input type="text" formControlName="taxNumber" class="form-control">
+                                            <app-control-messages [control]="f['taxNumber']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="(isBasicDivSearch && isShowVertical) || !isShowVertical"
+                                     [ngClass]="isShowVertical?'':'ui-g vt-row'">
+                                    <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-4 rows'">
+                                        <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                            <p-checkbox *ngIf="isShowVertical"
+                                                        [formControl]="f['dateOfBirthFrom']"
+                                                        binary="true"
+                                            ></p-checkbox>
+                                            {{'profile.label.nstn' | translate}}
+                                        </label>
+                                        <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                             *ngIf="(f['dateOfBirthFrom'].value && isShowVertical) || !isShowVertical">
+                                            <date-picker
+                                                    [property]="f['dateOfBirthFrom']">
+                                            </date-picker>
+                                            <app-control-messages [control]="f['dateOfBirthFrom']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-4 rows'">
+                                        <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                            <p-checkbox *ngIf="isShowVertical"
+                                                        [formControl]="f['dateOfBirthTo']"
+                                                        binary="true"
+                                            ></p-checkbox>
+                                            {{'profile.label.nsdn' | translate}}
+                                        </label>
+                                        <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                             *ngIf="(f['dateOfBirthTo'].value && isShowVertical) || !isShowVertical">
+                                            <date-picker
+                                                    [property]="f['dateOfBirthTo']">
+                                            </date-picker>
+                                            <app-control-messages [control]="f['dateOfBirthTo']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-4 rows'">
+                                        <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                            <p-checkbox *ngIf="isShowVertical"
+                                                        [formControl]="f['gender']"
+                                                        binary="true"
+                                            ></p-checkbox>
+                                            {{'app.curriculumVitae.gender' | translate}}
+        
+                                        </label>
+                                        <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                             *ngIf="(f['gender'].value && isShowVertical) || !isShowVertical">
+                                            <select-filter
+                                                [property]="f['gender']"
+                                                [options]="genderList"
+                                                optionLabel="name"
+                                                optionValue="genderId"
+                                                [placeHolder]="'common.label.cboSelectAll'">
+                                            </select-filter>
+                                            <!-- <div class="form-check-inline " [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                                <label class="i-checks">
+                                                    <input type="radio" class="form-check-input control-label"
+                                                           id="maritalStatus_0"
+                                                           value="0" name="gender" formControlName="gender">
+                                                    <i></i>
+                                                    {{'app.curriculumVitae.chooseAll' | translate}}
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline" [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                                <label class="i-checks">
+                                                    <input type="radio" class="form-check-input control-label"
+                                                           id="maritalStatus_1"
+                                                           value="1" name="gender" formControlName="gender">
+                                                    <i></i>
+                                                    {{'app.curriculumVitae.male' | translate}}
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline" [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                                <label class="i-checks">
+                                                    <input type="radio" class="form-check-input control-label"
+                                                           id="maritalStatus_2"
+                                                           value="2" name="gender" formControlName="gender">
+                                                    <i></i>
+                                                    {{'app.curriculumVitae.female' | translate}}
+                                                </label>
+                                            </div> -->
+                                            <app-control-messages [control]="f['gender']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="(isBasicDivSearch && isShowVertical) || !isShowVertical"
+                                     [ngClass]="isShowVertical?'':'ui-g vt-row'">
+                                    <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-4 rows'">
+                                        <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                            <p-checkbox *ngIf="isShowVertical"
+                                                        [formControl]="f['managementTypeId']"
+                                                        binary="true"
+                                            ></p-checkbox>
+                                            {{'app.curriculumVitae.managementType' | translate}}
+    
+                                        </label>
+                                        <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                             *ngIf="(f['managementTypeId'].value && isShowVertical) || !isShowVertical">
+                                            <select-filter
+                                                [property]="f['managementTypeId']"
+                                                [options]="managementTypeList"
+                                                optionLabel="name"
+                                                optionValue="managementTypeId"
+                                                [placeHolder]="'common.label.cboSelectAll'">
+                                            </select-filter>
+                                            <!-- <div class="form-check-inline"
+                                                 [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                                <label class="i-checks">
+                                                    <input type="radio" class="form-check-input control-label"
+                                                           id="managementType_0"
+                                                           value="0" name="managementTypeId"
+                                                           formControlName="managementTypeId">
+                                                    <i></i>
+                                                    {{'app.curriculumVitae.chooseAll' | translate}}
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline"
+                                                 [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                                <label class="i-checks">
+                                                    <input type="radio" class="form-check-input control-label"
+                                                           id="managementType_1"
+                                                           value="1" name="managementTypeId"
+                                                           formControlName="managementTypeId">
+                                                    <i></i>
+                                                    {{'app.curriculumVitae.officerManagement' | translate}}
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline"
+                                                 [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                                <label class="i-checks">
+                                                    <input type="radio" class="form-check-input control-label"
+                                                           id="managementType_2"
+                                                           value="2" name="managementTypeId"
+                                                           formControlName="managementTypeId">
+                                                    <i></i>
+                                                    {{'app.curriculumVitae.forceManagement' | translate}}
+                                                </label>
+                                            </div> -->
+                                            <app-control-messages [control]="f['managementTypeId']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 vt-padding-vertical':'ui-md-4 rows'">
+                                        <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right'">
+                                            <p-checkbox *ngIf="isShowVertical"
+                                                        [formControl]="f['isKeyPosition']"
+                                                        binary="true"
+                                            ></p-checkbox>
+                                            {{'employeeInfo.workProcess.keyPosition' | translate}}
+                                        </label>
+                                        <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-lg-6'"
+                                             *ngIf="(f['isKeyPosition'].value && isShowVertical) || !isShowVertical">
+                                            <select-filter
+                                                [property]="f['isKeyPosition']"
+                                                [options]="keyPositionList"
+                                                optionLabel="name"
+                                                optionValue="keyPositionId"
+                                                [placeHolder]="'common.label.cboSelectAll'">
+                                            </select-filter>
+                                            <!-- <div class="form-check-inline "
+                                                 [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                                <label class="i-checks">
+                                                    <input type="radio" class="form-check-input control-label"
+                                                           id="isKeyPosition_0"
+                                                           [value]="null" name="isKeyPosition"
+                                                           formControlName="isKeyPosition">
+                                                    <i></i>
+                                                    {{'app.curriculumVitae.chooseAll' | translate}}
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline"
+                                                 [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                                <label class="i-checks">
+                                                    <input type="radio" class="form-check-input control-label"
+                                                           id="isKeyPosition_1"
+                                                           [value]="0" name="isKeyPosition"
+                                                           formControlName="isKeyPosition">
+                                                    <i></i>
+                                                    {{'employeeInfo.workProcess.notKeyPosition' | translate}}
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline"
+                                                 [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                                <label class="i-checks">
+                                                    <input type="radio" class="form-check-input control-label"
+                                                           id="isKeyPosition_2"
+                                                           [value]="1" name="isKeyPosition"
+                                                           formControlName="isKeyPosition">
+                                                    <i></i>
+                                                    {{'report.qualityInternal.keyPosition' | translate}}
+                                                </label>
+                                            </div> -->
+                                            <app-control-messages [control]="f['isKeyPosition']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="isMobileScreen">
+                                <div class="ui-g-12 vt-row">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-sm-3 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="f['employeeCode']"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'common.label.partymembersCode' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-sm-9 ui-lg-6'"
+                                            *ngIf="(f['employeeCode'].value && isShowVertical) || !isShowVertical">
+                                        <input type="text" id="employeeCode" name="employeeCode"
+                                                formControlName="employeeCode"
+                                                class="form-control" [autoFocus]="true">
+                                        <app-control-messages [control]="f['employeeCode']"></app-control-messages>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 vt-row">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-sm-3 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="f['employeeName']"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'profile.label.tdd' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-sm-9 ui-lg-6'"
+                                            *ngIf="(f['employeeName'].value && isShowVertical) || !isShowVertical">
+                                        <input type="text" formControlName="employeeName" class="form-control">
+                                        <app-control-messages [control]="f['employeeName']"></app-control-messages>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 vt-row">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-sm-3 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="f['organizationId']"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'common.label.unit' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-sm-9 ui-lg-6'"
+                                            *ngIf="(f['organizationId'].value && isShowVertical) || !isShowVertical">
+                                        <org-selector
+                                                [property]="f['organizationId']"
+                                                operationKey="action.view"
+                                                adResourceKey="resource.employeeManager"
+                                                [defaultValue]="true">
+                                        </org-selector>
+                                        <app-control-messages [control]="f['organizationId']"></app-control-messages>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 vt-row">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-sm-3 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="f['status']"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'profile.label.ttnv' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-sm-9 ui-lg-6'"
+                                            *ngIf="(f['status'].value && isShowVertical) || !isShowVertical">
+                                        <select-filter
+                                            [property]="f['status']"
+                                            [options]="statusList"
+                                            optionLabel="name"
+                                            optionValue="statusId"
+                                            [placeHolder]="'common.label.cboSelectAll'">
+                                        </select-filter>
+                                        <!-- <div class="form-check-inline "
+                                                [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                            <label class="i-checks">
+                                                <input type="radio" class="form-check-input control-label"
+                                                        id="employeeStatus_0"
+                                                        value="0" name="status" formControlName="status">
+                                                <i></i>
+                                                {{'app.organization.status.all' | translate}}
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline"
+                                                [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                            <label class="i-checks">
+                                                <input type="radio" class="form-check-input control-label"
+                                                        id="employeeStatus_1"
+                                                        value="1" name="status" formControlName="status">
+                                                <i></i>
+                                                {{'employee.isWorking' | translate}}
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline"
+                                                [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                            <label class="i-checks">
+                                                <input type="radio" class="form-check-input control-label"
+                                                        id="employeeStatus_2"
+                                                        value="2" name="status" formControlName="status">
+                                                <i></i>
+                                                {{'employee.notWorking' | translate}}
+                                            </label>
+                                        </div> -->
+                                        <app-control-messages [control]="f['status']"></app-control-messages>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 vt-row">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-sm-3 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="f['mobileNumber']"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'profile.label.dtdd' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-sm-9 ui-lg-6'"
+                                            *ngIf="(f['mobileNumber'].value && isShowVertical) || !isShowVertical">
+                                        <input type="text" formControlName="mobileNumber" class="form-control">
+                                        <app-control-messages [control]="f['mobileNumber']"></app-control-messages>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 vt-row">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-sm-3 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="f['email']"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'common.label.email' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-sm-9 ui-lg-6'"
+                                            *ngIf="(f['email'].value && isShowVertical) || !isShowVertical">
+                                        <input type="text" formControlName="email" class="form-control">
+                                        <app-control-messages [control]="f['email']"></app-control-messages>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 vt-row">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-sm-3 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="f['personalIdNumber']"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'profile.label.scmnd' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-sm-9 ui-lg-6'"
+                                            *ngIf="(f['personalIdNumber'].value && isShowVertical) || !isShowVertical">
+                                        <input type="text" formControlName="personalIdNumber" class="form-control">
+                                        <app-control-messages [control]="f['personalIdNumber']"></app-control-messages>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 vt-row">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-sm-3 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="f['passportNumber']"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'profile.label.shc' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-sm-9 ui-lg-6'"
+                                            *ngIf="(f['passportNumber'].value && isShowVertical) || !isShowVertical">
+                                        <input type="text" formControlName="passportNumber" class="form-control">
+                                        <app-control-messages [control]="f['passportNumber']"></app-control-messages>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 vt-row">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-sm-3 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="f['positionId']"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'common.label.title' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-sm-9 ui-lg-6'"
+                                            *ngIf="(f['positionId'].value && isShowVertical) || !isShowVertical">
+                                        <data-picker [property]="f['positionId']"
+                                                        systemCode="political"
+                                                        operationKey="action.view"
+                                                        adResourceKey="resource.employeeManager"
+                                                        objectBO="PositionBO"
+                                                        codeField="code"
+                                                        nameField="name"
+                                                        selectField="positionId"
+                                                        type="position">
+                                        </data-picker>
+                                        <app-control-messages [control]="f['positionId']"></app-control-messages>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 vt-row">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-sm-3 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="f['isEmpTypeId']"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'profile.label.ddt' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-sm-9 ui-lg-6'"
+                                            *ngIf="(f['isEmpTypeId'].value && isShowVertical) || !isShowVertical">
+                                        <select-filter
+                                                [property]="f['empTypeId']"
+                                                [options]="empTypeList"
+                                                optionLabel="name"
+                                                optionValue="empTypeId"
+                                                [placeHolder]="'common.label.cboSelectAll'">
+                                        </select-filter>
+                                        <app-control-messages [control]="f['empTypeId']"></app-control-messages>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 vt-row">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-sm-3 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="f['soldierNumber']"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'profile.label.shsqqn' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-sm-9 ui-lg-6'"
+                                            *ngIf="(f['soldierNumber'].value && isShowVertical) || !isShowVertical">
+                                        <input type="text" formControlName="soldierNumber" class="form-control">
+                                        <app-control-messages [control]="f['soldierNumber']"></app-control-messages>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 vt-row">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-sm-3 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="f['taxNumber']"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'profile.label.mst' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-sm-9 ui-lg-6'"
+                                            *ngIf="(f['taxNumber'].value && isShowVertical) || !isShowVertical">
+                                        <input type="text" formControlName="taxNumber" class="form-control">
+                                        <app-control-messages [control]="f['taxNumber']"></app-control-messages>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 vt-row">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-sm-3 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="f['dateOfBirthFrom']"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'profile.label.nstn' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-sm-9 ui-lg-6'"
+                                            *ngIf="(f['dateOfBirthFrom'].value && isShowVertical) || !isShowVertical">
+                                        <date-picker
+                                                [property]="f['dateOfBirthFrom']">
+                                        </date-picker>
+                                        <app-control-messages [control]="f['dateOfBirthFrom']"></app-control-messages>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 vt-row">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-sm-3 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="f['dateOfBirthTo']"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'profile.label.nsdn' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-sm-9 ui-lg-6'"
+                                            *ngIf="(f['dateOfBirthTo'].value && isShowVertical) || !isShowVertical">
+                                        <date-picker
+                                                [property]="f['dateOfBirthTo']">
+                                        </date-picker>
+                                        <app-control-messages [control]="f['dateOfBirthTo']"></app-control-messages>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 vt-row">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-sm-3 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="f['gender']"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'app.curriculumVitae.gender' | translate}}
+    
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-sm-9 ui-lg-6'"
+                                            *ngIf="(f['gender'].value && isShowVertical) || !isShowVertical">
+                                        <select-filter
+                                            [property]="f['gender']"
+                                            [options]="genderList"
+                                            optionLabel="name"
+                                            optionValue="genderId"
+                                            [placeHolder]="'common.label.cboSelectAll'">
+                                        </select-filter>
+                                        <!-- <div class="form-check-inline " [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                            <label class="i-checks">
+                                                <input type="radio" class="form-check-input control-label"
+                                                        id="maritalStatus_0"
+                                                        value="0" name="gender" formControlName="gender">
+                                                <i></i>
+                                                {{'app.curriculumVitae.chooseAll' | translate}}
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline" [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                            <label class="i-checks">
+                                                <input type="radio" class="form-check-input control-label"
+                                                        id="maritalStatus_1"
+                                                        value="1" name="gender" formControlName="gender">
+                                                <i></i>
+                                                {{'app.curriculumVitae.male' | translate}}
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline" [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                            <label class="i-checks">
+                                                <input type="radio" class="form-check-input control-label"
+                                                        id="maritalStatus_2"
+                                                        value="2" name="gender" formControlName="gender">
+                                                <i></i>
+                                                {{'app.curriculumVitae.female' | translate}}
+                                            </label>
+                                        </div> -->
+                                        <app-control-messages [control]="f['gender']"></app-control-messages>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 vt-row">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-sm-3 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="f['managementTypeId']"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'app.curriculumVitae.managementType' | translate}}
+
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-sm-9 ui-lg-6'"
+                                            *ngIf="(f['managementTypeId'].value && isShowVertical) || !isShowVertical">
+                                        <select-filter
+                                            [property]="f['managementTypeId']"
+                                            [options]="managementTypeList"
+                                            optionLabel="name"
+                                            optionValue="managementTypeId"
+                                            [placeHolder]="'common.label.cboSelectAll'">
+                                        </select-filter>
+                                        <!-- <div class="form-check-inline"
+                                                [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                            <label class="i-checks">
+                                                <input type="radio" class="form-check-input control-label"
+                                                        id="managementType_0"
+                                                        value="0" name="managementTypeId"
+                                                        formControlName="managementTypeId">
+                                                <i></i>
+                                                {{'app.curriculumVitae.chooseAll' | translate}}
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline"
+                                                [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                            <label class="i-checks">
+                                                <input type="radio" class="form-check-input control-label"
+                                                        id="managementType_1"
+                                                        value="1" name="managementTypeId"
+                                                        formControlName="managementTypeId">
+                                                <i></i>
+                                                {{'app.curriculumVitae.officerManagement' | translate}}
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline"
+                                                [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                            <label class="i-checks">
+                                                <input type="radio" class="form-check-input control-label"
+                                                        id="managementType_2"
+                                                        value="2" name="managementTypeId"
+                                                        formControlName="managementTypeId">
+                                                <i></i>
+                                                {{'app.curriculumVitae.forceManagement' | translate}}
+                                            </label>
+                                        </div> -->
+                                        <app-control-messages [control]="f['managementTypeId']"></app-control-messages>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 vt-row">
+                                    <label [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-12 control-label vt-label-unset-padding-top':'ui-g-12 ui-md-6 ui-sm-3 ui-lg-4 control-label vt-align-right'">
+                                        <p-checkbox *ngIf="isShowVertical"
+                                                    [formControl]="f['isKeyPosition']"
+                                                    binary="true"
+                                        ></p-checkbox>
+                                        {{'employeeInfo.workProcess.keyPosition' | translate}}
+                                    </label>
+                                    <div [ngClass]="isShowVertical?'ui-g-12 ui-md-6 ui-sm-3 ui-lg-11 vt-float-right vt-padding-vertical':'ui-g-12 ui-md-6 ui-sm-9 ui-lg-6'"
+                                            *ngIf="(f['isKeyPosition'].value && isShowVertical) || !isShowVertical">
+                                        <select-filter
+                                            [property]="f['isKeyPosition']"
+                                            [options]="keyPositionList"
+                                            optionLabel="name"
+                                            optionValue="keyPositionId"
+                                            [placeHolder]="'common.label.cboSelectAll'">
+                                        </select-filter>
+                                        <!-- <div class="form-check-inline "
+                                                [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                            <label class="i-checks">
+                                                <input type="radio" class="form-check-input control-label"
+                                                        id="isKeyPosition_0"
+                                                        [value]="null" name="isKeyPosition"
+                                                        formControlName="isKeyPosition">
+                                                <i></i>
+                                                {{'app.curriculumVitae.chooseAll' | translate}}
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline"
+                                                [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                            <label class="i-checks">
+                                                <input type="radio" class="form-check-input control-label"
+                                                        id="isKeyPosition_1"
+                                                        [value]="0" name="isKeyPosition"
+                                                        formControlName="isKeyPosition">
+                                                <i></i>
+                                                {{'employeeInfo.workProcess.notKeyPosition' | translate}}
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline"
+                                                [ngClass]="isShowVertical?'ui-g-12 vt-row':''">
+                                            <label class="i-checks">
+                                                <input type="radio" class="form-check-input control-label"
+                                                        id="isKeyPosition_2"
+                                                        [value]="1" name="isKeyPosition"
+                                                        formControlName="isKeyPosition">
+                                                <i></i>
+                                                {{'report.qualityInternal.keyPosition' | translate}}
+                                            </label>
+                                        </div> -->
+                                        <app-control-messages [control]="f['isKeyPosition']"></app-control-messages>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="isBasicSearch" class="panel-footer vt-area-button">
+                        <button type="submit" class="btn btn-sm vt-btn btn-submit" (click)="processSearch()"
+                                [innerHTML]="'common.button.icon.search' | translate"></button>
+                        <button *ngIf="isShowVertical" type="submit" class="btn btn-sm vt-btn "
+                                (click)="showFormSearch(false)"
+                                [innerHTML]="'common.button.icon.out' | translate"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="listArea" [ngClass]="isShowVertical?'display-list-vertical':''"
+         [ngStyle]="{'width': isShowVertical && !isShowHideVertical ? '100%' : '','height': isShowVertical && !isShowHideVertical ? '85vh' : ''}">
+        <div [ngClass]="isShowVertical?'panel panel-default display-max-vertical-height':'panel panel-default'">
+            <div class="panel-heading vt-relative vt-panel-heading-table">
+                <strong>
+                    <img *ngIf="isShowVertical && !isShowHideVertical" alt="next" class="img-fluid icon-show-hide-search" src="./../../../../../../assets/images/home/Mask_Group_24371.png"  (click)="closeBasicSearch()">
+                    {{ 'profile.table.title' | translate }}
+                </strong>
+                <div class="show-btn-right-header">
+                    <button type="button" *ngIf="hasPermission('action.export')" class="btn btn-sm vt-btn"
+                            (click)="processExport()"
+                            [innerHTML]="'common.button.icon.exportFile' | translate"></button>
+                </div>
+            </div>
+            <div class="panel-body panel-table table-container">
+                <p-table
+                    #ptable
+                    [value]="resultList.data"
+                    [paginator]="true"
+                    (onLazyLoad)="processSearch($event)"
+                    [lazy]="true"
+                    [rows]="changeRow"
+                    [totalRecords]="resultList.recordsTotal"
+                    [scrollable]="true"
+                    [lazyLoadOnInit]="false"
+                    tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+                    [resizableColumns]="true"
+                    styleClass="controlOverflow">
+                    <ng-template pTemplate="colgroup" let-columns>
+                        <colgroup>
+                            <col style="width: 50px;">
+                            <col style="width: 50px;">
+                            <col style="width: 100px;">
+                            <col style="width: 100px;">
+                            <col style="width: 200px;">
+                            <col style="width: 200px;">
+                            <col style="width: 100px;">
+                            <col style="width: 200px;">
+                            <col style="width: 200px;">
+                            <col style="width: 200px;">
+                            <col style="width: 200px;">
+                            <col style="width: 200px;">
+                            <col style="width: 200px;">
+                            <col style="width: 200px;">
+                        </colgroup>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th translate pResizableColumn></th>
+                            <th translate pResizableColumn>common.table.index</th>
+                            <th [pSortableColumn]="'employeeName'" translate pResizableColumn>
+                                evaluatestaffprocess.label.tnv
+                                <p-sortIcon [field]="'employeeName'"></p-sortIcon>
+                            </th>
+                            <th [pSortableColumn]="'employeeCode'" translate pResizableColumn>
+                                common.label.partymembersCode
+                                <p-sortIcon [field]="'employeeCode'"></p-sortIcon>
+                            </th>
+                            <th [pSortableColumn]="'organizationName'" translate pResizableColumn>
+                                common.label.unit
+                                <p-sortIcon [field]="'organizationName'"></p-sortIcon>
+                            </th>
+                            <th [pSortableColumn]="'empTypeName'" translate pResizableColumn>
+                                profile.table.dtcb
+                                <p-sortIcon [field]="'empTypeName'"></p-sortIcon>
+                            </th>
+                            <th [pSortableColumn]="'soldierNumber'" translate pResizableColumn>
+                                generalInformation.label.officerNumber
+                                <p-sortIcon [field]="'soldierNumber'"></p-sortIcon>
+                            </th>
+                            <th [pSortableColumn]="'positionName'" translate pResizableColumn>
+                                common.label.title
+                                <p-sortIcon [field]="'positionName'"></p-sortIcon>
+                            </th>
+                            <th [pSortableColumn]="'gender'" translate pResizableColumn>
+                                common.label.gender
+                                <p-sortIcon [field]="'gender'"></p-sortIcon>
+                            </th>
+                            <th [pSortableColumn]="'dateOfBirth'" translate pResizableColumn>
+                                evaluatestaffprocess.label.ns
+                                <p-sortIcon [field]="'dateOfBirth'"></p-sortIcon>
+                            </th>
+                            <th [pSortableColumn]="'personalIdNumber'" translate pResizableColumn>
+                                profile.label.scmnd
+                                <p-sortIcon [field]="'personalIdNumber'"></p-sortIcon>
+                            </th>
+                            <th [pSortableColumn]="'email'" translate pResizableColumn>
+                                common.label.email
+                                <p-sortIcon [field]="'email'"></p-sortIcon>
+                            </th>
+                            <th [pSortableColumn]="'mobileNumber'" translate pResizableColumn>
+                                profile.label.dtdd
+                                <p-sortIcon [field]="'mobileNumber'"></p-sortIcon>
+                            </th>
+                            <th [pSortableColumn]="'status'" translate pResizableColumn>
+                                common.label.status
+                                <p-sortIcon [field]="'status'"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                        <tr>
+                            <td class="vt-align-center">
+                                <div ngbDropdown class="d-inline-block">
+                                    <div ngbDropdownToggle class="vt-action-hover">
+                                        <img class="menu-icon" src="./../../../assets/images/home/Icon.svg">
+                                    </div>
+                                    <div ngbDropdownMenu class="vt-border-radius">
+                                        <!-- Sửa -->
+                                        <button *ngIf="hasPermission('action.update')" class="dropdown-item"
+                                                (click)="prepareSaveOrUpdate(item)"
+                                                [innerHTML]="'common.button.table.acteditdropdown' | translate">
+                                        </button>
+                                        <!-- Xem chi tiết -->
+                                        <button *ngIf="hasPermission('action.view')" class="dropdown-item"
+                                                (click)="processView(item)"
+                                                [innerHTML]="'common.button.table.viewdropdown' | translate">
+                                        </button>
+                                        <!-- Xem thông tin tổng thể 360 -->
+                                        <button *ngIf="permission360Info"
+                                                class="dropdown-item" (click)="processViewAllInformation(item)"
+                                                [innerHTML]="'common.button.view360' | translate">
+                                        </button>
+                                        <button *ngIf="!isView && permissionSecurityPro"
+                                                class="dropdown-item" (click)="exportCurriculumVitae(item.employeeId)"
+                                                [innerHTML]="'common.button.exportCurriculumVitae' | translate">
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="vt-align-center">{{index}}</td>
+                            <td class="vt-align-left" title="{{item.employeeName}}">{{item.employeeName}}</td>
+                            <td class="vt-align-center" title="{{item.employeeCode}}">{{item.employeeCode}}</td>
+                            <td class="vt-align-left" title="{{item.organizationName}}">{{item.organizationName}}</td>
+                            <td class="vt-align-left">
+                                <div *ngIf="item.empTypeName || item.soldierLevel">
+                                    {{item.empTypeName}}/{{item.soldierLevel}}
+                                </div>
+                            </td>
+                            <td class="vt-align-left" title="{{item.formatedSoldierNumber}}">{{item.formatedSoldierNumber}}</td>
+                            <td class="vt-align-left" title="{{item.positionName}}">{{item.positionName}}</td>
+                            <td class="vt-align-center">
+                                <div *ngIf="item.gender==1">{{'common.label.male' | translate}}</div>
+                                <div *ngIf="item.gender==2">{{'common.label.female' | translate}}</div>
+                            </td>
+                            <td class="vt-align-center">{{item.dateOfBirth | displayDate}}</td>
+                            <td class="vt-align-left">{{item.personalIdNumber}}</td>
+                            <td class="vt-align-left" title="{{item.email}}">{{item.email}}</td>
+                            <td class="vt-align-left">{{item.mobileNumber}}</td>
+                            <td class="vt-align-left">
+                                <div class="label-status info"
+                                     *ngIf="item.status==1">{{'employee.isWorking' | translate}}</div>
+                                <div class="label-status danger"
+                                     *ngIf="item.status==2">{{'employee.notWorking' | translate}}</div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr class="emptymessage">
+                            <td [attr.colspan]="14" [innerHTML]="'app.noRecords' | translate">
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="paginatorleft">
+                        <table-footer (changeRow)="onTablePageChange($event)" [resultList]="resultList"></table-footer>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

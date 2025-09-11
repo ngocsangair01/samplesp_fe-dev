@@ -1,0 +1,6 @@
+<div *ngIf="hasPermission('action.view')">
+  <staff-assessment-criteria-group-search></staff-assessment-criteria-group-search>
+</div>
+<div *ngIf="!hasPermission('action.view')" translate>
+common.haveNoPermission
+</div>

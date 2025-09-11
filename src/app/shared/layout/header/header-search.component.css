@@ -1,0 +1,216 @@
+.help-css{
+    width: 680px !important;
+    height: 805px;
+  }
+  
+  .iframe-body{
+    width: 100%;
+    height: 100%;
+  }
+  
+  .modal-dialog {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    max-width: 675px;
+   }
+   .modal-content {
+    height: 448px;
+    border-radius: 10px;
+    background: border-box;
+    border: hidden;
+   }
+   .modal-title {
+    white-space: nowrap;
+    text-align: left;
+    font-family: "PFBeauSansPro";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    color: rgba(49,57,73,1);
+   }
+   .close-icon {
+    overflow: visible;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    top: 24px;
+    transform: matrix(1,0,0,1,0,0);
+   }
+   .modal-body {
+    padding: 24px;
+   }
+/*Tìm kiếm*/
+.search {
+    position: relative;
+  }
+  .search-box {
+    position: relative;
+    /*width: 100%;*/
+    font-size: .8333333333rem;
+    margin-top: 16px;
+  }
+  .search-box .search-input {
+    padding-left: 2.5rem;
+    line-height: 1.7;
+    border-radius: 10px;
+    -webkit-box-shadow: none;
+    background-color: rgba(245,245,245,1);
+    box-shadow: none;
+    height: 44px;
+  }
+  .search-box #search {
+    position: absolute;
+    top: 50%;
+    width: 24px;
+    height: 24px;
+    left: 0.9rem;
+    -webkit-transform: translateY(-48%);
+    -ms-transform: translateY(-48%);
+    transform: translateY(-48%);
+  }
+  .search .btn-group-{
+    margin-top: 16px;
+  }
+  .search .btn-group- .active{
+
+  }
+  .search .btn-group- a{
+    padding: 6px 24px 5px 24px;
+    margin-right: 16px!important;
+    background: rgba(245,245,245,1);
+    transition: all .3s ease-in-out 0s;
+    -moz-transition: all .3s ease-in-out 0s;
+    -webkit-transition: all .3s ease-in-out 0s;
+    -o-transition: all .3s ease-in-out 0s;
+  }
+  .search .btn-group- a:hover{
+    transition: all .3s ease-in-out 0s;
+    -moz-transition: all .3s ease-in-out 0s;
+    -webkit-transition: all .3s ease-in-out 0s;
+    -o-transition: all .3s ease-in-out 0s;}
+  .search .search-input:focus{
+    background-color: rgba(245,245,245,1);
+    box-shadow:initial;
+  }
+  .search-input::placeholder{
+    font-weight: 400;
+    font-size: 16px;
+    text-align: center;
+  }
+  .search-input::-webkit-input-placeholder { /* Edge */
+
+  }
+  .search-input:-ms-input-placeholder { /* Internet Explorer */
+
+  }
+  .search-input::content {
+    font-weight: 400;
+    font-size: 16px;
+
+  }
+  .result-card {
+    width: 625px;
+    max-height: 380px;
+    overflow: scroll;
+    overflow-x: hidden;
+    position: absolute;
+    z-index: 1000;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 1px;
+  }
+  .image-avatar {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-left: 18px;
+   }
+  .user-name {
+    white-space: nowrap;
+    text-align: left;
+    font-family: SVN-Gilroy;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    color: rgba(38,38,38,1);
+   }
+   .user-type {
+    white-space: nowrap;
+    text-align: left;
+    font-family: "PFBeauSansPro";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    color: rgba(98,104,127,1);
+   }
+   .result-item {
+    margin-bottom: 14px;
+   }
+   .result-item:hover {
+    background-color: #F2F4F7;
+    cursor: pointer;
+   }
+   ::-webkit-scrollbar {
+    width: 6px;
+    margin-left: 10px;
+   }
+   ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+   }
+   ::-webkit-scrollbar-thumb {
+    background: #888;
+   }
+   ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+   }
+  /* mobile*/
+  /* @media (min-width: 374px) and (max-width: 576px){
+    .search{display: none}
+    .search .btn-group- a{
+      margin-bottom: 16px;
+      padding: 3px 16px 2px 16px;
+      font-size: 14px;
+    }
+    .search-box {
+      position: relative;
+      font-size: .8333333333rem;
+      margin-top: 0;
+      width: 160px;
+    }
+  }
+  @media (min-width: 577px) and (max-width: 767px){
+    .search .btn-group- a{
+      margin-bottom: 16px;
+    }
+    .search {
+      top: 6px;
+      left: 18%;
+      width: 270px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1024px){
+    .search .btn-group- a{
+      margin-bottom: 16px;
+    }
+  }
+  @media (min-width: 992px) {
+    .search {
+      position:absolute;
+      left: 40%;
+      width: 270px;
+      margin-left: -100px
+    }
+  }
+  @media (min-width: 1200px) {
+    .search {
+      width:370px;
+      left: 50%;
+      margin-left: -140px
+    }
+  } */

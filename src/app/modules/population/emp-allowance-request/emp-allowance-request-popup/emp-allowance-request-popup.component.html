@@ -1,0 +1,296 @@
+<div class="modal-body">
+  <div id="searchArea"></div>
+  <div class="panel panel-default">
+    <form id="formSave" [formGroup] = "formSave"  >
+      <div class="panel-heading">
+        <strong class="text-u-c" *ngIf="type === 2">
+          <i class="fa fa-th"></i>&nbsp; Từ chối đề nghị trợ cấp
+        </strong>
+        <strong class="text-u-c" *ngIf="type === 1">
+          <i class="fa fa-th"></i>&nbsp; Tiếp nhận đề nghị trợ cấp
+        </strong>
+        <strong class="text-u-c" *ngIf="type === 3">
+          <i class="fa fa-th"></i>&nbsp; Bổ sung giấy tờ
+        </strong>
+        <div class="vt-absolute vt-shotcut-button-in-heading">
+          <button style="display: inline-block;" (click)="activeModal.close()" title="{{'common.button.close' | translate}}" class="btn btn-sm btn-info btn-span"><i class="fa fa-times"></i></button>
+        </div>
+      </div>
+      <div class="panel-body padding-xl ui-g">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'subsidizedSuggest.label.subsidizedPeriodId' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter [property]="formSave.controls.allowancePeriodId"
+                           [options]="allowancePeriodOptions"
+                           optionLabel="name"
+                           optionValue="allowancePeriodId"
+                           [placeHolder]="'common.label.cboMustSelect'"
+                           [disabled]="true">
+            </select-filter>
+            <app-control-messages [control]="f['allowancePeriodId']"></app-control-messages>
+          </div>
+          <label *ngIf="type === 2" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'common.label.object' | translate}}
+          </label>
+          <div *ngIf="type === 2" class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter [property]="f['objectType']"
+                           [options]="objectTypeOptions"
+                           optionLabel="name"
+                           optionValue="value"
+                           [placeHolder]="'common.label.cboMustSelect'"
+                           [disabled]="true">
+            </select-filter>
+            <app-control-messages [control]="f['objectType']"></app-control-messages>
+          </div>
+        </div>
+        <div *ngIf="type === 1" class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.allowance.request.search.allowanceType' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter [property]="f['allowanceType']" [options]="allowanceTypeOptions" optionLabel="name" optionValue="value" [disabled]="true"
+                           [placeHolder]="'common.label.cboMustSelect'" >
+            </select-filter>
+            <app-control-messages [control]="f['allowanceType']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'common.label.object' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter [property]="f['objectType']"
+                           [options]="objectTypeOptions"
+                           optionLabel="name"
+                           optionValue="value"
+                           [placeHolder]="'common.label.cboMustSelect'"
+                           [disabled]="true">
+            </select-filter>
+            <app-control-messages [control]="f['objectType']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.welfare.policy.request.requestContent' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter
+                    [property]="f['welfarePolicyCategoryId']"
+                    [options]="welfarePolicyCategoryList"
+                    optionLabel="name"
+                    optionValue="welfarePolicyCategoryId"
+                    [placeHolder]="'common.label.cboSelect'"
+                    [disabled]="true">
+            </select-filter>
+            <app-control-messages [control]="f['welfarePolicyCategoryId']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.welfare.policy.request.employee' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <data-picker
+                    [property]="f['employeeId']"
+                    systemCode="political"
+                    operationKey="action.view"
+                    adResourceKey="resource.empAllowanceRequest"
+                    objectBO="EmployeeBO"
+                    codeField="employeeCode"
+                    nameField="fullName"
+                    emailField="email"
+                    mobileNumberField="mobileNumber"
+                    selectField="employeeId"
+                    type="employee"
+                    [disabled]="true"
+            >
+            </data-picker>
+            <app-control-messages [control]="f['employeeId']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.welfare.policy.category.relationship' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter
+                    [property]="f['relationshipId']"
+                    [options]="relationshipOptions"
+                    optionLabel="name"
+                    optionValue="sysCatId"
+                    [placeHolder]="'common.label.cboSelect'"
+                    [disabled]="true">
+            </select-filter>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.welfare.policy.requestList.objectName' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter
+                    [property]="f['objectId']"
+                    [options]="objectNameOptions"
+                    optionLabel="name"
+                    optionValue="value"
+                    [placeHolder]="'common.label.cboSelect'"
+                    [disabled]="true">
+            </select-filter>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.welfare.policy.desease.category' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter [property]="formSave.controls.deseaseId"
+                           [options]="deseaseOptions"
+                           optionLabel="categoryName"
+                           optionValue="policyDeseaseId"
+                           [placeHolder]="'common.label.cboMustSelect'"
+                           [disabled]="true">
+            </select-filter>
+            <app-control-messages [control]="f['deseaseId']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            <label class="required" style="word-break: break-word; float: right; width: 50% !important;">
+              {{'label.emp.allowance.request.reason' | translate}}
+            </label>
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <textarea maxlength="500" name="reason" formControlName="reason" id="reason" cols="200" rows="3" class="form-control" [attr.disabled]="true"></textarea>
+            <app-control-messages [control]="f['reason']"></app-control-messages>
+          </div>
+        </div>
+        <!--  từ chối-->
+        <div *ngIf="type===2" class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'rewardPropose.rejectReason' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-8">
+                <textarea [formControl]="formSave.controls.rejectReason" id="rejectReason" type="text-area" rows="4"
+                          class="form form-control"></textarea>
+            <small *ngIf="isValidRejectReason" class="text-danger errorMessage">* Trường bắt buộc</small>
+          </div>
+        </div>
+        <!--        tiếp nhận -->
+        <div *ngIf="type===1" class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.welfare.policy.request.chairmanType' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-icon-filter [property]="formSave.controls.chairmanType" [options]="chairmanTypeList" optionLabel="name"
+                                optionValue="value" [placeHolder]="'common.label.cboMustSelect'" appendTo="body"
+                                [disabled]="type !== 1? true: false" (onChange)="changeChairmanType($event)">
+            </select-icon-filter>
+            <app-control-messages [control]="f['chairmanType']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.welfare.policy.request.documentState' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter [property]="formSave.controls.documentState"
+                           [options]="documentStateList"
+                           optionLabel="name"
+                           optionValue="value"
+                           [placeHolder]="'common.label.cboMustSelect'">
+            </select-filter>
+            <app-control-messages [control]="f['documentState']"></app-control-messages>
+          </div>
+        </div>
+        <div *ngIf="type===1" class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.welfare.policy.proposal.total' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="number" [attr.disabled]="true" [formControl]="formSave.controls.amountTotal" class="form-control">
+            <app-control-messages [control]="f['amountTotal']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.allowance.request.form.note' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <textarea [formControl]="formSave.controls.rejectReason" id="rejectReason" type="text-area"
+                          class="form form-control"></textarea>
+            <app-control-messages [control]="f['rejectReason']"></app-control-messages>
+          </div>
+        </div>
+        <div *ngIf="type===1" class="ui-g-12 vt-row">
+          <form [formGroup]="empAllowanceRequestAmountBOList" style="width: 100%">
+            <div *ngFor="let item of empAllowanceRequestAmountBOList.controls; let i = index">
+              <div [formGroup]="item" class="ui-g-12 vt-row" style="display: flex;">
+                <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                  {{'label.welfare.policy.category.fundingCategory' | translate}}</label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                  <select-icon-filter [property]="item.controls.fundingCategoryId" [options]="fundingCategoryOptions" optionLabel="funding"
+                                      optionValue="fundingCategoryId" [placeHolder]="'common.label.cboMustSelect'" appendTo="body"
+                                      [disabled]="true">
+                  </select-icon-filter>
+                  <app-control-messages [control]="item.controls.fundingCategoryId"></app-control-messages>
+                </div>
+                <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                  {{'label.welfare.policy.category.level' | translate}}</label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3" style="display: flex">
+                  <div style="width: 40%">
+                    <select-icon-filter [property]="item.controls.level" [options]="item.controls.optionLevel.value" optionLabel="name"
+                                        optionValue="id" [placeHolder]="'common.label.cboMustSelect'" appendTo="body"
+                                        [disabled]="view" (onChange)="changeLevelList(empAllowanceRequestAmountBOList, i)">
+                    </select-icon-filter>
+                  </div>
+                  <div style="width: 60%; padding-left: 10px;">
+                    <input type="number" [attr.disabled]="(item.get('isFixed').value === 1) ? true: null" [formControl]="item.controls.amount" class="form-control">
+                  </div>
+                  <app-control-messages [control]="item.controls.amount"></app-control-messages>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- bổ sung giấy tờ -->
+      <div *ngIf="type===3" class="ui-g-12 vt-row">
+        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+          {{'label.welfare.policy.request.attachmentFile' | translate}}</label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <span style="font-style: italic; color: red;">{{attachmentFileLabel}}</span>
+        </div>
+      </div>
+      <div *ngIf="type===3" class="ui-g-12 vt-row">
+        <form [formGroup]="empAllowanceRequestDocumentList" style="width: 100%">
+          <div *ngFor="let item of empAllowanceRequestDocumentList.controls; let i = index">
+            <div [formGroup]="item" class="ui-g-12 vt-row" style="display: flex;" *ngIf="item.value.isDeleted !== 0">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'label.welfare.policy.request.fileType' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-icon-filter [property]="item.controls.policyDocumentId" [options]="requestDocumentTypeOptions" optionLabel="name"
+                                    optionValue="policyDocumentId" [placeHolder]="'common.label.cboMustSelect'" appendTo="body"
+                                    [disabled]="true">
+                </select-icon-filter>
+                <app-control-messages [control]="item.controls.policyDocumentId"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="item.get('isRequired').value !== 1 ? '' : 'required'">
+                {{'label.welfare.policy.request.chooseFile' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <file-chooser
+                        [property]="item.controls.file"
+                        fileName="fileAttachment"
+                        [htmlId]="'filesControl' + i"
+                        validMaxSize="50"
+                        validType="png,jpg,gif,tiff,bmp,xls,xlsx,doc,docx,pdf,rar,zip,7z"
+                        (onFileChange)="onFileChange($event)"
+                        [disabled]="view"
+                >
+                </file-chooser>
+                <small *ngIf="isInvalidFileAttachment && item.value.isRequired === 1 && (!item.value.file || (item.value.file && !item.value.file.type)) && item.value.isDeleted == 1" class="text-danger errorMessage">* Trường bắt buộc</small>
+                <app-control-messages *ngIf="item.get('isRequired').value === 1" [control]="item.controls.file"></app-control-messages>
+              </div>
+              <div>
+                <button type="button" class="btn-icon plus" style="margin: 0px 5px" *ngIf="!view" [title]="'titleAdd' | translate" (click)="addRow(i, item)" [innerHTML]="'common.icon.plus' | translate">
+                </button>
+                <button type="button" class="btn-icon minus" *ngIf="!view" [title]="'titleDelete' | translate" (click)="removeRow(i, item)" [innerHTML]="'common.icon.minus' | translate">
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="panel-footer vt-area-button">
+        <button type="button" (click)="processSaveOrUpdate()"  class="btn btn-sm btn-info" [innerHTML]="'common.button.icon.save' | translate"> </button>
+        <button type="button" (click)="activeModal.close()"  class="btn btn-sm btn-danger" [innerHTML]="'common.button.out' | translate"></button>
+      </div>
+    </form>
+  </div>
+</div>
+
+

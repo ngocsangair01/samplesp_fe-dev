@@ -1,0 +1,115 @@
+<div class="card-form">
+  <div class="clearfix">
+    <div class="left-nav-bar pull-left row-header">
+      <div>
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="goBack();">
+        <span class="title" translate>app.responseResolutionMonth.viewTitle</span>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+        <ul class="header-right sys-ul space-line">
+          <li>
+            <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="goBack();" [innerHTML]="'common.button.out' | translate">
+            </button>
+          </li>
+        </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <div class="panel panel-default card-info">
+    <form id="formView" [formGroup]="formView">
+      <div class="panel-heading vt-relative">
+        <strong>
+          <span class="ml-2 title-info">Thông tin nội dung nghị quyết ban hành</span>
+        </strong>
+        <div class="vt-absolute vt-sub-title-in-heading" style="color: #313949;">
+          <div>{{title}}</div>
+        </div>
+      </div>
+      <div class="panel-body padding-xl ui-g">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right ">
+            {{'app.requestResolutionMonth.extractingTextContent' | translate}}
+          </label>
+          <span class="ui-g-12 ui-md-3 ui-lg-10 " style="padding-top: 10px; padding-left: 30px;">
+            {{f['extractingTextContent'].value}}
+          </span>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'app.requestResolutionMonth.numberOfSymbols' | translate}}
+          </label>
+          <span class="ui-g-12 ui-md-3 ui-lg-10 " style="padding-top: 10px; padding-left: 30px;">
+            {{f['textSymbols'].value}}
+          </span>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right ">
+            {{'app.responseResolutionMonth.implementDate' | translate}}
+          </label>
+          <span class="ui-g-12 ui-md-3 ui-lg-4 " style="padding-top: 10px; padding-left: 30px;">
+            {{f['implementDate'].value}}
+          </span>
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right ">
+            {{'app.responseResolutionMonth.implementBy' | translate}}
+          </label>
+          <span class="ui-g-12 ui-md-3 ui-lg-3 " style="padding-top: 10px; padding-left: 30px;">
+            {{f['massOrganizationEmployee'].value}}
+          </span>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'label.resolutionsMonth.actualFinishDate' | translate}}
+          </label>
+          <span class="ui-g-12 ui-md-3 ui-lg-4 " style="padding-top: 10px; padding-left: 30px;">
+            {{f['actualFinishDate'].value}}
+          </span>
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right ">
+            {{'app.responseResolutionMonth.requestDate' | translate}}
+          </label>
+          <span class="ui-g-12 ui-md-3 ui-lg-3 " style="padding-top: 10px; padding-left: 30px;">
+            {{f['finishDate'].value}}
+          </span>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'app.responseResolutionMonth.status' | translate}}
+          </label>
+          <span class="ui-g-12 ui-md-3 ui-lg-4 " style="padding-top: 10px; padding-left: 30px;">
+            {{f['status'].value}}
+          </span>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'app.responseResolutionMonth.resolutionFile' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-3" style="padding-left: 30px;">
+            <a *ngFor="let data of resolutionFile"
+              style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 340px; display: block; overflow: hidden; padding-top: 5px;"
+              (click)="downloadFile(data)">
+              <i class="fas fa-download" style="padding-right: 10px;"></i>
+              <span>{{data.fileName}}</span>
+              <br>
+            </a>
+          </div>
+          <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right">
+            {{'app.responseResolutionMonth.reportFile' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-3" style="padding-left: 30px;">
+            <a *ngFor="let data of reportFile"
+              style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 340px; display: block; overflow: hidden; padding-top: 5px;"
+              (click)="downloadFile(data)">
+              <i class="fas fa-download" style="padding-right: 10px; "></i>
+              <span>{{data.fileName}}</span>
+              <br>
+            </a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div *ngIf="!hasPermission('action.update')" translate>
+  common.haveNoPermission
+</div>

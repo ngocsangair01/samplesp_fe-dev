@@ -1,0 +1,468 @@
+<div class="card-form">
+    <div class="clearfix">
+      <div class="left-nav-bar pull-left row-header">
+        <div>
+          <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="goBack();">
+          <span *ngIf="!update && !view" class="title">Thêm mới đăng ký thi đua đơn vị</span>
+          <span *ngIf="update" class="title">Cập nhật đăng ký thi đua đơn vị</span>
+          <span *ngIf="view && this.typeView == 'INDIVIDUAL_REGISTRATION'" class="title">Chi tiết đăng ký thi đua cá nhân</span>
+          <span *ngIf="view && this.typeView == 'UNIT_REGISTRATION'" class="title">Chi tiết đăng ký thi đua đơn vị</span>
+        </div>
+      </div>
+      <div class="right-nav-bar pull-right left-option">
+          <ul class="header-right sys-ul space-line">
+            <li>
+                <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="goBack();" [innerHTML]="'common.button.out' | translate">
+                </button>
+            </li>
+            <li *ngIf="!view">
+                <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="processSaveOrUpdate()" [innerHTML]="'common.button.icon.save' | translate">
+                </button>
+            </li>
+            <li *ngIf="!view">
+                <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="processSaveOrUpdateAndActSign()" [innerHTML]="'common.button.icon.saveAndActSign' | translate">
+                </button>
+            </li>
+          </ul>
+      </div>
+    </div>
+</div>
+<div class="info">
+    <div class="panel panel-default card-info">
+        <form id="formSave" [formGroup]="formSave">
+            <div class="panel-heading vt-relative">
+                <strong>
+                    <!-- <span *ngIf="!update && !view">THÊM MỚI ĐĂNG KÝ THI ĐUA ĐƠN VỊ</span>
+                    <span *ngIf="update">CẬP NHẬT ĐĂNG KÝ THI ĐUA ĐƠN VỊ</span>
+                    <span *ngIf="view && this.typeView == 'INDIVIDUAL_REGISTRATION'">CHI TIẾT ĐĂNG KÝ THI ĐUA CÁ NHÂN</span>
+                    <span *ngIf="view && this.typeView == 'UNIT_REGISTRATION'">CHI TIẾT ĐĂNG KÝ THI ĐUA ĐƠN VỊ</span> -->
+                    <span class="ml-2 title-info">Thông tin đăng ký thi đua đơn vị</span>
+                </strong>
+            </div>
+            <div class="panel-body padding-xl ui-g">
+                <div class="panel panel-default" *ngIf="this.typeView == 'INDIVIDUAL_REGISTRATION'" style="width: 100%">
+                    <div class="panel-heading vt-relative">
+                        <strong>
+                            <span class="ml-2 title-info">Thông tin cá nhân</span>
+                        </strong>
+                    </div>
+                    <div class="panel-body padding-xl ui-g" *ngIf="this.typeView == 'INDIVIDUAL_REGISTRATION'" style="padding: 16px;">
+                        <div class="ui-g-12 vt-row">
+                            <label [class]="firstTitle">
+                                Mã nhân viên
+                            </label>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <input type="text" class="form form-control" name="employeeCode"
+                                       formControlName="employeeCode"
+                                       maxlength="50" autocomplete="off"
+                                       disabled>
+                                <app-control-messages [control]="f['employeeCode']"></app-control-messages>
+                            </div>
+                            <label [class]="lastTitle">
+                                Tên nhân viên
+                            </label>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <input type="text" class="form form-control" name="fullName" formControlName="fullName"
+                                       maxlength="50" autocomplete="off"
+                                       disabled>
+                                <app-control-messages [control]="f['fullName']"></app-control-messages>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 vt-row">
+                            <label [class]="firstTitle">
+                                Đơn vị
+                            </label>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <input type="text" class="form form-control" name="unitName" formControlName="unitName"
+                                       maxlength="50" autocomplete="off"
+                                       disabled>
+                                <app-control-messages [control]="f['unitName']"></app-control-messages>
+                            </div>
+                            <label [class]="lastTitle">
+                                Chức vụ
+                            </label>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <input type="text" class="form form-control" name="currentPosition"
+                                       formControlName="currentPosition"
+                                       maxlength="50" autocomplete="off"
+                                       disabled>
+                                <input type="text" class="form form-control" name="competitionId"
+                                       [hidden]="true"
+                                       maxlength="50"
+                                       disabled>
+    
+                                <input type="text" class="form form-control" name="registOrgId"
+                                       [hidden]="true"
+                                       maxlength="50"
+                                       disabled>
+    
+                                <app-control-messages [control]="f['currentPosition']"></app-control-messages>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 vt-row">
+                            <label [class]="firstTitle">
+                                email
+                            </label>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <input type="text" class="form form-control" name="email" formControlName="email"
+                                       maxlength="50" autocomplete="off"
+                                       disabled>
+                                <app-control-messages [control]="f['email']"></app-control-messages>
+                            </div>
+                            <label [class]="lastTitle">
+                                Số điện thoại
+                            </label>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <input type="text" class="form form-control" name="phoneNumber"
+                                       formControlName="phoneNumber"
+                                       maxlength="50" autocomplete="off"
+                                       disabled>
+                                <app-control-messages [control]="f['phoneNumber']"></app-control-messages>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading vt-relative">
+                        <strong>
+                            <span class="ml-2 title-info">Thông tin đăng ký</span>
+                        </strong>
+                    </div>
+                    <div class="panel-body padding-xl ui-g" style="padding: 16px;">
+                        <div class="ui-g-12 vt-row">
+                            <label [class]="firstTitle" *ngIf=" this.competitionRegistrationId!= null" disabled="true">
+                                Mã ĐK
+                            </label>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf=" this.competitionRegistrationId!= null"
+                                 disabled="true">
+                                <input type="text" class="form form-control" name="competitionRegistrationCode"
+                                       formControlName="competitionRegistrationCode"
+                                       maxlength="50" autocomplete="off"
+                                       disabled>
+                                <app-control-messages [control]="f['competitionRegistrationCode']"></app-control-messages>
+                            </div>
+    
+                            <label [class]="lastTitleNotRequired" *ngIf=" this.competitionRegistrationStatus!= null"
+                                   disabled="true">
+                                Trạng thái
+                            </label>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf=" this.competitionRegistrationStatus!= null"
+                                 disabled="true">
+                                <input type="text" class="form form-control" name="competitionRegistrationStatus"
+                                       formControlName="competitionRegistrationStatus"
+                                       maxlength="50" autocomplete="off"
+                                       disabled>
+                                <app-control-messages [control]="f['competitionRegistrationStatus']"></app-control-messages>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 vt-row">
+                            <label [class]="firstTitle">
+                                Tên chương trình
+                            </label>
+                            <div [hidden]="false" class="ui-g-12 ui-md-6 ui-lg-3">
+                                <input type="text" class="form form-control" name="competitionName"
+                                       formControlName="competitionName"
+                                       maxlength="250" autocomplete="off"
+                                       disabled>
+                                <app-control-messages [hidden]="false"
+                                                      [control]="f['competitionProgramCode']"></app-control-messages>
+                            </div>
+                            <label [class]="lastTitleNotRequired">
+                                Năm
+                            </label>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <input type="text" class="form form-control" name="time" formControlName="time"
+                                       maxlength="50"
+                                       autocomplete="off"
+                                       disabled>
+                                <app-control-messages [control]="f['time']"></app-control-messages>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 vt-row">
+                            <label [class]="firstTitleNotRequired">
+                                Chủ đề thi đua
+                            </label>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <input type="text" class="form form-control" name="messageCompetition"
+                                       formControlName="messageCompetition"
+                                       autocomplete="off"
+                                       disabled>
+                                <app-control-messages [control]="f['messageCompetition']"></app-control-messages>
+                            </div>
+    
+                            <label [class]="lastTitleNotRequired">
+                                Thời gian
+                            </label>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <input type="text" class="form form-control" name="startTime" formControlName="startTime"
+                                       maxlength="50" autocomplete="off"
+                                       disabled>
+                                <app-control-messages [control]="f['startTime']"></app-control-messages>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 vt-row" *ngIf="competitionTitleList">
+                            <label [class]="firstTitle" class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right"
+                                  >
+                                Danh hiệu thi đua
+                            </label>
+                            <div *ngIf="!this.view && competitionTitleList" [hidden]="false"
+                                 class="ui-g-12 ui-md-6 ui-lg-3">
+                                <select-filter
+                                        [property]="f['titleId']"
+                                        [options]="competitionTitleList"
+                                        optionLabel="name"
+                                        optionValue="rewardCategoryId"
+                                        [placeHolder]="'common.label.cboMustSelect'"
+                                        [disabled]="view"
+                                        [autoFocus]="false">
+                                </select-filter>
+                                <app-control-messages [control]="f['titleId']"></app-control-messages>
+                            </div>
+                            <div *ngIf="this.view  && competitionTitleList" [hidden]="false"
+                                 class="ui-g-12 ui-md-6 ui-lg-3">
+                                <input type="text" class="form form-control" name="titleName" formControlName="titleName"
+                                       maxlength="50" autocomplete="off"
+                                       disabled>
+                                <app-control-messages *ngIf="this.view" [hidden]="false"
+                                                      [control]="f['titleName']"></app-control-messages>
+                            </div>
+    
+                            <label [class]="lastTitleNotRequired">
+                                Đơn vị phát động
+                            </label>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <input type="text" class="form form-control" name="publisherUnitName"
+                                       formControlName="publisherUnitName"
+                                       autocomplete="off"
+                                       disabled>
+                                <app-control-messages [control]="f['publisherUnitName']"></app-control-messages>
+                            </div>
+    
+                        </div>
+                        <div  *ngIf=" !this.view && !(rewardList || competitionTitleList)" class="ui-g-12 vt-row">
+                            <label [class]="firstTitleNotRequired">
+                                Đơn vị phát động
+                            </label>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <input type="text" class="form form-control" name="publisherUnitName"
+                                       formControlName="publisherUnitName"
+                                       autocomplete="off"
+                                       disabled>
+                                <app-control-messages [control]="f['publisherUnitName']"></app-control-messages>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 vt-row">
+                            <form [formGroup]="formOtherConfig" style="width: 100%">
+                                <div *ngFor="let item of formOtherConfig.controls; let i = index">
+                                    <div [formGroup]="item" style="display: flex;">
+                                        <label [class]="firstTitle">
+                                            Chỉ tiêu thi đua {{i+1}} <label *ngIf="i+1===1" style="font-weight: bold">(Chỉ tiêu thách thức)</label>
+                                        </label>
+                                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                            <textarea type="text" class="form form-control" name="competitionTarget" rows="3"
+                                                  formControlName="competitionTarget"
+                                                  maxlength="10000" autocomplete="off"
+                                                  [attr.disabled]="view"></textarea>
+                                            <app-control-messages [control]="item.get('competitionTarget')"></app-control-messages>
+                                        </div>
+                                        <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                            <button *ngIf="!view" style="margin-top: 14px;" type="button" [title]="'titleAdd' | translate"
+                                                    (click)="addOtherItem(i)" class="btn-icon plus" [innerHTML]="'common.icon.plus' | translate"></button>
+                                            <button *ngIf="!view" style="margin-top: 14px;margin-left: 4px;" type="button" [title]="'titleDelete' | translate"
+                                                    (click)="removeOtherItem(i)" class="btn-icon minus" [innerHTML]="'common.icon.minus' | translate"></button>
+                                        </div>
+                                        <label [class]="lastTitleOther">
+                                            Giải pháp thực hiện {{i+1}}
+                                        </label>
+                                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                            <textarea type="text" class="form form-control" name="competitionSolution" rows="3"
+                                                      formControlName="competitionSolution" maxlength="10000"
+                                                      autocomplete="off"
+                                                      [attr.disabled]="view"></textarea>
+                                            <app-control-messages [control]="item.get('competitionSolution')"></app-control-messages>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="ui-g-12 vt-row" *ngIf="!view || this.typeView != 'INDIVIDUAL_REGISTRATION'">
+                            <label [class]="firstTitleNotRequired">
+                                Đơn vị đăng ký
+                            </label>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <input type="text" class="form form-control" name="unit" formControlName="unit"
+                                       autocomplete="off"
+                                       disabled>
+                                <app-control-messages [control]="f['unit']"></app-control-messages>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 vt-row" *ngIf="this.reasonDenied != null" disabled="true">
+                            <label [class]="firstTitleNotRequired">
+                                Lý do từ chối
+                            </label>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <input type="text" class="form form-control" name="reasonDenied"
+                                       formControlName="reasonDenied"
+                                       maxlength="50" autocomplete="off"
+                                       disabled>
+                                <app-control-messages [control]="f['reasonDenied']"></app-control-messages>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="scollTable panel panel-default" *ngIf="this.view" [hidden]="false">
+                    <div class="panel-heading vt-relative">
+                        <strong>
+                            <span class="ml-2 title-info">Kết quả thực hiện</span>
+                        </strong>
+                    </div>
+                    <div class="panel-body panel-table" style="padding: 16px;">
+                        <p-table
+                            #ptable
+                            [value]="resultList.data"
+                            [paginator]="false"
+                            (onLazyLoad)="processSearch($event)"
+                            [lazy]="true" [rows]="6"
+                            [totalRecords]="resultList.recordsTotal"
+                            [scrollable]="true"
+                            [resizableColumns]="true"
+                            [lazyLoadOnInit]="false"
+                            tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+                            styleClass="controlOverflow"
+                        >
+                            <ng-template pTemplate="colgroup" let-columns>
+                                <colgroup>
+                                    <col style="width:6%;text-align: center">
+                                    <col style="width: 150px;">
+                                    <col style="width: 150px;">
+                                    <col style="width: 300px;">
+                                </colgroup>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pResizableColumn translate>common.table.index</th>
+                                    <th pResizableColumn [pSortableColumn]="'registrationCode'">
+                                        Ngày cập nhật
+                                    </th>
+                                    <th pResizableColumn [pSortableColumn]="'unitCode'">
+                                        Tỷ lệ hoàn thành
+                                    </th>
+                                    <th pResizableColumn [pSortableColumn]="'unitName'">
+                                        Mô tả chi tiết
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                                <tr>
+                                    <td class="vt-align-center">{{index}}</td>
+                                    <td class="vt-align-center">{{item.updateTime | date: 'dd/MM/yyyy' }}</td>
+                                    <td class="vt-align-center">{{item.completionRate}}</td>
+                                    <td class="vt-align-left">{{item.detailDescription}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr class="emptymessage">
+                                    <td [attr.colspan]="12" [innerHTML]="'app.noRecords' | translate">
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+    
+                <div class="scollTable panel panel-default" *ngIf="this.view" [hidden]="false">
+                    <div class="panel-heading vt-relative">
+                        <strong>
+                            <span class="ml-2 title-info">Đánh giá thi đua</span>
+                        </strong>
+                    </div>
+                    <div class="panel-body panel-table" *ngIf="this.view" [hidden]="false" style="padding: 16px;">
+                        <p-table
+                            #ptable
+                            [value]="resultList.data"
+                            [paginator]="false"
+                            (onLazyLoad)="processSearch($event)"
+                            [lazy]="true" [rows]="1"
+                            [totalRecords]="resultList.recordsTotal"
+                            [scrollable]="true"
+                            [lazyLoadOnInit]="false"
+                            tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+                            styleClass="controlOverflow"
+                        >
+                            <ng-template pTemplate="colgroup" let-columns>
+                                <colgroup>
+                                    <col style="width:6%;text-align: center">
+                                    <col style="width: 100px;">
+                                    <col style="width: 100px;">
+                                    <col style="width: 250px;">
+                                    <col style="width: 100px;">
+                                    <col style="width: 100px;">
+                                    <col style="width: 150px;">
+                                    <col style="width: 100px;">
+                                    <col style="width: 100px;">
+                                    <col style="width: 100px;">
+                                </colgroup>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pResizableColumn translate>common.table.index</th>
+                                    <th pResizableColumn [pSortableColumn]="'registrationCode'">
+                                        Ngày cập nhật
+                                    </th>
+                                    <th pResizableColumn [pSortableColumn]="">
+                                        Tỷ lệ hoàn thành
+                                    </th>
+                                    <th pResizableColumn [pSortableColumn]="">
+                                        Mô tả chi tiết
+                                    </th>
+                                    <th pResizableColumn [pSortableColumn]="">
+                                        Đánh giá chung
+                                    </th>
+                                    <th pResizableColumn [pSortableColumn]="">
+                                        Đánh giá khác
+                                    </th>
+                                    <th pResizableColumn [pSortableColumn]="">
+                                        Người ký duyệt
+                                    </th>
+                                    <th pResizableColumn [pSortableColumn]="">
+                                        Trạng thái trình ký
+                                    </th>
+                                    <th pResizableColumn [pSortableColumn]="">
+                                        Lý do từ chối
+                                    </th>
+                                    <th pResizableColumn [pSortableColumn]="">
+                                        Ngày ký duyệt kết quả
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                                <tr *ngIf="(item.type == 'FINAL_RESULT')&&(item.resultEvaluation != '')">
+                                    <td class="vt-align-center">{{index}}</td>
+                                    <td class="vt-align-center">{{item.updateTime | date: 'dd/MM/yyyy'}}</td>
+                                    <td class="vt-align-center">{{item.completionRate}}</td>
+                                    <td class="vt-align-left"
+                                        [title]="item.detailDescription">{{item.detailDescription}}</td>
+                                    <td class="vt-align-left">{{item.resultEvaluation}}</td>
+                                    <td class="vt-align-left">{{item.ortherEvaluation}}</td>
+                                    <td class="vt-align-left" [title]="item.approveName">{{item.approveName}}</td>
+                                    <td class="vt-align-left">{{item.status}}</td>
+                                    <td class="vt-align-left">{{item.reason}}</td>
+                                    <td class="vt-align-center">{{item.approveDate | date: 'dd/MM/yyyy'}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr class="emptymessage">
+                                    <td [attr.colspan]="12" [innerHTML]="'app.noRecords' | translate">
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="paginatorleft">
+                                <table-footer (changeRow)="onTablePageChange($event)" [resultList]="resultList"></table-footer>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

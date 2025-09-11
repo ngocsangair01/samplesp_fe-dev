@@ -1,0 +1,111 @@
+<div class="content vt-nopadding">
+    <div class="no-padding-left">
+        <div class="panel-default">
+            <div class="panel-heading vt-relative">
+                <strong>
+                    {{'assessmentPeriod.title.createdList' | translate}}
+                </strong>
+                <div class="vt-absolute vt-shotcut-button-in-heading">
+                    <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+                      class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                </div>
+            </div>
+            <form id="formData" [formGroup]="formData">
+                <div *ngIf="!isMobileScreen" class="panel-body padding-xl ui-g">
+                    <div class="ui-g-12 vt-row">
+                        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                            {{'label.assessmentPeriod.name' | translate}}
+                        </label>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <select-filter
+                                [property]="f['assessmentPeriodId']"
+                                [options]="assessmentList"
+                                optionLabel="assessmentPeriodName"
+                                optionValue="assessmentPeriodId"
+                                [placeHolder]="'placeholder.choose'"
+                                (onChange)="changeAssessmentPeriod($event)"
+                            >
+                            </select-filter>
+                            <app-control-messages [control]="f['assessmentPeriodId']"></app-control-messages>
+                        </div>
+                        <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                            {{'organization.label.name' | translate}}
+                        </label>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <party-org-selector
+                                [property]="f['partyOrganizationId']"
+                                operationKey="action.view"
+                                adResourceKey="resource.assessmentPeriod"
+                                [defaultValue]="true"
+                                [isRequiredField]="true"
+                            >
+                            </party-org-selector>
+                            <app-control-messages [control]="f['partyOrganizationId']"></app-control-messages>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 vt-row">
+                        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                            {{'common.label.object' | translate}}
+                        </label>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <input [autoFocus]="true" disabled type="text" class="form form-control" name="assessmentPeriodName"
+                            formControlName="assessmentPeriodName" maxlength="500">
+                            <app-control-messages [control]="f['assessmentPeriodName']"></app-control-messages>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="isMobileScreen" class="panel-body padding-xl ui-g">
+                    <div class="ui-g-12 vt-row">
+                        <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+                            {{'label.assessmentPeriod.name' | translate}}
+                        </label>
+                        <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+                            <select-filter
+                                [property]="f['assessmentPeriodId']"
+                                [options]="assessmentList"
+                                optionLabel="assessmentPeriodName"
+                                optionValue="assessmentPeriodId"
+                                [placeHolder]="'placeholder.choose'"
+                                (onChange)="changeAssessmentPeriod($event)"
+                            >
+                            </select-filter>
+                            <app-control-messages [control]="f['assessmentPeriodId']"></app-control-messages>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 vt-row">
+                        <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-3 control-label vt-align-right">
+                            {{'organization.label.name' | translate}}
+                        </label>
+                        <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+                            <party-org-selector
+                                [property]="f['partyOrganizationId']"
+                                operationKey="action.view"
+                                adResourceKey="resource.assessmentPeriod"
+                                [defaultValue]="true"
+                                [isRequiredField]="true"
+                            >
+                            </party-org-selector>
+                            <app-control-messages [control]="f['partyOrganizationId']"></app-control-messages>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 vt-row">
+                        <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+                            {{'common.label.object' | translate}}
+                        </label>
+                        <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+                            <input [autoFocus]="true" disabled type="text" class="form form-control" name="assessmentPeriodName"
+                            formControlName="assessmentPeriodName" maxlength="500">
+                            <app-control-messages [control]="f['assessmentPeriodName']"></app-control-messages>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer vt-area-button">
+                    <button type="submit" (click)="save()" class="btn btn-sm vt-btn btn-submit"
+                    [innerHTML]="'assessmentPeriod.button.makeList' | translate"></button>
+                    <button type="button"  class="btn btn-sm vt-btn" (click)="cancel()"
+                    [innerHTML]="'common.button.out' | translate"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="modal-body">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong class="text-u-c">
+        <i class="fa fa-th"></i>&nbsp;
+        <span translate>table.title.staff.assessment.criteria</span>
+      </strong>
+    </div>
+    <div class="panel-body padding-xl ui-g">
+      <div class="ui-g-12 vt-row">
+        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right " [ngClass]="'required'">
+          {{'label.table.staff.assessment.criteria.group.code' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <input 
+            type="text"
+            [title]="assessmentCriteriaGroupCode"
+            [value]="assessmentCriteriaGroupCode"
+            class="form form-control" 
+            disabled="disabled"
+          >
+        </div>
+        <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right " [ngClass]="'required'">
+          {{'label.table.staff.assessment.criteria.group.name' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <input
+            type="text" 
+            [title]="assessmentCriteriaGroupName"
+            [value]="assessmentCriteriaGroupName"
+            class="form form-control" 
+            disabled="disabled"
+          >
+        </div>
+      </div>
+    </div>
+    <div id="listArea">
+      <p-table
+        #ptable
+        [value]="resultList.data"
+        [paginator]="true"
+        (onLazyLoad)="processSearch($event)"
+        [lazy]="true"
+        [rows]="changeRow"
+        [totalRecords]="resultList.recordsTotal"
+        [scrollable]="true"
+        [lazyLoadOnInit]="false"
+        tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+        styleClass="controlOverflow"
+      >
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col class="size-1">
+            <col class="size-6">
+            <col class="size-10">
+            <col class="size-10">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+              <th translate>common.table.index</th>
+              <th [pSortableColumn]="'assessmentCriteriaCode'" translate>
+                label.table.staff.assessment.criteria.code
+              <p-sortIcon [field]="'assessmentCriteriaCode'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'assessmentCriteriaName'" translate>
+                label.table.staff.assessment.criteria.name
+              <p-sortIcon [field]="'assessmentCriteriaName'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'note'" translate>
+                label.table.staff.assessment.criteria.note
+              <p-sortIcon [field]="'note'"></p-sortIcon>
+              </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+          <tr>
+            <td class="vt-align-center">{{index}}</td>
+            <td class="vt-align-left">{{item.assessmentCriteriaCode}}</td>
+            <td class="vt-align-left">{{item.assessmentCriteriaName}}</td>
+            <td class="vt-align-left">{{item.note}}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr class="emptymessage">
+            <td [attr.colspan]="14" [innerHTML]="'app.noRecords' | translate">
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+          <table-footer (changeRow)="onTablePageChange($event)" [resultList]="resultList"></table-footer>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="panel-footer vt-area-button">
+      <button
+        [autoFocus]="true"
+        type="button"
+        (click)="activeModal.close()"
+        class="btn btn-sm btn-danger"
+        [innerHTML]="'common.button.out' | translate"
+      ></button>
+    </div>
+  </div>
+</div>
+

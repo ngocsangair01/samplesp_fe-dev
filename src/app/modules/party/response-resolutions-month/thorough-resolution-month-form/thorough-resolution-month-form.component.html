@@ -1,0 +1,118 @@
+<div class="content vt-nopadding" style="display: grid">
+  <div>
+    <div class="panel-heading vt-relative">
+      <strong>
+        Quán triệt nghị quyết
+      </strong>
+      <div class="vt-absolute vt-shotcut-button-in-heading">
+        <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+                class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+      </div>
+    </div>
+    <div class="ui-g-12 vt-row">
+      <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+        {{'app.requestResolutionMonth.thoroughResolutionSelect' | translate}}
+      </label>
+      <div class="ui-g-12 ui-md-3 ui-lg-3">
+        <select-filter [property]="f['thoroughResolution']" [options]="thoroughResolutionOptions" optionLabel="label"
+                       optionValue="value" [placeHolder]="'common.label.cboMustSelect'" (onChange)="processSearchEmployee()">
+        </select-filter>
+        <app-control-messages [control]="f['thoroughResolution']"></app-control-messages>
+      </div>
+    </div>
+    <div class="ui-g-12 vt-row">
+      <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right" *ngIf="f['thoroughResolution'].value == 3">
+        {{'label.exe.req.employee' | translate}}
+      </label>
+      <div class="ui-g-12 ui-md-3 ui-lg-9" *ngIf="f['thoroughResolution'].value == 3">
+        <multi-data-picker
+                [property]="f['listEmployeeId']"
+                systemCode="political"
+                operationKey="action.view"
+                adResourceKey="resource.partyMember"
+                objectBO="EmployeeBO"
+                codeField="employeeCode"
+                nameField="fullName"
+                emailField="email"
+                selectField="employeeId"
+                isNotSearchByOrgDomainData="true"
+                (onChange)="changeSelectEmployee()"
+        >
+        </multi-data-picker>
+        <small *ngIf="isEmptyEmployee" class="text-danger errorMessage">Bạn phải chọn nhân viên!</small>
+      </div>
+    </div>
+  </div>
+  <div class="no-padding-left">
+    <div class="panel-default">
+      <div class="panel-body panel-table" style="padding: 16px;">
+        <p-table
+            #ptable
+            [value]="resultList.data"
+            [paginator]="true"
+            (onLazyLoad)="processSearchEmployee($event)"
+            [lazy]="true" [rows]="changeRow"
+            [totalRecords]="resultList.recordsTotal"
+            [scrollable]="true"
+            [lazyLoadOnInit]="false"
+            tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+            [resizableColumns]="true"
+            styleClass="controlOverflow"
+        >
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col style="width: 50px;">
+              <col style="width: 100px;">
+              <col style="width: 200px;">
+              <col style="width: 200px;">
+              <col style="width: 100px;">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th translate pResizableColumn>common.table.index</th>
+              <th [pSortableColumn]="'employeeCode'" pResizableColumn>
+                {{'common.label.employeeCode' | translate}}
+                <p-sortIcon [field]="'employeeCode'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'employeeName'" pResizableColumn>
+                {{'common.label.employeeName' | translate}}
+                <p-sortIcon [field]="'employeeName'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'employeeEmail'" pResizableColumn>
+                {{'common.label.employeeEmail' | translate}}
+                <p-sortIcon [field]="'employeeEmail'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'phoneNumber'" pResizableColumn>
+                {{'common.label.phoneNumber' | translate}}
+                <p-sortIcon [field]="'phoneNumber'"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+            <tr>
+              <td class="vt-align-center">{{index}}</td>
+              <td class="vt-align-left">{{item.employeeCode}}</td>
+              <td class="vt-align-left">{{item.employeeName}}</td>
+              <td class="vt-align-center">{{item.employeeEmail}}</td>
+              <td class="vt-align-left">{{item.phoneNumber}}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr class="emptymessage">
+              <td [attr.colspan]="14" [innerHTML]="'app.noRecords' | translate">
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft">
+            <table-footer (changeRow)="onTablePageChange($event)" [resultList]="resultList"></table-footer>
+          </ng-template>
+        </p-table>
+      </div>
+      <div class="panel-footer vt-area-button">
+        <button type="button" (click)="goBack()" class="btn btn-sm btn-danger" [innerHTML]="'common.button.out' | translate"></button>
+        <button type="button" (click)="getListEmp()" class="btn btn-sm vt-btn btn-submit" [innerHTML]="'common.button.chose' | translate"></button>
+      </div>
+    </div>
+  </div>
+</div>

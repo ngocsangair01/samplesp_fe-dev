@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_10650" data-name="Rectangle 10650" width="24" height="24" transform="translate(24 312)" fill="#fff" stroke="#fff" stroke-width="1"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect id="Rectangle_10653" data-name="Rectangle 10653" width="24" height="24" transform="translate(436.615 286.154)" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_1345" data-name="Mask Group 1345" transform="translate(-24 -312)" clip-path="url(#clip-path)">
+    <g id="Mask_Group_1345-2" data-name="Mask Group 1345" transform="translate(-412.615 25.846)" clip-path="url(#clip-path-2)">
+      <g id="calendar-1" transform="translate(435.226 284.759)">
+        <path id="Path_57398" data-name="Path 57398" d="M8.926,2.232V5.579" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.674"/>
+        <path id="Path_57399" data-name="Path 57399" d="M17.852,2.232V5.579" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.674"/>
+        <path id="Path_57400" data-name="Path 57400" d="M17.852,3.905c3.715.2,5.579,1.618,5.579,6.862v6.9c0,4.6-1.116,6.9-6.692,6.9H10.046c-5.579,0-6.692-2.3-6.692-6.9v-6.9c0-5.244,1.863-6.65,5.579-6.862Z" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.674"/>
+        <path id="Path_57401" data-name="Path 57401" d="M23.152,19.638H3.626" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.674"/>
+        <path id="Path_57402" data-name="Path 57402" d="M13.389,9.2a2.253,2.253,0,0,0-2.533,2.2,1.813,1.813,0,0,0,.815,1.551A2.061,2.061,0,0,0,10.6,14.761c0,1.385,1.062,2.243,2.79,2.243s2.79-.859,2.79-2.243A2.037,2.037,0,0,0,15.1,12.954a1.8,1.8,0,0,0,.815-1.551,2.243,2.243,0,0,0-2.522-2.2Zm0,3.169a.906.906,0,0,1-1-.893.892.892,0,0,1,1-.882.892.892,0,0,1,1,.882.906.906,0,0,1-1,.893Zm0,3.247c-.738,0-1.272-.369-1.272-1.038s.535-1.026,1.272-1.026,1.272.369,1.272,1.026S14.125,15.621,13.389,15.621Z" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,6 @@
+.set-border-body-search{
+    border-left: 1px solid rgba(246,183,109,1);
+    border-right: 1px solid  rgba(246,183,109,1);
+    border-top: 1px solid rgba(246,183,109,1);
+    border-radius: unset;
+}

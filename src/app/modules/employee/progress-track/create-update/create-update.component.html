@@ -1,0 +1,439 @@
+<div class="card-form">
+  <div class="clearfix">
+    <div class="left-nav-bar pull-left row-header">
+      <div>
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png"
+          (click)="previous()">
+        <span class="title">{{header}}</span>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+      <ul class="header-right sys-ul space-line">
+        <li>
+          <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="previous()"
+            [innerHTML]="'common.button.close' | translate">
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <form id="formSave" [formGroup]="formGroup">
+    <div class="panel panel-default card-info">
+      <div *ngIf="!isMobileScreen" class="panel-body padding-xl ui-g border-info-common">
+        <!-- 1 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Quán triệt cấp trên -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.parent-add' | translate}}</label>
+          <div class="ui-g-12 ui-md-12 ui-lg-8">
+            <data-picker
+              [disabled]="viewMode"
+              [property]="f['parentId']"
+              systemCode="political"
+              operationKey="action.view"
+              adResourceKey="CTCT_THOROUGH_CONTENT"
+              objectBO="ThoroughContentBO"
+              codeField="status"
+              nameField="title"
+              selectField="thoroughContentId"
+              [filterCondition]="filterCondition">
+            </data-picker>
+          </div>
+        </div>
+        <!-- 2 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Tiêu đề -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.title' | translate}}</label>
+          <div class="ui-g-12 ui-md-12 ui-lg-8">
+            <input type="text" [readonly]="viewMode" formControlName="title" class="form-control"
+              maxlength="250">
+          </div>
+        </div>
+        <!-- 3 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Lĩnh vực -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.branch' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <p-dropdown [optionLabel]="'name'" [formControl]="f['branch']" [disabled]="viewMode || f['parentId'].value"
+              [options]="branchOptions" [placeholder]="'placeholder.choose' | translate" [showClear]="true"
+              [filter]="true" [emptyFilterMessage]="emptyFilterMessage" [resetFilterOnHide]="true">
+            </p-dropdown>
+          </div>
+          <!-- Đơn vị triển khai quán triệt -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.org-tkqt' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <party-org-selector
+              #partyOrgSelector
+              [property]="f['organizationId']"
+              operationKey="action.view"
+              adResourceKey="CTCT_THOROUGH_CONTENT"
+              [disabled]="viewMode"
+              isRequiredField="true">
+            </party-org-selector>
+          </div>
+        </div>
+        <!-- 4 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Hình thức xác nhận -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.form-of-confirmation' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <p-dropdown [optionLabel]="'name'" [formControl]="f['formOfConfirmation']" [disabled]="viewMode || f['parentId'].value"
+              [options]="formOfConfirmationOptions" [placeholder]="'placeholder.choose' | translate" [showClear]="true"
+              [filter]="true" [emptyFilterMessage]="emptyFilterMessage" [resetFilterOnHide]="true">
+            </p-dropdown>
+          </div>
+          <!-- Đối tượng quán triệt -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.type-thorough' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <p-dropdown [optionLabel]="'name'" [formControl]="f['typeThorough']" [disabled]="viewMode"
+              [options]="typeThoroughOptions" [placeholder]="'placeholder.choose' | translate" [showClear]="true"
+              [filter]="true" [emptyFilterMessage]="emptyFilterMessage" [resetFilterOnHide]="true">
+            </p-dropdown>
+          </div>
+        </div>
+        <!-- 5 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Ngày quán triệt -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.thorough-date' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <date-picker [disabled]="viewMode" [property]="f['thoroughDate']"></date-picker>
+          </div>
+          <!-- Yêu cầu quán triệt cho đơn vị -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.required-thorough' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <p-checkbox [disabled]="viewMode" [formControl]="f['requiredThorough']" binary="true">
+            </p-checkbox>
+          </div>
+        </div>
+        <!-- 6 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Hạn quán triệt -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.end-date' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <date-picker [disabled]="viewMode" [property]="f['endDate']"></date-picker>
+          </div>
+          <!-- Đối tượng quán triệt đích -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.target-type-thorough' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <p-dropdown [optionLabel]="'name'" [formControl]="f['targetTypeThorough']" [disabled]="viewMode || f['parentId'].value"
+              [options]="typeThoroughOptions" [placeholder]="'placeholder.choose' | translate" [showClear]="true"
+              [filter]="true" [emptyFilterMessage]="emptyFilterMessage" [resetFilterOnHide]="true">
+            </p-dropdown>
+          </div>
+        </div>
+        <!-- 7 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Chọn đề thi -->
+          <label *ngIf="f['formOfConfirmation'].value != undefined && f['formOfConfirmation'].value.id == 2"
+            class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.select-exam-question-set' | translate}}</label>
+          <div *ngIf="f['formOfConfirmation'].value != undefined && f['formOfConfirmation'].value.id == 2"
+            class="ui-g-12 ui-md-6 ui-lg-3">
+            <p-dropdown [optionLabel]="'title'" [formControl]="f['examQuestionSetId']"
+              [disabled]="viewMode || f['parentId'].value" [options]="examQuestionSetOptions"
+              [placeholder]="'placeholder.choose' | translate" [showClear]="true" [filter]="true"
+              [emptyFilterMessage]="emptyFilterMessage" [resetFilterOnHide]="true">
+            </p-dropdown>
+          </div>
+          <!-- Số câu hỏi -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.question-amount' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="number" [readonly]="viewMode || f['parentId'].value" formControlName="questionAmount"
+              class="form-control">
+          </div>
+        </div>
+        <!-- 8 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Tổng số -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.total' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input [readonly]="viewMode" formControlName="total" class="form-control">
+          </div>
+          <!-- Yêu cầu tối thiểu -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.pass-score' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="number" [readonly]="viewMode || f['parentId'].value" formControlName="passScore" class="form-control">
+          </div>
+        </div>
+        <!-- 9 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Đã xác nhận -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.confirmed' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input [readonly]="viewMode" formControlName="confirmed" class="form-control">
+          </div>
+          <!-- Chưa xác nhận -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.not-confirmed' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input [readonly]="viewMode" formControlName="notConfirmed" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isMobileScreen" class="panel-body padding-xl ui-g border-info-common">
+        <!-- 1 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Quán triệt cấp trên -->
+          <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.parent-add' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+            <data-picker
+              [disabled]="viewMode"
+              [property]="f['parentId']"
+              systemCode="political"
+              operationKey="action.view"
+              adResourceKey="CTCT_THOROUGH_CONTENT"
+              objectBO="ThoroughContentBO"
+              codeField="status"
+              nameField="title"
+              selectField="thoroughContentId"
+              filterCondition="AND obj.status = 1
+                ORDER BY obj.created_date DESC">
+            </data-picker>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <!-- Tiêu đề -->
+          <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.title' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+            <input type="text" [readonly]="viewMode" formControlName="title" class="form-control"
+              maxlength="250">
+          </div>
+        </div>
+        <!-- 2 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Lĩnh vực -->
+          <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.branch' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+            <p-dropdown [optionLabel]="'name'" [formControl]="f['branch']" [disabled]="viewMode || f['parentId'].value"
+              [options]="branchOptions" [placeholder]="'placeholder.choose' | translate" [showClear]="true"
+              [filter]="true" [emptyFilterMessage]="emptyFilterMessage" [resetFilterOnHide]="true">
+            </p-dropdown>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <!-- Đơn vị triển khai quán triệt -->
+          <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.org-tkqt' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+            <party-org-selector
+              #partyOrgSelector
+              [property]="f['organizationId']"
+              operationKey="action.view"
+              adResourceKey="CTCT_THOROUGH_CONTENT"
+              [disabled]="viewMode"
+              isRequiredField="true">
+            </party-org-selector>
+          </div>
+        </div>
+        <!-- 3 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Hình thức xác nhận -->
+          <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.form-of-confirmation' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+            <p-dropdown [optionLabel]="'name'" [formControl]="f['formOfConfirmation']" [disabled]="viewMode || f['parentId'].value"
+              [options]="formOfConfirmationOptions" [placeholder]="'placeholder.choose' | translate" [showClear]="true"
+              [filter]="true" [emptyFilterMessage]="emptyFilterMessage" [resetFilterOnHide]="true">
+            </p-dropdown>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <!-- Đối tượng quán triệt -->
+          <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.type-thorough' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+            <p-dropdown [optionLabel]="'name'" [formControl]="f['typeThorough']" [disabled]="viewMode"
+              [options]="typeThoroughOptions" [placeholder]="'placeholder.choose' | translate" [showClear]="true"
+              [filter]="true" [emptyFilterMessage]="emptyFilterMessage" [resetFilterOnHide]="true">
+            </p-dropdown>
+          </div>
+        </div>
+        <!-- 4 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Ngày quán triệt -->
+          <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.thorough-date' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+            <date-picker [disabled]="viewMode" [property]="f['thoroughDate']"></date-picker>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <!-- Yêu cầu quán triệt cho đơn vị -->
+          <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.required-thorough' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+            <p-checkbox [disabled]="viewMode" [formControl]="f['requiredThorough']" binary="true">
+            </p-checkbox>
+          </div>
+        </div>
+        <!-- 5 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Hạn quán triệt -->
+          <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.end-date' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+            <date-picker [disabled]="viewMode" [property]="f['endDate']"></date-picker>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <!-- Đối tượng quán triệt đích -->
+          <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.target-type-thorough' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+            <p-dropdown [optionLabel]="'name'" [formControl]="f['targetTypeThorough']" [disabled]="viewMode || f['parentId'].value"
+              [options]="typeThoroughOptions" [placeholder]="'placeholder.choose' | translate" [showClear]="true"
+              [filter]="true" [emptyFilterMessage]="emptyFilterMessage" [resetFilterOnHide]="true">
+            </p-dropdown>
+          </div>
+        </div>
+        <!-- 6 -->
+        <div *ngIf="f['formOfConfirmation'].value != undefined && f['formOfConfirmation'].value.id == 2" class="ui-g-12 vt-row">
+          <!-- Chọn đề thi -->
+          <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.select-exam-question-set' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+            <p-dropdown [optionLabel]="'title'" [formControl]="f['examQuestionSetId']" [disabled]="viewMode || f['parentId'].value"
+              [options]="examQuestionSetOptions" [placeholder]="'placeholder.choose' | translate" [showClear]="true"
+              [filter]="true" [emptyFilterMessage]="emptyFilterMessage" [resetFilterOnHide]="true">
+            </p-dropdown>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <!-- Số câu hỏi -->
+          <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.question-amount' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+            <input type="number" [readonly]="viewMode || f['parentId'].value" formControlName="questionAmount"
+              class="form-control">
+          </div>
+        </div>
+        <!-- 7 -->
+        <div *ngIf="f['formOfConfirmation'].value != undefined && f['formOfConfirmation'].value.id == 2" class="ui-g-12 vt-row">
+          <!-- Tổng số -->
+          <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.total' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+            <input [readonly]="viewMode" formControlName="total" class="form-control">
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <!-- Yêu cầu tối thiểu -->
+          <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.pass-score' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+            <input type="number" [readonly]="viewMode || f['parentId'].value" formControlName="passScore" class="form-control">
+          </div>
+        </div>
+        <!-- 8 -->
+        <div *ngIf="f['formOfConfirmation'].value != undefined && f['formOfConfirmation'].value.id == 2" class="ui-g-12 vt-row">
+          <!-- Đã xác nhận -->
+          <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.confirmed' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+            <input [readonly]="viewMode" formControlName="confirmed" class="form-control">
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <!-- Chưa xác nhận -->
+          <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.not-confirmed' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+            <input [readonly]="viewMode" formControlName="notConfirmed" class="form-control">
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div id="listArea">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong>
+        <span> {{'label.progress-track.employee-listData' | translate}}</span>
+      </strong>
+    </div>
+    <form id="formSearch" [formGroup]="formSearch" style="padding-bottom: 25px;">
+      <div style="display: flex; align-items: center">
+        <div class="row" style="margin-top: 0px; width: 85%;">
+          <div class="col-md-4" style="display: flex; align-items: center;">
+            <label class="ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right">
+              {{'common.label.employee' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-8">
+              <input autocomplete="off"
+                class="form-control org-selector-input ng-pristine ng-valid ng-touched" formControlName="employee" type="text"
+                placeholder="Nhập mã/tên/email nhân viên">
+            </div>
+          </div>
+          <div class="col-md-4" style="padding-left: 0px; display: flex; align-items: center;">
+            <label class="ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right">
+              {{'common.label.unit' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-8">
+              <party-org-selector
+                #partyOrgSearchSelector
+                [property]="formSearch.controls.organizationId"
+                operationKey="action.view"
+                adResourceKey="CTCT_THOROUGH_CONTENT">
+              </party-org-selector>
+            </div>
+          </div>
+          <div class="col-md-4" style="padding-left: 0px; display: flex; align-items: center;">
+            <label class="ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right">
+              {{'label.thorough-content.status' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-8">
+              <p-dropdown [optionLabel]="'name'" [formControl]="formSearch.controls.status"
+                [options]="statusOptions" [placeholder]="'placeholder.choose' | translate" [showClear]="true">
+              </p-dropdown>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button class="btn btn-sm vt-btn btn-submit" type="button" (click)="search()">
+            Tìm kiếm
+          </button>
+          <button class="btn btn-sm vt-btn btn-submit" type="button" (click)="exportData()">
+            Xuất file
+          </button>
+        </div>
+      </div>
+    </form>
+    <table-view (lazyLoad)="search($event)" [columnsConfig]="tableColumnsConfig" [optionTemplate]="optionTemplate"
+      [resultList]="resultList">
+      <ng-template #optionTemplate let-rowData let-rowIndex="rowIndex">
+        <td class="vt-align-center">{{rowIndex + 1}}</td>
+        <td class="vt-align-left">{{rowData.employeeCode}}</td>
+        <td class="vt-align-left">{{rowData.fullName}}</td>
+        <td class="vt-align-left">{{rowData.partyOrganizationName}}</td>
+        <td class="vt-align-left">{{rowData.statusName}}</td>
+        <td class="vt-align-left">{{rowData.readTime | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+        <td class="vt-align-center">
+          <span [ngClass]="rowData.testCount > 0 ? 'text-primary':''"
+            [ngStyle]="{'cursor': rowData.testCount > 0 ? 'pointer' : ''}" (click)="openTestHistoryPopup(rowData)">{{rowData.testCount}}</span>
+        </td>
+        <td class="vt-align-center">{{rowData.maxGrade ? (rowData.maxGrade + (rowData.empThoroughContentId ? ("/" + rowData.questionAmount) : "")) : null}}</td>
+      </ng-template>
+    </table-view>
+
+  </div>
+</div>

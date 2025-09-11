@@ -1,0 +1,17 @@
+<div class="panel-body padding-xl ui-g" style="padding-bottom: 0;">
+
+    <div class="ui-g-10 ui-g-offset-1">
+        <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+            {{'transferactivity.label.authority' | translate}}</label>
+        <div class="ui-g-12 ui-md-8">
+            <textarea [formControl]="form.controls.authorityContent" class="form-control" maxlength="2000"></textarea>
+            <app-control-messages [control]="form.controls.authorityContent"></app-control-messages>
+        </div>
+    </div>
+
+    <div class="panel-footer vt-area-button ui-g-12">
+
+        <button type="submit" class="btn btn-sm btn-success" (click)="authority()"
+        [innerHTML]="'common.button.icon.save' | translate"></button>
+    </div>
+</div>

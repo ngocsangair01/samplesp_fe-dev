@@ -1,0 +1,314 @@
+<div class="card-form">
+  <div class="clearfix">
+    <div class="left-nav-bar pull-left row-header">
+      <div>
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="goBack();">
+        <strong *ngIf="!view && branch == 1">
+          <span *ngIf="!formSave.get('massOrganizationId').value" class="title"> {{'mass.organization.addWomen' | translate}}</span>
+          <span *ngIf="formSave.get('massOrganizationId').value" class="title"> {{'mass.organization.editWomen' |translate}} </span>
+        </strong>
+        <strong *ngIf="view && branch == 1">
+          <span class="title"> {{'mass.organization.viewWomen' | translate}}</span>
+        </strong>
+        <strong *ngIf="!view && branch == 2">
+          <span *ngIf="!formSave.get('massOrganizationId').value" class="title"> {{'mass.organization.addYoung' | translate}}</span>
+          <span *ngIf="formSave.get('massOrganizationId').value" class="title"> {{'mass.organization.editYoung' |translate}} </span>
+        </strong>
+        <strong *ngIf="view && branch == 2">
+          <span class="title"> {{'mass.organization.viewYoung' | translate}}</span>
+        </strong>
+        <strong *ngIf="!view && branch == 3">
+          <span *ngIf="!formSave.get('massOrganizationId').value" class="title"> {{'mass.organization.addUnion' | translate}}</span>
+          <span *ngIf="formSave.get('massOrganizationId').value" class="title"> {{'mass.organization.editUnion' |translate}} </span>
+        </strong>
+        <strong *ngIf="view && branch == 3">
+          <span class="title"> {{'mass.organization.viewUnion' | translate}}</span>
+        </strong>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+        <ul class="header-right sys-ul space-line">
+          <li>
+            <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="goBack();" [innerHTML]="'common.button.out' | translate">
+            </button>
+          </li>
+          <li *ngIf="!view">
+            <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="processSaveOrUpdate()" [innerHTML]="'common.button.icon.save' | translate">
+            </button>
+          </li>
+          <li *ngIf="view">
+            <button class="btn btn-sm vt-btn btn-submit mt-btn btn-header-right ng-star-inserted" type="button" (click)="navigate()" [innerHTML]="'common.button.icon.edit' | translate">
+            </button>
+          </li>
+        </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <div>
+    <form id="formSave" [formGroup]="formSave" >
+      <div class="panel panel-default card-info">
+        <div class="panel-heading vt-relative">
+          <!-- <strong class="text-u-c" *ngIf="!view && branch == 1">
+            <i class="fa fa-th"></i>&nbsp;
+            <span *ngIf="!formSave.get('massOrganizationId').value" > {{'mass.organization.addWomen' | translate}}</span>
+            <span *ngIf="formSave.get('massOrganizationId').value" > {{'mass.organization.editWomen' |translate}} </span>
+          </strong>
+          <strong class="text-u-c" *ngIf="view && branch == 1">
+            <i class="fa fa-th"></i>&nbsp;
+            <span > {{'mass.organization.viewWomen' | translate}}</span>
+          </strong>
+          <strong class="text-u-c" *ngIf="!view && branch == 2">
+            <i class="fa fa-th"></i>&nbsp;
+            <span *ngIf="!formSave.get('massOrganizationId').value" > {{'mass.organization.addYoung' | translate}}</span>
+            <span *ngIf="formSave.get('massOrganizationId').value" > {{'mass.organization.editYoung' |translate}} </span>
+          </strong>
+          <strong class="text-u-c" *ngIf="view && branch == 2">
+            <i class="fa fa-th"></i>&nbsp;
+            <span > {{'mass.organization.viewYoung' | translate}}</span>
+          </strong>
+          <strong class="text-u-c" *ngIf="!view && branch == 3">
+            <i class="fa fa-th"></i>&nbsp;
+            <span *ngIf="!formSave.get('massOrganizationId').value" > {{'mass.organization.addUnion' | translate}}</span>
+            <span *ngIf="formSave.get('massOrganizationId').value" > {{'mass.organization.editUnion' |translate}} </span>
+          </strong>
+          <strong class="text-u-c" *ngIf="view && branch == 3">
+            <i class="fa fa-th"></i>&nbsp;
+            <span > {{'mass.organization.viewUnion' | translate}}</span>
+          </strong> -->
+          <strong>
+            <span class="ml-2 title-info">Thông tin chi tiết</span>
+          </strong>
+        </div>
+        <div class="panel-body padding-xl ui-g">
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'massOrganizationParent' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <mass-org-selector
+                [property]="f['parentId']"
+                operationKey="action.insert" 
+                adResourceKey="resource.massOrganization"
+                [defaultValue]="true"
+                [isRequiredField]="false"
+                [branch] = "branch"
+                [disabled] = "view">
+              </mass-org-selector>
+              <app-control-messages [control]="f['parentId']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'massOrganizationName' | translate}} 
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form form-control" name="name" formControlName="name" (change)="genCodeMass();" maxlength="255" [autoFocus]="true" [attr.disabled]="view? true : null">
+              <app-control-messages [control]="f['name']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+              {{'massOrganizationCode' | translate}} 
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form form-control" name="code" formControlName="code" disabled>
+              <app-control-messages [control]="f['code']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'massOrganizationType' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter
+                [property]="f['type']"
+                [options]="typeList"
+                optionLabel="cateName"
+                optionValue="type"
+                [placeHolder]="'common.label.cboMustSelect'"
+                [disabled] = 'view'>
+              </select-filter>
+              <app-control-messages [control]="f['type']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'massOrganizationEmployee' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <data-picker
+                #data 
+                [property]="f['employeeId']" 
+                systemCode="political" 
+                operationKey="action.view"
+                adResourceKey="resource.massOrganization" 
+                objectBO="EmployeeBO" 
+                codeField="employeeCode" 
+                nameField="fullName"
+                emailField="email"
+                mobileNumberField="mobileNumber"
+                selectField="employeeId" 
+                (onChange)="genPhoneAndEmail($event)"
+                [disabled] = 'view'
+                filterCondition=" and obj.status = 1 "
+                >
+              </data-picker>
+              <app-control-messages [control]="f['employeeId']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'massOrganizationPhone' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form form-control" name="phoneNumber" formControlName="phoneNumber" maxlength="50" autofocus = "true" disabled>
+              <app-control-messages [control]="f['phoneNumber']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'massOrganizationEmail' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form form-control" name="email" formControlName="email" maxlength="100" disabled>
+              <app-control-messages [control]="f['email']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'massOrganizationStart' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker
+                [property]="f['effectiveDate']" [disabled] = 'view'>
+              </date-picker>
+              <app-control-messages [control]="f['effectiveDate']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'massOrganizationEnd' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker
+                [property]="f['expiredDate']" [disabled] = 'view'>
+              </date-picker>
+              <app-control-messages [control]="f['expiredDate']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'massUploadImgStamp' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <file-chooser
+                [property]="f['fileImage']"
+                [validMaxSize]="50"
+                validType="jpg,png">
+              </file-chooser>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'massOrganizationDescription' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <textarea name="description" formControlName="description" id="description" class="form-control" rows="3" maxlength="1000" [attr.disabled]="view? true : null"></textarea>
+              <app-control-messages [control]="f['description']"></app-control-messages>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default card-info">
+        <div class="panel-heading vt-relative">
+          <strong>
+            {{'partyOrganization.lstOrgRela' | translate}}
+          </strong>
+        </div>
+        <div class="panel-body padding-xl ui-g" style="padding: 0 12px 12px 12px;">
+          <p-table
+            [scrollable]="true" 
+            [value]="lstFormOrgRelationConfig.controls"  
+            styleClass="controlOverflow" 
+            tableStyleClass="table controls-table table-wrapper b-t b-b"
+            [resizableColumns]="true">
+            <ng-template pTemplate="colgroup" let-columns>
+              <colgroup>
+                <col style="width: 50px;">
+                <col style="width: 200px;">
+                <col style="width: 100px;">
+                <col style="width: 100px;">
+                <col style="width: 100px;" *ngIf="view == false">
+              </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th pResizableColumn>STT</th>
+                <th [ngClass]="{'required': true}" pResizableColumn>{{'massOrganizationChooseArea' | translate}}</th>
+                <th pResizableColumn>{{'massOrganizationStart' | translate}}</th>
+                <th pResizableColumn>{{'massOrganizationEnd' | translate}}</th>
+                <th *ngIf="view == false" pResizableColumn>{{'massOrganizationTool' | translate}}</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-index="rowIndex">
+              <tr [formGroup]="item">
+                <td class="vt-align-center">
+                  {{index+1}}
+                </td>
+                <td>
+                  <org-selector
+                    [property]="item.controls.organizationId"
+                    operationKey="action.view"
+                    adResourceKey="resource.massOrganization"
+                    [defaultValue]="false"
+                    (onChange) = "setDateInfo(item);"
+                    isRequiredField = true
+                    [disabled]="view"
+                    >
+                  </org-selector>
+                  <app-control-messages [control]="item.controls.organizationId"></app-control-messages>
+                </td>
+                <td class="vt-align-center">
+                    {{item.controls.effectiveDate.value | displayDate}}
+                </td>
+                <td class="vt-align-center">
+                    {{item.controls.expiredDate.value | displayDate}}
+                </td>
+                <td class="vt-align-center" *ngIf="view == false">
+                  <button type="button" class="btn-icon plus" [title]="'titleAdd' | translate" (click)="addRow(index, item)" [innerHTML]="'common.icon.plus' | translate">
+                  </button>
+                  <button type="button" class="btn-icon minus" [title]="'titleDelete' | translate" (click)="removeRow(index, item)" [innerHTML]="'common.icon.minus' | translate">
+                  </button>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-index="rowIndex">
+            <tr [formGroup]="item">
+              <td class="vt-align-center">
+                {{index+1}}
+              </td>
+              <td>
+                <org-selector
+                  [property]="item.controls.organizationId"
+                  operationKey="action.view"
+                  adResourceKey="resource.massOrganization"
+                  [defaultValue]="false"
+                  (onChange) = "setDateInfo(item);"
+                  isRequiredField = true
+                  [disabled]= "view"
+                  >
+                </org-selector>
+                <app-control-messages [control]="item.controls.organizationId"></app-control-messages>
+              </td>
+              <td class="vt-align-center">
+                  {{item.controls.effectiveDate.value | displayDate}}
+              </td>
+              <td class="vt-align-center">
+                  {{item.controls.expiredDate.value | displayDate}}
+              </td>
+              <td class="vt-align-center" *ngIf="view == false">
+                <button type="button" class="btn-icon plus" [title]="'titleAdd' | translate" (click)="addRow(index, item)" [innerHTML]="'common.icon.plus' | translate">
+                </button>
+                <button type="button" class="btn-icon minus" [title]="'titleDelete' | translate" (click)="removeRow(index, item)" [innerHTML]="'common.icon.minus' | translate">
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+          </p-table>
+        </div>
+      </div>
+      <reward-party-organization [massOrganizationId]="massOrganizationId" [branch]="branch" [hidden]="!formSave.get('massOrganizationId').value ? true : false"></reward-party-organization>
+    </form>
+  </div>
+</div>

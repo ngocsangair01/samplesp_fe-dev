@@ -1,0 +1,27 @@
+<svg id="Bảo_vệ_an_ninh" data-name="Bảo vệ an ninh" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="120" height="120" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#00b368"/>
+      <stop offset="1" stop-color="#009556"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#00dd80"/>
+      <stop offset="1" stop-color="#007443"/>
+    </linearGradient>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_15183" data-name="Rectangle 15183" width="34.593" height="34.593" transform="translate(957 1296)" stroke="#62687f" stroke-width="1" fill="url(#linear-gradient)"/>
+    </clipPath>
+  </defs>
+  <rect id="Rectangle_13918" data-name="Rectangle 13918" width="120" height="120" rx="24" fill="url(#linear-gradient-2)"/>
+  <g id="Group_34954" data-name="Group 34954" transform="translate(-33.008 16.793)">
+    <path id="Path_77184" data-name="Path 77184" d="M123.513,13.607C109.672,13.607,95.329.777,95.187.649a2.5,2.5,0,0,0-3.36,0C91.684.778,77.378,13.607,63.5,13.607a2.5,2.5,0,0,0-2.5,2.5V46.053c0,24.259,18.043,33.953,31.615,39.134a2.5,2.5,0,0,0,1.784,0c19.03-7.265,31.615-18.6,31.615-39.134V16.107A2.5,2.5,0,0,0,123.513,13.607Z" transform="translate(0 0)" fill="#fff" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <g id="Group_42568" data-name="Group 42568" transform="translate(54.621 -1.283)">
+      <path id="Path_84774" data-name="Path 84774" d="M72.27,59.42A44.893,44.893,0,0,1,61.518,76.17c-5.4,5.272-12.469,9.461-21.013,12.449a6.429,6.429,0,0,1-2.042.36h-.077a6.533,6.533,0,0,1-1.253-.123,6.76,6.76,0,0,1-.861-.235C27.718,85.638,20.64,81.45,15.236,76.178A44.8,44.8,0,0,1,4.486,59.432C.143,47.647.39,34.665.589,24.232l0-.16c.04-.861.066-1.766.08-2.766a9.43,9.43,0,0,1,8.88-9.239C19.783,11.5,27.7,8.16,34.459,1.569l.059-.054a5.7,5.7,0,0,1,7.738,0l.058.054c6.763,6.591,14.678,9.928,24.908,10.5a9.43,9.43,0,0,1,8.88,9.239c.014,1.006.04,1.91.08,2.766l0,.068c.2,10.452.444,23.461-3.914,35.28Zm0,0" transform="translate(0 0)" fill="#fff"/>
+    </g>
+    <g id="Mask_Group_24163" data-name="Mask Group 24163" transform="translate(-881.289 -1273.621)" clip-path="url(#clip-path)">
+      <g id="lock" transform="translate(959.193 1296)">
+        <path id="Path_77205" data-name="Path 77205" d="M27.41,15.35H25.766V10.416a10.416,10.416,0,0,0-20.832,0V15.35H3.289A3.29,3.29,0,0,0,0,18.639V31.8a3.29,3.29,0,0,0,3.289,3.289H27.41A3.29,3.29,0,0,0,30.7,31.8V18.639A3.29,3.29,0,0,0,27.41,15.35Zm-7.127,0H10.416V10.416a4.934,4.934,0,0,1,9.868,0Z" fill="url(#linear-gradient)"/>
+      </g>
+    </g>
+  </g>
+</svg>

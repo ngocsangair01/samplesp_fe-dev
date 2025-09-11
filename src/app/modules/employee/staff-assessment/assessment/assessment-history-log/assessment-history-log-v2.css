@@ -1,0 +1,42 @@
+.assessment-body .modal-assessment-history {
+    width: 800px;
+    min-width: 800px;
+}
+
+.card-header {
+    white-space: nowrap;
+    text-align: left;
+    font-family: "PFBeauSansPro";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    color: rgba(198,31,27,1);
+    letter-spacing: 0.12px;
+    background-color: #fff;
+}
+
+.card-footer {
+    padding: 0;
+    background-color: #fff;
+}
+
+@media (min-width: 1366px) and (max-width: 1919px) {
+    .assessment-body .modal-assessment-history {
+        width: 644px !important;
+        min-width: 644px !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1365px) {
+    .assessment-body .modal-assessment-history {
+        width: 644px !important;
+        min-width: 644px !important;
+    }
+}
+
+@media (min-width: 375px) and (max-width: 767px) {
+    .assessment-body .modal-assessment-history {
+        width: 335px !important;
+        min-width: 335px !important;
+    }
+}

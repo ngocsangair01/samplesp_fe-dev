@@ -1,0 +1,257 @@
+<div class="modal-body">
+  <div class="panel panel-default" style="background-color: #fff !important;">
+
+    <div class="panel-heading">
+      <strong class="text-u-c">
+<!--        <i class="fa fa-th"></i>-->
+        {{'assessment.historis.title' | translate}}
+      </strong>
+      <div class="vt-absolute vt-shotcut-button-in-heading">
+        <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+          class="btn btn-span btn-sm btn-info btn-close"><i class="fa fa-times" style="color: #A6A39F !important;"></i></button>
+      </div>
+    </div>
+
+    <!-- </header> -->
+    <div class="panel-body padding-xl ui-g">
+      <div class="row align-items-center assessment-history-header">
+        <div class="col-2 header-rank-point">
+          <div class="logo1">
+            <div class="tg-promo-number">
+              <div class="odometer odometer-auto-theme">
+                  <span *ngIf="result.assessmentPoint !== null">{{result.assessmentPoint}}</span>
+              </div>
+              <h4 class="promo-title" *ngIf = "result.assessmentResult !== null" >{{result.assessmentResult}}</h4>
+              <h4 class="no-resulft" *ngIf = "result.assessmentResult === null" style="color:#f94f4f">{{'assessment.employee.no.resulft'| translate}}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-1" style="padding: 0px;">
+          <div class="logo">
+            <figure class="image-avatar"
+              [ngStyle]="{'background-image': 'url(' + AVATAR_API_URL + evaluateEmployeeInfo.employeeCode + ')'}"
+              style="width: 70px; height: 80px;">
+            </figure>
+          </div>
+        </div>
+        <div class="col-9">
+          <table class="info-table" *ngIf="scrWidth !== 768 ">
+            <tbody>
+              <tr>
+                <th style="width: 90px">{{'common.label.fullName' | translate}}:</th>
+                <td>{{evaluateEmployeeInfo.employeeFullName}}</td>
+                <th style="width: 130px">{{'common.label.title' | translate}}:</th>
+                <td>{{evaluateEmployeeInfo.positionName}}</td>
+              </tr>
+              <tr>
+                <th>{{'common.label.object' | translate}}:</th>
+                <td>{{evaluateEmployeeInfo.empTypeName}}</td>
+                <!-- <th>{{'app.employee.assessment.experienceYears' | translate}}:</th>
+                <td>4.5</td> -->
+              </tr>
+            </tbody>
+          </table>
+          <table class="info-table" *ngIf="scrWidth === 768 ">
+            <tbody>
+              <tr>
+                <th style="width: 90px">{{'common.label.fullName' | translate}}:</th>
+                <td>{{evaluateEmployeeInfo.employeeFullName}}</td>
+              </tr>
+              <tr>
+                <th style="width: 130px">{{'common.label.title' | translate}}:</th>
+                <td>{{evaluateEmployeeInfo.positionName}}</td>
+              </tr>
+              <tr>
+                <th>{{'common.label.object' | translate}}:</th>
+                <td>{{evaluateEmployeeInfo.empTypeName}}</td>
+              </tr>
+              <!-- <tr>
+                <th>{{'app.employee.assessment.experienceYears' | translate}}:</th>
+                <td>4.5</td>
+              </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div style="width: 100%;">
+        <div class="no-padding-left emp_information_right">
+          <div class="employeeTabs">
+            <p-scrollPanel styleClass="emp-tab-scroll clearfix tab-level-history text-center">
+              <p-tabMenu [model]="items" [activeItem]="itemMenu"></p-tabMenu>
+            </p-scrollPanel>
+          </div>
+        </div>
+        <p-scrollPanel styleClass=" emp-tab-scroll clearfix assessment-history-body">
+          <div role="main">
+            <section id="detail" class="section-detail">
+              <div class="container">
+                <form id="formAssessment" [formGroup]="formAssessment">
+                  <div class="row-criteria row">
+                    <div class="col-12 col-lg-12 criteria" *ngFor="let criteriaGroup of assessmentCriteriaGroupList, let i = index">
+                      <div class="section-title">
+                        <h2 class="title-main">{{i + 1}}. {{criteriaGroup.assessmentCriteriaGroupName}}</h2>
+                      </div>
+                      <div *ngFor="let groupChild of criteriaGroup.groupChildList, let idx = index">
+                        <h2 class="assessmentIdx" *ngIf="criteriaGroup.assessmentCriteriaGroupType === 2" >{{i + 1}}. {{idx + 1}}</h2>
+                        <div class="service-card-list" [ngClass]="{'groupChild': criteriaGroup.assessmentCriteriaGroupType === 2}">
+                          <div id="serviceCardThree" class="service-card-three" *ngFor="let criteria of groupChild.listAssessmentCriterias, let i = index">
+                            <div class="service-icon">
+                              <!-- <figure class="image-avatar" 
+                                tooltipPosition="top"
+                                [ngStyle]="{'background-image': 'url(' + ICON_API_URL + criteria.settingIconId + ')', 'width': '56px', 'height': '56px', 'background-size': 'contain'}">
+                              </figure> -->
+                              <img *ngIf="criteria.settingIconId !== null" class="image-avatar" 
+                                [src]="ICON_API_URL + criteria.settingIconId" alt="Icon" 
+                                style="width: 56px; height: 56px; background-size: contain; margin-top: -30px;" appImage />
+                            </div>
+                            <div class="service-info" style="margin-right: 80px">
+                              <h2 class="service-title criteria-explain" ngbDropdown placement="top-right" >
+                                {{criteria.assessmentCriteriaName}}
+                                <i
+                                  *ngIf="criteria.assessmentCriteriaExplain !== null && criteria.assessmentCriteriaExplain !== ''"
+                                  style="color: #66b3ff;"
+                                  class="fas fa-info-circle"
+                                  ngbDropdownToggle
+                                ></i>
+                                <div class = "criteria-explain-dropdown-menu" ngbDropdownMenu >
+                                  {{criteria.assessmentCriteriaExplain}}
+                                </div>
+                              </h2>
+                              <div *ngIf="criteria.fieldType === assessmentFieldType.COMBO_BOX">
+                                <select-filter
+                                  [property]="fAssessment[criteria.assessmentCriteriaCode]"
+                                  [options]="json.parse(criteria.fieldItems)"
+                                  optionLabel="label"
+                                  optionValue="value"
+                                  [placeHolder]="'common.label.cboSelect'"
+                                  [attr.disabled]="true"
+                                  >
+                                </select-filter>
+                                <app-control-messages [control]="fAssessment[criteria.assessmentCriteriaCode]"></app-control-messages>
+                              </div>
+                              <div *ngIf="criteria.fieldType === assessmentFieldType.TEXT_BOX">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  [formControlName]="criteria.assessmentCriteriaCode"
+                                  [placeholder]="criteria.fieldPlaceholderValue ? criteria.fieldPlaceholderValue : ''"
+                                  [maxlength]="criteria.maxLength"
+                                  [attr.disabled]="true"
+                                >
+                                <app-control-messages [control]="fAssessment[criteria.assessmentCriteriaCode]"></app-control-messages>
+                              </div>
+                              <div *ngIf="criteria.fieldType === assessmentFieldType.FROM_TO" class="fromTo" >
+                                <h2 class="fromToTitle2">{{'assessmentResult.from' | translate}}</h2>
+                                <div class="from">
+                                  <date-picker [property]="fAssessment[criteria.assessmentCriteriaCode + 'From']"
+                                    [attr.disabled]="true">
+                                  </date-picker>
+                                  <app-control-messages [control]="fAssessment[criteria.assessmentCriteriaCode + 'From']"></app-control-messages>
+                                </div>
+                                <h2 class="fromToTitle">{{'assessmentResult.to' | translate}}</h2>
+                                <div class="to">
+                                  <date-picker [property]="fAssessment[criteria.assessmentCriteriaCode + 'To']"
+                                    [attr.disabled]="true">
+                                  </date-picker>
+                                  <app-control-messages [control]="fAssessment[criteria.assessmentCriteriaCode + 'To']"></app-control-messages>
+                              </div>
+                              </div>
+                              <div *ngIf="criteria.fieldType === assessmentFieldType.DATE" class="control-assessment-date">
+                                <date-picker [property]="fAssessment[criteria.assessmentCriteriaCode]"
+                                  [attr.disabled]="true">
+                                </date-picker>
+                                <app-control-messages [control]="fAssessment[criteria.assessmentCriteriaCode]"></app-control-messages>
+                              </div>
+                              <div *ngIf="criteria.fieldType === assessmentFieldType.DATE_TIME" class="control-assessment-date">
+                                <date-picker [property]="fAssessment[criteria.assessmentCriteriaCode]"
+                                  [showTime]="true"
+                                  [attr.disabled]="true">
+                                </date-picker>
+                                <app-control-messages [control]="fAssessment[criteria.assessmentCriteriaCode]"></app-control-messages>
+                              </div>
+                              <div *ngIf="criteria.fieldType === assessmentFieldType.TIME" class="control-assessment-date">
+                                <date-picker [property]="fAssessment[criteria.assessmentCriteriaCode]"
+                                  [timeOnly]="true" [disabled]="true">
+                                </date-picker>
+                                <app-control-messages [control]="fAssessment[criteria.assessmentCriteriaCode]"></app-control-messages>
+                              </div>
+                              <div *ngIf="criteria.fieldType === assessmentFieldType.SPINNER" class="assessment-rank">
+                                <div class="control-assessment-spinner">
+                                  <p-slider
+                                    animate="true"
+                                    [formControlName]="criteria.assessmentCriteriaCode"
+                                    [max]="criteria.assessmentMaxValue"
+                                    [min]="criteria.assessmentMinValue"
+                                    [step]="criteria.step"
+                                    [attr.disabled]="true"
+                                  >
+                                  </p-slider>
+                                  <app-control-messages [control]="fAssessment[criteria.assessmentCriteriaCode]"></app-control-messages>
+                                </div>
+                                <span class="label-rank"  [ngStyle]="{'background-color': criteria.assessmentCriteriaRankColor}">
+                                  {{fAssessment[criteria.assessmentCriteriaCode].value}} ( {{criteria.assessmentCriteriaRankLabel}} )
+                                </span>
+                              </div>
+                              <div *ngIf="criteria.fieldType === assessmentFieldType.TEXTAREA">
+                                <textarea
+                                  class="form-control"
+                                  [formControlName]="criteria.assessmentCriteriaCode"
+                                  [placeholder]="criteria.fieldPlaceholderValue ? criteria.fieldPlaceholderValue : ''"
+                                  [maxlength]="criteria.maxLength"
+                                  [rows]="criteria.assessmentCriteriaRows"
+                                  [attr.disabled]="true"
+                                >
+                                </textarea>
+                                <app-control-messages [control]="fAssessment[criteria.assessmentCriteriaCode]"></app-control-messages>
+                              </div>
+                              <div *ngIf="criteria.fieldType === assessmentFieldType.STAR" class="assessment-rank">
+                                <div class="control-assessment-star">
+                                  <p-rating
+                                    [formControlName]="criteria.assessmentCriteriaCode"
+                                    [stars]="criteria.assessmentMaxValue"
+                                    [attr.disabled]="true"
+                                  >
+                                  </p-rating>
+                                  <app-control-messages [control]="fAssessment[criteria.assessmentCriteriaCode]"></app-control-messages>
+                                </div>
+                                <span class="label-rank"  [ngStyle]="{'background-color': criteria.assessmentCriteriaRankColor}">
+                                  {{criteria.assessmentCriteriaRankLabel}}
+                                </span>
+                              </div>
+                              <div class="row" *ngIf="criteria.fieldType === assessmentFieldType.RADIO_BUTTON">
+                                <div style="padding-left: 15px;padding-bottom: 15px;" *ngFor="let item of json.parse(criteria.fieldItems), let i = index">
+                                  <p-radioButton
+                                    [formControlName]="criteria.assessmentCriteriaCode"
+                                    [name]="criteria.assessmentCriteriaCode"
+                                    [value]="item.value"
+                                    [label]="item.label"
+                                    [attr.disabled]="true"
+                                  >
+                                  </p-radioButton>
+                                </div>
+                                <app-control-messages [control]="fAssessment[criteria.assessmentCriteriaCode]"></app-control-messages>
+                              </div>
+                              <div *ngIf="criteria.fieldType === assessmentFieldType.PERCENT">
+                                <input
+                                  type="text"
+                                  class="form-control control-assessment-percent"
+                                  [formControlName]="criteria.assessmentCriteriaCode"
+                                  [attr.disabled]="true"
+                                >
+                                <app-control-messages [control]="fAssessment[criteria.assessmentCriteriaCode]"></app-control-messages>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </section>
+          </div>
+        </p-scrollPanel>
+      </div>
+    </div>
+  </div>
+</div>

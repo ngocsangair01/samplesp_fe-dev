@@ -1,0 +1,33 @@
+<div class="nation-picker display-table picker w100">
+  <div class="table-cell nation-input">
+    <p-dropdown
+      [options]="listData"
+      [(ngModel)]="selectedValue"
+      [filter]="filter"
+      [placeholder]="placeHolder | translate"
+      (ngModelChange)="selectedChange()"
+      [showClear]="checkShowClear"
+      [disabled]="disabled ? true : false"
+      [autofocus] = "autofocus"
+      [appendTo]="appendTo"
+      [attr.dataName]="property.propertyName"
+      [emptyFilterMessage]="emptyFilterMessage"
+      [resetFilterOnHide] = "true"
+      #dropDown
+      >
+      <ng-template pTemplate="selectedItem">
+        <div class="setting-icon-item" *ngIf="selectedValue">
+          <img [src]="ICON_API_URL + selectedValue" />
+          <div>{{selectedLabel}}</div>
+        </div>
+      </ng-template>
+      <ng-template let-icon pTemplate="listData">
+        <div class="setting-icon-item">
+          <img [src]="ICON_API_URL + icon.value"  />
+          <div>{{icon.label}}</div>
+        </div>
+      </ng-template>
+    </p-dropdown>
+  </div>
+</div>
+

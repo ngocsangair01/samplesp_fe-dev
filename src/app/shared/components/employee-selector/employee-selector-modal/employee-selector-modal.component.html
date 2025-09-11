@@ -1,0 +1,214 @@
+<div class="modal-body orgSelectorModal">
+  <form [formGroup]="form">
+    <div class="panel panel-default">
+      <div class="panel-heading vt-relative">
+        <strong class="text-u-c">
+          <i class="fa fa-th"></i>&nbsp;
+          <span>CHỌN ĐỐI TƯỢNG ÁP DỤNG</span>
+        </strong>
+        <div class="vt-absolute vt-shotcut-button-in-heading">          &nbsp;
+          <button  class="btn btn-span btn-sm btn-info btn-close"
+                  title="{{'common.button.close' | translate}}" type="button" (click)="activeModal.close()">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <div class="panel-body modal-content-body">
+        <div class="grid-structure org-selector-content">
+          <div class="form-group">
+            <div class="panel-background" style="height: auto; padding-top: 5px; padding-bottom: 5px">
+              <div class="row" style="margin-top: 0px; width: 60%">
+                <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" style="margin: auto">
+                  Chọn
+                </label>
+                <div class="col-md-4">
+                  <select-filter
+                          [placeHolder]="'common.label.cboSelectAll'"
+                          [property]="f['methodSelection']"
+                          [options]="subjectSeletionList"
+                          optionLabel="value"
+                          optionValue="code"
+                          (onChange)="handleChoseSubjectType($event)">
+                  </select-filter>
+                </div>
+
+                <label *ngIf="f['methodSelection'].value === true"
+                       style="padding-right: 18px; margin: auto"
+                       class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                  Theo nhóm đối tượng
+                </label>
+                <div *ngIf="form.get('methodSelection').value === true" class="col-md-4" style="padding-left: 0px;">
+                  <div class="input-group orgSelector">
+                    <multi-select-filter
+                            style="width: inherit"
+                            [filterPlaceHolder]="'common.label.cboSelectAll'"
+                            [property]="f['subjectSeletion']"
+                            [options]="subjectTypeList"
+                            optionLabel="name"
+                            optionValue="empTypeId"
+                            (onChange)="subjectSeletionChange()"
+                    >
+                    </multi-select-filter>
+                  </div>
+                </div>
+                <label *ngIf="f['methodSelection'].value === false"
+                       style="padding-right: 18px"
+                       class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                  Theo danh sách import
+                </label>
+                <div *ngIf="f['methodSelection'].value === false" class="col-md-4" style="padding-left: 0px;">
+                  <div class="input-group orgSelector">
+                    <file-chooser
+                            [property]="f['subjectImported']"
+                            validMaxSize="50"
+                            htmlId="subjectImported"
+                            validType="xlsx">
+                    </file-chooser>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="margin-top: 0px; width: 40%">
+                <div style="display: flex">
+                  <label class="ui-g-12 ui-md-6 ui-lg-6 control-label vt-align-left" style="padding: unset !important; margin: auto" *ngIf="form.get('methodSelection').value === true">
+                    Theo đơn vị
+                  </label>
+                  <div class="col-md-9" style="max-width: 100%;" *ngIf="form.get('methodSelection').value === true">
+                    <multi-org-selector [property]="f['applicableOrg']" operationKey="action.view"
+                                        adResourceKey="CTCT_COMPETITION_PROGRAM"
+                                        (onChange)="validateOrg()">
+                    </multi-org-selector>
+                    <app-control-messages [control]="f['applicableOrg']"></app-control-messages>
+                  </div>
+                </div>
+
+                <div class="vt-align-right" *ngIf="form.get('methodSelection').value === true">
+                  <p-checkbox
+                          [formControl]="f['isLongLeave']"
+                          binary="true"
+                          label="Bao gồm đối tượng nghỉ dài ngày"
+                  ></p-checkbox>
+                </div>
+
+                <div class="ui-g-12 vt-align-left" *ngIf="form.get('methodSelection').value === true && isTimeError">
+                  <small class="text-danger errorMessage">
+                    Bạn chưa chọn thời gian áp dụng chương trình thi đua
+                  </small>
+                </div>
+                <div class="ui-g-12 vt-align-left" *ngIf="isApplicationError" >
+                  <small class="text-danger errorMessage">
+                    Bạn chưa chọn nhóm đối tượng
+                  </small>
+                </div>
+                <div class="ui-g-12 vt-align-left" *ngIf="form.get('methodSelection').value === true && orgRequired">
+                  <small class="text-danger errorMessage">
+                    Bạn chưa chọn đơn vị
+                  </small>
+                </div>
+                <div class="ui-g-12 vt-align-left" *ngIf="form.get('methodSelection').value === false">
+                  <button style="border: none; outline: none; color: #0681ee" type="submit" class="" (click)="downloadTemplate()"
+                          [innerHTML]="'partymember.download.file.teamplate' | translate"></button>
+                </div>
+                <div class="ui-g-12 vt-align-left" *ngIf="form.get('methodSelection').value === false && fileRequired">
+                  <small class="text-danger errorMessage">
+                    Bạn chưa chọn file import
+                  </small>
+                </div>
+
+              </div>
+            </div>
+            <div *ngIf="dataError">
+              <import-error [data]="dataError"></import-error>
+            </div>
+            <div class="table-wrapper table-responsive" *ngIf="form.get('methodSelection').value === true">
+              <p-table [value]="resultList" [paginator]="true" (onLazyLoad)="handlePreview($event)"
+                       [lazyLoadOnInit]="false"
+                       [lazy]="true" [rows]="changeRow" [totalRecords]="totalRecords" [responsive]="true"
+                       [first]="first"
+                       [ngClass]="{'show-org-expried' : showOrgExpried}"
+                       tableStyleClass="table table-wrapper table-hover table-striped b-t b-b">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th class="size-6" pSortableColumn="code">
+                      STT
+                      <p-sortIcon field="code"></p-sortIcon>
+                    </th>
+                    <th class="size-7" pSortableColumn="expiredDate">
+                      Mã nhân viên/Mã đơn vị
+                      <p-sortIcon field="expiredDate"></p-sortIcon>
+                    </th>
+                    <th class="size-9" pSortableColumn="expiredDate">
+                      Tên
+                      <p-sortIcon field="expiredDate"></p-sortIcon>
+                    </th>
+                    <th class="size-00" pSortableColumn="name">
+                      Đơn vị
+                      <p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th class="size-8" pSortableColumn="expiredDate">
+                      Email
+                      <p-sortIcon field="expiredDate"></p-sortIcon>
+                    </th>
+                    <th class="size-8" pSortableColumn="expiredDate">
+                      Số điện thoại
+                      <p-sortIcon field="expiredDate"></p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-index="rowIndex">
+                  <!-- isExpried -->
+                  <tr #row>
+                    <td class="vt-align-center">
+                        {{sumStt(index, 1)}}
+                    </td>
+                    <td class="vt-align-center">
+                      {{item.employeeCode}}
+                    </td>
+                    <td>
+                      {{item.employeeName}}
+                    </td>
+                    <td>{{item.organization}}</td>
+                    <td class="vt-align-center">
+                      {{item.email}}
+                    </td>
+                    <td class="vt-align-center">
+                      {{item.phoneNumber}}
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr class="emptymessage">
+                    <td [attr.colspan]="12" [innerHTML]="'app.noRecords' | translate">
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="paginatorleft">
+                  <div class="table-footer-sumary">
+                  <span *ngIf="totalRecords < 10 && totalRecords > 0">
+                    {{'common.tableSumary.find' | translate}} {{totalRecords}}, {{'common.tableSumary.showAll' | translate}}
+                  </span>
+                  <span *ngIf="totalRecords >= 10">
+                    {{'common.tableSumary.find' | translate}} {{totalRecords}}, {{'common.tableSumary.showFrom' | translate}} {{sum(this.first, 1)}} {{'common.tableSumary.showTo' | translate}}
+                                    {{sum(this.first, parseInt(resultList.length))}}
+                  </span>
+                  </div>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+          <div class="vt-area-button" style="width: 100%; margin-top: 20px">
+            <button type="button" (click)="clodeModal()" class="btn btn-sm btn-danger"
+                    [innerHTML]="'common.button.out' | translate"></button>
+            <button type="submit" class="btn btn-sm btn-info" (click)="applyListStaff()"
+                    *ngIf="form.get('methodSelection').value === true">
+              Áp dụng
+            </button>
+            <button type="submit" class="btn btn-sm btn-info" (click)="processImport()"
+                    *ngIf="form.get('methodSelection').value === false">
+              Import
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

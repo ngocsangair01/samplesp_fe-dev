@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ffb32d"/>
+      <stop offset="1" stop-color="#fd9821"/>
+    </linearGradient>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_10991" data-name="Rectangle 10991" width="52" height="52" transform="translate(674 877)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Group_19668" data-name="Group 19668" transform="translate(-527 -393)">
+    <rect id="Rectangle_10625" data-name="Rectangle 10625" width="100" height="100" rx="24" transform="translate(527 393)" fill="url(#linear-gradient)"/>
+    <g id="Mask_Group_19458" data-name="Mask Group 19458" transform="translate(-123 -460)" clip-path="url(#clip-path)">
+      <g id="kiosk" transform="translate(674 877.92)">
+        <g id="Layer_2" data-name="Layer 2">
+          <g id="Layer_1" data-name="Layer 1">
+            <g id="kiosk-2" data-name="kiosk">
+              <path id="Path_63724" data-name="Path 63724" d="M17.718,50.115A7.485,7.485,0,1,1,25.2,42.63,7.485,7.485,0,0,1,17.718,50.115Zm0-10.567A3.082,3.082,0,1,0,20.8,42.63a3.082,3.082,0,0,0-3.082-3.082Z" fill="#fff"/>
+              <path id="Path_63725" data-name="Path 63725" d="M12.434,44.832H6.763a2.2,2.2,0,0,1-2.2-2.2V21.064a2.2,2.2,0,0,1,4.4,0V40.438h3.47a2.2,2.2,0,0,1,0,4.4Z" fill="#fff"/>
+              <path id="Path_63726" data-name="Path 63726" d="M43.634,44.832H23a2.2,2.2,0,0,1,0-4.4H41.433V21.055a2.2,2.2,0,1,1,4.4,0V42.63a2.2,2.2,0,0,1-2.2,2.2Z" fill="#fff"/>
+              <path id="Path_63727" data-name="Path 63727" d="M19.453,23.389a7.925,7.925,0,0,1-7.925-7.925V12.24a2.2,2.2,0,1,1,4.4,0v3.2a3.549,3.549,0,0,0,7.1,0v-3.2a2.2,2.2,0,0,1,4.4,0v3.2a7.925,7.925,0,0,1-7.978,7.952Z" fill="#fff"/>
+              <path id="Path_63728" data-name="Path 63728" d="M30.945,23.389a7.925,7.925,0,0,1-7.925-7.925V12.24a2.2,2.2,0,0,1,4.4,0v3.2a3.544,3.544,0,0,0,7.089,0v-3.2a2.2,2.2,0,0,1,4.4,0v3.2a7.925,7.925,0,0,1-7.97,7.952Z" fill="#fff"/>
+              <path id="Path_63729" data-name="Path 63729" d="M42.445,23.389a7.925,7.925,0,0,1-7.925-7.925V12.24a2.2,2.2,0,1,1,4.4,0v3.2a3.549,3.549,0,1,0,7.1,0V14.09a4.676,4.676,0,0,0-.634-2.342L42.375,6.684A4.606,4.606,0,0,0,38.4,4.4H11.985A4.632,4.632,0,0,0,8.022,6.684L5.037,11.756A4.676,4.676,0,0,0,4.4,14.09v1.339a3.549,3.549,0,1,0,7.1,0V12.24a2.2,2.2,0,1,1,4.4,0v3.2a7.952,7.952,0,0,1-15.9,0V14.09a9.061,9.061,0,0,1,1.242-4.57L4.227,4.447a9.053,9.053,0,0,1,7.767-4.4H38.412a9.053,9.053,0,0,1,7.767,4.447l2.985,5.081A9.061,9.061,0,0,1,50.4,14.09v1.339a7.925,7.925,0,0,1-7.952,7.961Z" fill="#fff"/>
+              <path id="Path_63730" data-name="Path 63730" d="M43.634,49.191a2.193,2.193,0,0,1-2.2-2.2v-4.4a2.193,2.193,0,0,1,2.2-2.2H49.8a2.2,2.2,0,0,1,0,4.4H45.836v2.157a2.193,2.193,0,0,1-2.2,2.246Z" fill="#fff"/>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

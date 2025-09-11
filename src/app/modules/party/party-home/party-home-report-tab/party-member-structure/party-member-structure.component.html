@@ -1,0 +1,29 @@
+<div class="panel panel-default homeWarning" style="height: 312px;">
+    <div class="panel-heading">
+        <strong class="text-u-c">
+           {{title}}
+        </strong>
+    </div>
+    <div class="panel-body padding-top-0 ">
+        <div class="display-table w-100">
+            <label class="table-cell text-mute">
+                    {{partyName}} {{myDate}}
+            </label>
+            <div class="table-cell vt-align-right">
+                <div class="ui-report-action">
+                    <a (click)="onReport()" class="icon-home2"><i class="fa fa-download text-mute"></i></a> 
+                    <a (click)="actionOpenFormSearch()" class="icon-home2"><i class="fa fa-cog text-mute"></i></a>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isHaveData" class="div-pie">
+            <p-chart #chartPie type="pie" height="240px" [data]="dataStructure" [options]="basicOptions"></p-chart>
+            <div id="legendStructure" class="panel-body" [innerHTML] = "innerHTMLLegend"></div>
+        </div>
+        <div *ngIf="!isHaveData" class="no-data">
+            <i class="fa ico-no-data-pie"></i>
+            <br/>
+            <i>Không có dữ liệu</i>
+        </div>
+    </div>
+  </div>

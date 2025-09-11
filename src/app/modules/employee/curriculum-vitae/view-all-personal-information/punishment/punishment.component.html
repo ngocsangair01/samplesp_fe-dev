@@ -1,0 +1,170 @@
+<div class="card-emp">
+  <div id="personalPunishment" class="card card-info">
+    <div class="card-header">
+      <div>
+        <img class="header-icon" [ngClass]="{'transform-icon': hidePersonalPunishment === true}" src="./../../../../../../assets/images/home/Group_18932.png" (click)="hidePersonalPunishment = !hidePersonalPunishment">
+        {{'personalPunishment.titleGrid' | translate}}
+      </div>
+    </div>
+    <div *ngIf="!hidePersonalPunishment" class="card-body">
+      <div class="panel-body panel-table">
+        <p-table
+            #ptable
+            [value]="resultList.data"
+            [paginator]="true"
+            (onLazyLoad)="processSearchPunishmentForEmployee(employeeId,$event)"
+            [lazy]="true" [rows]="changeRow"
+            [totalRecords]="resultList.recordsTotal"
+            [scrollable]="true"
+            [lazyLoadOnInit]="false"
+            tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+            [resizableColumns]="true">
+              <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                  <col style="width: 50px;">
+                  <col style="width: 50px;">
+                  <col style="width: 100px;">
+                  <col style="width: 200px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;">
+                  <col style="width: 200px;">
+                  <col style="width: 200px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;">
+                  <col style="width: 200px;">
+                </colgroup>
+              </ng-template>
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pResizableColumn></th> 
+                  <th pResizableColumn>{{'common.table.index' | translate}}</th>
+                  <th [pSortableColumn]="'orgCode'" pResizableColumn>
+                    {{'personalPunishment.orgCode' | translate}}
+                    <p-sortIcon [field]="'orgCode'"></p-sortIcon>
+                  </th>
+                  <th [pSortableColumn]="'orgName'" pResizableColumn>
+                    {{'personalPunishment.orgName' | translate}} 
+                    <p-sortIcon [field]="'orgName'"></p-sortIcon>
+                  </th>
+                  <th [pSortableColumn]="'decissionNumber'" pResizableColumn>
+                    {{'personalPunishment.decissionNumber' | translate}}
+                    <p-sortIcon [field]="'decissionNumber'"></p-sortIcon>
+                  </th>
+                  <th [pSortableColumn]="'signedDate'" pResizableColumn>
+                    {{'personalPunishment.signedDate' | translate}}
+                    <p-sortIcon [field]="'signedDate'"></p-sortIcon>
+                  </th>
+                  <th [pSortableColumn]="'decissionLevelName'" pResizableColumn>
+                    {{'personalPunishment.decissionLevel' | translate}}
+                    <p-sortIcon [field]="'decissionLevelName'"></p-sortIcon>
+                  </th>
+                  <th [pSortableColumn]="'signer'" pResizableColumn>
+                    {{'personalPunishment.employeeName' | translate}}
+                    <p-sortIcon [field]="'signer'"></p-sortIcon>
+                  </th>
+                  <th [pSortableColumn]="'punishmentTypeName'" pResizableColumn>
+                    {{'personalPunishment.punishmentType' | translate}}
+                    <p-sortIcon [field]="'punishmentTypeName'"></p-sortIcon>
+                  </th>
+                  <th [pSortableColumn]="'reason'" pResizableColumn>
+                    {{'personalPunishment.reason' | translate}}
+                    <p-sortIcon [field]="'reason'"></p-sortIcon>
+                  </th>
+                  <th [pSortableColumn]="'physicalResponsibility'" pResizableColumn>
+                    {{'personalPunishment.physicalResponsibility' | translate}}
+                    <p-sortIcon [field]="'physicalResponsibility'"></p-sortIcon>
+                  </th>
+                  <th [pSortableColumn]="'punishmentFormName'" pResizableColumn>
+                    {{'personalPunishment.punishmentForm' | translate}}
+                    <p-sortIcon [field]="'punishmentFormName'"></p-sortIcon>
+                  </th>
+                  <th [pSortableColumn]="'partyPunishmentFormName'" pResizableColumn>
+                    {{'personalPunishment.partyPunishmentForm' | translate}}
+                    <p-sortIcon [field]="'partyPunishmentFormName'"></p-sortIcon>
+                  </th>
+                  <th [pSortableColumn]="'note'" pResizableColumn>
+                    {{'personalPunishment.note' | translate}}
+                    <p-sortIcon [field]="'note'"></p-sortIcon>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                <!--body-->
+                <tr>
+                  <td class="vt-align-center" style="overflow: initial !important;">
+                    <div ngbDropdown class="d-inline-block">
+                        <div ngbDropdownToggle class="vt-action-hover">
+                            <img class="menu-icon" src="./../../../assets/images/home/Icon.svg">
+                        </div>
+                        <div ngbDropdownMenu class="vt-border-radius">
+                          <!-- Sửa -->
+                          <button *ngIf="hasPermission('action.update')" class="dropdown-item"
+                                  (click)="prepareSaveOrUpdate(item)"
+                                  [innerHTML]="'common.button.table.acteditdropdown' | translate">
+                          </button>
+                          <!-- Xóa -->
+                          <button *ngIf="hasPermission('action.delete')" class="dropdown-item"
+                                  (click)="processDelete(item)"
+                                  [innerHTML]="'common.button.icon.delete' | translate">
+                          </button>
+                        </div>
+                    </div>
+                  </td>
+                  <td class="vt-align-center">{{index}}</td>
+                  <td class="vt-align-center">
+                    {{item.orgCode}}
+                  </td>
+                  <td class="vt-align-left">
+                    {{item.orgName}}
+                  </td>
+                  <td class="vt-align-left">
+                    {{item.decissionNumber}}
+                  </td>
+                  <td class="vt-align-center">
+                    {{item.signedDate | displayDate}}
+                  </td>
+                  <td class="vt-align-left">
+                    {{item.decissionLevelName}}
+                  </td>
+                  <td class="vt-align-left">
+                    {{item.signer}}
+                  </td>
+                  <td class="vt-align-left">
+                    {{item.punishmentTypeName}}
+                  </td>
+                  <td class="vt-align-left">
+                    {{item.reason}}
+                  </td>
+                  <td class="vt-align-left">
+                    {{item.physicalResponsibility}}
+                  </td>
+                  <td class="vt-align-left">
+                    {{item.punishmentFormName}}
+                  </td>
+                  <td class="vt-align-left">
+                    {{item.partyPunishmentFormName}}
+                  </td>
+                  <td class="vt-align-left">
+                    {{item.note}}
+                  </td>
+                </tr>
+              </ng-template>
+              
+              <ng-template pTemplate="emptymessage">
+                <tr class="emptymessage">
+                  <td [attr.colspan]="10" [innerHTML]="'app.noRecords' | translate">
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="paginatorleft">
+                <table-footer (changeRow)="onTablePageChange($event)"  [resultList]="resultList"></table-footer>
+              </ng-template>
+            </p-table>
+      </div>
+    </div>
+  </div>
+</div>
+

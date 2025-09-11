@@ -1,0 +1,79 @@
+<div class="nation-picker display-table picker w100">
+  <div class="table-cell nation-flag" *ngIf="nationConfigType">
+    <button class="btn btn-icon btn-append"
+      type="button" [ngClass]="{'btn-icon-info' : property.value}"
+      (click)="op.toggle($event); focusInputSearch();">
+      <span class="{{nationSelected? nationSelected.icon : ''}}" [ngClass]="{'glyphicons glyphicons-globe-af': !nationSelected.icon}"></span>
+    </button>
+    <p-overlayPanel #op [dismissable]="true" styleClass="panel-nation" [showCloseIcon]="false" appendTo="body" baseZIndex="20000">
+      <div class="nation-picker-search ui-dropdown-panel">
+        <div class="ui-dropdown-filter-container">
+          <input class="ui-dropdown-filter ui-inputtext ui-widget ui-state-default ui-corner-all" autocomplete="off" type="text"
+          [(ngModel)]="nationFilter"
+          (focus)="op.show($event)"
+          (keyup.arrowdown)="focusElement()"
+          (keyup.arrowup)="focusElement()"
+          (keydown.arrowdown)="changeIndex(1)"
+          (keydown.arrowup)="changeIndex(-1)"
+          (keyup.enter)="choseFocusNation();op.hide();"
+          #inputSearch
+          >
+          <span class="ui-dropdown-filter-icon pi pi-search" style="pointer-events: none"></span>
+        </div>
+      </div>
+      <div class="panel-location-nation">
+        <ul class="sys-ul">
+          <li *ngFor="let nation of listNation | findBy: nationFilter : ['name', 'code']; index as i" (click)="choseNation(nation); op.hide();">
+            <button [tabIndex]="i" class="display-table flag-item"
+              [ngClass]="{selected: nation == nationSelected}"
+              #btnItem
+            >
+              <div class="table-cell flag-img">
+                <span class="{{nation.icon}}" [ngClass]="{'glyphicons glyphicons-globe-af': !nation.icon}"></span>
+              </div>
+              <div class="table-cell">
+                {{nation.name}}
+              </div>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </p-overlayPanel>
+  </div>
+  <div class="table-cell nation-input">
+    <p-dropdown *ngIf="!group"
+      [options]="listData"
+      [(ngModel)]="selectedValue"
+      [filter]="filter"
+      [placeholder]="placeHolder | translate"
+      (ngModelChange)="selectedChange()"
+      [showClear]="checkShowClear && isDisplayClear"
+      [disabled]="disabled ? true : false"
+      [autofocus] = "autofocus"
+      [appendTo]="appendTo"
+      [attr.dataName]="property.propertyName"
+      [emptyFilterMessage]="emptyFilterMessage"
+      [resetFilterOnHide] = "true"
+      #dropDown
+      >
+    </p-dropdown>
+    <p-dropdown *ngIf="group"
+      [options]="listDataGroup"
+      [(ngModel)]="selectedValue"
+      [filter]="filter"
+      [placeholder]="placeHolder | translate"
+      (ngModelChange)="selectedChange()"
+      [showClear]="checkShowClear && isDisplayClear"
+      [disabled]="disabled ? true : false"
+      [autofocus] = "autofocus"
+      [appendTo]="appendTo"
+      [attr.dataName]="property.propertyName"
+      [emptyFilterMessage]="emptyFilterMessage"
+      [group]="true"
+      [resetFilterOnHide] = "true"
+      #dropDown
+      >
+    </p-dropdown>
+  </div>
+</div>
+

@@ -1,0 +1,556 @@
+<div id="searchArea">
+    <div class="panel panel-default">
+        <div class="panel-heading" translate>
+            <strong class="text-u-c">
+                <i class="fa fa-th"></i>
+                common.label.search.info
+            </strong>
+        </div>
+        <form id="formSearch" [formGroup]="formSearch">
+            <div class="panel-body padding-xl ui-g">
+                <div class="ui-g-12 vt-row">
+                    <!-- Quyết định -->
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                        {{'rewardPayment.reporting.RewardPropose' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <select-filter [property]="f['rewardProposeSignId']"
+                                       [options]="listRewardProposeSign"
+                                       optionLabel="name"
+                                       optionValue="rewardProposeSignId" [placeHolder]="'common.label.cboSelectAll'"
+                                       disabled="1">
+                        </select-filter>
+                        <app-control-messages [control]="f['rewardProposeSignId']"></app-control-messages>
+                    </div>
+                    <!-- Đơn vị -->
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                        {{'rewardPayment.reporting.Organization' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <org-selector [property]="f['organizationId']" operationKey="action.view"
+                                      adResourceKey="resource.rewardPropose" [defaultValue]="true"
+                                      (onChange)="onProposeOrgChange($event)"
+                                      disabled="1">
+                        </org-selector>
+                        <app-control-messages [control]="f['organizationId']"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+                    <!-- Loại bảng THTT -->
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                        {{'rewardPayment.reporting.type' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <input type="text" class="form form-control" name="type"
+                               formControlName="type" maxlength="200"  disabled="1">
+                        <app-control-messages [control]="f['type']"></app-control-messages>
+                    </div>
+                    <!--    Phòng ban      -->
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                        {{'rewardPayment.reporting.Department' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <input type="text" class="form form-control" name="departmentValue"
+                               formControlName="departmentValue" maxlength="200" disabled="1">
+                        <app-control-messages [control]="f['departmentValue']"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+                    <!-- Người yêu cầu -->
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                        {{'rewardPayment.reporting.Requester' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <input type="text" class="form form-control" name="requesterValue"
+                               formControlName="requesterValue" maxlength="200" disabled="1">
+                        <app-control-messages [control]="f['requesterValue']"></app-control-messages>
+                    </div>
+                    <!--    Email kế toán                -->
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                        {{'rewardPayment.reporting.AccountantEmail' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <input type="text" class="form form-control" name="email"
+                               formControlName="email" maxlength="200" disabled="1">
+                        <app-control-messages [control]="f['email']"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row" >
+                    <!-- Số chứng từ -->
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                        {{'rewardPayment.reporting.DocumentNo' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <input type="text" class="form form-control" name="documentNo" formControlName="documentNo"
+                               maxlength="200" disabled="1">
+                        <app-control-messages [control]="f['documentNo']"></app-control-messages>
+                    </div>
+                    <!--    Ngày chứng từ               -->
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                        {{'rewardPayment.reporting.TransDate' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <input type="text" class="form form-control" name="transDate" formControlName="transDate"
+                               maxlength="200" disabled="1">
+                        <app-control-messages [control]="f['transDate']"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+                    <!-- Nội dung -->
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                        {{'rewardPayment.reporting.Description' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <input type="text" class="form form-control" name="description" formControlName="description"
+                               maxlength="200" disabled="1">
+                        <app-control-messages [control]="f['description']"></app-control-messages>
+                    </div>
+                    <!--    Tờ trình        -->
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                        {{'rewardPayment.reporting.documentNoStatement' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <input type="text" class="form form-control" name="documentNoStatement"
+                               formControlName="documentNoStatement" maxlength="200" disabled="1">
+                        <app-control-messages [control]="f['documentNoStatement']"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+                    <!-- Tổng tiền thanh toán -->
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                        {{'rewardPayment.reporting.TotalAmount' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <input type="text" class="form form-control" name="totalAmount" formControlName="totalAmount"
+                               maxlength="200" disabled="1">
+                        <app-control-messages [control]="f['totalAmount']"></app-control-messages>
+                    </div>
+                    <!--    Trạng thái thanh toán     -->
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                        {{'rewardPayment.reporting.PaymentStatus' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <select-filter [property]="f['paymentStatus']"
+                                       [options]="paymentStatusList"
+                                       optionLabel="label"
+                                       optionValue="value"
+                                       [placeHolder]="'common.label.cboMustSelect'"
+                                       disabled="1">
+                        </select-filter>
+                        <app-control-messages [control]="f['paymentStatus']"></app-control-messages>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="listArea" class="reward-genral-search">
+    <div class="scollTable panel panel-default">
+        <div class="panel-heading vt-relative">
+            <strong class="text-u-c">
+                <i class="fa fa-th"></i>
+                &nbsp;{{ 'tab.label.invoice' | translate }}
+            </strong>
+            <div class="show-btn-right-header">
+                <button type="button" class="btn btn-sm vt-btn btn-submit" *ngIf="hasPermission('action.insert')"
+                        (click)="exportInvoice()"
+                        [innerHTML]="'tab.label.exportInvoice' | translate"></button>
+            </div>
+        </div>
+        <div>
+            <div class="panel-body panel-table" style="padding: 12px;">
+                <p-table [scrollable]="true" [value]="listReimbursementInvoice" [paginator]="true"
+                         [first]="firstRowIndex" [rows]="pageSize"
+                         [totalRecords]="listReimbursementInvoice ? listReimbursementInvoice.length : 0"
+                         tableStyleClass="table controls-table table-wrapper b-t b-b">
+                    <div class="tbl-panel">
+                        <ng-template pTemplate="colgroup" let-columns>
+                            <colgroup>
+                                <col class="size-1">
+                                <col class="size-8">
+                                <col class="size-8">
+                                <col class="size-10">
+                                <col class="size-5">
+                                <col class="size-5">
+                                <col class="size-7">
+                                <col class="size-5">
+                                <col class="size-5">
+                                <col class="size-5">
+                                <col class="size-5">
+                                <col class="size-5">
+                                <col class="size-12">
+                                <col class="size-5">
+                                <col class="size-5">
+                                <col class="size-5">
+                                <col class="size-5">
+                                <col class="size-9">
+                                <col class="size-10">
+                                <col class="size-9">
+                                <col class="size-9">
+                                <col class="size-9">
+                                <col class="size-9">
+                                <col class="size-9">
+                                <col class="size-9">
+                                <col class="size-9">
+                                <col class="size-9">
+                            </colgroup>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th translate>common.table.index</th>
+
+                                <!-- noi dung-->
+                                <th translate>rewardPropose.invoice.description</th>
+                                <!-- ky hieu hoa don-->
+                                <th translate>rewardPropose.invoice.symbol</th>
+                                <!-- so hoa don-->
+                                <th translate>
+                                    <span>rewardPropose.invoice.invoiceNo</span></th>
+
+                                <!--ngay hoa don-->
+                                <th translate>rewardPropose.invoice.transDate</th>
+
+                                <!--Doi tuong cong no -->
+                                <th translate><span>rewardPropose.invoice.partnerCode</span>
+                                </th>
+                                <!-- Ho va ten-->
+                                <th translate>rewardPropose.appendix.FULL_NAME</th>
+                                <!-- Ma nhan vien-->
+                                <th translate>
+                                    <span>rewardPropose.appendix.EMPLOYEE_CODE</span></th>
+                                <!-- so tien hoa don -->
+                                <th translate>rewardPropose.invoice.requestBeforeTaxAmount</th>
+
+                                <!-- trang thai-->
+                                <th translate>rewardPropose.invoice.synStatus</th>
+
+                                <!--trạng thái thanh toán-->
+                                <th translate>rewardPayment.reporting.PaymentStatus</th>
+
+                                <!--trạng thái đề nghị chuyển tiền-->
+                                <th translate>rewardPayment.reporting.SignerStatus</th>
+
+                                <!--mo ta-->
+                                <th translate>rewardPropose.invoiceLine.description</th>
+
+                                <!--                                &lt;!&ndash; so tien &ndash;&gt;-->
+                                <!--                                <th translate>rewardPropose.invoice.amount</th>-->
+                                <!-- Trung tam chi phi-->
+                                <th translate>rewardPropose.invoice.costCenterCode</th>
+
+                                <!--nguon kinh phi khen thuong-->
+                                <th translate>rewardPropose.invoice.budgetCode</th>
+
+                                <!-- so tai khoan-->
+                                <th translate>rewardPropose.invoice.bankAccountNo</th>
+                                <!-- ten ngan hang-->
+                                <th translate>rewardPropose.invoice.bankName</th>
+
+                                <!--ten chu tai khoan-->
+                                <th translate>rewardPropose.invoice.bankAccountName</th>
+
+
+                                <!--Ma giao dich-->
+                                <th translate>rewardPropose.invoice.synKeyInvoiceLine</th>
+                                <!--Mã ngân hàng-->
+                                <th>Mã ngân hàng</th>
+
+                                <th>Tài khoản hạch toán</th>
+                                <th>Kỳ thanh toán</th>
+                                <th>Hạn thanh toán</th>
+
+                                <th>Trạng thái hóa đơn</th>
+                                <th>Mô tả chi tiết lỗi</th>
+                                <th>Line tờ trình SAP</th>
+                                <th>Phương thức thanh toán</th>
+
+                                <!--                                &lt;!&ndash; Đơn vị  &ndash;&gt;-->
+                                <!--                                <th translate><span>rewardPropose.invoice.organization</span>-->
+                                <!--                                </th>-->
+                                <!-- Chi tieest thu nhap-->
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-item let-index="rowIndex">
+                            <tr>
+                                <td class="vt-align-center">
+                                    {{index + 1}}
+                                </td>
+                                <!-- noi dung-->
+                                <td class="vt-align-center">
+                                    {{item.description}}
+                                </td>
+                                <!-- ky hieu hoa don-->
+                                <td class="vt-align-center">
+                                    {{item.symbol}}
+                                </td>
+                                <!-- so hoa don-->
+                                <td class="vt-align-center">
+                                    {{item.invoiceNo}}
+                                </td>
+
+                                <!--ngay hoa don-->
+                                <td class="vt-align-center">
+                                    {{item.transDate}}
+                                </td>
+
+                                <!--Doi tuong cong no -->
+                                <td class="vt-align-center">
+                                    {{item.partnerCode}}
+                                </td>
+                                <td class="vt-align-center">
+                                    {{item.fullName}}
+                                </td>
+                                <td class="vt-align-center">
+                                    {{item.employeeCode}}
+                                </td>
+                                <!-- so tien hoa don -->
+                                <td class="vt-align-center">
+                                    {{item.requestBeforeTaxAmount | number}}
+                                </td>
+
+                                <!-- trang thai-->
+                                <td class="vt-align-center">
+                                    {{item.synStatus}}
+                                </td>
+
+                                <!--trạng thái thanh toán-->
+                                <td class="vt-align-left">
+                                    <span *ngIf="item.paymentStatus == 0">Chưa tạo bảng THTT</span>
+                                    <span *ngIf="item.paymentStatus == 1">Tài chính chưa duyệt</span>
+                                    <span *ngIf="item.paymentStatus == 2">TC đã duyệt</span>
+                                    <span *ngIf="item.paymentStatus == 3">Lỗi khi tạo bảng THTT</span>
+                                    <span *ngIf="item.paymentStatus == 4">Hủy tính thuế</span>
+                                    <span *ngIf="item.paymentStatus == 5">Dữ liệu lỗi</span>
+                                    <span *ngIf="item.paymentStatus == 6">Đã tính thuế TNCN thành công</span>
+                                    <span *ngIf="item.paymentStatus == 7">Đã hạch toán</span>
+                                    <span *ngIf="item.paymentStatus == 8">Đã ký Voffice</span>
+                                    <span *ngIf="item.paymentStatus == 9">Đã tạo Đề nghị chuyển tiền</span>
+                                    <span *ngIf="item.paymentStatus == 10">Đã chi tiền</span>
+                                </td>
+
+                                <!--trạng thái đề nghị chuyển tiền-->
+                                <td class="vt-align-center">
+                                    <span *ngIf="item.signerStatus == '0'">Chưa ký</span>
+                                    <span *ngIf="item.signerStatus == '1'">Văn thư từ chối</span>
+                                    <span *ngIf="item.signerStatus == '2'">Lãnh đạo từ chối</span>
+                                    <span *ngIf="item.signerStatus == '3'">Đã phê duyệt</span>
+                                    <span *ngIf="item.signerStatus == '4'">Hủy luồng</span>
+                                    <span *ngIf="item.signerStatus == '5'">Đã ban hành</span>
+                                    <span *ngIf="item.signerStatus == '10'">Chờ ký</span>
+                                </td>
+
+                                <!--mo ta-->
+                                <td class="vt-align-center">
+                                    {{item.descriptionLine}}
+                                </td>
+                                <!-- Trung tam chi phi-->
+                                <td class="vt-align-center">
+                                    {{item.costCenterCode}}
+                                </td>
+
+                                <!--nguon kinh phi khen thuong-->
+                                <td class="vt-align-center">
+                                    {{item.budgetCode}}
+                                </td>
+
+                                <!-- so tai khoan-->
+                                <td class="vt-align-center">
+                                    {{item.bankAccountNo}}
+                                </td>
+                                <!-- ten ngan hang-->
+                                <td class="vt-align-center">
+                                    {{item.bankName}}
+                                </td>
+
+                                <!--ten chu tai khoan-->
+                                <td class="vt-align-center">
+                                    {{item.bankAccountName}}
+                                </td>
+
+
+                                <!--Ma giao dich-->
+                                <td class="vt-align-center">
+                                    {{item.synKeyInvoiceLine}}
+                                </td>
+                                <!--Ma ngân hàng-->
+                                <td class="vt-align-center">
+                                    {{item.bankKey}}
+                                </td>
+                                <!--Tài khoản hạch toán-->
+                                <td class="vt-align-center">
+                                    {{item.accountDrCode}}
+                                </td>
+                                <!--Kỳ thanh toán-->
+                                <td class="vt-align-center">
+                                    {{item.expensePeriod}}
+                                </td>
+                                <!-- Hạn thanh toán-->
+                                <td class="vt-align-center">
+                                    {{item.baselineDate}}
+                                </td>
+
+                                <!-- Trạng thái hóa đơn  -->
+                                <td class="vt-align-left">
+                                    {{item.sapInvNoStatus}}
+                                </td>
+                                
+                                <!-- Mô tả chi tiết lỗi  -->
+                                <td class="vt-align-center" (click)="openModal(item.sapInvNoMsg)">
+                                    {{item.sapInvNoMsg}}
+                                </td>
+                                <!-- Line tờ trình SAP  -->
+                                <td class="vt-align-center">
+                                    {{item.fundReservationLine}}
+                                </td>
+                                <!-- phương thức thanh toán  -->
+                                <td class="vt-align-center">
+                                    {{item.paymentMethod}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </div>
+                </p-table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--<div id="listArea" class="reward-genral-search">-->
+<!--    <div class="scollTable panel panel-default">-->
+<!--        <div class="panel-heading vt-relative">-->
+<!--            <strong class="text-u-c">-->
+<!--                <i class="fa fa-th"></i>-->
+<!--                &nbsp;{{ 'tab.label.tax' | translate }}-->
+<!--            </strong>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <div class="panel-body panel-table" style="padding: 12px;">-->
+<!--                <p-table [scrollable]="true" [value]="listVfsPitAppendix" [paginator]="true"-->
+<!--                         [first]="firstRowIndex" [rows]="pageSize"-->
+<!--                         [totalRecords]="listVfsPitAppendix ? listVfsPitAppendix.length : 0"-->
+<!--                         tableStyleClass="table controls-table table-wrapper b-t b-b">-->
+<!--                    <div class="tbl-panel">-->
+<!--                        <ng-template pTemplate="colgroup" let-columns>-->
+<!--                            <colgroup>-->
+<!--                                <col class="size-1">-->
+<!--                                <col class="size-12">-->
+<!--                                <col class="size-7">-->
+<!--                                <col class="size-7">-->
+<!--                                <col class="size-7">-->
+<!--                                <col class="size-7">-->
+<!--                                <col class="size-5">-->
+<!--                                <col class="size-5">-->
+<!--                                <col class="size-5">-->
+<!--                                <col class="size-5">-->
+<!--                                <col class="size-5">-->
+<!--                                <col class="size-5">-->
+<!--                                <col class="size-5">-->
+<!--                                <col class="size-5">-->
+<!--                                <col class="size-5">-->
+<!--                                <col class="size-5">-->
+<!--                                <col class="size-5">-->
+<!--                            </colgroup>-->
+<!--                        </ng-template>-->
+<!--                        <ng-template pTemplate="header">-->
+<!--                            <tr>-->
+<!--                                <th translate>common.table.index</th>-->
+<!--                                &lt;!&ndash; Chi tiết hóa đơn &ndash;&gt;-->
+<!--                                <th translate>rewardPropose.appendix.synKeyInvoiceLine-->
+<!--                                </th>-->
+<!--                                &lt;!&ndash; Chi tieest thu nhap&ndash;&gt;-->
+<!--                                <th translate>rewardPropose.appendix.DETAILED_INCOME_TYPE_NAME</th>-->
+<!--                                &lt;!&ndash; Ho va ten&ndash;&gt;-->
+<!--                                <th translate>rewardPropose.appendix.FULL_NAME</th>-->
+<!--                                &lt;!&ndash; Ma nhan vien&ndash;&gt;-->
+<!--                                <th translate>-->
+<!--                                    <span>rewardPropose.appendix.EMPLOYEE_CODE</span></th>-->
+<!--                                &lt;!&ndash; Quoc tich &ndash;&gt;-->
+<!--                                <th translate><span>rewardPropose.appendix.NATIONALITY</span>-->
+<!--                                </th>-->
+<!--                                &lt;!&ndash; tinh trang cu tru &ndash;&gt;-->
+<!--                                <th translate>rewardPropose.appendix.RESIDENT_STATUS</th>-->
+<!--                                &lt;!&ndash; ma so thue&ndash;&gt;-->
+<!--                                <th translate>rewardPropose.appendix.PIT_ID_NUMBER</th>-->
+<!--                                &lt;!&ndash; so cccd/ho chieu&ndash;&gt;-->
+<!--                                <th translate>rewardPropose.appendix.ID_NUMBER</th>-->
+<!--                                &lt;!&ndash; ngay cap&ndash;&gt;-->
+<!--                                <th translate>rewardPropose.appendix.DATE_OF_ISSUE</th>-->
+<!--                                &lt;!&ndash; noi cap&ndash;&gt;-->
+<!--                                <th translate>rewardPropose.appendix.PLACE_OF_ISSUE</th>-->
+<!--                                &lt;!&ndash;so tai khoan&ndash;&gt;-->
+<!--                                <th translate>rewardPropose.appendix.ACCOUNT_NO</th>-->
+<!--                                &lt;!&ndash; ten ngan hang&ndash;&gt;-->
+<!--                                <th translate>rewardPropose.appendix.BANK_NAME</th>-->
+<!--                                &lt;!&ndash;thu nhap chiu thue&ndash;&gt;-->
+<!--                                <th translate>rewardPropose.appendix.TAXABLE_INCOME</th>-->
+<!--                                &lt;!&ndash;thu nhap mien thue&ndash;&gt;-->
+<!--                                <th translate>rewardPropose.appendix.TAX_EXEMPT_INCOME</th>-->
+<!--                                &lt;!&ndash;ky luong&ndash;&gt;-->
+<!--                                <th translate>rewardPropose.appendix.SALARY_PERIOD</th>-->
+<!--                                &lt;!&ndash;ky thanh toan&ndash;&gt;-->
+<!--                                <th translate>rewardPropose.appendix.PAYMENT_PERIOD</th>-->
+<!--                            </tr>-->
+<!--                        </ng-template>-->
+<!--                        <ng-template pTemplate="body" let-item let-index="rowIndex">-->
+<!--                            <tr>-->
+<!--                                <td class="vt-align-center">-->
+<!--                                    {{index + 1}}-->
+<!--                                </td>-->
+<!--                                <td class="vt-align-center">-->
+<!--                                    {{item.synKeyInvoiceLine}}-->
+<!--                                </td>-->
+<!--                                <td class="vt-align-center">-->
+<!--                                    {{item.detailIncomeTypeName}}-->
+<!--                                </td>-->
+<!--                                <td class="vt-align-center">-->
+<!--                                    {{item.fullName}}-->
+<!--                                </td>-->
+<!--                                <td class="vt-align-center">-->
+<!--                                    {{item.employeeCode}}-->
+<!--                                </td>-->
+<!--                                <td class="vt-align-center">-->
+<!--                                    {{item.nationalityValue}}-->
+<!--                                </td>-->
+<!--                                <td class="vt-align-center">-->
+<!--                                    {{item.residentStatus}}-->
+<!--                                </td>-->
+<!--                                <td class="vt-align-center">-->
+<!--                                    {{item.pitIdNumber}}-->
+<!--                                </td>-->
+<!--                                <td class="vt-align-center">-->
+<!--                                    {{item.idNumber}}-->
+<!--                                </td>-->
+<!--                                <td class="vt-align-center">-->
+<!--                                    {{item.dateOfIssue | date: 'dd/MM/yyyy'}}-->
+<!--                                </td>-->
+<!--                                <td class="vt-align-center">-->
+<!--                                    {{item.placeOfIssue}}-->
+<!--                                </td>-->
+<!--                                <td class="vt-align-center">-->
+<!--                                    {{item.accountNo}}-->
+<!--                                </td>-->
+<!--                                <td class="vt-align-center">-->
+<!--                                    {{item.bankName}}-->
+<!--                                </td>-->
+<!--                                <td class="vt-align-center">-->
+<!--                                    {{item.taxableIncome}}-->
+<!--                                </td>-->
+<!--                                <td class="vt-align-center">-->
+<!--                                    {{item.taxExemptIncome}}-->
+<!--                                </td>-->
+<!--                                <td class="vt-align-center">-->
+<!--                                    {{item.salaryPeriodCode}}-->
+<!--                                </td>-->
+<!--                                <td class="vt-align-center">-->
+<!--                                    {{item.paymentPeriodCode}}-->
+<!--                                </td>-->
+<!--                        </ng-template>-->
+<!--                    </div>-->
+<!--                </p-table>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->

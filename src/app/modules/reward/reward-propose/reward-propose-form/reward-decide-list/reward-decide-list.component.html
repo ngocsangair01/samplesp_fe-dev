@@ -1,0 +1,239 @@
+<div class="content vt-nopadding">
+  <div class="no-padding-left">
+    <div class="panel panel-default">
+      <form id="formSave" [formGroup]="formSearch">
+        <div class="panel-heading">
+          <strong>
+            <!-- <span *ngIf="option == 1" translate> rewardPropose.importGroup</span>
+            <span *ngIf="option == 2" translate> rewardPropose.importEmployee</span> -->
+            <span translate>decide.rewardPropose.label.choose</span>
+          </strong>
+          <div class="vt-absolute vt-shotcut-button-in-heading">
+            <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+              class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+          </div>
+        </div>
+        <div class="panel-body padding-xl ui-g" style="justify-content: center;">
+          <div class="ui-g-12 vt-row">
+            <!-- Tên đề xuất -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'rewardPropose.rewardProposeName' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form form-control" name="name" formControlName="name" maxlength="200">
+            </div>
+            <!-- Đơn vị đề xuất -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'rewardPropose.rewardDecideOrg' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <org-selector [property]="f['proposeOrgId']" operationKey="action.view" adResourceKey="resource.rewardPropose" >
+              </org-selector>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- Lĩnh vực khen thưởng -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'rewardPropose.rewardType' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [placeHolder]="'common.label.cboMustSelect'" [property]="f['rewardType']"
+                [options]="rewardTypeList" optionLabel="name" optionValue="id"
+                [disabled]="true">
+              </select-filter>
+            </div>
+            <!-- Cấp ra quyết định -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'rewardPropose.reviewOrganization' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <org-selector [property]="f['approvalOrgId']" operationKey="action.view"
+                adResourceKey="resource.rewardPropose" [disabled]="true">
+              </org-selector>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- Trạng thái -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'decide.rewardPropose.label.status' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [placeHolder]="'common.label.cboMustSelect'" [property]="f['status']"
+                [options]="listStatus" optionLabel="name" optionValue="id"
+                [disabled]="true">
+              </select-filter>
+            </div>
+            <!-- năm -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'rewardPropose.year' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['proposeYear']" [options]="listYear" optionLabel="year" optionValue="year"
+                [placeHolder]="'common.label.cboMustSelect'" [disabled]="true">
+              </select-filter>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- kì khen thưởng -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'rewardPropose.periodType' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['periodType']" [options]="lstPeriodType" optionLabel="name" optionValue="id"
+                [placeHolder]="'common.label.cboMustSelect'" [disabled]="true">
+              </select-filter>
+            </div>
+            <!-- Đề xuất ủy quyền-->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'rewardPropose.isAuthority' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="checkbox" name="isAuthority" formControlName="isAuthority" style="width: 18px;
+                height: 1.5rem;" [attr.disabled]="true" [value]="0">
+            </div>
+          </div>
+          <div class="ui-g-12 text-center">
+            <button type="submit" class="btn btn-sm btn-info" (click)="searchData()" style="border-radius: 4px; margin-bottom: 16px;"
+            [innerHTML]="'common.button.icon.search' | translate"></button>
+          </div>
+        </div>
+        <div class="form-table">
+          <p-table #ptable [value]="formTable && formTable.data ? formTable.data : null" [(selection)]="selectedRows" selectionMode="multiple" [paginator]="true" (onLazyLoad)="searchData($event)" [lazy]="true"
+          [rows]="changeRow" [totalRecords]="formTable && formTable.recordsTotal ? formTable.recordsTotal : 0" [scrollable]="true" [lazyLoadOnInit]="false"
+          tableStyleClass="table table-wrapper table-hover table-striped b-t b-b" styleClass="controlOverflow">
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col class="size-1">
+              <col class="size-5">
+              <col class="size-12">
+              <col class="size-12">
+              <col class="size-8">
+              <col class="size-8">
+              <!-- <col class="size-6"> -->
+              <col class="size-8">
+              <!-- <col class="size-4">
+              <col class="size-12">
+              <col class="size-8">
+              <col class="size-8"> -->
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th>{{'common.table.index' | translate}}</th>
+              <th translate>common.label.action</th>
+              <th [pSortableColumn]="'name'">
+                {{'rewardPropose.rewardProposeName' | translate}}
+                <p-sortIcon [field]="'name'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'proposeOrgId'">
+                {{'rewardPropose.rewardDecideOrg' | translate}}
+                <p-sortIcon [field]="'proposeOrgId'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'approvalOrgId'">
+                {{'rewardPropose.reviewOrganization' | translate}}
+                <p-sortIcon [field]="'approvalOrgId'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="''">
+                {{'rewardPropose.rewardField' | translate}}
+                <p-sortIcon [field]="''"></p-sortIcon>
+              </th>
+              <!-- <th [pSortableColumn]="'rewardType'">
+                {{'rewardPropose.rewardType' | translate}}
+                <p-sortIcon [field]="'rewardType'"></p-sortIcon>
+              </th> -->
+              <th [pSortableColumn]="'periodType'">
+                {{'rewardPropose.periodType' | translate}}
+                <p-sortIcon [field]="'periodType'"></p-sortIcon>
+              </th>
+              <!-- <th [pSortableColumn]="'proposeYear'">
+                {{'rewardPropose.year' | translate}}
+                <p-sortIcon [field]="'proposeYear'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'signOrgId'">
+                {{'rewardPropose.signOrganization' | translate}}
+                <p-sortIcon [field]="'signOrgId'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'totalAmountOfMoney'">
+                {{'rewardPropose.amountMoney' | translate}}
+                <p-sortIcon [field]="'totalAmountOfMoney'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'status'">
+                {{'rewardPropose.statusType' | translate}}
+                <p-sortIcon [field]="'status'"></p-sortIcon>
+              </th> -->
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+            <tr>
+              <!--body-->
+              <td class="vt-align-center">{{index}}</td>
+              <td class="vt-align-center">
+                <p-tableCheckbox [value]="item"></p-tableCheckbox>
+              </td>
+              <td class="vt-align-left">
+                {{item.name}}
+              </td>
+              <td class="vt-align-left">
+                {{item.proposeOrgName}}
+              </td>
+              <td class="vt-align-left">
+                {{item.approvalOrgName}}
+              </td>
+              <td class="vt-align-left">
+                <div *ngIf="item.rewardType === 1" translate>rewardType.party
+                </div>
+                <div *ngIf="item.rewardType === 2" translate>rewardType.group
+                </div>
+                <div *ngIf="item.rewardType === 3" translate>rewardType.women
+                </div>
+                <div *ngIf="item.rewardType === 4" translate>rewardType.youth
+                </div>
+                <div *ngIf="item.rewardType === 5" translate>rewardType.government
+                </div>
+              </td>
+              <td class="vt-align-center">
+                <div *ngIf="item.periodType === 1" translate>periodType.periodic
+                </div>
+                <div *ngIf="item.periodType === 2" translate>periodType.unexpected
+                </div>
+              </td>
+              <!-- <td class="vt-align-center">
+                {{item.proposeYear}}
+              </td>
+              <td class="vt-align-left">
+                {{item.signOrgName}}
+              </td>
+              <td class="vt-align-right">{{item.totalAmountOfMoney | number}}</td>
+              <td class="vt-align-left">
+                <span class="vt-align-center" *ngIf="item.status === 1" translate>rewardPropose.status.1</span>
+                <span class="vt-align-center" *ngIf="item.status === 2" translate>rewardPropose.status.2</span>
+                <span class="vt-align-center" *ngIf="item.status === 3" translate>rewardPropose.status.3</span>
+                <span class="vt-align-center" *ngIf="item.status === 4" translate>rewardPropose.status.4</span>
+                <span class="vt-align-center" *ngIf="item.status === 5" translate>rewardPropose.status.5</span>
+                <span class="vt-align-center" *ngIf="item.status === 6" translate>rewardPropose.status.6</span>
+                <span class="vt-align-center" *ngIf="item.status === 7" translate>rewardPropose.status.7</span>
+                <span class="vt-align-center" *ngIf="item.status === 8" translate>rewardPropose.status.8</span>
+              </td> -->
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr class="emptymessage">
+              <td [attr.colspan]="11" [innerHTML]="'app.noRecords' | translate">
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft">
+            <table-footer (changeRow)="onTablePageChange($event)" *ngIf="formTable" [resultList]="formTable"></table-footer>
+          </ng-template>
+        </p-table>
+        </div>
+        <div class="panel-footer vt-area-button">
+          <button type="button" class="btn btn-sm btn-danger"
+          [innerHTML]="'common.button.out' | translate" (click)="activeModal.close()"></button>
+          <button type="submit" (click)="processImport()" class="btn btn-sm btn-info" [autoFocus]="true"
+            [innerHTML]="'common.button.icon.select' | translate"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+.app-header-fixed .curtail-header {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    transition: all 0.5s ease-out 0.1s;
+}
+.min-md-header {
+    width: calc(100% - 60px) !important;
+}
+.min-sm-header {
+    width: calc(100% - 40px) !important;
+}
+.app-header-fixed .m-l-60 {
+    margin-left: 60px !important;
+}
+.app-header-fixed .m-l-40 {
+    margin-left: 40px !important;
+}
+
+.app.app-header-fixed.app-aside-fixed {
+    min-height: 100vh;
+    height: auto;
+}

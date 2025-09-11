@@ -1,0 +1,15 @@
+<div class="input-group picker orgSelector">
+  <input type="text" *ngIf="onlyClick; else inputForcus" (keyup.enter)="onChose()" [disabled]="disabled ? true: false" (click)="onFocus($event)"
+    class="form-control" #displayName />
+  <ng-template #inputForcus>
+    <input [disabled]="disabled ? true: false" (focus)="onFocus($event)" class="form-control" #displayName />
+  </ng-template>
+  <div class="input-group-append" *ngIf="!disabled">
+    <button style="margin: 0" [title]="'app.common.title.remove' | translate" *ngIf="!isRequiredField"
+      (click)="delete()" class="btn btn-danger" type="button" [innerHTML]="'common.icon.removeData' | translate"
+      i></button>
+    <button tabindex="-1" style="margin: 0" [autoFocus]="autoFocus" [title]="'app.common.title.select' | translate"
+      class="btn btn-info chosen" type="button" (click)="onChose()" #buttonChose
+      [innerHTML]="'common.icon.checkDataParty' | translate"></button>
+  </div>
+</div>

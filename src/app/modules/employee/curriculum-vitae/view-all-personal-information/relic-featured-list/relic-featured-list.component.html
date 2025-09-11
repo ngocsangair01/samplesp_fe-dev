@@ -1,0 +1,67 @@
+<div class="panel-body panel-table">
+  <p-table
+    #pTable
+    [value]="resultList.data"
+    [paginator]="true"
+    (onLazyLoad)="processSearch($event)"
+    [lazy]="true" [rows]="changeRow"
+    [totalRecords]="resultList.recordsTotal"
+    [scrollable]="true"
+    [lazyLoadOnInit]="false"
+    tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+    [resizableColumns]="true"
+  >
+    <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+        <col style="width: 50px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+      </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th translate pResizableColumn>common.table.index</th>
+        <th translate pResizableColumn>employee360.relicFeatured.type</th>
+        <th translate pResizableColumn>employee360.relicFeatured.relicName</th>
+        <th translate pResizableColumn>employee360.relicFeatured.startDate</th>
+        <th translate pResizableColumn>employee360.relicFeatured.endDate</th>
+        <th translate pResizableColumn>employee360.relicFeatured.conten</th>
+        <th translate pResizableColumn>employee360.relicFeatured.role</th>
+        <th translate pResizableColumn>employee360.relicFeatured.employeeSign</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+      <tr>
+        <td class="vt-align-center">{{index}}</td>
+        <td class="vt-align-left">
+          <span *ngIf="item.type === 1" translate>employee360.relicFeatured.type.hardWork</span>
+          <span *ngIf="item.type === 2" translate>employee360.relicFeatured.type.newJob</span>
+          <span *ngIf="item.type === 3" translate>employee360.relicFeatured.type.goal</span>
+        </td>
+        <td class="vt-align-left">{{item.relicName}}</td>
+        <td class="vt-align-left">{{item.startDate | displayDate}}</td>
+        <td class="vt-align-left">{{item.endDate | displayDate}}</td>
+        <td class="vt-align-left">{{item.conten}}</td>
+        <td class="vt-align-left">
+          <span *ngIf="item.role === 1" translate>employee360.relicFeatured.role.leader</span>
+          <span *ngIf="item.role === 2" translate>employee360.relicFeatured.role.member</span>
+        </td>
+        <td class="vt-align-left">{{item.employeeSign}}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr class="emptymessage">
+        <td [attr.colspan]="10" [innerHTML]="'app.noRecords' | translate">
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <table-footer (changeRow)="onTablePageChange($event)"  [resultList]="resultList"></table-footer>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,0 +1,55 @@
+.footer-wrapper {
+    display: flex;
+    align-items: baseline;
+    width: 100%;
+    justify-content: space-between;
+    font-family: "PFBeauSansPro";
+}
+
+.item-right {
+    display: flex;
+    align-items: center;
+    font-family: "PFBeauSansPro";
+}
+
+.item-right label {
+    font-size: 13px;
+    font-family: 'PFBeauSansPro';
+}
+
+@media (min-width: 375px) and (max-width: 576px) {
+    .item-right label {
+        display: none
+    }
+}
+
+.total-record {
+    font-weight: 500;
+}
+
+:host ::ng-deep .ui-dropdown .ui-dropdown-label {
+    color: #202123 !important;
+    font-weight: 600;
+    font-size: 12px;
+    background-color: rgba(246,183,109,0.6);
+    height: 27px;
+    padding: 0 10px;
+}
+
+/*:host ::ng-deep .ui-dropdown .ui-dropdown-trigger {*/
+/*    background-color: rgba(246,183,109,0.6);*/
+/*}*/
+
+:host ::ng-deep .ui-dropdown-panel .ui-dropdown-items-wrapper{
+    overflow: unset;
+    max-height: 250px !important;
+}
+/*@media (min-width: 768px) and (max-width: 1024px) {*/
+/*    :host ::ng-deep .modal-content .modal-body .table-wrapper .ui-paginator-bottom .ui-paginator-left-content .footer-wrapper .item-right {*/
+/*        display: none !important;*/
+/*    }*/
+/*}*/
+
+.none {
+    display: none !important;
+}

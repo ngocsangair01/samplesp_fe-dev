@@ -1,0 +1,6 @@
+<div *ngIf="hasPermission('action.view')" >
+  <key-project-search [warningType]="warningType"></key-project-search>
+</div>
+<div *ngIf="!hasPermission('action.view')">
+  {{'common.haveNoPermission' | translate}}
+</div>

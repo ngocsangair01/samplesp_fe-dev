@@ -1,0 +1,28 @@
+<div class="panel panel-default" *ngIf="nodes && nodes.length > 0">
+  <div class="panel-heading vt-relative ">
+    <form [formGroup]="formSearch">
+      <strong class="text-u-c">
+          <i class="fa fa-th"></i>&nbsp;<span [innerText]="title | translate"></span>
+      </strong>
+      <div class="vt-absolute vt-input-in-heading">
+        <div class="ui-inputgroup vt-relative">
+          <input type="text" formControlName="keyword" class="form-control input-search" placeholder="{{'common.label.search' | translate}}" (input)="onSearch()"/>
+          <button type="submit" class="vt-absolute icon-search btn-search" (click)="onSearch()">
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="panel-body padding-xl ui-g">
+    <div class="ui-g-12 vt-row">
+      <p-scrollPanel [style]="{width: '100%', height: '300px'}" styleClass="custombar2 clearfix">
+        <p-tree [value]="nodes">
+          <ng-template let-node pTemplate="default">
+            <a [routerLink]="node.url">{{node.label}}</a>
+          </ng-template>
+        </p-tree>
+      </p-scrollPanel>
+    </div>
+  </div>
+</div>

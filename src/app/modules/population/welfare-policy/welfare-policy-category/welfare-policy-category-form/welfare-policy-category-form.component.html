@@ -1,0 +1,499 @@
+<div class="card-form">
+  <div class="clearfix">
+    <div class="left-nav-bar pull-left row-header">
+      <div>
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="previous()">
+        <span class="title">{{header}}</span>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+        <ul class="header-right sys-ul space-line">
+            <li>
+              <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="previous()" [innerHTML]="'common.button.close' | translate">
+              </button>
+            </li>
+            <li *ngIf="!viewMode">
+              <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="save()" [innerHTML]="'common.button.icon.save' | translate">
+              </button>
+            </li>
+            <li *ngIf="viewMode">
+              <button class="btn btn-sm vt-btn btn-submit mt-btn btn-header-right ng-star-inserted" type="button" (click)="navigate()" [innerHTML]="'common.button.icon.edit' | translate">
+              </button>
+            </li>
+        </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <form id="formSave" [formGroup]="formGroup" >
+    <div class="panel panel-default card-info">
+      <div class="panel-heading">
+        <strong>
+          <!-- {{header}} -->
+          <span class="ml-2 title-info">Thông tin danh mục chính sách</span>
+        </strong>
+      </div>
+      <div class="panel-body padding-xl ui-g border-info-common">
+        <!--        row 1-->
+        <div class="ui-g-12 vt-row">
+          <!--            mã danh mục -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.welfare.policy.category.code' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="text" [attr.disabled]="viewMode?true:null" [formControl]="formGroup.controls.code" class="form-control">
+            <app-control-messages [control]="f['code']"></app-control-messages>
+          </div>
+          <!--            tên danh mục -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.welfare.policy.category.name' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="text" [attr.disabled]="viewMode?true:null" [formControl]="formGroup.controls.name" class="form-control">
+            <app-control-messages [control]="f['name']"></app-control-messages>
+          </div>
+        </div>
+        <!--        row 2-->
+        <div class="ui-g-12 vt-row">
+          <!-- Loại -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.welfare.policy.category.type' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <p-dropdown [optionLabel]="'name'" [formControl]="formGroup.controls.type" [disabled]="viewMode ? true : false" (onChange)="changeType($event)"
+                        [options]="typeOptions" [placeholder]="'placeholder.choose' | translate" [showClear]="true" ></p-dropdown>
+            <app-control-messages [control]="f['type']"></app-control-messages>
+          </div>
+          <!-- Đối tượng -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.welfare.policy.category.objectType' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <p-dropdown [optionLabel]="'name'" [formControl]="formGroup.controls.objectType" [disabled]="viewMode ? true : false"
+                        [options]="objectTypeOptions" [placeholder]="'placeholder.choose' | translate" [showClear]="true" (onChange)="changeObjectType($event)"></p-dropdown>
+            <app-control-messages [control]="f['objectType']"></app-control-messages>
+          </div>
+        </div>
+        <!--      row 3   -->
+        <div class="ui-g-12 vt-row">
+          <!-- Ngày hiệu lực-->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.welfare.policy.category.fromDate' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <date-picker [disabled]="viewMode" [property]="f['effectiveStartDate']" (onChanged)="changeStartDate($event)" (action)="getAction($event)"></date-picker>
+            <app-control-messages [control]="f['effectiveStartDate']"></app-control-messages>
+          </div>
+          <!-- Mối quan hệ -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="!isRequireRelationship?'':'required'">
+            {{'label.welfare.policy.category.relationship' | translate}}</label>
+          <div *ngIf="viewMode" class="ui-g-12 ui-md-6 ui-lg-3">
+            <multi-select-filter
+                      [property]="f['relationShipList']"
+                      [options]="relationshipList"
+                      optionLabel="name"
+                      optionValue="sysCatId"
+                      [disabled]="true"
+                      [filterPlaceHolder]="'common.label.cboSelect'"
+                      (click)="requiredRelationShip()"
+                      (onChange)="handleBr5()">
+            </multi-select-filter>
+          </div>
+          <div *ngIf="!viewMode" class="ui-g-12 ui-md-6 ui-lg-3">
+            <multi-select-filter
+                      [property]="f['relationShipList']"
+                      [options]="relationshipList"
+                      optionLabel="name"
+                      optionValue="sysCatId"
+                      [disabled]="!isRequireRelationship ? true : false"
+                      [filterPlaceHolder]="'common.label.cboSelect'"
+                      (click)="requiredRelationShip()"
+                      (onChange)="changeRelationship($event)">
+            </multi-select-filter>
+            <!-- <app-control-messages [control]="f['relationShipList']"></app-control-messages> -->
+            <small *ngIf="isInvalidRelationship" class="text-danger errorMessage">* Trường bắt buộc</small>
+          </div>
+        </div>
+        <!--  row 4   -->
+        <div class="ui-g-12 vt-row">
+          <!--  Ngày hết hiệu lực -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.welfare.policy.category.toDate' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <date-picker [disabled]="viewMode" [property]="f['effectiveEndDate']" (onChanged)="changeEndDate($event)" (action)="getAction($event)"></date-picker>
+            <app-control-messages [control]="f['effectiveEndDate']"></app-control-messages>
+            <small *ngIf="isInvalidEndDate" class="text-danger errorMessage">Đến ngày phải lớn hơn hoặc bằng từ ngày</small>
+          </div>
+          <!-- Loại thu nhập -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.welfare.policy.category.employeeStatus' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter [property]="f['employeeStatus']"
+                           [options]="employeeStatusOptions"
+                           optionLabel="name"
+                           optionValue="id"
+                           [placeHolder]="'common.label.cboMustSelect'"
+                           [disabled]="viewMode">
+            </select-filter>
+            <app-control-messages [control]="f['employeeStatus']"></app-control-messages>
+          </div>
+        </div>
+        <!--  row 5   -->
+        <div class="ui-g-12 vt-row">
+          <!--  Giới hạn số lần tối đa -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.welfare.policy.category.limitNumber' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3 " style="display: inline-flex">
+            <div class="display-table" style="width: 100%;">
+              <div class="table-cell" style="width: 30%;">
+                <input type="number" [attr.disabled]="viewMode?true:null" class="form form-control" name="limitNumber" [formControl]="formGroup.controls.limitNumber" [min]="0">
+              </div>
+              <div class="control-label" style="padding: 9px !important;">/</div>
+              <div class="table-cell" style="width: 70%;">
+                <p-dropdown [optionLabel]="'name'" [formControl]="formGroup.controls.limitUnit" [disabled]="viewMode ? true : false"
+                        [options]="limitUnitList" [placeholder]="'placeholder.choose' | translate" [showClear]="true" (onChange)="changeCheckLimitNumber($event)" ></p-dropdown>
+                <small *ngIf="checkLimitNumber" class="text-danger errorMessage">* Trường bắt buộc</small>
+              </div>
+              <app-control-messages [control]="f['limitNumber']"></app-control-messages>
+            </div>
+          </div>
+          <!--  Giới hạn số tiền tối đa -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.welfare.policy.category.limitAmount' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3 " style="display: inline-flex">
+            <div class="display-table" style="width: 100%;">
+              <div class="table-cell" style="width: 30%;">
+                <input type="number" [attr.disabled]="viewMode?true:null" class="form form-control" name="limitAmount" [formControl]="formGroup.controls.limitAmount" [min]="0">
+              </div>
+              <div class="control-label" style="padding: 9px !important;">/</div>
+              <div class="table-cell" style="width: 70%;">
+                <p-dropdown [optionLabel]="'name'" [formControl]="formGroup.controls.limitAmountUnit" [disabled]="viewMode ? true : false"
+                            [options]="limitUnitList" [placeholder]="'placeholder.choose' | translate" [showClear]="true" (onChange)="changeCheckLimitAmountUnit($event)"></p-dropdown>
+                <small *ngIf="checkLimitAmountUnit" class="text-danger errorMessage">* Trường bắt buộc</small>
+              </div>
+              <app-control-messages [control]="f['limitAmountUnit']"></app-control-messages>
+            </div>
+          </div>
+        </div>
+        <!--  row 6   -->
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.welfare.policy.category.order' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3 " style="display: inline-flex">
+            <input type="number" [attr.disabled]="viewMode?true:null" [formControl]="formGroup.controls.order" class="form-control" [min]="0">
+            <app-control-messages [control]="f['order']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'staff.assessment.criteria.icon' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <file-chooser [property]="f['file']" validMaxSize="50" validType="png,jpg">
+            </file-chooser>
+            <app-control-messages [control]="f['file']"></app-control-messages>
+          </div>
+        </div>
+        <!--  row 7   -->
+        <div class="ui-g-12 vt-row">
+          <!--  Giới hạn số lần tối đa -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.welfare.policy.category.organizationModel' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3 " style="display: inline-flex">
+            <select-filter [property]="f['orgType']"
+                           [options]="organizationModelOptions"
+                           optionLabel="name"
+                           optionValue="id"
+                           [placeHolder]="'common.label.cboMustSelect'"
+                           [disabled]="true">
+            </select-filter>
+            <app-control-messages [control]="f['orgType']"></app-control-messages>
+          </div>
+        </div>
+        <!--  row 8   -->
+        <div class="ui-g-12 vt-row">
+          <!--    mô tả   -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.reportConfig.description' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-9">
+            <textarea [formControl]="formGroup.controls.description" id="description" type="text-area" rows="4"
+                      class="form form-control" [attr.disabled]="viewMode? true: null"></textarea>
+            <app-control-messages [control]="f['description']"></app-control-messages>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default card-info" style="padding-bottom: 15px" >
+      <div class="panel-heading vt-relative">
+        <strong>
+          <span>{{'label.welfare.policy.category.documentType' | translate}}</span>
+        </strong>
+      </div>
+      <div class="panel-body padding-xl">
+        <p-table
+            #ptable
+            [scrollable]="true"
+            [value]="policyDocumentBOList.controls"
+            [paginator]="true"
+            [(first)]="firstRowIndexDocumentType"
+            [rows]="pageSizeDocumentType"
+            [totalRecords]="policyDocumentBOList.length"
+            styleClass="controlOverflow"
+            tableStyleClass="table controls-table table-wrapper b-t b-b"
+            [resizableColumns]="true">
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col style="width: 50px;">
+              <col style="width: 200px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;" *ngIf="viewMode == false">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th pResizableColumn>STT</th>
+              <th pResizableColumn>{{'label.welfare.policy.category.requestDocumentType' | translate}}</th>
+              <th pResizableColumn>{{'label.welfare.policy.category.require' | translate}}</th>
+              <th pResizableColumn>{{'label.welfare.policy.category.active' | translate}}</th>
+              <th *ngIf="viewMode == false" pResizableColumn></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-index="rowIndex">
+            <tr [formGroup]="item" *ngIf="item.controls.isDeleted.value !== 0">
+              <td class="vt-align-center">
+                {{index+1}}
+              </td>
+              <td class="vt-align-center">
+                <select-icon-filter [property]="item.controls.code" [options]="requestDocumentTypeOptions" optionLabel="parName"
+                                    optionValue="parCode" [placeHolder]="'common.label.cboMustSelect'" appendTo="body"
+                                    [disabled]="viewMode ? true : false"
+                                    [title]="item.controls.code.value ? item.controls.code.value : ''">
+                </select-icon-filter>
+                <app-control-messages [control]="item.controls.code"></app-control-messages>
+              </td>
+              <td class="vt-align-center">
+                <input type="checkbox" [attr.disabled]="viewMode?true:null" formControlName="isRequired" class="ui-chkbox ui-chkbox-box" style="width: 18px; height: 1.5rem;" [value]="1">
+                <app-control-messages [control]="item.controls.isRequired"></app-control-messages>
+              </td>
+            <td class="vt-align-center">
+                <input type="checkbox" [attr.disabled]="viewMode?true:null" formControlName="isActive" class="ui-chkbox ui-chkbox-box" style="width: 18px; height: 1.5rem;" [value]="1">
+                <app-control-messages [control]="item.controls.isActive"></app-control-messages>
+            </td>
+              <td class="vt-align-center" *ngIf="viewMode == false">
+                <button type="button" class="btn-icon plus" [title]="'titleAdd' | translate" (click)="addRowDocumentType(index, item)" [innerHTML]="'common.icon.plus' | translate">
+                </button>
+                <button type="button" class="btn-icon minus" [title]="'titleDelete' | translate" (click)="removeRowDocumentType(index, item)" [innerHTML]="'common.icon.minus' | translate">
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft" *ngIf="!isCreate">
+            <div class="table-footer-sumary">
+              <span *ngIf="policyDocumentBOList.length < pageSizeDocumentType && policyDocumentBOList.length > 0">
+                {{'common.tableSumary.find' | translate}} {{policyDocumentBOList.length}}, {{'common.tableSumary.showAll' | translate}}
+              </span>
+              <span *ngIf="policyDocumentBOList.length >= pageSizeDocumentType && firstRowIndexDocumentType+pageSizeDocumentType <= policyDocumentBOList.length">
+                {{'common.tableSumary.find' | translate}} {{policyDocumentBOList.length}}, {{'common.tableSumary.showFrom' | translate}}
+                {{firstRowIndexDocumentType + 1}} {{'common.tableSumary.showTo' | translate}}
+                {{firstRowIndexDocumentType + pageSizeDocumentType}}
+              </span>
+              <span *ngIf="policyDocumentBOList.length >= pageSizeDocumentType && firstRowIndexDocumentType+pageSizeDocumentType > policyDocumentBOList.length">
+                {{'common.tableSumary.find' | translate}} {{policyDocumentBOList.length}}, {{'common.tableSumary.showFrom' | translate}}
+                {{firstRowIndexDocumentType + 1}} {{'common.tableSumary.showTo' | translate}}
+                {{policyDocumentBOList.length}}
+              </span>
+            </div>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+    <div class="panel panel-default card-info" style="padding-bottom: 15px">
+      <div class="panel-heading vt-relative">
+        <strong *ngIf="!isAllowanceHM">
+          {{'label.welfare.policy.category.desease' | translate}}
+        </strong>
+        <strong *ngIf="isAllowanceHM">
+          {{'label.welfare.policy.category.deseaseHM' | translate}}
+        </strong>
+      </div>
+      <div class="panel-body padding-xl">
+        <p-table
+            #ptable
+            [scrollable]="true"
+            [value]="policyDeseaseBOList.controls"
+            [paginator]="true"
+            [(first)]="firstRowIndexDesease"
+            [rows]="pageSizeDesease"
+            [totalRecords]="policyDeseaseBOList.length"
+            styleClass="controlOverflow"
+            tableStyleClass="table controls-table table-wrapper b-t b-b"
+            [resizableColumns]="true">
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col style="width: 50px;">
+              <col style="width: 200px;">
+              <col style="width: 100px;" *ngIf="viewMode == false">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th pResizableColumn>STT</th>
+              <th pResizableColumn *ngIf="!isAllowanceHM">{{'label.welfare.policy.desease.category' | translate}}</th>
+              <th pResizableColumn *ngIf="isAllowanceHM">{{'label.welfare.policy.deseaseHM.category' | translate}}</th>
+              <th *ngIf="viewMode == false" pResizableColumn></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-index="rowIndex">
+            <tr [formGroup]="item" *ngIf="item.controls.isDeleted.value !== 0">
+              <td class="vt-align-center">
+                {{index+1}}
+              </td>
+              <td class="vt-align-center">
+                <select-icon-filter [property]="item.controls.categoryId" [options]="categoryOptions" optionLabel="name"
+                                    optionValue="categoryId" [placeHolder]="'common.label.cboMustSelect'" appendTo="body"
+                                    [disabled]="viewMode ? true : false"
+                                    [title]="item.controls.categoryId.value ? item.controls.categoryId.value : ''">
+                </select-icon-filter>
+                <app-control-messages [control]="item.controls.categoryId"></app-control-messages>
+              </td>
+              <td class="vt-align-center" *ngIf="viewMode == false">
+                <button type="button" class="btn-icon plus" [title]="'titleAdd' | translate" (click)="addRowPolicyDesease(index, item)" [innerHTML]="'common.icon.plus' | translate">
+                </button>
+                <button type="button" class="btn-icon minus" [title]="'titleDelete' | translate" (click)="removeRowPolicyDesease(index, item)" [innerHTML]="'common.icon.minus' | translate">
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft" *ngIf="!isCreate">
+            <div class="table-footer-sumary">
+              <span *ngIf="policyDeseaseBOList.length < pageSizeDesease && policyDeseaseBOList.length > 0">
+                {{'common.tableSumary.find' | translate}} {{policyDeseaseBOList.length}}, {{'common.tableSumary.showAll' | translate}}
+              </span>
+              <span *ngIf="policyDeseaseBOList.length >= pageSizeDesease && firstRowIndexDesease+pageSizeDesease <= policyDeseaseBOList.length">
+                {{'common.tableSumary.find' | translate}} {{policyDeseaseBOList.length}}, {{'common.tableSumary.showFrom' | translate}}
+                {{firstRowIndexDesease + 1}} {{'common.tableSumary.showTo' | translate}}
+                {{firstRowIndexDesease + pageSizeDesease}}
+              </span>
+              <span *ngIf="policyDeseaseBOList.length >= pageSizeDesease && policyDeseaseBOList+pageSizeDesease > policyDeseaseBOList.length">
+                {{'common.tableSumary.find' | translate}} {{policyDeseaseBOList.length}}, {{'common.tableSumary.showFrom' | translate}}
+                {{firstRowIndexDesease + 1}} {{'common.tableSumary.showTo' | translate}}
+                {{policyDeseaseBOList.length}}
+              </span>
+            </div>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+    <div class="panel panel-default card-info" style="padding-bottom: 15px">
+      <div class="panel-heading vt-relative">
+        <strong>
+          {{'label.welfare.policy.category.norm' | translate}} <span style="color: red;">*</span>
+        </strong>
+      </div>
+      <div class="panel-body padding-xl">
+        <p-table
+                #ptable
+                [scrollable]="true"
+                [value]="welfarePolicyNormBOList.controls"
+                [paginator]="true"
+                [(first)]="firstRowIndexNorm"
+                [rows]="pageSizeNorm"
+                [totalRecords]="welfarePolicyNormBOList.length"
+                styleClass="controlOverflow"
+                tableStyleClass="table controls-table table-wrapper b-t b-b"
+                [resizableColumns]="true">
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                  <col style="width: 50px;">
+                  <col style="width: 200px;">
+                  <col style="width: 200px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;" *ngIf="viewMode == false">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                  <th pResizableColumn>STT</th>
+                  <th pResizableColumn>{{'label.welfare.policy.category.chairmanType' | translate}}</th>
+                  <th pResizableColumn>{{'label.welfare.policy.category.fundingCategory' | translate}}</th>
+                  <th pResizableColumn>{{'label.welfare.policy.category.incomeType' | translate}}</th>
+                  <th pResizableColumn>{{'label.welfare.policy.category.level' | translate}}</th>
+                  <th pResizableColumn>{{'label.welfare.policy.category.amount' | translate}}</th>
+                  <th pResizableColumn>{{'label.welfare.policy.category.isFixed' | translate}}</th>
+                  <th *ngIf="viewMode == false" pResizableColumn></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-index="rowIndex">
+                <tr [formGroup]="item" *ngIf="item.controls.isDeleted.value !== 0">
+                  <td class="vt-align-center">
+                      {{index+1}}
+                  </td>
+                  <td class="vt-align-center">
+                    <select-icon-filter [property]="item.controls.chairmanType" [options]="chairmanTypeList" optionLabel="name"
+                                    optionValue="value" [placeHolder]="'common.label.cboMustSelect'" appendTo="body"
+                                    [disabled]="viewMode ? true : false"
+                                    [title]="item.controls.chairmanType.value ? item.controls.chairmanType.value : ''">
+                    </select-icon-filter>
+                    <app-control-messages [control]="item.controls.chairmanType"></app-control-messages>
+                  </td>
+                  <td class="vt-align-center">
+                    <select-icon-filter [property]="item.controls.fundingCategoryId" [options]="fundingCategoryOptions" optionLabel="funding"
+                                    optionValue="fundingCategoryId" [placeHolder]="'common.label.cboMustSelect'" appendTo="body"
+                                    [disabled]="viewMode ? true : false"
+                                    [title]="item.controls.fundingCategoryId.value ? item.controls.fundingCategoryId.values : ''">
+                    </select-icon-filter>
+                    <app-control-messages [control]="item.controls.fundingCategoryId"></app-control-messages>
+                  </td>
+                  <td class="vt-align-center">
+                    <select-icon-filter [property]="item.controls.incomeType" [options]="incomeTypeList" optionLabel="name"
+                                        optionValue="value" [placeHolder]="'common.label.cboMustSelect'" appendTo="body"
+                                        [disabled]="viewMode ? true : false"
+                                        [title]="item.controls.incomeType.value ? item.controls.incomeType.values : ''">
+                    </select-icon-filter>
+                    <app-control-messages [control]="item.controls.fundingCategoryId"></app-control-messages>
+                  </td>
+                  <td class="vt-align-center">
+                    <select-icon-filter [property]="item.controls.level" [options]="welfareCategoryLevelOptions" optionLabel="name"
+                                        optionValue="id" [placeHolder]="'common.label.cboMustSelect'" appendTo="body"
+                                        [disabled]="viewMode ? true : false">
+                    </select-icon-filter>
+                    <app-control-messages [control]="item.controls.level"></app-control-messages>
+                  </td>
+                  <td class="vt-align-center">
+                    <input type="number" [attr.disabled]="viewMode?true:null" formControlName="amount" class="form form-control" [min]="0">
+                    <app-control-messages [control]="item.controls.amount"></app-control-messages>
+                  </td>
+                  <td class="vt-align-center">
+                    <input type="checkbox" [attr.disabled]="viewMode?true:null" formControlName="isFixed" class="ui-chkbox ui-chkbox-box" style="width: 18px; height: 1.5rem;" [value]="1">
+                    <app-control-messages [control]="item.controls.isFixed"></app-control-messages>
+                  </td>
+                  <td class="vt-align-center" *ngIf="viewMode == false">
+                      <button type="button" class="btn-icon plus" [title]="'titleAdd' | translate" (click)="addRow(index, item)" [innerHTML]="'common.icon.plus' | translate">
+                      </button>
+                      <button type="button" class="btn-icon minus" [title]="'titleDelete' | translate" (click)="removeRow(index, item)" [innerHTML]="'common.icon.minus' | translate">
+                      </button>
+                  </td>
+                </tr>
+            </ng-template>
+          <ng-template pTemplate="paginatorleft" *ngIf="!isCreate">
+            <div class="table-footer-sumary">
+              <span *ngIf="welfarePolicyNormBOList.length < pageSizeNorm && welfarePolicyNormBOList.length > 0">
+                {{'common.tableSumary.find' | translate}} {{welfarePolicyNormBOList.length}}, {{'common.tableSumary.showAll' | translate}}
+              </span>
+              <span *ngIf="welfarePolicyNormBOList.length >= pageSizeNorm && firstRowIndexNorm+pageSizeNorm <= welfarePolicyNormBOList.length">
+                {{'common.tableSumary.find' | translate}} {{welfarePolicyNormBOList.length}}, {{'common.tableSumary.showFrom' | translate}}
+                              {{firstRowIndexNorm + 1}} {{'common.tableSumary.showTo' | translate}}
+                              {{firstRowIndexNorm + pageSizeNorm}}
+              </span>
+              <span *ngIf="welfarePolicyNormBOList.length >= pageSizeNorm && firstRowIndexNorm+pageSizeNorm > welfarePolicyNormBOList.length">
+                {{'common.tableSumary.find' | translate}} {{welfarePolicyNormBOList.length}}, {{'common.tableSumary.showFrom' | translate}}
+                {{firstRowIndexNorm + 1}} {{'common.tableSumary.showTo' | translate}}
+                {{welfarePolicyNormBOList.length}}
+              </span>
+            </div>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </form>
+</div>

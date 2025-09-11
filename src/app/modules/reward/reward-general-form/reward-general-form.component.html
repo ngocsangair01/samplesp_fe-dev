@@ -1,0 +1,164 @@
+<div class="card-reward">
+  <div class="clearfix">
+    <div class="left-nav-bar pull-left row-header">
+      <div>
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="goBack();">
+        <span *ngIf="isPersonal" class="title" translate>bonusType.addPersonalRewardsType</span>
+          <span *ngIf="isViewPersonal" class="title" translate>bonusType.editPersonalRewardsType</span>
+          <span *ngIf="isGroup" class="title" translate>bonusType.addCollectiveRewardType</span>
+          <span *ngIf="isViewGroup" class="title" translate>bonusType.editCollectiveRewardType</span>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+        <ul class="header-right sys-ul space-line">
+          <li>
+            <button class="btn btn-sm vt-btn ng-star-inserted" type="button" (click)="goBack();" [innerHTML]="'common.button.out' | translate">
+            </button>
+          </li>
+          <li>
+            <button class="btn btn-sm vt-btn btn-submit ng-star-inserted" type="button" (click)="processSaveOrUpdate()" [innerHTML]="'common.button.icon.save' | translate">
+            </button>
+          </li>
+        </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <form id="formSave" [formGroup]="formSave">
+    <div *ngIf="(hasPermission('action.insert') && isInsert) || (hasPermission('action.update') && isEdit || hasPermission('action.view') && isInsert)">
+      <div class="panel panel-defaul card-info">
+        <div class="panel-heading vt-relative">
+          <strong>
+            <!-- <span *ngIf="isPersonal" translate>bonusType.addPersonalRewardsType</span>
+            <span *ngIf="isViewPersonal" translate>bonusType.editPersonalRewardsType</span>
+            <span *ngIf="isGroup" translate>bonusType.addCollectiveRewardType</span>
+            <span *ngIf="isViewGroup" translate>bonusType.editCollectiveRewardType</span> -->
+            <span class="ml-2 title-info">Thông tin khen thưởng</span>
+          </strong>
+        </div>
+        <div class="panel-body padding-xl ui-g">
+          <div class="ui-g-12 vt-row">
+            <!-- Trong/ ngoài TĐ -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'employee360.insuranceProcess.inOut' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['isInside']" [options]="isInsideList" optionLabel="name" optionValue="id"
+                             [placeHolder]="'common.label.cboMustSelect'" (onChange)="onChangeObjectType()">
+              </select-filter>
+              <small *ngIf="isRequiredIsInside" class="text-danger errorMessage">* Trường bắt buộc</small>
+              <app-control-messages [control]="f['isInside']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row" *ngIf="f['isInside'].value === 0 ">
+            <!-- cấp quyết định -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'common.label.organization.terminataion.decisionLevel' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['decisionId']" [options]="decisionList" optionLabel="parValue" optionValue="parId"
+                             [placeHolder]="'common.label.cboMustSelect'">
+              </select-filter>
+              <small *ngIf="isRequiredDecision" class="text-danger errorMessage">* Trường bắt buộc</small>
+              <app-control-messages [control]="f['decisionId']"></app-control-messages>
+            </div>
+            <!-- người ký quyết định -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'app.organization.decisionSigner' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" name="decisionPerson" class="form-control" formControlName="decisionPerson" maxlength="255">
+              <app-control-messages [control]="f['decisionPerson']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- phân loại -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'bonus.rewardType' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['rewardType']" [options]="rewardTypeListByUserToInsert" optionLabel="name" optionValue="id"
+                [placeHolder]="'common.label.cboMustSelect'" (onChange)="onChangeObjectType()" [disabled]="isViewPersonal">
+              </select-filter>
+              <app-control-messages [control]="f['rewardType']"></app-control-messages>
+              <div *ngIf="isEmptyRewardType" class="errorMessageDiv show" ng-reflect-klass="errorMessageDiv" ng-reflect-ng-class="[object Object]"><small class="text-danger errorMessage ng-star-inserted"> * Trường bắt buộc </small></div>
+            </div>
+            <!-- kỳ khen thưởng -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+              {{'bonus.periodType' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['periodType']" [options]="periodTypeList" optionLabel="name" optionValue="id"
+                [placeHolder]="'common.label.cboMustSelect'">
+              </select-filter>
+              <app-control-messages [control]="f['periodType']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- số quyết định -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'bonus.decisionNumber' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form form-control" formControlName="decisionNumber"
+                maxlength="200">
+                <app-control-messages [control]="f['decisionNumber']"></app-control-messages>
+            </div>
+            <!-- ngày quyết định-->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+              {{'bonus.decisionDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker [property]="f['decisionDate']" (onChanged)="onChangeDecisionDate($event)" >
+              </date-picker>
+              <app-control-messages [control]="f['decisionDate']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- năm -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'bonus.decisionYear' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['decisionYear']" [options]="listYear" optionLabel="year" optionValue="year"
+                [placeHolder]="'common.label.cboMustSelect'">
+              </select-filter>
+              <app-control-messages [control]="f['decisionYear']"></app-control-messages>
+            </div>
+            <!-- file đính kèm -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'common.label.attachmentFile' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <multi-file-chooser [property]="f['attachedFiles']" fileName="attachedFiles" [validMaxSize]="50"
+                validType="png,jpg,gif,tiff,bmp,xls,xlsx,doc,docx,pdf,rar,zip,7z">
+              </multi-file-chooser>
+              <app-control-messages [control]="f['attachedFiles']"></app-control-messages>
+              <div [innerHTML]="'common.button.note' | translate">
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-area-button-import">
+            <button *ngIf="isPersonal || isGroup" type="button" class="btn btn-sm vt-btn" (click)="openFormImport()"
+              [innerHTML]="'bonusType.importFile' | translate"></button>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <reward-general-form-position #position [isPersonal]="isPersonal" [isGroup]="isGroup"
+              [isViewPersonal] = "isViewPersonal" [isViewGroup] = "isViewGroup" [rewardType]="rewardType"
+              [resetFormSubject]="resetFormSubject.asObservable()" [saveData]="saveData.asObservable()"
+              [loadDataIntoForm]="loadDataIntoForm.asObservable()" [dataToLoadIntoForm]="dataToLoadIntoForm"
+              [onDecisionDate]="onDecisionDate.asObservable()"
+              [dataToSave]="dataToSave"
+              [decisionDate]="f['decisionDate']" 
+              (dataPersion)="getDataPersion($event)"
+              >
+            </reward-general-form-position>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="(!hasPermission('action.insert') && isInsert) || (!hasPermission('action.update') && isEdit)">
+    {{'common.haveNoPermission' | translate}}
+  </div>
+</div>

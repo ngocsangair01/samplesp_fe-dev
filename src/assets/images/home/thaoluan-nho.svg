@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Platter" width="24" height="24" rx="3" transform="translate(152 394)" fill="#e4e4e4"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect id="Rectangle_10640" data-name="Rectangle 10640" width="24" height="24" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_19502" data-name="Mask Group 19502" transform="translate(-152 -394)" clip-path="url(#clip-path)">
+    <g id="Mask_Group_1332" data-name="Mask Group 1332" transform="translate(152 394)" clip-path="url(#clip-path-2)">
+      <g id="chatbubbles-outline" transform="translate(0.681 0.858)">
+        <path id="Path_57347" data-name="Path 57347" d="M23.089,17.175a.981.981,0,0,1,.177-.654,1.8,1.8,0,0,1,.113-.166,8.677,8.677,0,0,0,1.477-4.837A9.114,9.114,0,0,0,15.55,2.572,9.241,9.241,0,0,0,6.428,9.692a8.609,8.609,0,0,0-.2,1.832,9.087,9.087,0,0,0,9.16,9.057,11.031,11.031,0,0,0,2.528-.413c.606-.166,1.206-.386,1.361-.444a1.416,1.416,0,0,1,.5-.092,1.393,1.393,0,0,1,.541.107l3.038,1.076a.724.724,0,0,0,.209.054.429.429,0,0,0,.429-.429.689.689,0,0,0-.027-.144Z" transform="translate(-2.571 -2.571)" fill="none" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.714"/>
+        <path id="Path_57348" data-name="Path 57348" d="M3.56,12.428A7.834,7.834,0,0,0,3.9,20.607c.124.187.193.331.172.429s-.639,3.314-.639,3.314a.429.429,0,0,0,.145.411.438.438,0,0,0,.277.1.389.389,0,0,0,.156-.032l3.011-1.179a.841.841,0,0,1,.643.011,9.074,9.074,0,0,0,3.258.643,8.529,8.529,0,0,0,4.288-1.151" transform="translate(-2.571 -2.571)" fill="none" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.714"/>
+      </g>
+    </g>
+  </g>
+</svg>

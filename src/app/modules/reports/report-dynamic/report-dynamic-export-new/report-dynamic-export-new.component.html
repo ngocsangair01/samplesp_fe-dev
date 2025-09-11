@@ -1,0 +1,104 @@
+<div class="vt-nopadding" style="padding: 0 16px;" *ngIf="hasPermission('action.view')">
+    <div class="row panel panel-default" style="background-color: unset; box-shadow: unset">
+      <div style="width: 70%;">
+        <input class="input-sm form-control" type="search" id="searchCategoryType" maxlength="200" [ngStyle]="{'width': !isMobileScreen ? '30%' : '60%'}" style="height: 32px;"
+               [(ngModel)]="reportFillter" placeholder="{{'common.label.search' | translate}}" />
+      </div>
+      <div style="width: 30%; text-align: right;">
+        <button class="btn btn-sm btn-up-down-report" type="button" (click)="checkAllAction()">
+          <i class="fa fa-caret-down icon-up-down-list" *ngIf="!checkAll" ></i>
+          <i class="fa fa-caret-up icon-up-down-list" *ngIf="checkAll" ></i>
+        </button>
+      </div>
+    </div>
+    <div *ngIf="isAdmin" style="float: right">
+      <button type="button" class="btn btn-sm btn-import-file"
+      (click)="openFormImport()"
+      [innerHTML]="'common.button.importStaff' | translate"></button>
+    </div>
+    <br><br><br>
+    <div class="row panel panel-default" style="box-shadow: unset; background-color: unset;" *ngIf="listReportDynamic && listReportDynamic.length > 0">
+      <table class="table table-wrapper">
+        <tbody id="export-body">
+        <tr id="categoryTypeTable" *ngFor="let item of dataPriority | filters : reportFillter; index as i">
+          <p-scrollPanel [style]="{width: '100%', height: '100%'}" style="overflow-x:hidden"
+                         *ngIf="dataPriority && dataPriority[0].items.length > 0"
+                         styleClass="custombar2 custombar3 clearfix nopadding-custombar" class="vt-max-width">
+            <div class=" vt-nopadding">
+              <div class="table-responsive" style="width: 100%; margin: 0px;">
+                <td style="width: 1800px; padding: 0px !important;border: unset">
+                  <div (click)="changeListReport(item)"
+                       [ngStyle]="{'height': item.checkBoolean ? '50px' : '52px'}"style=" font-size: 16px; width:100%; padding: 15px 0 0 0;">
+                    <i class="fa fa-caret-down icon-up-down-list" *ngIf="!item.checkBoolean "></i>
+                    <i class="fa fa-caret-up icon-up-down-list" *ngIf="item.checkBoolean "></i>
+                    <strong class="report-heading-text">
+                      <span>{{item.label}}</span>
+                    </strong>
+                  </div>
+                  <div [ngStyle]="{'display': !isMobileScreen ? 'flex' : '', 'flex-wrap': !isMobileScreen ? 'wrap' : ''}" *ngIf="item.checkBoolean ">
+                    <div *ngFor="let el of item.items; index as j" [ngStyle]="{'width': !isMobileScreen ? '50%' : ''}" style=" display: flex; padding: 0px 20px 20px 20px;">
+                      <div style="width: 100%; font-weight: 500; align-items: center; display: flex;
+                         border-bottom: 1px solid #D7E2E3; height: 40px"
+                           [ngClass]="{'li-report': reportDynamicId === el.value}" class="data-body-table">
+                        <div class="label-export" style="width: 50%; height: 40px; align-items: center; display: flex" (click)="changeReportDynamic(el.value)">
+                          {{el.label}}
+                        </div>
+                        <div style="width: 46%">
+                        </div>
+                        <div class="star-export" style="height: 40px; align-items: center; justify-content: center; display: flex; width: 4%">
+                          <img (click)="changePriority(el, 1)" *ngIf="el.isPriority != 1" src="./../../../../assets/images/home/starReport.svg" alt="" style="height: 16px; width: 16px">
+                          <img (click)="changePriority(el, 0)" *ngIf="el.isPriority == 1" src="./../../../../assets/images/home/starReportPriority.svg" alt="" style="height: 16px; width: 16px">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </div>
+            </div>
+          </p-scrollPanel>
+        </tr>
+        <tr id="categoryTypeTable"
+            *ngFor="let item of listReportDynamic | filters : reportFillter; index as i">
+          <p-scrollPanel [style]="{width: '100%', height: '100%'}" style="overflow-x:hidden"
+                         styleClass="custombar2 custombar3 clearfix nopadding-custombar" class="vt-max-width">
+            <div class=" vt-nopadding">
+              <div class="table-responsive" style="width: 100%; margin: 0px;">
+                <td style="width: 1800px; padding: 0px !important;border: unset">
+                  <div (click)="changeListReport(item)"
+                       [ngStyle]="{'height': item.checkBoolean ? '50px' : '52px'}"style=" font-size: 16px; width:100%; padding: 15px 0 0 0;">
+                    <i class="fa fa-caret-down icon-up-down-list" *ngIf="!item.checkBoolean "></i>
+                    <i class="fa fa-caret-up icon-up-down-list" *ngIf="item.checkBoolean "></i>
+                    <strong class="report-heading-text">
+                      <span>{{item.label}}</span>
+                    </strong>
+                  </div>
+                  <div [ngStyle]="{'display': !isMobileScreen ? 'flex' : '', 'flex-wrap': !isMobileScreen ? 'wrap' : ''}" *ngIf="item.checkBoolean ">
+                    <div *ngFor="let el of item.items; index as j" [ngStyle]="{'width': !isMobileScreen ? '50%' : ''}" style=" display: flex; padding: 0px 20px 20px 20px;">
+                      <div style="width: 100%; font-weight: 500; align-items: center; display: flex;
+                         border-bottom: 1px solid #D7E2E3; height: 40px"
+                           [ngClass]="{'li-report': reportDynamicId === el.value}" class="data-body-table">
+                        <div class="label-export" style="width: 50%; height: 40px; align-items: center; display: flex" (click)="changeReportDynamic(el.value)">
+                          {{el.label}}
+                        </div>
+                        <div style="width: 46%">
+                        </div>
+                        <div class="star-export" style="height: 40px; align-items: center; justify-content: center; display: flex; width: 4%">
+                          <img (click)="changePriority(el, 1)" *ngIf="el.isPriority != 1" src="./../../../../assets/images/home/starReport.svg" alt="" style="height: 16px; width: 16px">
+                          <img (click)="changePriority(el, 0)" *ngIf="el.isPriority == 1" src="./../../../../assets/images/home/starReportPriority.svg" alt="" style="height: 16px; width: 16px">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </div>
+            </div>
+          </p-scrollPanel>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
+
+<div *ngIf="!hasPermission('action.view')" translate>
+  common.haveNoPermission
+</div>

@@ -1,0 +1,74 @@
+<div class="panel-body padding-xl ui-g" style="padding-bottom: 0;">
+    <div class="ui-g-10 ui-g-offset-1">
+        <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+            {{'common.label.name' | translate}}</label>
+        <div class="ui-g-12 ui-md-8">
+            <input [formControl]="form.controls.name" class="form-control">
+            <app-control-messages [control]="form.controls.name"></app-control-messages>
+        </div>
+    </div>
+
+    <div class="ui-g-10 ui-g-offset-1">
+        <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+            {{'label.allowance.subject' | translate}}</label>
+        <div class="ui-g-12 ui-md-8">
+            <p-dropdown [formControl]="form.controls.subject" [options]="subjectOptions" optionLabel="name"
+                [placeholder]="'placeholder.choose' | translate"></p-dropdown>
+                <app-control-messages [control]="form.controls.subject"></app-control-messages>
+        </div>
+    </div>
+
+    <div class="ui-g-10 ui-g-offset-1">
+        <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+            {{'common.label.gender' | translate}}</label>
+        <div class="ui-g-12 ui-md-8">
+            <p-dropdown [formControl]="form.controls.gender" optionLabel="name"
+                [placeholder]="'placeholder.choose' | translate" [options]="genderOptions"></p-dropdown>
+            <app-control-messages [control]="form.controls.gender"></app-control-messages>
+        </div>
+    </div>
+
+    <div class="ui-g-10 ui-g-offset-1">
+        <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+            {{'label.allowance.scope' | translate}}</label>
+        <div class="ui-g-12 ui-md-8">
+            <p-dropdown [formControl]="form.controls.scope" [options]="scopeOptions" optionLabel="name"
+                [placeholder]="'placeholder.choose' | translate"></p-dropdown>
+                <app-control-messages [control]="form.controls.scope"></app-control-messages>
+        </div>
+    </div>
+
+    <div class="ui-g-10 ui-g-offset-1">
+        <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+            {{'label.allowance.isReceiveManyTimes' | translate}}</label>
+        <div class="ui-g-12 ui-md-8">
+            <!-- <radio-button name="isReceiveManyTimes" [configs]="isReceiveManyTimesOptions"
+                [property]="form.controls.isReceiveManyTimes">
+            </radio-button> -->
+            <div class="form-check-inline ">
+                <label class="i-checks">
+                    <input type="radio" class="form-check-input control-label" id="employeeStatus_0"
+                        value="Y" name="isReceiveManyTimesValue"  [formControl]="form.controls.isReceiveManyTimesValue">
+                    <i></i>
+                    {{'common.label.yes' | translate}}
+                </label>
+            </div>
+            <div class="form-check-inline">
+                <label class="i-checks">
+                    <input type="radio" class="form-check-input control-label" id="employeeStatus_1"
+                        value="N" name="isReceiveManyTimesValue"  [formControl]="form.controls.isReceiveManyTimesValue">
+                    <i></i>
+                    {{'common.label.no' | translate}}
+                </label>
+            </div>
+            <app-control-messages [control]="form.controls.isReceiveManyTimesValue"></app-control-messages>
+        </div>
+    </div>
+    <div class="panel-footer vt-area-button ui-g-12">
+        <button type="submit" class="btn btn-sm vt-btn btn-submit" (click)="save()"
+            [innerHTML]="'common.button.icon.save' | translate"></button>
+        <!-- <button type="submit" class="btn btn-sm btn-success" (click)="exportReport()"
+                [innerHTML]="'common.button.icon.export' | translate"></button> -->
+    </div>
+
+</div>

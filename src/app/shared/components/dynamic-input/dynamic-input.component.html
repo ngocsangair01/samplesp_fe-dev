@@ -1,0 +1,39 @@
+<div [hidden]="property.isHide" remove-wrapper>
+  <label *ngIf="labelValue" [class]="labelClass" [ngClass]="{'required': property.isRequire}"
+    [innerText]="labelValue"  style="margin-top: 8px;"></label>
+  <div [class]="inputClass" [ngSwitch]="type">
+    <ng-template [ngSwitchCase]="'text-area'">
+      <div class="input-group">
+        <textarea class="form-control" [formControl]="property" [ngStyle]="styleObject"
+          [attr.dataName]="property.propertyName" [attr.dataActionForm]="property.actionForm"
+          [attr.dataResource]="property.resource" [placeholder]="placeHolder? (placeHolder | translate) : ''"
+          [autoFocus]="autofocus" [attr.rows]="rows" (blur)="property.markAsTouched()"
+          (input)="onChangeMethod($event.target.value)" [readonly]="readonly" [attr.disabled]="disabled ? true : null"
+          [maxlength]="maxLength"></textarea>
+        <div *ngIf="objectId" class="input-group-append">
+          <button class="btn btn-info chosen" type="button" *ngIf="property.isMultiLanguage"
+            (click)="onClickMultiLang($event)">
+            <i class="fa fa-globe"></i>
+          </button>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template ngSwitchDefault>
+      <div class="input-group">
+        <input type="text" [formControl]="property" [ngStyle]="styleObject" [attr.dataName]="property.propertyName"
+          [attr.dataActionForm]="property.actionForm" [attr.dataResource]="property.resource"
+          othertype="{{othertype || ''}}" [placeholder]="placeHolder? (placeHolder | translate) : ''"
+          class="form-control" (blur)="property.markAsTouched(); onBlurMethod($event.target.value);"
+          [autoFocus]="autofocus" [readonly]="readonly" [attr.disabled]="disabled ? true : null"
+          (input)="onChangeMethod($event.target.value)" [maxlength]="maxLength" />
+        <div *ngIf="objectId" class="input-group-append">
+          <button class="btn btn-info chosen" type="button" *ngIf="property.isMultiLanguage"
+            (click)="onClickMultiLang($event)">
+            <i class="fa fa-globe"></i>
+          </button>
+        </div>
+      </div>
+    </ng-template>
+    <app-control-messages [control]="property"></app-control-messages>
+  </div>
+</div>

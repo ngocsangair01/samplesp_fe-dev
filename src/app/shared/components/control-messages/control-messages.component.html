@@ -1,0 +1,5 @@
+<div class="errorMessageDiv" [ngClass]="{'show': errorMessage !== undefined}">
+  <small *ngIf="errorMessage !== undefined" (click)="markAsUntouched()" class="text-danger errorMessage">
+    {{ errorMessage }}
+  </small>
+</div>

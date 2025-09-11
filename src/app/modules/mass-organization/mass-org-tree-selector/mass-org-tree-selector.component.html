@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+  <div class="panel-heading vt-relative">
+    <div class=" vt-shotcut-button-in-heading" *ngIf = "!showAll">
+      <label class="control-label" style="padding-top: 0; padding-left: 5px;" translate>
+        massRequest.selectChild
+      </label>
+      &nbsp;
+      <label class="i-switch bg-info m-t-xs m-r" id="showMassOrgExpried">
+        <input  (change)="checkAll();" type="checkbox" name="status" [value]="1" [(ngModel)]="showMassOrgExpried" [attr.disabled] = "disabled ? '' : null"/>
+        <i></i>
+      </label>
+    </div>
+  </div>
+  <p-scrollPanel [style]="{width: '100%', height: 400 + 'px'}" styleClass="custombar2 clearfix">
+    <div *ngIf="!showMassOrgByLineOrg" id="orgTree">
+      <p-tree
+        [value]="nodes"
+        selectionMode="checkbox"
+        dynamic="true" 
+        [propagateSelectionDown]="isCheckAll" 
+        [propagateSelectionUp]="false"
+        [(selection)]="selectedNode"
+        (onNodeSelect)="nodeSelect($event)"
+        (onNodeContextMenuSelect)="nodeContextMenuSelect($event)"
+        showUnselectableCheckbox="false"
+        [styleClass]="disabled ? 'ui-treenode-content-disable' : null"
+      >
+      </p-tree>
+      <p-contextMenu #cm [model]="items" appendTo="body" ></p-contextMenu>
+    </div>
+  </p-scrollPanel>
+</div>

@@ -1,0 +1,7 @@
+<div class="input-group picker orgSelector">
+    <input type="text" [disabled]="disabled ? true: false" (focus)="onFocus()" class="form-control" #displayName />
+    <div class="input-group-append" *ngIf="!disabled">
+      <button [title]="'app.common.title.select' | translate" class="btn btn-info chosen" type="button" (click)="onChose()" #buttonChose [innerHTML]="'common.icon.checkData' | translate"></button>
+      <button [title]="'app.common.title.remove' | translate" *ngIf="!isRequiredField" (click)="delete()" class="btn btn-danger" type="button" [innerHTML]="'common.icon.removeData' | translate"i></button>
+    </div>
+</div>

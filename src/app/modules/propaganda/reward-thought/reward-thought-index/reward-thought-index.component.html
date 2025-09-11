@@ -1,0 +1,7 @@
+<div *ngIf="hasPermission('action.view')" >
+    <reward-thought-search></reward-thought-search>
+  </div>
+  <div *ngIf="!hasPermission('action.view')">
+    {{'common.haveNoPermission' | translate}}
+  </div>
+  

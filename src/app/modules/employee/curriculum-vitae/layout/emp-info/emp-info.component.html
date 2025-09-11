@@ -1,0 +1,123 @@
+<!-- <div class="infoTag">
+  <div class="panel panel-default">
+    <div class="panel-body" style="padding-bottom: 15px;">
+      <div class="image">
+        <div class="image-viewer" *ngIf="EmployeeInfo">
+          <img [src]="API_URL + EmployeeInfo.avatar" />
+        </div>
+      </div>
+      <div class="content-detail">
+        <ul class="basic-info">
+          <li class="display-table" *ngIf="EmployeeInfo">
+            <div class="table-cell symbol">
+              <span class="glyphicons glyphicons-user"></span>
+            </div>
+            <div class="table-cell">
+              <span class="fullname">{{ EmployeeInfo ? EmployeeInfo.employeeName : '' }}</span>
+            </div>
+          </li>
+          <li class="display-table" *ngIf="EmployeeInfo" id="changeEmployee">
+            <div class="table-cell symbol">
+              <span class="glyphicons glyphicons-tick"></span>
+            </div>
+            <div class="table-cell">
+              <a href="javascript:void(0);" class="color-info" (click)="choseEmployeeCode.onChose()"><b>{{ EmployeeInfo ? EmployeeInfo.employeeCode : '' }}</b></a>
+              <div style="height: 0px; visibility: hidden; overflow: hidden;">
+                <data-picker
+                  #choseEmployeeCode
+                  [property]="employeeId"
+                  systemCode="political"
+                  operationKey="action.view"
+                  adResourceKey="resource.employeeManager"
+                  objectBO="EmployeeBO"
+                  codeField="employeeCode"
+                  nameField="fullName"
+                  emailField="email"
+                  mobileNumberField="mobileNumber"
+                  selectField="employeeId"
+                  isRequiredField="true"
+                  isDisplayCode="true"
+                ></data-picker>
+              </div>
+            </div>
+          </li>
+          <li class="display-table" *ngIf="EmployeeInfo && EmployeeInfo.email">
+            <div class="table-cell symbol">
+              <span class="glyphicons glyphicons-envelope"></span>
+            </div>
+            <div class="table-cell" style="word-break: break-all;"><a class="color-info" href="mailto:{{ EmployeeInfo ? EmployeeInfo.email : '' }}">{{ EmployeeInfo ? EmployeeInfo.email : '' }}</a></div>
+          </li>
+          <li class="display-table" *ngIf="EmployeeInfo && EmployeeInfo.mobileNumber">
+            <div class="table-cell symbol">
+              <span class="glyphicons glyphicons-earphone"></span>
+            </div>
+            <div class="table-cell">{{ EmployeeInfo ? EmployeeInfo.mobileNumber : '' }}</div>
+          </li>
+          <li class="display-table" *ngIf="EmployeeInfo && EmployeeInfo.phoneNumber">
+            <div class="table-cell symbol">
+              <span class="glyphicons glyphicons-phone-alt"></span>
+            </div>
+            <div class="table-cell">{{ EmployeeInfo ? EmployeeInfo.phoneNumber : ''}}</div>
+          </li>
+          <li class="display-table" *ngIf="EmployeeInfo && EmployeeInfo.currentAddress">
+            <div class="table-cell symbol">
+              <span class="glyphicons glyphicons-home"></span>
+            </div>
+            <div class="table-cell">{{ EmployeeInfo ? EmployeeInfo.currentAddress : ''}}</div>
+          </li>
+          <li class="display-table" *ngIf="EmployeeInfo && EmployeeInfo.dateOfBirth">
+            <div class="table-cell symbol">
+              <span class="glyphicons glyphicons-birthday-cake"></span>
+            </div>
+            <div class="table-cell">{{EmployeeInfo ? (EmployeeInfo.dateOfBirth | displayDate ) : ''}}</div>
+          </li>
+        </ul>
+        <hr />
+        <span id="exportContract" *ngIf="hasPermission('action.export', 'resource.securityProtection')" (click)="exportCurriculumVitae()" class="glyphicons glyphicons-disk-save color-info" style="font-size: 24px; cursor: pointer; margin-left: 5px" title="{{'common.label.exportCurriculumVitae' | translate}}"></span>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="clearfix" style="height: 100%">
+  <div class="left-nav-bar pull-left row-header">
+    <div>
+      <img style="margin-top: 2px;" alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="close()">
+      <img class="image-avatar" [src]="API_URL + EmployeeInfo?.avatar" />
+      <span style="margin-top: 5px;" class="user-info">{{ EmployeeInfo ? EmployeeInfo.employeeCode : '' }} - {{ EmployeeInfo ? EmployeeInfo.employeeName : '' }}</span>
+    </div>
+  </div>
+  <div class="right-nav-bar pull-right left-option">
+      <ul class="header-right sys-ul space-line">
+          <li *ngIf="isView">
+            <button class="btn btn-sm vt-btn btn-submit btn-header-right ng-star-inserted" type="button" (click)="navigate()" [innerHTML]="'common.button.icon.edit' | translate">
+            </button>
+          </li>
+          <li *ngIf="isUpdate">
+            <button class="btn btn-sm vt-btn btn-header-right ng-star-inserted" type="button" (click)="close()" [innerHTML]="'common.button.icon.cancel' | translate" style="width: 80px;">
+            </button>
+          </li>
+          <li *ngIf="isUpdate && hasPermission('action.update', 'resource.partyMember')">
+            <button class="btn btn-sm vt-btn btn-submit btn-header-right ng-star-inserted" type="button" (click)="save()" [innerHTML]="'common.button.icon.save' | translate" style="width: 80px;">
+            </button>
+          </li>
+          <li *ngIf="isEmployeeInformation && hasPermission('action.update', 'resource.partyMember')">
+            <button class="btn btn-sm vt-btn btn-submit btn-header-right ng-star-inserted" type="button" (click)="save()" [innerHTML]="'common.button.icon.save' | translate" style="width: 80px;">
+            </button>
+          </li>
+          <li *ngIf="isEmployeeInformation && hasPermission('action.export')">
+            <button class="btn btn-sm vt-btn btn-header-right ng-star-inserted" type="submit" (click)="export()" [innerHTML]="'common.button.icon.exportFile' | translate">
+            </button>
+          </li>
+          <li>
+            <img class="icon-more" src="assets/img/icon/icon-more.png">
+          </li>
+          <li>
+            <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png">
+          </li>
+          <li>
+            <img alt="next" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18822.png">
+          </li>
+      </ul>
+  </div>
+</div>

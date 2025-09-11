@@ -1,0 +1,60 @@
+<div *ngIf="hasPermission('action.export')">
+    <div id="searchArea">
+        <div class="panel panel-default card-info">
+            <div class="panel-heading">
+                <strong>
+                    {{'democraticMeetingReport.title' | translate}}
+                </strong>
+            </div>
+            <form id="formExport" [formGroup]="formExport">
+                <div class="panel-body padding-xl ui-g">
+                    <div class="ui-g-12 vt-row">
+                        <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+                            {{'label.employee.ogzination' | translate}}
+                        </label>
+                        <div class="ui-g-12 ui-md-3 ui-lg-3">
+                            <org-selector
+                                    [property]="f['organizationId']"
+                                    operationKey="action.view"
+                                    adResourceKey="resource.requestDemocraticMeeting"
+                                    [defaultValue]="true"
+                                    [isRequiredField]="true"
+                                    [autoFocus]="true"
+                            >
+                            </org-selector>
+                            <app-control-messages [control]="f['organizationId']"></app-control-messages>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 vt-row">
+                        <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+                            {{'common.label.fromDate' | translate}}
+                        </label>
+                        <div class="ui-g-12 ui-md-3 ui-lg-3">
+                            <date-picker
+                                    [property]="f['fromDate']">
+                            </date-picker>
+                            <app-control-messages [control]="f['fromDate']"></app-control-messages>
+                        </div>
+                        <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right required">
+                            {{'common.label.toDate' | translate}}
+                        </label>
+                        <div class="ui-g-12 ui-md-3 ui-lg-3">
+                            <date-picker
+                                    [property]="f['toDate']">
+                            </date-picker>
+                            <app-control-messages [control]="f['toDate']"></app-control-messages>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="panel-footer vt-area-button">
+                <button type="submit" class="btn btn-sm vt-btn btn-submit" (click)="processReportEmpTypePolicy()"
+                        [innerHTML]="'common.button.icon.export' | translate"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="!hasPermission('action.export')">
+    {{'common.haveNoPermission' | translate}}
+</div>
+ 

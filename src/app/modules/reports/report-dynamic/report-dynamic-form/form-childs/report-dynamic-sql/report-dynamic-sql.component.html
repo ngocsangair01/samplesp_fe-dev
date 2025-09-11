@@ -1,0 +1,92 @@
+<form id="formSql" [formGroup]="formSql">
+    <div class="panel panel-default">
+      <div class="panel-heading vt-relative" style="border: none;">
+        <strong>
+          <span translate> app.reportDynamic.sqlForm </span>
+        </strong>
+      </div>
+      <div class="panel-body panel-table" style="margin-top: unset; padding: 12px;">
+        <p><span style="font-weight: bold;">Chú ý: Câu lệnh SQL đầu tiên luôn là câu lệnh lấy data.</span></p>
+        <p-table [value]="formSql.controls" tableStyleClass="table controls-table table-wrapper b-t b-b" [resizableColumns]="true"
+                 [scrollable]="true">
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col style="width: 50px;">
+              <col style="width: 400px;">
+              <col style="width: 50px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col style="width: 50px;">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th pResizableColumn translate><span>common.table.index</span></th>
+              <th pResizableColumn translate><span [ngClass]="{'required': formSql.controls[0] && formSql.controls[0].controls.sql.isRequire}">app.reportDynamic.sql</span></th>
+              <th pResizableColumn translate><span>app.reportDynamic.sql.append_filter</span></th>
+              <th pResizableColumn translate><span>app.reportDynamic.sql.groupByColumn</span></th>
+              <th pResizableColumn translate><span>app.reportDynamic.sql.rowGroupBy</span></th>
+              <th pResizableColumn translate><span>app.reportDynamic.sql.pivotColumn</span></th>
+              <th pResizableColumn translate><span>app.reportDynamic.add_delete</span></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-index="rowIndex">
+            <tr [formGroup]="item">
+              <td class="vt-align-center">
+                {{index+1}}
+              </td>
+              <td>
+                <dynamic-input  [property]="item.controls.sql"
+                                [rows]='10'
+                                [type]="'text-area'">
+                </dynamic-input>
+                <app-control-messages [control]="item.controls.sql"></app-control-messages>
+              </td>
+              <td class="vt-align-center">
+                <span>
+                  <input class="single-input"
+                    type="checkbox"
+                    name="isAppendFilter"
+                    formControlName="isAppendFilter"/>
+                </span>
+              </td>
+              <td class="vt-align-center">
+                <span>
+                  <dynamic-input [property]="item.controls.groupByColumn">
+                  </dynamic-input>
+                  <app-control-messages [control]="item.controls.groupByColumn"></app-control-messages>
+                </span>
+              </td>
+              <td class="vt-align-center">
+                <span>
+                  <dynamic-input [property]="item.controls.rowGroupBy">
+                  </dynamic-input>
+                  <app-control-messages [control]="item.controls.rowGroupBy"></app-control-messages>
+                </span>
+              </td>
+              <td class="vt-align-center">
+                <span>
+                  <dynamic-input  [property]="item.controls.pivotColumn"
+                                [rows]='10'
+                                [type]="'text-area'">
+                </dynamic-input>
+                <app-control-messages [control]="item.controls.pivotColumn"></app-control-messages>
+                </span>
+              </td>
+              <td class="vt-align-center">
+                <button class="btn-icon plus" type="button" (click)="addGroup(index, item)" [innerHTML]="'common.icon.plus' | translate">
+                </button>
+                <button class="btn-icon minus" type="button" (click)="removeGroup(index, item)" [innerHTML]="'common.icon.minus' | translate">
+                </button>
+                <button class="btn-icon plus" *ngIf="item.controls.sortOrder.value > 1" type="button" (click)="goUp(item)" [innerHTML]="'common.icon.up' | translate">
+                </button>
+                <button class="btn-icon plus" *ngIf="item.controls.sortOrder.value < numIndex" type="button" (click)="goDown(item)" [innerHTML]="'common.icon.down' | translate">
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </form>

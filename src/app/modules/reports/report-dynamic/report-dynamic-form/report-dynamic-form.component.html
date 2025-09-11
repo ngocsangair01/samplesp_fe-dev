@@ -1,0 +1,190 @@
+<div class="card-form">
+  <div class="clearfix">
+    <div class="left-nav-bar pull-left row-header">
+      <div>
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" [routerLink]="['/reports/report-dynamic']">
+        <span *ngIf="!formSave.get('reportDynamicId').value" class="title">{{'app.reportDynamic.add_form_title' | translate}}</span>
+        <span *ngIf="formSave.get('reportDynamicId').value" class="title">{{'app.reportDynamic.update_form_title' | translate}}</span>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+        <ul class="header-right sys-ul space-line">
+          <li>
+            <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" [routerLink]="['/reports/report-dynamic']" [innerHTML]="'common.button.icon.cancel' | translate">
+            </button>
+          </li>
+          <li>
+            <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="processSaveOrUpdate()" [innerHTML]="'common.button.icon.save' | translate">
+            </button>
+          </li>
+        </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <div *ngIf="hasPermission('action.insert')">
+    <div class="panel panel-default card-info">
+      <form id="formSave" [formGroup]="formSave">
+        <div class="panel-heading vt-relative">
+          <strong>
+            <!-- <span *ngIf="!formSave.get('reportDynamicId').value">{{'app.reportDynamic.add_form_title' | translate}}</span>
+            <span
+              *ngIf="formSave.get('reportDynamicId').value">{{'app.reportDynamic.update_form_title' | translate}}</span> -->
+            <span class="ml-2 title-info">Thông tin báo cáo</span>
+          </strong>
+        </div>
+        <div class="panel-body padding-xl ui-g">
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'app.reportDynamic.code' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form form-control"  name="code" formControlName="code" [maxLength]='50'>
+              <app-control-messages [control]="f['code']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'app.reportDynamic.name' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form form-control"  name="name" formControlName="name" [maxLength]='200'>
+              <app-control-messages [control]="f['name']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label [hidden]="f['startDate'].isHide" [ngClass]="{'required': f['startDate'].isRequire}"
+              class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'app.reportDynamic.startDate' | translate}}
+            </label>
+            <div [hidden]="f['startDate'].isHide" class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker [property]="f['startDate']"></date-picker>
+              <app-control-messages [control]="f['startDate']"></app-control-messages>
+            </div>
+            <label [hidden]="f['endDate'].isHide" [ngClass]="{'required': f['endDate'].isRequire}"
+              class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'app.reportDynamic.endDate' | translate}}
+            </label>
+            <div [hidden]="f['endDate'].isHide" class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker [property]="f['endDate']"></date-picker>
+              <app-control-messages [control]="f['endDate']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'app.reportDynamic.attachFile' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-12 ui-lg-3">
+              <file-chooser [property]="f['file']" [validMaxSize]="50" validType="xls,xlsx,doc,docx,pdf,rptdesign">
+              </file-chooser>
+              <div *ngIf="this.formSave.get('fileName').value">
+                <br>
+                <a class="text-link" (click)="downloadFile(formSave.get('reportDynamicId').value);" >
+                    <span translate><i class="fa fa-download"></i> app.common.downloadTemplate</span>
+                </a>
+              </div>
+              <app-control-messages [control]="f['file']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+              {{'app.reportDynamic.groupReport' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-12 ui-lg-3">
+              <select-filter [property]="f['groupId']" [options]="listGroup" optionLabel="name" optionValue="categoryId"
+                [placeHolder]="f['groupId'].isRequire ? 'common.label.cboMustSelect' : 'common.label.cboSelect'">
+              </select-filter>
+              <app-control-messages [control]="f['groupId']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label [hidden]="f['formatReport'].isHide" [ngClass]="{'required': f['formatReport'].isRequire}"
+              class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'app.reportDynamic.formatReport' | translate}}
+            </label>
+            <div [hidden]="f['formatReport'].isHide" class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['formatReport']" [options]="listFormatReport" optionLabel="parValue"
+                optionValue="parCode"
+                [placeHolder]="f['formatReport'].isRequire ? 'common.label.cboMustSelect' : 'common.label.cboSelect'">
+              </select-filter>
+              <app-control-messages [control]="f['formatReport']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right"  [hidden]="f['formatReport'].value !== 'EXCEL' && f['formatReport'].value !== 'EXCEL_EXTENDS'">
+              {{'app.reportDynamic.startRow' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3"  [hidden]="f['formatReport'].value !== 'EXCEL' && f['formatReport'].value !== 'EXCEL_EXTENDS'">
+              <input type="text" class="form form-control"  name="startRow" formControlName="startRow">
+              <app-control-messages [control]="f['startRow']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row"
+            [hidden]="f['formatReport'].value !== 'EXCEL' && f['formatReport'].value !== 'EXCEL_EXTENDS'">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'app.reportDynamic.startRowSign' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form form-control"  name="startRowSign" formControlName="startRowSign">
+              <app-control-messages [control]="f['startRowSign']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'app.reportDynamic.endRowSign' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form form-control"  name="endRowSign" formControlName="endRowSign">
+              <app-control-messages [control]="f['endRowSign']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row" [hidden]="f['formatReport'].value !== 'BIRT'">
+            <label [hidden]="f['fileType'].isHide" [ngClass]="{'required': f['fileType'].isRequire}"
+              class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'app.reportDynamic.fileTyle' | translate}}
+            </label>
+            <div [hidden]="f['fileType'].isHide" class="ui-g-12 ui-md-6 ui-lg-3">
+              <div class="form-check-inline">
+                <label class="i-checks">
+                  <input type="radio" formControlName="fileType" [value]="1" class="form-check-input control-label"
+                    id="radioExcel" name="fileType" />
+                  <i></i> {{'app.reportDynamic.fileTyle.excel' | translate}}
+                </label>
+              </div>
+              <div class="form-check-inline">
+                <label class="i-checks">
+                  <input type="radio" formControlName="fileType" [value]="2" class="form-check-input control-label"
+                    id="radioWord" name="fileType" />
+                  <i></i> {{'app.reportDynamic.fileTyle.word' | translate}}
+                </label>
+              </div>
+              <div class="form-check-inline">
+                <label class="i-checks">
+                  <input type="radio" formControlName="fileType" [value]="3" class="form-check-input control-label"
+                    id="radioPDF" name="fileType" />
+                  <i></i> {{'app.reportDynamic.fileTyle.pdf' | translate}}
+                </label>
+              </div>
+              <app-control-messages [control]="f['fileType']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-12 ui-lg-2 control-label vt-align-right">
+              {{'app.reportDynamic.reportUrl' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-12 ui-lg-9">
+              <input type="text" class="form form-control"  name="reportUrl" formControlName="reportUrl">
+              <app-control-messages [control]="f['reportUrl']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row" [hidden]="f['formatReport'].value === 'BIRT'">
+            <report-dynamic-sql #sql></report-dynamic-sql>
+          </div>
+          <div class="ui-g-12 vt-row"
+            [hidden]="f['formatReport'].value !== 'EXCEL' && f['formatReport'].value !== 'EXCEL_EXTENDS'">
+            <report-dynamic-column #column (onRefresh)="syncAlias()"></report-dynamic-column>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <report-dynamic-parameter #parameter></report-dynamic-parameter>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  <div *ngIf="!hasPermission('action.view')" translate>
+    common.haveNoPermission
+  </div>
+</div>

@@ -1,0 +1,217 @@
+<div
+  *ngIf="(hasPermission('action.update') && vicinityPositionPlanId) || (hasPermission('action.insert') && !vicinityPositionPlanId)">
+  <div class="panel panel-default">
+    <form id="formDetail" [formGroup]="formDetail">
+      <div class="panel-heading vt-relative">
+        <strong class="text-u-c">
+          <i class="fa fa-th"></i>&nbsp;
+          <span translate>profile.table.ttct</span>
+        </strong>
+      </div>
+      <div class="panel-body padding-xl ui-g">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" translate>
+            vicinityPlan.vicinityPositionPlan.unit
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="text" [attr.disabled]="true" formControlName="organizationName" name="organizationName"
+              class="form-control" maxlength="200">
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" translate>
+            vicinityPlan.vicinityPositionPlan.documentNumber
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="text" [attr.disabled]="true" formControlName="documentNumber" name="documentNumber"
+              class="form-control" maxlength="200">
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" translate>
+            vicinityPlan.vicinityPositionPlan.documentName
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="text" [attr.disabled]="true" formControlName="documentName" name="documentName"
+              class="form-control" maxlength="200">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading btn-group">
+      <button *ngFor="let item of listPositions, let i = index" type="button"
+        (click)="vicinityPositionPlanId = item.vicinityPositionPlanId; getDetailPostion(item.positionId)"
+        [ngClass]="{'btn btn-info': item.activeClass, 'btn btn-btn-success':!item.activeClass}">
+        {{'vicinityPlan.vicinityPositionPlan.planningTitle' | translate}}: {{ item.positionName }}
+      </button>
+    </div>
+    <div class="panel-body panel-table">
+      <form id="lstDetail">
+        <p-table #dt [scrollable]="true" [value]="positionList" [lazyLoadOnInit]="false" selectionMode="single"
+          [responsive]="true" tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+          styleClass="controlOverflow">
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col class="size-1">
+              <col class="size-5">
+              <col class="size-15">
+              <col class="size-15">
+              <!-- <col class="size-7"> -->
+              <col class="size-3">
+              <col class="size-7">
+              <col class="size-3">
+              <col class="size-4">
+              <col class="size-4">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th translate>common.table.index</th>
+              <th translate>common.label.action</th>
+              <th>
+                <p style="margin-bottom: auto;" translate>common.label.fullName</p>
+                <p style="margin-bottom: auto;" translate>label.employee.level</p>
+                <p style="margin-bottom: auto;" translate>label.employee.ogzination</p>
+              </th>
+              <th translate>vicinityPlan.vicinityPositionPlan.evaluateInfor</th>
+              <!-- <th translate>vicinityPlan.vicinityPositionPlan.inforYear</th> -->
+              <th>
+                <p style="margin-bottom: auto;" translate>vicinityPlan.vicinityPositionPlan.train</p>
+                <p style="margin-bottom: auto;" translate>vicinityPlan.vicinityPositionPlan.contentYear</p>
+              </th>
+              <th>
+                <p style="margin-bottom: auto;" translate>vicinityPlan.vicinityPositionPlan.futureMove</p>
+                <p style="margin-bottom: auto;" translate>vicinityPlan.vicinityPositionPlan.unitYear</p>
+              </th>
+              <th translate>vicinityPlan.vicinityPositionPlan.useOrientation</th>
+              <th translate>vicinityPlan.vicinityPositionPlan.personnelClass</th>
+              <th translate>vicinityPlan.vicinityPositionPlan.zoningStatus</th>
+            </tr>
+            <tr>
+              <th></th>
+              <th></th>
+              <th>
+                <input class="form-control" type="text"
+                  (input)="dt.filter($event.target.value, 'information', 'contains')">
+              </th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th>
+                <p-dropdown appendTo="body" [options]="classEmployees"
+                  (onChange)="dt.filter($event.value, 'classEmployee', 'equals')"></p-dropdown>
+              </th>
+              <th>
+                <p-dropdown appendTo="body" [options]="statusVicinities"
+                  (onChange)="dt.filter($event.value, 'statusVicinity', 'contains')"></p-dropdown>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-index="rowIndex">
+            <tr>
+              <td class="vt-align-center">
+                {{index+1}}
+              </td>
+              <td class="vt-align-center" style="overflow: initial !important;">
+                <div ngbDropdown class="d-inline-block">
+                  <button class="btn btn-sm btn-info" ngbDropdownToggle translate>common.label.action</button>
+                  <div ngbDropdownMenu style="margin-left: -50px;">
+                    <!-- Cap nhat -->
+                    <div>
+                      <button class="dropdown-item" (click)="prepareSaveOrUpdate(item)"
+                        [innerHTML]="'common.button.table.update' | translate">
+                      </button>
+                    </div>
+                    <!-- dua ra khoi quy hoach -->
+                    <div>
+                      <button class="dropdown-item" (click)="getDetailRotation(item)"
+                        [innerHTML]="'common.button.table.duara' | translate">
+                      </button>
+                    </div>
+                    <!-- xoa can bo quy hoach -->
+                    <div>
+                      <button class="dropdown-item" (click)="removeRotation(item)"
+                        [innerHTML]="'common.button.table.xoa' | translate">
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div [innerHTML]="item.information"></div>
+              </td>
+              <td>
+                <div *ngIf="item.isShowNote" class="vt-align-center">
+                  <button class="btn btn-info" type="button" [title]="'titleHide' | translate"
+                    (click)="item.isShowNote = false" [innerHTML]="'common.button.icon.hide' | translate">
+                  </button>
+                  <br>
+                </div>
+                <div *ngIf="item.isShowNote">
+                  {{ item.note }}
+                </div>
+                <div *ngIf="!item.isShowNote" class="vt-align-center">
+                  <button *ngIf="!item.isShowNote" class="btn btn-info" type="button" [title]="'titleShow' | translate"
+                    (click)="item.isShowNote = true" [innerHTML]="'common.button.icon.show' | translate">
+                  </button>
+                </div>
+              </td>
+              <!-- <td>
+                <div ngbDropdown class="d-inline-block">
+                  <button type="button" class="btn btn-info" (click)="getEmployeeAssessmentByEmployeeId(item)"
+                    ngbDropdownToggle><u>Link Download</u></button>
+                  <div ngbDropdownMenu>
+                    <div>
+                      <button class="dropdown-item" *ngFor="let item of listAssessmentPeriod"
+                        (click)="downloadTemplate(item)">
+                        <a class="color-info">{{ item.assessmentPeriodName }}</a>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </td> -->
+              <td>
+                <!-- chưa xử lý-->
+                {{ item.name }}
+              </td>
+              <td>
+                <!-- chưa xử lý-->
+                {{ item.nameEmploy }}
+              </td>
+              <td>
+                {{ item.directionOfUse }}
+              </td>
+              <td>
+                {{ item.classEmployee }}
+              </td>
+              <td>
+                {{ item.statusVicinity }}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </form>
+    </div>
+    <div class="panel-footer vt-area-button">
+      <button type="submit" (click)="putPlanning()" class="btn btn-sm btn-info">Đưa vào quy hoạch</button>
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-sm btn-info" ngbDropdownToggle>Xuất báo cáo quy hoạch</button>
+        <div ngbDropdownMenu>
+          <!-- Cap nhat -->
+          <div>
+            <button class="dropdown-item" *ngFor="let item of listExport" (click)="export(item)">
+              <a class="color-info">{{ item }}</a>
+            </button>
+          </div>
+        </div>
+      </div>
+      <button type="button" (click)="goBack()" class="btn btn-sm btn-danger"
+        [innerHTML]="'common.button.out' | translate"></button>
+    </div>
+  </div>
+</div>
+<div
+  *ngIf="(!hasPermission('action.update') && vicinityPositionPlanId) || (!hasPermission('action.insert') && !vicinityPositionPlanId)">
+  {{'common.haveNoPermission' | translate}}
+</div>

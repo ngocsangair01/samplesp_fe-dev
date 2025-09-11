@@ -1,0 +1,100 @@
+<div *ngIf="hasPermission('action.update')">
+  <div class="panel panel-default">
+    <form id="formSave" [formGroup]="formSave">
+      <div class="panel-heading vt-relative">
+        <strong class="text-u-c">
+          <i class="fa fa-th"></i>&nbsp;
+          <span  translate>app.responseResolutionMonth.updateTitle</span>
+        </strong>
+        <div class="vt-absolute vt-sub-title-in-heading text-u-c">
+          <div>{{f['title'].value}}</div>
+        </div>
+      </div>
+      <div class="panel-body padding-xl ui-g">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="'required'">
+            {{'app.requestResolutionMonth.numberOfSymbols' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="text" formControlName="textSymbols" class="form-control" maxlength="100"> 
+            <app-control-messages [control]="f['textSymbols']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right " [ngClass]="'required'">
+            {{'app.requestResolutionMonth.extractingTextContent' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="text" formControlName="extractingTextContent" class="form-control" maxlength="250">
+            <app-control-messages [control]="f['extractingTextContent']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'app.responseResolutionMonth.issuedResolution' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <label class="i-switch bg-info m-t-xs m-r" id="issuedResolution">
+              <input type="checkbox" disabled="true" name="issuedResolution" [value]="1" formControlName="issuedResolution"/>
+              <i></i>
+            </label>
+            <app-control-messages [control]="f['issuedResolution']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" [ngClass]="f['issuedResolution'].value ? 'required' : null">
+            {{'app.responseResolutionMonth.promulgateDate' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <date-picker [property]="f['promulgateDate']"></date-picker>
+            <app-control-messages [control]="f['promulgateDate']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="'required'">
+            {{'app.responseResolutionMonth.resolutionFile' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3" >
+            <file-chooser
+              [property]="f['signFile']"
+              validType="pdf"
+              htmlId="signFile"
+              [disabled]="isView">
+            </file-chooser>
+            <app-control-messages [control]="f['signFile']"></app-control-messages>
+            <br>
+            <ng-container *ngFor="let item of templateFileSigns">
+              <a class="text-link"
+                (click)="downloadTemplateSign(item);">
+                <span>- {{item.name}}</span><br/>
+              </a>
+            </ng-container>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" [ngClass]="'required'">
+            {{'app.responseResolutionMonth.reportFile' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <multi-file-chooser
+              [property]="f['reportFile']"
+              htmlId="reportFile"
+              validType="xls,doc,pdf"
+              [disabled]="isView"
+              [validMaxSize]="50"
+            >
+            </multi-file-chooser>
+            <app-control-messages [control]="f['reportFile']"></app-control-messages>
+          </div>
+          <br>
+          <label class="ui-g-12 ui-md-6 ui-lg-2 ">
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer vt-area-button">
+        <button type="submit" *ngIf="!isView" (click)="processSaveOrUpdate()" class="btn btn-sm btn-info" [innerHTML]="'common.button.icon.doneUpdate' | translate"></button>
+        <button type="button" (click)="goBack()" class="btn btn-sm btn-danger" [innerHTML]="'common.button.out' | translate"></button>
+      </div>
+    </form>
+  </div>
+</div>
+<div *ngIf="!hasPermission('action.update')" translate>
+  common.haveNoPermission
+</div>

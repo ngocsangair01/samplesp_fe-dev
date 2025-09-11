@@ -1,0 +1,1134 @@
+<!-- <div *ngIf="hasPermission('action.view')"> -->
+<div class="overlay-search">
+  <p-overlayPanel #downloadFile [dismissable]="true" styleClass="panel-nation-assessment" [showCloseIcon]="false" appendTo="body" baseZIndex="20000">
+    <div class="assessment-employee-dropdown-menu">
+      <div class="assessment-action">
+          <ul class="assessment-action-icon" [ngClass]="{'overlay-inlist': !showListDetail}">
+              <li *ngFor="let file of templateFileList, let i = index">
+                  <a href="javascript:void(0)"
+                    title="{{makeFileName(file.fileName)}}"
+                    (click)="exportAssessmentResult2(evaluateEmployeeData.employeeId, file, i)"
+                    class="export-assessment-result">
+                      <i class="fas fa-download" style="width: 15px; height: 15px;color: #BF8771;"></i>
+                  </a>
+                  <p style="margin-top: 10px">{{makeFileName(file.fileName)}}</p>
+              </li>
+          </ul>
+      </div>
+    </div>
+  </p-overlayPanel>
+  <div class="rotate-layout" [ngClass]="{'show': isShowRotateSearch}" *ngIf="currentPage === ASSESSMENT_EMPLOYEE_PAGE">
+    <div class="search">
+      <button (click)="showHideSearch()"
+        title="{{'common.button.close' | translate}}"
+        class="close-button appearance-ghost size-medium status-basic shape-rectangle icon-start icon-end nb-transition"
+        aria-disabled="false" tabindex="0">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="body-assessment" [ngClass]="{'show-rotate-search': isShowRotateSearch, 'menu-active': isShowSideRightMenu}">
+  <div class="theme-container width-100vw height-100vh active1" id="main-container"
+    [ngClass]="{'active1': currentPage === 'assessment-period-page', 'active2': currentPage === 'employee-page', 'active3': currentPage === 'assessment-page'}">
+    <div class="theme-inner transition-common">
+
+
+      <div class="theme-layout" id="period-page">
+        <div role="main"
+          class=" bg-overlay bg-image bg-parallax width-100vw height-100vh assessment-background">
+          <section class="valign-middle">
+            <div class="block inner-pages transition-common transition-common-custom">
+              <div class="container container-ass-cus">
+                <div class="row justify-content-center" style="max-height: max-content;">
+                    <div class="hero-content text-center">
+                      <h1 class="hero-title">Đánh giá cán bộ, Đảng viên</h1>
+                        <p> <i>Đề nghị đồng chí thực hiện đánh giá theo các biểu mẫu ở thư mục phía dưới (nếu đồng chí có hai thư mục thì vui lòng vào đánh giá cả hai)</i></p>
+                        <div class="row justify-content-center row-content-custom" >
+                        <div class="col-md-1" style="display: flex; align-items: center; min-width: 20rem">
+                            <label  class="ui-g-4 ui-md-3 ui-lg-6 control-label vt-align-right ">
+                                Chọn kỳ
+                            </label>
+                            <div class="ui-g-6 ui-md-3 ui-lg-12">
+                            <select-filter
+                                    [placeHolder]="'common.label.cboSelectAll'"
+                                    [property]="fSearch['year']"
+                                    [options]="LIST_YEAR"
+                                    optionLabel="name"
+                                    optionValue="id"
+                                    [isDisplayClear]="false"
+                                    (onChange)="onChangeYear()"
+                            >
+                            </select-filter>
+                            </div>
+                        </div>
+                        </div>
+                      <div class="row justify-content-center row-content-custom">
+
+                        <div *ngFor="let data of assessmentPeriodList" class="col-md-6 content-custom">
+                          <div class="card cursor-pointer" (click)="onChosePeriod(data)">
+                            <div class="card-body card-custom">
+                              <div>
+                                <div class="content-assessment card-body-custom">
+                                  <div class="card-assessment">
+                                    <div class="firstinfo-assessment">
+                                      <div class="profileinfo-assessment">
+                                        <div>
+                                          <img class="image-tech-v2 img-tech-custom" [pTooltip]="data.assessmentPeriodName"
+                                               [src]="ICON_API_URL + data.settingIconId"
+                                               showDelay="250" tooltipPosition="bottom"/>
+                                        </div>
+
+                                        <div class= "content-time-period-name">
+                                        <div class= "label-time-custom">
+                                          <span class="label-time"
+                                                *ngIf="data.expiredDate"><span style="font-weight: 400">{{data.effectiveDate|displayDate}}</span> -
+                                            <span style="font-weight: 700">{{data.expiredDate|displayDate}}</span></span>
+                                          <span class="label-time"
+                                                *ngIf="!data.expiredDate"><span style="font-weight: 400">{{data.effectiveDate|displayDate}}</span> - <span style="font-weight: 700">Vô thời</span>
+                                            hạn</span>
+                                        </div>
+
+                                        <div class="period-name-custom">
+                                          <span class="period-name span-period-name">
+                                             {{data.assessmentPeriodName}}
+                                          </span>
+                                        </div>
+                                        </div>
+
+                                        <div class= "count-member-assessment">
+                                        <div class="count-member">
+                                          <span *ngIf="data.isPartyMemberAssessment !== 1">
+                                            Số lượng cán bộ đánh giá:&nbsp;
+                                          </span>
+                                          <span *ngIf="data.isPartyMemberAssessment === 1">
+                                            Số lượng cán bộ,đảng viên phải đánh giá:&nbsp;
+                                          </span>
+                                          <span>{{data.countAssessmentedEmployee}}</span>
+                                        </div>
+
+                                         <div class="count-member">
+                                          <span *ngIf="data.isPartyMemberAssessment !== 1">
+                                            Số lượng cán bộ đã đánh giá:&nbsp;
+                                          </span>
+                                          <span *ngIf="data.isPartyMemberAssessment === 1">
+                                            Số lượng cán bộ,đảng viên đã đánh giá:&nbsp;
+                                          </span>
+                                          <span>{{data.countAssessmented}}</span>
+                                        </div>
+                                      </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+
+
+
+      <div class="theme-layout" id="list-page" [ngClass]="{'show-search': isShowRotateSearch}">
+        <div class="se-pre-con" style="display: none;background: #F5F5F5 !important;"></div>
+          <div class="header-assessment-custom" style="z-index: 100">
+                <div class="info-header-left">
+                    <div class="logo logo-page-back">
+                        <a href="javascript:void(0)" *ngIf="!disableBtnBackPeriod"
+                            (click)="movePageBack()"
+                            class="btn-back-custom">
+                            <span class="ic-back-preriod">
+                              <i class="fa fa-chevron-left fa-back-custom" aria-hidden="true"></i>
+                            </span>
+                            <span class="title-back-custom" *ngIf="this.scrWidth >= 1366">Quay lại</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="info-header-center">
+                    <div class="title-evaluate-custom">
+                        <h1 class="title-evaluate">{{assessmentPeriodName}}</h1 >
+                    </div>
+                </div>
+                <div class="info-header-right pl-2">
+                    <div class="info-header-right-position" *ngIf="this.scrWidth >= 768">
+                        <div class="info-name-code-employee">
+                            <div class="info-name-employee">
+                                {{userInfo.fullName}}
+                            </div>
+                            <div class="info-code-employee">
+                                {{userInfo.employeeCode}}
+                            </div>
+                        </div>
+
+                        <div class="avt-image-employee">
+                            <figure class="img-avatar-empl"
+                                    style="background-size: cover; background-repeat: no-repeat;background-position-y: -3px;"
+                                    [ngStyle]="{'background-image': 'url(' + AVATAR_API_URL + evaluateEmployeeInfo.employeeCode + ')'}">
+                            </figure>
+                        </div>
+
+                        <div class="line-straight">
+                        </div>
+                            <div class="btn-logout-custom">
+                                <div title="Đăng xuất" (click)="logout()">
+                                    <span class="ic ic-sign-out"></span>
+                                </div>
+                            </div>
+                    </div>
+                    <div *ngIf="this.scrWidth < 768">
+                        <div class="avt-image-employee-2">
+                            <figure class="img-avatar-empl"
+                                        style="background-size: cover; background-repeat: no-repeat;background-position-y: -3px;"
+                                    [ngStyle]="{'background-image': 'url(' + AVATAR_API_URL + evaluateEmployeeInfo.employeeCode + ')'}">
+                            </figure>
+                            <div class="dropdown-content">
+                                <div style="margin-top: 12px;margin-left: 12px;height: 32px;margin-bottom: 10px;">
+                                <div class="info-name-employee">
+                                    {{userInfo.fullName}}
+                                </div>
+                                <div class="info-code-employee" style="float: left;">
+                                    {{userInfo.employeeCode}}
+                                </div>
+                                </div>
+                                <div style="margin-left: 12px;width: 136px;height: 0px;border: 1.5px solid rgba(208, 61, 3, 0.1);color: rgba(208, 61, 3, 0.1);"></div>
+                                <div style="margin-top: 10px;margin-left: 12px;margin-bottom: 12px;" (click)="logout()">
+                                        <div title="Đăng xuất" style="margin-right: 4px;float: left;">
+                                            <span class="ic ic-sign-out"></span>
+                                        </div>
+                                        <a class="logout-title-custom" style="float:left;font-weight: 600;font-size: 11px;line-height: 16px;color: #BF8771;height: 16px;">Đăng xuất</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div role="main" class=" width-100vw height-100vh main main-custom">
+          <section class="valign-middle">
+              <div class="container-custom">
+                <div class="form-wrapper">
+
+                      <form class="form ng-untouched ng-pristine ng-valid form-untouched wrapper-custom position-relative"
+                            [formGroup]="formRotateSearch"
+                            (ngSubmit)="processSuggestSearch()">
+                          <p-autoComplete #autoCompleteAssessmentEmployee formControlName="keySearch"
+                                          styleClass="w-100 bg-transparent input-search" inputStyleClass="w-100 pr-5 pl-3 bg-transparent border-0 py-0"
+                                          [suggestions]="assessmentEmployeeList" (completeMethod)="assessmentEmployeeSuggestSearch($event)"
+                                          delay="500" placeholder="{{'assessment.search.placeholder' | translate}}"
+                                          [style]="{fontSize: '16px',borderRadius: '8px'}"
+                                          (onSelect)="onSelectAssessmentEmployee($event)">
+                              <ng-template let-employee pTemplate="item">
+                                  <div class="avatar-suggest">
+                                      <figure class="image-avatar-local-search"
+                                              [ngStyle]="{'background-image': 'url(' + AVATAR_API_URL + employee.employeeCode + ')'}">
+                                      </figure>
+                                  </div>
+                                  <div class="emp-info-suggest">
+                                      <p>{{employee.employeeFullName}}</p>
+                                      <p>{{employee.orgNameLevel1}}</p>
+                                  </div>
+                              </ng-template>
+                          </p-autoComplete>
+
+                          <div class="icon-search-custom">
+                              <i class="fa fa-search" aria-hidden="true"></i>
+                          </div>
+                      </form>
+                </div>
+                <div class="pagination-page wrapper-custom" *ngIf="this.scrWidth < 1366">
+                  <button pButton  [disabled]="pageOffset <= 0 ? true : false" class="fa-pagination-custom" (click)="changePageEmployee('prev')">
+                    <i class="fa fa-chevron-left w-100" aria-hidden="true" [ngClass]="pageOffset > 0 ? '' : 'disabled'"></i>
+                  </button>
+                  <span class="tittle-pages">{{pageLoad()}}</span>
+                  <button pButton  [disabled]="moreData ? false : true" class="fa-pagination-custom" (click)="changePageEmployee('next')">
+                    <i class="fa fa-chevron-right w-100" aria-hidden="true" [ngClass]="moreData ? '' : 'disabled'"></i>
+                  </button>
+                </div>
+                <div class="list-page">
+                  <div *ngIf="!hasRecord" class="hero-content text-center">
+                    <h2>{{'app.noRecords.assessment.statistic' | translate}}</h2>
+                  </div>
+                  <div class="students-page active student-contain student-contain-custom"
+                    *ngFor="let splitEmployeeList of employeeShowList, let i = index">
+                    <div>
+                    <div class="row justify-content-center" style="margin: auto;">
+                      <div class="col-6 col-md-4 col-lg-3 assessment-col-custom"
+                        *ngFor="let employee of splitEmployeeList"
+                        [tabIndex]="pageOffset !== i ? -1 : 0">
+                        <div [tabIndex]="pageOffset !== i ? -1 : 0" class="students">
+                          <figure [tabIndex]="pageOffset !== i ? -1 : 0" class="image-avatar img-custom"
+                            (click)="prepareEvaluateEmployee(employee)"
+                            [ngClass]="{'assessment-employee-active': employeeInfo != null && employeeInfo.employeeId === employee.employeeId}"
+                            [ngStyle]="{'background-image': 'url(' + AVATAR_API_URL + employee.employeeCode + ')'}">
+                          </figure>
+                          <div class="content-employee-assessment">
+                              <div class="info-employee-assessment" [ngClass]="scrWidth <= 768 ? 'text-left' : ''">
+                                  <label  class="name-employee-assessment" [tabIndex]="pageOffset !== i ? -1 : 0" (click)="prepareEvaluateEmployee(employee)">
+                                      <a style="color: #212529;" [title]="employee.employeeFullName" [tabIndex]="pageOffset !== i ? -1 : 0" href="javascript:void(0)"
+                                      >{{employee.employeeFullName}}</a>
+                                  </label>
+                                  <span class="title-org-name " [ngClass]="scrWidth <= 768 ? 'text-left ml-0' : ''" [title]="employee.orgNameLevel1" style="-webkit-box-orient: vertical;">{{employee.orgNameLevel1}}</span>
+<!--                                  <span class= "assessemnt-result-custom" *ngIf="employee.assessmentResult !== null"-->
+<!--                                        style="text-transform: capitalize;">-->
+<!--                                  <a>({{'assessment.criteria.resulft' | translate}}:-->
+<!--                            </a><span class="badge badge-success" style="font-size: 9px;">{{employee.assessmentResult}}-->
+<!--                            </span>)</span>-->
+<!--                                  <span class= "assessemnt-result-custom" *ngIf="employee.assessmentResult === null"-->
+<!--                                        style="text-transform: capitalize;">(<span>{{'assessment.criteria.resulft' | translate}}:-->
+<!--                            </span><span class="badge badge-warning"-->
+<!--                                         style="font-size: 9px;">{{'assessment.employee.no.resulft' | translate}}</span>)</span>-->
+                              </div>
+                              <div class="lst-assessment-custom">
+                                <ul class="ul-assessment-custom" [ngClass]="scrWidth <= 768 ? 'text-left p-0' : ''" [tabIndex]="pageOffset !== i ? -1 : 0">
+                                    <li [tabIndex]="pageOffset !== i ? -1 : 0" *ngIf="employee.displayBtnEvaluate === 1" class="li-custom-balance-scale" [ngClass]="scrWidth <= 768 ? 'text-center' : ''">
+                                        <a [tabIndex]="pageOffset !== i ? -1 : 0" href="javascript:void(0)"
+                                          (click)="prepareEvaluateEmployee(employee)" class="stu-facebook">
+                                            <i [tabIndex]="pageOffset !== i ? -1 : 0"
+                                              [title]="'assessment.criteria.criteria' | translate" class="fas fa-balance-scale"
+                                              style="color: #FFF4EB !important;padding-top: 30%;"></i>
+                                        </a>
+                                    </li>
+
+                                    <li [tabIndex]="pageOffset !== i ? -1 : 0" *ngIf="employee.displayBtnEvaluate !== 1" class="li-custom-balance-scale" style="background: #FFF4EB;" [ngClass]="scrWidth <= 768 ? 'text-center' : ''">
+                                        <a [tabIndex]="pageOffset !== i ? -1 : 0" href="javascript:void(0)" class="stu-facebook"
+                                          (click)="prepareEvaluateEmployee(employee)">
+                                            <i [tabIndex]="pageOffset !== i ? -1 : 0"
+                                              [title]="'assessment.criteria.criteria' | translate" style="color: gray;padding-top: 30%;"
+                                              class="fas fa-balance-scale" ></i>
+                                        </a>
+                                    </li>
+
+                                    <li [tabIndex]="pageOffset !== i ? -1 : 0" class="li-custom-file-dowload" [ngClass]="scrWidth <= 768 ? 'text-center' : ''">
+                                        <a [tabIndex]="pageOffset !== i ? -1 : 0" href="javascript:void(0)"
+                                          (click)="downloadAssessmentResult($event, employee)"
+                                          class="export-assessment-result">
+                                            <i [tabIndex]="pageOffset !== i ? -1 : 0"
+                                              [title]="'assessment.criteria.export.file' | translate" class="fas fa-file-word"
+                                              style="color: #BF8771 !important;width: 13.33px !important;height: 16.67px !important;padding-top: 30%;"
+                                            ></i>
+                                        </a>
+                                    </li>
+                                    <li [tabIndex]="pageOffset !== i ? -1 : 0" class="li-custom-envelope-square" [ngClass]="scrWidth <= 768 ? 'text-center' : ''">
+                                        <a [tabIndex]="pageOffset !== i ? -1 : 0" href="javascript:void(0)" class="stu-twitter"
+                                          (click)="prepareSendNotification(employee.employeeId)">
+                                            <i [tabIndex]="pageOffset !== i ? -1 : 0"
+                                              [title]="'assessment.criteria.send.notification' | translate"
+                                              class="fas fa-envelope-square" style="color: #BF8771 !important;padding-top: 30%;"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                              </div>
+                          <div class="evaluated" *ngIf="employee.signStatus === 3">
+                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                          </div>
+                          <div class="evaluated-bg" *ngIf="employee.signStatus === 3">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+
+                <div *ngIf="this.scrWidth >= 1366">
+                  <ul class="paginationz">
+                    <li id="prev-page-student" class="prev prev-custom" style="border: #D4C2BB;" *ngIf="pageOffset > 0">
+                      <a href="javascript:void(0)" title="Trang trước" (click)="changePageEmployee('prev')"><i
+                          class="fa fa fa-caret-left" style="color: #D4C2BB;"></i></a>
+                    </li>
+                    <li id="next-page-student" class="next next-custom" style="border: #D4C2BB;" *ngIf="moreData">
+                      <a href="javascript:void(0)" title="Trang sau" (click)="changePageEmployee('next')"><i
+                          class="fa fa fa-caret-right" style="color: #D4C2BB;"></i></a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div *ngIf="this.scrWidth < 1366">
+                  <ul class="paginationz">
+                    <li id="prev-page-student" class="prev prev-custom" style="border: #D4C2BB;" *ngIf="pageOffset > 0">
+                      <a href="javascript:void(0)" title="Trang trước" (click)="changePageEmployee('prev')"><i
+                          class="fa fa fa-caret-left" style="color: #D4C2BB;"></i></a>
+                    </li>
+                    <li id="next-page-student" class="next next-custom" style="border: #D4C2BB;" *ngIf="moreData">
+                      <a href="javascript:void(0)" title="Trang sau" (click)="changePageEmployee('next')"><i
+                          class="fa fa fa-caret-right" style="color: #D4C2BB;"></i></a>
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </section>
+        </div>
+        <a href="javascript:void(0)" id="close-left-menu-btn" class="butn1 butn-light"
+          [ngClass]="{'show-menu': isShowSideLeftMenu}" (click)="closeLeftMenu()">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </a>
+        </div>
+
+
+      <div class="theme-layout-custom" id="detail-page">
+            <div class="header-assessment-custom" style="z-index: 100">
+                <div class="info-header-left">
+                    <div class="logo logo-page-back">
+                        <a href="javascript:void(0)" *ngIf="!disableBtnBackPeriod"
+                            (click)="movePageBack()"
+                            class="btn-back-custom">
+                            <span class="ic-back-preriod">
+                              <i class="fa fa-chevron-left fa-back-custom" aria-hidden="true"></i>
+                            </span>
+                            <span class="title-back-custom" *ngIf="this.scrWidth >= 1366">Quay lại</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="info-header-center">
+                    <div class="title-evaluate-custom">
+                        <h1 class="title-evaluate">{{assessmentPeriodName}}</h1 >
+                    </div>
+                </div>
+                <div class="info-header-right pl-2">
+                    <div class="info-header-right-position" *ngIf="this.scrWidth >= 768">
+                        <div class="info-name-code-employee">
+                            <div class="info-name-employee">
+                                {{userInfo.fullName}}
+                            </div>
+                            <div class="info-code-employee">
+                                {{userInfo.employeeCode}}
+                            </div>
+                        </div>
+
+                        <div class="avt-image-employee">
+                            <figure class="img-avatar-empl"
+                                    style="background-size: cover; background-repeat: no-repeat;background-position-y: -3px;"
+                                    [ngStyle]="{'background-image': 'url(' + AVATAR_API_URL + evaluateEmployeeInfo.employeeCode + ')'}">
+                            </figure>
+                        </div>
+
+                        <div class="line-straight">
+                        </div>
+                        <div class="btn-logout-custom">
+                            <div title="Đăng xuất" (click)="logout()">
+                                <span class="ic ic-sign-out"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="this.scrWidth < 768">
+                        <div class="avt-image-employee-2">
+                            <figure class="img-avatar-empl"
+                                style="background-size: cover; background-repeat: no-repeat;background-position-y: -3px;"
+                                [ngStyle]="{'background-image': 'url(' + AVATAR_API_URL + evaluateEmployeeInfo.employeeCode + ')'}">
+                            </figure>
+                            <div class="dropdown-content">
+                                <div style="margin-top: 12px;margin-left: 12px;height: 32px;margin-bottom: 10px;">
+                                    <div class="info-name-employee">
+                                        {{userInfo.fullName}}
+                                    </div>
+                                    <div class="info-code-employee" style="float: left;">
+                                        {{userInfo.employeeCode}}
+                                    </div>
+                                </div>
+                                <div style="margin-left: 12px;width: 136px;height: 0px;border: 1.5px solid rgba(208, 61, 3, 0.1);color: rgba(208, 61, 3, 0.1);"></div>
+                                <div style="margin-top: 10px;margin-left: 12px;margin-bottom: 12px;" (click)="logout()">
+                                    <div title="Đăng xuất" style="margin-right: 4px;float: left;">
+                                        <span class="ic ic-sign-out"></span>
+                                    </div>
+                                    <a class="logout-title-custom" style="float:left;font-weight: 600;font-size: 11px;line-height: 16px;color: #D4C2BB;height: 16px;">Đăng xuất</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+          <div>
+          <form id="formAssessment" class="d-flex"  [ngClass]="scrWidth < 1366 ? 'flex-column' : ''"
+                [formGroup]="formAssessment" focusInvalidInput focusFirstInput>
+          <div class="info-employee-evaluated-cus">
+            <div class= "info-employee-evaluated">
+              <div class="detail-info-empl">
+                <div class="align-items-center" [ngClass]="scrWidth < 1366 ? 'd-flex' : ''"   (click)="hanldeCollapsed()">
+                  <div class="avatar-img-custom">
+                      <figure class="image-avatar image-avatar-v2 image-avatar-custom"
+                           [ngStyle]="{'background-image': 'url(' + AVATAR_API_URL + evaluateEmployeeInfo.employeeCode + ')'}">
+                      </figure>
+                  </div>
+                    <div class="content-info-custom">
+                      <div class="title-soldier-level">
+                          <label>{{evaluateEmployeeInfo.soldierLevel}}</label>
+                      </div>
+
+                      <div class="title-employee-fullname">
+                          <label>{{evaluateEmployeeInfo.employeeFullName}}</label>
+                      </div>
+                      <div class="title-employee-code">
+                          <label><span style="color: #D03D03 !important;">{{evaluateEmployeeInfo.employeeCode}}</span> - {{evaluateEmployeeInfo.email}}</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="detail-info-cus">
+                    <div class="title-emp-type-name">
+                        <label class="label-assessment-custom">{{'common.label.object' | translate}}:</label>
+                        <div class="text-assessment-custom">
+                        <label>{{evaluateEmployeeInfo.empTypeName}}</label>
+                        </div>
+                    </div>
+                    <div class="title-info-other">
+                        <label class="label-assessment-custom">{{'common.label.title' | translate}}:</label>
+                        <div class="text-assessment-custom">
+                        <label>{{evaluateEmployeeInfo.positionName}}</label>
+                        </div>
+                    </div>
+
+                    <div class="title-info-other">
+                        <label class="label-assessment-custom">{{'common.label.government.unit' | translate}}:</label>
+                        <div class="text-assessment-custom">
+                            <label>{{evaluateEmployeeInfo.organizationName}}</label>
+                        </div>
+                    </div>
+
+                    <div class="title-info-other">
+                        <label class="label-assessment-custom">{{'partymanager.label.partyTitle' | translate}}:</label>
+                        <div class="text-assessment-custom">
+                            <label>{{evaluateEmployeeInfo.partyPositionName}}</label>
+                        </div>
+                    </div>
+
+                    <div class="title-info-other">
+                        <label class="label-assessment-custom">{{'common.label.party.organization.activities' | translate}}:</label>
+                        <div class="text-assessment-custom">
+                            <label>{{evaluateEmployeeInfo.partyOrgName}}</label>
+                        </div>
+                    </div>
+
+                    <div class="title-info-other">
+                        <label class="label-assessment-custom">{{'app.employee.assessment.nextStaff' | translate}}:</label>
+                        <div class="text-assessment-custom">
+                        <label>{{assessmentLevelName}}</label>
+                        </div>
+                    </div>
+
+                    <div class="title-info-other btn-custom-assessment mb-3">
+                        <button type="submit" (click)="ShowValueJudgment()" class="btn btn-sm btn-primary" [innerHTML]="'employee.assessment.previewEvaluate' | translate">
+                        </button>
+                    </div>
+                  </div>
+              </div>
+          </div>
+          </div>
+            <div class="body-form-assessment-detail" [ngClass]="listActionControl['SAVE'] || listActionControl['SUBMIT'] ? '' : 'disable-input' ">
+            <div id="bodyFormAssessment">
+              <div role="main" class="">
+                <section id="detail" class=" section-detail">
+                  <div class="no-padding-left emp_information_right">
+                    <div class="employeeTabs">
+                      <p-scrollPanel styleClass="custombar2 custombar3 clearfix tab-level-history scroll-panel-custom">
+                        <p-tabMenu [model]="listTab" [activeItem]="tabActive"></p-tabMenu>
+                      </p-scrollPanel>
+                    </div>
+                  </div>
+                  <div class="container-detail-custom" [ngClass]="items && items.length > 1 ? 'border-0 bg-transparent' : ''">
+                      <ol *ngIf="items && items.length > 1" class="steps-assessment">
+                        <div *ngFor="let iTem of items; let posiTem = index" class="collapse-form-assessment">
+
+                          <p-panel [toggleable]="true" [toggler]="'header'" expandIcon="pi pi-angle-down" collapseIcon="pi pi-angle-down"  [collapsed]="posiTem == 0 || iTem.isCheck === -1 ? false : true" class="panel">
+                                  <h6 *ngIf="listActionControl['SAVE']" (click)="suggestCriticalList(posiTem)"  aria-hidden="true" style="text-align: right;padding-right: 50px;color: #D03D03; cursor: pointer; text-decoration: underline;font-size: 14px; font-weight: bold" >
+                                      <i style="color: #66b3ff;" class="fas fa-info-circle absolute ml-1"></i>Tham khảo nội dung NXĐG kỳ trước</h6>
+                            <p-header class="title">
+                              <li style="margin: 4px 0px;">
+                                {{iTem.label}}
+                                <i *ngIf="iTem.isCheck === -1 || iTem.isCheck === 1" [ngClass]="iTem.isCheck === -1 ? 'icon-close pi pi-times-circle': 'icon-check pi pi-check-circle'"></i>
+                              </li>
+                            </p-header>
+                            <div class="formAssessmentArray" formArrayName="formAssessmentArray" *ngFor="let assessment of formAssessmentArray.controls; let j = index">
+                              <div id="{{'formAssessment' + j}}" *ngIf="posiTem === j" class="d-flex flex-wrap body-assessment-panel" [formGroupName]="j">
+                                  <div class="col-12 col-lg-12 criteria" id="accordionExample"
+                                       *ngFor="let criteriaGroup of assessmentCriteriaGroupList, let i = index">
+                                      <div class="assessment-part" *ngIf="criteriaGroup.assessmentCriteriaGroupFormType === (j + 1)">
+                                          <div class="section-title">
+                                              <h2 class="title-main" style="font-weight: 700;font-size: 14px !important;line-height: 20px !important;">{{criteriaGroup.index}}. {{criteriaGroup.assessmentCriteriaGroupName}}</h2>
+                                          </div>
+                                          <div *ngFor="let groupChild of criteriaGroup.groupChildList, let idx = index">
+                                              <div class="service-card-list pt-0"
+                                                   [ngClass]="{'groupChild': criteriaGroup.assessmentCriteriaGroupType === 2}">
+                                                  <div *ngIf="criteriaGroup.assessmentCriteriaGroupType === 2
+                                        && idx !== 0
+                                        && isHasEvaluating
+                                        && !isDisableButtonDuplicateCriteria(criteriaGroup)" class="remove-criteria">
+                                                      <button href="javascript:void(0)" title="{{'common.label.delete' | translate}}"
+                                                              class="butn1 butn-light" (click)="removeCircle(criteriaGroup, idx)">
+                                                          <i class="fa fa-times" aria-hidden="true"></i>
+                                                      </button>
+                                                  </div>
+
+                                                  <div id="serviceCardThree" class="service-card-three"
+                                                       *ngFor="let criteria of groupChild.listAssessmentCriterias, let i = index">
+                                                      <div class="service-icon">
+                                                      </div>
+                                                      <div class="service-info" >
+                                                          <h2 class="service-title criteria-explain position-relative" ngbDropdown placement="top-right">
+                                                              {{criteria.assessmentCriteriaName}}
+                                                              <span [ngClass]="{'required': criteria.required > 0}"></span>
+                                                                <i *ngIf="criteria.assessmentCriteriaExplain !== null && criteria.assessmentCriteriaExplain !== ''"
+                                                                 style="color: #66b3ff;" class="fas fa-info-circle absolute ml-1" ngbDropdownToggle></i>
+                                                              <div class="criteria-explain-dropdown-menu" ngbDropdownMenu>
+                                                                  {{criteria.assessmentCriteriaExplain}}
+                                                              </div>
+                                                          </h2>
+                                                          <div *ngIf="criteria.fieldType === assessmentFieldType.COMBO_BOX && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                              <select-filter [property]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                                             [options]="json.parse(criteria.fieldItems)" optionLabel="label" optionValue="value"
+                                                                             [placeHolder]="'common.label.cboSelect'"
+                                                                             (onChange)="onChangeAssessmentSpecial($event, criteria)"
+                                                                             appendTo="body">
+                                                              </select-filter>
+                                                              <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                              </app-control-messages>
+                                                          </div>
+                                                          <div *ngIf="criteria.fieldType === assessmentFieldType.TEXT_BOX && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                            <div style="position: relative;" class="assessment-text">
+                                                              <input type="text" class="form-control"
+                                                                     [formControlName]="criteria.assessmentCriteriaCode"
+                                                                     [placeholder]="criteria.fieldPlaceholderValue ? criteria.fieldPlaceholderValue : ''"
+                                                                     [maxlength]="criteria.maxLength"
+                                                                     (onChange)="onChangeAssessmentSpecial($event.target.value, criteria);">
+                                                              <div class="title-count-character input">
+                                                                {{getLength(fAssessmentArray[j].controls[criteria.assessmentCriteriaCode].value) + "/" + (criteria.maxLength ? criteria.maxLength : '')}}
+                                                              </div>
+                                                            </div>
+                                                              <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                              </app-control-messages>
+                                                          </div>
+                                                          <div
+                                                                  *ngIf="criteria.fieldType === assessmentFieldType.FROM_TO
+                                            && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode + 'From']
+                                            && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode + 'To']"
+                                                                  class="fromTo"
+                                                          >
+                                                              <h2 class="fromToTitle2" [ngClass]="{'required': criteria.required > 0}">
+                                                                  {{'assessmentResult.from' | translate}}</h2>
+                                                              <div class="from">
+                                                                  <date-picker [property]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode + 'From']"
+                                                                               [disabled]="!isHasEvaluating || isDisableCriteria(criteria) "></date-picker>
+                                                                  <app-control-messages
+                                                                          [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode + 'From']">
+                                                                  </app-control-messages>
+                                                              </div>
+                                                              <h2 class="fromToTitle" [ngClass]="{'required': criteria.required > 0}">
+                                                                  {{'assessmentResult.to' | translate}}</h2>
+                                                              <div class="to">
+                                                                  <date-picker [property]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode + 'To']"
+                                                                               [disabled]="!isHasEvaluating || isDisableCriteria(criteria)"></date-picker>
+                                                                  <app-control-messages
+                                                                          [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode + 'To']">
+                                                                  </app-control-messages>
+                                                              </div>
+                                                          </div>
+                                                          <div *ngIf="criteria.fieldType === assessmentFieldType.DATE && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                               class="control-assessment-date">
+                                                              <date-picker [property]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                                           [disabled]="!isHasEvaluating || isDisableCriteria(criteria)"></date-picker>
+                                                              <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                              </app-control-messages>
+                                                          </div>
+                                                          <div *ngIf="criteria.fieldType === assessmentFieldType.DATE_TIME && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                               class="control-assessment-date">
+                                                              <date-picker [property]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                                           [showTime]="true" [disabled]="!isHasEvaluating || isDisableCriteria(criteria)">
+                                                              </date-picker>
+                                                              <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                              </app-control-messages>
+                                                          </div>
+                                                          <div *ngIf="criteria.fieldType === assessmentFieldType.TIME && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                               class="control-assessment-date">
+                                                              <date-picker [property]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                                           [timeOnly]="true" [disabled]="!isHasEvaluating || isDisableCriteria(criteria)">
+                                                              </date-picker>
+                                                              <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                              </app-control-messages>
+                                                          </div>
+                                                          <div
+                                                                  *ngIf="criteria.fieldType === assessmentFieldType.SPINNER && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                                  class="assessment-rank"
+                                                          >
+                                                              <div class="control-assessment-spinner">
+                                                                  <p-slider animate="true" [formControlName]="criteria.assessmentCriteriaCode"
+                                                                            [max]="criteria.assessmentMaxValue" [min]="criteria.assessmentMinValue"
+                                                                            [step]="criteria.step" (onChange)="onChangeAssessmentSpecial($event, criteria)">
+                                                                  </p-slider>
+                                                                  <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                                  </app-control-messages>
+                                                              </div>
+                                                              <span class="label-rank"
+                                                                    [ngStyle]="{'background-color': criteria.assessmentCriteriaRankColor}">
+                                            {{fAssessmentArray[j].controls[criteria.assessmentCriteriaCode].value}} (
+                                                                  {{criteria.assessmentCriteriaRankLabel}} )
+                                          </span>
+                                                          </div>
+                                                          <div *ngIf="criteria.fieldType === assessmentFieldType.TEXTAREA && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                            <div style="position: relative;" class="assessment-text">
+                                                                <textarea class="form-control" [formControlName]="criteria.assessmentCriteriaCode"
+                                                                            [placeholder]="criteria.fieldPlaceholderValue ? criteria.fieldPlaceholderValue : ''"
+                                                                            [maxlength]="criteria.maxLength" [rows]="criteria.assessmentCriteriaRows"
+                                                                            style="background: #FFFFFF;border: 1.25px solid #DEDEDE;border-radius: 8px;height: 138px">
+                                                                </textarea>
+                                                                <div class="title-count-character">
+                                                                    {{getLength(fAssessmentArray[j].controls[criteria.assessmentCriteriaCode].value) + "/" + (criteria.maxLength ? criteria.maxLength : '')}}
+                                                                </div>
+                                                            </div>
+                                                            <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                            </app-control-messages>
+                                                          </div>
+                                                          <div
+                                                                  *ngIf="criteria.fieldType === assessmentFieldType.STAR && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                                  class="assessment-rank"
+                                                          >
+                                                              <div class="control-assessment-star">
+                                                                  <p-rating [formControlName]="criteria.assessmentCriteriaCode"
+                                                                            [stars]="criteria.assessmentMaxValue"
+                                                                            (onRate)="onChangeAssessmentSpecial($event, criteria)"
+                                                                            (onCancel)="onChangeAssessmentSpecial($event, criteria)">
+                                                                  </p-rating>
+                                                                  <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                                  </app-control-messages>
+                                                              </div>
+                                                              <span class="label-rank"
+                                                                    [ngStyle]="{'background-color': criteria.assessmentCriteriaRankColor}">
+                                            {{criteria.assessmentCriteriaRankLabel}}
+                                          </span>
+                                                          </div>
+                                                          <div *ngIf="criteria.fieldType === assessmentFieldType.RADIO_BUTTON && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                              <div class="d-flex" [ngClass]="scrWidth <= 768 ? 'grid-assessment' : 'flex-wrap'">
+                                                                  <div [ngClass]="scrWidth <= 768 ? 'd-flex' : 'mr-2 mb-2'" *ngFor="let item of criteria.fieldItems, let i = index">
+                                                                      <label class="radio-button-custom" (click)="onChangeAssessmentSpecial($event, criteria, j, item.value)">
+                                                                          <div class="ui-radiobutton ui-widget" ng-reflect-ng-class="ui-radiobutton ui-widget">
+                                                                            <div class="ui-helper-hidden-accessible">
+                                                                              <input type="radio" [name]="criteria.assessmentCriteriaCode" [value]="item.value" />
+                                                                            </div>
+                                                                            <div class="ui-radiobutton-box ui-widget ui-state-default" [ngClass]="item.value == fAssessmentArray[j].controls[criteria.assessmentCriteriaCode].value? 'ui-state-active' : ''" >
+                                                                              <span class="ui-radiobutton-icon ui-clickable"></span>
+                                                                            </div>
+                                                                          </div>
+                                                                          <span class="ui-radiobutton-label">{{item.label}}</span>
+                                                                      </label>
+                                                                  </div>
+                                                              </div>
+                                                              <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                              </app-control-messages>
+                                                          </div>
+                                                          <div *ngIf="criteria.fieldType === assessmentFieldType.PERCENT && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"  class="assessment-text">
+                                                              <input type="text" class="form-control control-assessment-percent"
+                                                                     [formControlName]="criteria.assessmentCriteriaCode"
+                                                                     (onChange)="onChangeAssessmentSpecial($event.target.value, criteria);">
+                                                              <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                              </app-control-messages>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div *ngIf="criteriaGroup.assessmentCriteriaGroupType === 2
+                                    && isHasEvaluating
+                                    && !isDisableButtonDuplicateCriteria(criteriaGroup)" class="duplicate-criteria">
+                                              <button href="javascript:void(0)" title="{{'common.label.add' | translate}}"
+                                                      class="butn1 butn-light" (click)="addPlusCircle(criteriaGroup)">
+                                                  <i class="fa fa-plus" aria-hidden="true"></i>
+                                              </button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                          </p-panel>
+                        </div>
+                      </ol>
+                      <div *ngIf="items && items.length <= 1">
+                          <h6 *ngIf="listActionControl['SAVE']" (click)="suggestCriticalList(0)"  aria-hidden="true" style="text-align: right;padding-right: 50px;color: #D03D03;cursor: pointer;padding-top: 10px; text-decoration: underline;font-size: 14px; font-weight: bold" >
+                              <i style="color: #66b3ff;" class="fas fa-info-circle absolute ml-1"></i>Tham khảo nội dung NXĐG kỳ trước</h6>
+                        <div class="formAssessmentArray" formArrayName="formAssessmentArray" *ngFor="let assessment of formAssessmentArray.controls; let j = index">
+                          <div id="{{'formAssessment' + j}}" [hidden]="activeIndex !== j" class="row-criteria list-items" [formGroupName]="j">
+                              <div class="col-12 col-lg-12 criteria" id="accordionExample"
+                                   *ngFor="let criteriaGroup of assessmentCriteriaGroupList, let i = index">
+                                  <div class="assessment-part" *ngIf="criteriaGroup.assessmentCriteriaGroupFormType === (j + 1)">
+                                      <div class="section-title">
+                                          <h2 class="title-main" style="font-weight: 700;font-size: 14px !important;line-height: 20px !important;">{{criteriaGroup.index}}. {{criteriaGroup.assessmentCriteriaGroupName}}</h2>
+                                      </div>
+                                      <div *ngFor="let groupChild of criteriaGroup.groupChildList, let idx = index">
+                                          <div class="service-card-list pt-0"
+                                               [ngClass]="{'groupChild': criteriaGroup.assessmentCriteriaGroupType === 2}">
+                                              <div *ngIf="criteriaGroup.assessmentCriteriaGroupType === 2
+                                    && idx !== 0
+                                    && isHasEvaluating
+                                    && !isDisableButtonDuplicateCriteria(criteriaGroup)" class="remove-criteria">
+                                                  <button href="javascript:void(0)" title="{{'common.label.delete' | translate}}"
+                                                          class="butn1 butn-light" (click)="removeCircle(criteriaGroup, idx)">
+                                                      <i class="fa fa-times" aria-hidden="true"></i>
+                                                  </button>
+                                              </div>
+
+                                              <div id="serviceCardThree" class="service-card-three"
+                                                   *ngFor="let criteria of groupChild.listAssessmentCriterias, let i = index">
+                                                  <div class="service-icon">
+                                                  </div>
+                                                  <div class="service-info" >
+                                                      <h2 class="service-title criteria-explain position-relative" ngbDropdown placement="top-right">
+                                                          {{criteria.assessmentCriteriaName}}
+                                                          <span [ngClass]="{'required': criteria.required > 0}"></span>
+                                                            <i *ngIf="criteria.assessmentCriteriaExplain !== null && criteria.assessmentCriteriaExplain !== ''"
+                                                             style="color: #66b3ff;" class="fas fa-info-circle absolute ml-1" ngbDropdownToggle></i>
+                                                          <div class="criteria-explain-dropdown-menu" ngbDropdownMenu>
+                                                              {{criteria.assessmentCriteriaExplain}}
+                                                          </div>
+                                                      </h2>
+                                                      <div *ngIf="criteria.fieldType === assessmentFieldType.COMBO_BOX && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                          <select-filter [property]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                                         [options]="json.parse(criteria.fieldItems)" optionLabel="label" optionValue="value"
+                                                                         [placeHolder]="'common.label.cboSelect'"
+                                                                         (onChange)="onChangeAssessmentSpecial($event, criteria)"
+                                                                         appendTo="body">
+                                                          </select-filter>
+                                                          <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                          </app-control-messages>
+                                                      </div>
+                                                      <div *ngIf="criteria.fieldType === assessmentFieldType.TEXT_BOX && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                        <div style="position: relative;">
+                                                            <input type="text" class="form-control"
+                                                                   [formControlName]="criteria.assessmentCriteriaCode"
+                                                                   [placeholder]="criteria.fieldPlaceholderValue ? criteria.fieldPlaceholderValue : ''"
+                                                                   [maxlength]="criteria.maxLength"
+                                                                   (onChange)="onChangeAssessmentSpecial($event.target.value, criteria);">
+                                                            <div class="title-count-character input">
+                                                              {{getLength(fAssessmentArray[j].controls[criteria.assessmentCriteriaCode].value) + "/" + (criteria.maxLength ? criteria.maxLength : '')}}
+                                                            </div>
+                                                        </div>
+                                                          <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                          </app-control-messages>
+                                                      </div>
+                                                      <div
+                                                              *ngIf="criteria.fieldType === assessmentFieldType.FROM_TO
+                                        && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode + 'From']
+                                        && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode + 'To']"
+                                                              class="fromTo"
+                                                      >
+                                                          <h2 class="fromToTitle2" [ngClass]="{'required': criteria.required > 0}">
+                                                              {{'assessmentResult.from' | translate}}</h2>
+                                                          <div class="from">
+                                                              <date-picker [property]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode + 'From']"
+                                                                           [disabled]="!isHasEvaluating || isDisableCriteria(criteria) "></date-picker>
+                                                              <app-control-messages
+                                                                      [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode + 'From']">
+                                                              </app-control-messages>
+                                                          </div>
+                                                          <h2 class="fromToTitle" [ngClass]="{'required': criteria.required > 0}">
+                                                              {{'assessmentResult.to' | translate}}</h2>
+                                                          <div class="to">
+                                                              <date-picker [property]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode + 'To']"
+                                                                           [disabled]="!isHasEvaluating || isDisableCriteria(criteria)"></date-picker>
+                                                              <app-control-messages
+                                                                      [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode + 'To']">
+                                                              </app-control-messages>
+                                                          </div>
+                                                      </div>
+                                                      <div *ngIf="criteria.fieldType === assessmentFieldType.DATE && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                           class="control-assessment-date">
+                                                          <date-picker [property]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                                       [disabled]="!isHasEvaluating || isDisableCriteria(criteria)"></date-picker>
+                                                          <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                          </app-control-messages>
+                                                      </div>
+                                                      <div *ngIf="criteria.fieldType === assessmentFieldType.DATE_TIME && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                           class="control-assessment-date">
+                                                          <date-picker [property]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                                       [showTime]="true" [disabled]="!isHasEvaluating || isDisableCriteria(criteria)">
+                                                          </date-picker>
+                                                          <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                          </app-control-messages>
+                                                      </div>
+                                                      <div *ngIf="criteria.fieldType === assessmentFieldType.TIME && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                           class="control-assessment-date">
+                                                          <date-picker [property]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                                       [timeOnly]="true" [disabled]="!isHasEvaluating || isDisableCriteria(criteria)">
+                                                          </date-picker>
+                                                          <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                          </app-control-messages>
+                                                      </div>
+                                                      <div
+                                                              *ngIf="criteria.fieldType === assessmentFieldType.SPINNER && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                              class="assessment-rank"
+                                                      >
+                                                          <div class="control-assessment-spinner">
+                                                              <p-slider animate="true" [formControlName]="criteria.assessmentCriteriaCode"
+                                                                        [max]="criteria.assessmentMaxValue" [min]="criteria.assessmentMinValue"
+                                                                        [step]="criteria.step" (onChange)="onChangeAssessmentSpecial($event, criteria)">
+                                                              </p-slider>
+                                                              <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                              </app-control-messages>
+                                                          </div>
+                                                          <span class="label-rank"
+                                                                [ngStyle]="{'background-color': criteria.assessmentCriteriaRankColor}">
+                                        {{fAssessmentArray[j].controls[criteria.assessmentCriteriaCode].value}} (
+                                                              {{criteria.assessmentCriteriaRankLabel}} )
+                                      </span>
+                                                      </div>
+                                                      <div *ngIf="criteria.fieldType === assessmentFieldType.TEXTAREA && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                            <div style="position: relative;"  class="assessment-text">
+                                                                <textarea class="form-control" [formControlName]="criteria.assessmentCriteriaCode"
+                                                                            [placeholder]="criteria.fieldPlaceholderValue ? criteria.fieldPlaceholderValue : ''"
+                                                                            [maxlength]="criteria.maxLength" [rows]="criteria.assessmentCriteriaRows"
+                                                                            style="background: #FFFFFF;border: 1.25px solid #DEDEDE;border-radius: 8px;height: 138px">
+                                                                </textarea>
+                                                                <div class="title-count-character">
+                                                                    {{getLength(fAssessmentArray[j].controls[criteria.assessmentCriteriaCode].value) + "/" + (criteria.maxLength ? criteria.maxLength : '')}}
+                                                                </div>
+                                                            </div>
+                                                            <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                            </app-control-messages>
+                                                      </div>
+                                                      <div
+                                                              *ngIf="criteria.fieldType === assessmentFieldType.STAR && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]"
+                                                              class="assessment-rank"
+                                                      >
+                                                          <div class="control-assessment-star">
+                                                              <p-rating [formControlName]="criteria.assessmentCriteriaCode"
+                                                                        [stars]="criteria.assessmentMaxValue"
+                                                                        (onRate)="onChangeAssessmentSpecial($event, criteria)"
+                                                                        (onCancel)="onChangeAssessmentSpecial($event, criteria)">
+                                                              </p-rating>
+                                                              <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                              </app-control-messages>
+                                                          </div>
+                                                          <span class="label-rank"
+                                                                [ngStyle]="{'background-color': criteria.assessmentCriteriaRankColor}">
+                                        {{criteria.assessmentCriteriaRankLabel}}
+                                      </span>
+                                                      </div>
+                                                      <div *ngIf="criteria.fieldType === assessmentFieldType.RADIO_BUTTON && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                          <div class="d-flex" [ngClass]="scrWidth <= 768 ? 'grid-assessment' : 'flex-wrap'">
+                                                              <div [ngClass]="scrWidth <= 768 ? 'd-flex' : 'mr-2 mb-2'" *ngFor="let item of criteria.fieldItems, let i = index">
+                                                                  <label class="radio-button-custom" (click)="onChangeAssessmentSpecial($event, criteria, j, item.value)">
+                                                                    <div class="ui-radiobutton ui-widget" ng-reflect-ng-class="ui-radiobutton ui-widget">
+                                                                      <div class="ui-helper-hidden-accessible">
+                                                                        <input type="radio" [name]="criteria.assessmentCriteriaCode" [value]="item.value" />
+                                                                      </div>
+                                                                      <div class="ui-radiobutton-box ui-widget ui-state-default" [ngClass]="item.value == fAssessmentArray[j].controls[criteria.assessmentCriteriaCode].value? 'ui-state-active' : ''" >
+                                                                        <span class="ui-radiobutton-icon ui-clickable"></span>
+                                                                      </div>
+                                                                    </div>
+                                                                    <span class="ui-radiobutton-label">{{item.label}}</span>
+                                                                  </label>
+                                                              </div>
+                                                          </div>
+                                                          <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                          </app-control-messages>
+                                                      </div>
+                                                      <div *ngIf="criteria.fieldType === assessmentFieldType.PERCENT && fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                          <input type="text" class="form-control control-assessment-percent"
+                                                                 [formControlName]="criteria.assessmentCriteriaCode"
+                                                                 (onChange)="onChangeAssessmentSpecial($event.target.value, criteria);">
+                                                          <app-control-messages [control]="fAssessmentArray[j].controls[criteria.assessmentCriteriaCode]">
+                                                          </app-control-messages>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div *ngIf="criteriaGroup.assessmentCriteriaGroupType === 2
+                                && isHasEvaluating
+                                && !isDisableButtonDuplicateCriteria(criteriaGroup)" class="duplicate-criteria">
+                                          <button href="javascript:void(0)" title="{{'common.label.add' | translate}}"
+                                                  class="butn1 butn-light" (click)="addPlusCircle(criteriaGroup)">
+                                              <i class="fa fa-plus" aria-hidden="true"></i>
+                                          </button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+            </div>
+            <div id="lstBtnDetail" *ngIf="showListDetail == true">
+                <div class="row justify-content-center row-list-detail">
+                    <div class="text-center btn-danh-gia btn-dt" id="process-evaluate" *ngIf="listActionControl['SAVE']">
+                        <div class="btn-item" *ngIf="!disableLatch && !disableButton">
+                            <button [disabled]="disableButton" href="javascript:void(0)"
+                                title="{{'common.button.table.Update' | translate}}" class="butn1 butn-light butn-light-custom"
+                                (click)="processEvaluateEmployee(true)">
+                                <i class="fa fa-save fa-btn-custom" aria-hidden="true"></i>
+                            </button>
+                            <p class="mar-top-2 title-icon-right title-icon-custom">Lưu</p>
+                        </div>
+                        <div class="btn-item" *ngIf="disableLatch && !disableButton">
+                            <button [disabled]="disableButton" href="javascript:void(0)"
+                                title="{{'common.button.table.Update' | translate}}" class="butn1 border-radius butn-light-custom"
+                                (click)="processEvaluateEmployee(true)">
+                                <i class="fa fa-save fa-btn-disable-custom" aria-hidden="true"></i>
+                            </button>
+                            <p class="mar-top-2 title-icon-right title-icon-custom">Lưu</p>
+                        </div>
+                    </div>
+                    <div class="text-center btn-danh-gia btn-dt" id="confirm-evaluate" *ngIf="listActionControl['SUBMIT']">
+                        <div class="btn-item" *ngIf="!disableLatch  && !disableButton">
+                            <button [disabled]="disableButton" type="submit"
+                                title="{{'assessmentResult.evaluationApprovalTitle' | translate}}" class="butn1 butn-light butn-light-custom"
+                                (click)="processEvaluateEmployee(false)">
+                            <i class="fa fa-check fa-btn-custom" aria-hidden="true"></i>
+                            </button>
+                            <p class="mar-top-2 title-icon-right title-icon-custom">Nộp</p>
+                        </div>
+                        <div class="btn-item" *ngIf="disableLatch  && !disableButton">
+                            <button [disabled]="disableButton" href="javascript:void(0)"
+                                title="{{'assessmentResult.evaluationApprovalTitle' | translate}}" class="butn1 border-radius butn-light-custom">
+                                <i class="fa fa-check fa-btn-disable-custom" aria-hidden="true"></i>
+                            </button>
+                            <p class="mar-top-2 title-icon-right title-icon-custom">Nộp</p>
+                        </div>
+                    </div>
+                    <div class="text-center btn-danh-gia btn-dt" id="sign" *ngIf="listActionControl['SIGNING']">
+                        <div *ngIf="!disableLatch && hasPermission('action.view', 'resource.assessmentSign')  && !disableButton" class="btn-item" >
+                            <button [disabled]="disableButton" type="submit"
+                                title="{{'assessmentResult.sign' | translate}}" class="butn1 butn-light butn-light-custom"
+                                (click)="processEvaluateEmployee(false)">
+                                <i class="fa fa-check fa-btn-custom" aria-hidden="true"></i>
+                            </button>
+                            <p class="mar-top-2 title-icon-right title-icon-custom">Trình ký </p>
+                        </div>
+                        <div class="btn-item" *ngIf="disableLatch  && !disableButton">
+                            <button [disabled]="disableButton" href="javascript:void(0)"
+                                    title="{{'assessmentResult.sign' | translate}}" class="butn1 border-radius butn-light-custom">
+                                <i class="fa fa-check fa-btn-disable-custom" aria-hidden="true"></i>
+                            </button>
+                            <p class="mar-top-2 title-icon-right title-icon-custom">Trình ký </p>
+                        </div>
+                    </div>
+                    <div class="text-center btn-danh-gia btn-dt" id="re-evaluate" *ngIf="listActionControl['REEVALUATE'] && !disableButton">
+                        <div class="btn-item">
+                            <button href="javascript:void(0)" title="{{'assessmentResult.evaluatingAgainTitle' | translate}}" class="butn1 butn-light butn-light-custom"
+                                (click)="processReEvaluateEmployee()">
+                                <i class="fa fa-reply fa-btn-custom" aria-hidden="true"></i>
+                            </button>
+                            <p class="mar-top-2 title-icon-right title-icon-custom">YC ĐGL</p>
+                        </div>
+                    </div>
+                    <div class="text-center btn-danh-gia btn-dt assessment-employee-dropdown" id="download-file" *ngIf="listActionControl['EXPORT_RESULT_EVALUATE']">
+                        <div class="btn-item">
+                            <button href="javascript:void(0)" title="Tải KQĐG" (click)="exportAssessmentResult($event)"
+                                class="butn1 butn-light butn-light-custom" style="padding: 0 !important;width: 32px;height: 32px;border-color: #BF8771;background-color: #FFF4EB;border-radius: 25px;">
+                                <i class="fas fa-download" style="width: 15px; height: 15px;color: #BF8771;margin-top: 25%;" aria-hidden="true"></i>
+                            </button>
+                            <p class="mar-top-2 title-icon-right title-icon-custom">Tải KQĐG</p>
+                        </div>
+                    </div>
+                    <!-- <div class="text-center btn-danh-gia btn-dt"  id="signature" *ngIf="hasSignature">
+                        <button href="javascript:void(0)" title="{{'assessmentResult.signature' | translate}}"
+                                class="butn1 butn-light butn-light-custom" (click)="signature()">
+                            <i class="fas fa-paper-plane fa-btn-custom" aria-hidden="true"></i>
+                        </button>
+                        <p class="mar-top-2 title-icon-right title-icon-custom">Ký</p>
+                    </div> -->
+                    <!-- <div class="text-center btn-danh-gia btn-dt" id="unlatch" *ngIf="hasAdminAssessment">
+                    <button href="javascript:void(0)" title="{{'assessmentResult.unlatch' | translate}}"
+                        class="butn1 butn-light" (click)="unlatch()">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                    <p class="mar-top-2 title-icon-right">Hủy chốt</p>
+                    </div> -->
+                    <div class="text-center btn-danh-gia btn-dt" id="history-log" *ngIf="listActionControl['HISTORY_EVALUATE']">
+                        <div class="btn-item">
+                            <button href="javascript:void(0)" title="{{'assessmentResult.historyLog' | translate}}"
+                                class="butn1 butn-light butn-light-custom" (click)="showHistoryLog()">
+                                <i class="fas fa-history fa-btn-custom" aria-hidden="true"></i>
+                            </button>
+                            <p class="mar-top-2 title-icon-right title-icon-custom">Lịch sử ĐG</p>
+                        </div>
+                    </div>
+                    <div class="text-center btn-danh-gia">
+                        <div class="btn-item">
+                            <button class="butn1 butn-light butn-light-custom" id="scroll-top" (click)="scrollToTop()">
+                                <i class="fa fa-arrow-up fa-btn-custom"></i>
+                            </button>
+                            <p class="mar-top-2 title-icon-right title-icon-custom">Về đầu</p>
+                        </div>
+                    </div>
+                    <div class="text-center btn-danh-gia" *ngIf="showMoreAction">
+                        <div class="btn-item">
+                            <p-overlayPanel #listAction  styleClass="panel-nation-assessment more-action" [showCloseIcon]="false" appendTo="body" baseZIndex="200">
+                            <ul>
+                                <li *ngFor="let data of listMoreAction; index as idx" (click)="clickAction($event, data)">
+                                <span>{{data.name}}</span>
+                                </li>
+                            </ul>
+                            </p-overlayPanel>
+                            <button class="butn1 butn-light butn-light-custom" id="show-more" (click)="listAction.toggle($event)">
+                            <i class="fas fa-ellipsis-v fa-btn-custom"></i>
+                            </button>
+                            <p class="mar-top-2 title-icon-right title-icon-custom">Xem thêm</p>
+                        </div>
+                    </div>
+                </div>
+           </div>
+
+              <!-- Modal lichj sử đánh giá !-->
+              <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                              Nội dung lịch sử dánh giá
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-primary">Save changes</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- <div *ngIf="items && items.length > 1 && currentPage === ASSESSMENT_PAGE">
+                <div *ngIf="activeIndex > 0" class="main-bar btn-prev-form">
+                  <button [disabled]="disableButton" href="javascript:void(0)"
+                    title="{{'common.button.backForm' | translate}}" class="butn1 butn-light"
+                    (click)="backForm()">
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div *ngIf="activeIndex < 2" class="main-bar btn-next-form">
+                  <button type="submit" [disabled]="disableButton" href="javascript:void(0)"
+                    title="{{'common.button.nextForm' | translate}}" class="butn1 butn-light"
+                    (click)="processEvaluateEmployee(false, false, true)">
+                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div> -->
+        </form>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </div> -->
+<!-- <div *ngIf="!hasPermission('action.view')" translate>
+  common.haveNoPermission
+</div> -->
+<p-confirmDialog #cd header="{{'common.message.confirmation' | translate}}" icon="pi pi-exclamation-triangle">
+  <p-footer class="vt-confirm__footer" styleClass="vt-confirm__footer">
+      <button type="button" pButton class="btn btn-default" icon="pi pi-times" [label]="'common.button.no' | translate" (click)="cd.reject()"></button>
+      <button type="button" pButton class="btn btn-primary" icon="pi pi-check" [label]="'common.button.yes' | translate" (click)="cd.accept()"></button>
+  </p-footer>
+</p-confirmDialog>

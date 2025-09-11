@@ -1,0 +1,179 @@
+<div class="modal-body">
+  <form id="frmSaveEmpTypeProcess" [formGroup]="formSave">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong class="text-u-c"><i class="fa fa-th"></i>
+          <span *ngIf="!formSave.get('empTypeProcessId').value" translate> app.empTypeProcess.insert</span>
+          <span *ngIf="formSave.get('empTypeProcessId').value" translate> app.empTypeProcess.update</span>
+        </strong>
+        <div class="vt-absolute vt-shotcut-button-in-heading">
+          <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}" class="btn btn-span btn-sm btn-info btn-close"><i class="fa fa-times"></i></button>
+        </div>
+      </div>
+      <div class="panel-body padding-xl ui-g">
+        <div class="ui-g-12 vt-row">
+          <label  class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'app.empTypeProcess.empType' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3 required">
+            <select-filter
+              [property]="f['empTypeId']"
+              [options]="empTypeList"
+              (onChange)="onEmpTypeChange($event,null)"
+              optionLabel="name"
+              optionValue="empTypeId"
+              [autofocus]="'autofocus'"
+              [placeHolder]="'common.label.cboMustSelect'">
+            </select-filter>
+            <app-control-messages [control]="f['empTypeId']"></app-control-messages>
+          </div>
+          <label *ngIf="isNotHDLD" class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right ">
+            {{'app.empTypeProcess.soldierLevel' | translate}}
+          </label>
+          <div *ngIf="isNotHDLD" class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter
+              [property]="f['soldierLevelId']"
+              [options]="soldierLevelList"
+              optionLabel="name"
+              optionValue="sysCatId"
+              [placeHolder]="'common.label.cboSelect'">
+            </select-filter>
+            <app-control-messages [control]="f['soldierLevelId']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row" >
+          <label *ngIf="isHDLD" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'app.empTypeProcess.contractType' | translate}}
+          </label>
+          <div *ngIf="isHDLD" class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter
+              (onChange)="onLabourContractTypeChange($event)"
+              [property]="f['labourContractTypeId']"
+              [options]="laboutTypeList"
+              optionLabel="name"
+              optionValue="labourContractTypeId"
+              [placeHolder]="'common.label.cboMustSelect'" >
+            </select-filter>
+            <app-control-messages [control]="f['labourContractTypeId']"></app-control-messages>
+          </div>
+          <label *ngIf="!isLabourContract" class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+            {{'app.empTypeProcess.contract' | translate}}
+          </label>
+          <div *ngIf="!isLabourContract" class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter
+              [property]="f['labourContractDetailId']"
+              [options]="labourContractDetailList"
+              optionLabel="name"
+              optionValue="labourContractDetailId"
+              [placeHolder]="'common.label.cboMustSelect'" >
+            </select-filter>
+            <app-control-messages [control]="f['labourContractDetailId']"></app-control-messages>
+          </div>
+        </div>
+        <div *ngIf="isHDLD" class="ui-g-12 vt-row">
+          <label *ngIf="!isLabourNonRequired" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'app.empTypeProcess.contractPeriodByMonth' | translate}}
+          </label>
+          <label *ngIf="isLabourNonRequired" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'app.empTypeProcess.contractPeriodByMonth' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="text" name="contractMonth" class="form-control" formControlName="contractMonth" maxlength="4" />
+            <app-control-messages [control]="f['contractMonth']"></app-control-messages>
+          </div>
+          <label *ngIf="isLabourService" class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+            {{'app.empTypeProcess.workingTime' | translate}}
+          </label>
+          <div *ngIf="isLabourService" class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter
+              [property]="f['workingTimeId']"
+              [options]="workingTimeList"
+              optionLabel="name"
+              optionValue="sysCatId"
+              [placeHolder]="'common.label.cboMustSelect'">
+            </select-filter>
+            <app-control-messages [control]="f['workingTimeId']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'app.empTypeProcess.contractNumber' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form-control" formControlName="contractDecisionNumber" maxlength="50">
+              <app-control-messages [control]="f['contractDecisionNumber']"></app-control-messages>
+            </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+            {{'app.empTypeProcess.signedDate' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <date-picker [property]="f['signedDate']"></date-picker>
+            <app-control-messages [control]="f['signedDate']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'app.empTypeProcess.effectiveDate' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <date-picker [property]="f['effectiveDate']"></date-picker>
+            <app-control-messages [control]="f['effectiveDate']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+            {{'app.empTypeProcess.expiredDate' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <date-picker [property]="f['expiredDate']"></date-picker>
+            <app-control-messages [control]="f['expiredDate']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'app.empTypeProcess.managementType' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <div class="form-check-inline ">
+              <label class="i-checks">
+                <input type="radio" class="form-check-input control-label" id="managementTypeId_0" [value]="5624" name="managementTypeId" formControlName="managementTypeId">
+                <i></i>
+                {{'app.managementTypeId.officer' | translate}}
+              </label>
+            </div>
+            <div class="form-check-inline">
+              <label class="i-checks">
+                <input type="radio" class="form-check-input control-label" id="managementTypeId_1" [value]="5625" name="managementTypeId" formControlName="managementTypeId">
+                <i></i>
+                {{'app.managementTypeId.force' | translate}}
+              </label>
+            </div>
+            <app-control-messages [control]="f['managementTypeId']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right ">
+              {{'app.empTypeProcess.description' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <textarea type="text-area" rows="2" class="form-control" formControlName="description" maxlength="500"></textarea>
+            <app-control-messages [control]="f['description']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'app.empTypeProcess.attachmentFile' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <file-chooser
+              [property]="fileControl"
+              [validMaxSize]="50"
+              validType="xls,xlsx,doc,docx,pdf">
+            </file-chooser>
+            <app-control-messages [control]="fileControl"></app-control-messages>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer vt-area-button">
+        <button type="submit" (click)="processSaveOrUpdate()" class="btn btn-sm btn-info" [innerHTML]="'common.button.icon.save' | translate"></button>
+        <button type="button" (click)="activeModal.close()" class="btn btn-sm btn-danger" [innerHTML]="'common.button.out' | translate"></button>
+      </div>
+    </div>
+  </form>
+</div>

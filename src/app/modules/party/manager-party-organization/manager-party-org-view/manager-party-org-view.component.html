@@ -1,0 +1,487 @@
+<div class="card-form">
+  <div class="clearfix">
+    <div class="left-nav-bar pull-left row-header">
+      <div>
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="goBack();">
+        <span class="title" translate>partyOrganization.view</span>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+        <ul class="header-right sys-ul space-line">
+          <li>
+            <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="goBack();" [innerHTML]="'common.button.out' | translate">
+            </button>
+          </li>
+          <li>
+            <button class="btn btn-sm vt-btn btn-submit mt-btn btn-header-right ng-star-inserted" type="button" (click)="navigate()" [innerHTML]="'common.button.icon.edit' | translate">
+            </button>
+          </li>
+        </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <div *ngIf="hasPermission('action.view')">
+    <form id="formSave" [formGroup]="formSave">
+      <div class="panel panel-default card-info">
+        <div class="panel-heading vt-relative">
+          <strong>
+            <span class="ml-2 title-info">Thông tin tổ chức Đảng</span>
+          </strong>
+        </div>
+        <div *ngIf="!isMobileScreen" class="panel-body padding-xl ui-g">
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'partyOrganization.parentParty' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <party-org-selector 
+                [property]="f['parentId']" 
+                operationKey="action.view"
+                adResourceKey="resource.partyOrganization" 
+                [defaultValue]="true" 
+                [disabled]='true'
+               >
+              </party-org-selector>
+              <app-control-messages [control]="f['parentId']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'partyOrganization.type' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter 
+                [property]="f['type']" 
+                [options]="lstTypeParty" 
+                optionLabel="name" 
+                optionValue="categoryId"
+                [placeHolder]="'common.label.cboSelect'" 
+                [disabled]='true'
+                >
+              </select-filter>
+              <app-control-messages [control]="f['type']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'partyOrganization.type' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form form-control" name="name" formControlName="name" onChange="genCodeParty();"
+                disabled>
+              <app-control-messages [control]="f['name']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'partyOrganization.code' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="code" class="form form-control" name="code" formControlName="code" disabled>
+              <app-control-messages [control]="f['code']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'partyOrganization.documentFounding' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <data-picker 
+                [property]="f['documentId']" 
+                systemCode="political" 
+                operationKey="action.view"
+                adResourceKey="resource.partyOrganization" 
+                objectBO="DocumentBO" 
+                nameField="documentName"
+                codeField="documentNumber" 
+                selectField="documentId" 
+                [isDisplayCode]="true"
+                (onChange)="filterDataDocument();"
+                filterCondition=" and curdate() BETWEEN obj.effective_date and IFNULL(obj.expired_date, curdate()) and branch = 1 "
+                disabled='true'>
+              </data-picker>
+              <app-control-messages [control]="f['documentId']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'partyOrganizationTerminate.decisionParty' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form form-control" name="partyDecisionName" formControlName="partyDecisionName"
+                disabled>
+              <app-control-messages [control]="f['partyDecisionName']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'partyOrganization.foundingDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker [property]="f['foundingDate']" [disabled]='true'>
+              </date-picker>
+              <app-control-messages [control]="f['foundingDate']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'partyOrganization.effectiveDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker [property]="f['effectiveDate']" [disabled]='true'>
+              </date-picker>
+              <app-control-messages [control]="f['effectiveDate']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- Đầu mối hỗ trợ hồ sơ -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'partyOrganization.approvalReception' | translate}}
+            </label>    
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <data-picker
+                [property]="f['coordinatorId']"
+                operationKey="action.view"
+                adResourceKey="resource.partyOrganization"
+                objectBO="EmployeeBO"
+                codeField="employeeCode"
+                nameField="fullName"
+                emailField="email"
+                mobileNumberField="mobileNumber"
+                selectField="employeeId"
+              ></data-picker>
+              <app-control-messages [control]="f['coordinatorId']"></app-control-messages>
+            </div>
+            <!-- Đầu mối nghị quyết -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'partyOrganization.authorization' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <data-picker [property]="f['authorizationId']" operationKey="action.view" adResourceKey="resource.partyOrganization"
+                objectBO="EmployeeBO" codeField="employeeCode" nameField="fullName" emailField="email" selectField="employeeId">
+              </data-picker>
+              <app-control-messages [control]="f['authorizationId']"></app-control-messages>
+            </div>
+            </div>
+          <div class="ui-g-12 vt-row">
+            <!-- Đầu mối bí thư -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'partyOrganization.secretary' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <data-picker [property]="f['secretaryId']" operationKey="action.view" adResourceKey="resource.partyOrganization"
+                objectBO="EmployeeBO" codeField="employeeCode" nameField="fullName" emailField="email" selectField="employeeId">
+              </data-picker>
+              <app-control-messages [control]="f['secretaryId']"></app-control-messages>
+            </div>
+            <!-- Ban hành ngoài voffice -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'partyOrganization.deputySecretary' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <data-picker [property]="f['deputySecretaryId']" operationKey="action.view" adResourceKey="resource.partyOrganization"
+                objectBO="EmployeeBO" codeField="employeeCode" nameField="fullName" emailField="email" selectField="employeeId">
+              </data-picker>
+              <app-control-messages [control]="f['deputySecretaryId']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- đầu mối đề nghị thanh toán -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'partyOrganization.partyRequester' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <data-picker [property]="f['partyRequesterId']" operationKey="action.view" adResourceKey="resource.partyOrganization"
+                           objectBO="EmployeeBO" codeField="employeeCode" nameField="fullName" emailField="email" selectField="employeeId">
+              </data-picker>
+              <app-control-messages [control]="f['partyRequesterId']"></app-control-messages>
+            </div>
+            <!-- Upload ảnh con dấu -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'massUploadImgStamp' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <file-chooser
+              [property]="f['fileImage']"
+              [validMaxSize]="50"
+              validType="jpg,png"
+              [disabled]="true">
+            </file-chooser>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- Ban hành ngoài voffice -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'partyOrganization.signOutVoffice' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <label class="i-switch bg-info m-t-xs m-r" id="isSignOutVoffice">
+                <input type="checkbox" disabled="true" name="isSignOutVoffice" [value]="1" formControlName="isSignOutVoffice"/>
+                <i></i>
+              </label>
+              <app-control-messages [control]="f['isSignOutVoffice']"></app-control-messages>
+            </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                  {{'partyOrganization.order' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                  <input type="text" class="form form-control" name="order" formControlName="order" disabled>
+                  <app-control-messages [control]="f['order']"></app-control-messages>
+              </div>
+          </div>
+        </div>
+        <div *ngIf="isMobileScreen" class="panel-body padding-xl ui-g">
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+              {{'partyOrganization.parentParty' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+              <party-org-selector 
+                [property]="f['parentId']" 
+                operationKey="action.view"
+                adResourceKey="resource.partyOrganization" 
+                [defaultValue]="true" 
+                [disabled]='true'
+               >
+              </party-org-selector>
+              <app-control-messages [control]="f['parentId']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-3 control-label vt-align-right">
+              {{'partyOrganization.type' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+              <select-filter 
+                [property]="f['type']" 
+                [options]="lstTypeParty" 
+                optionLabel="name" 
+                optionValue="categoryId"
+                [placeHolder]="'common.label.cboSelect'" 
+                [disabled]='true'
+                >
+              </select-filter>
+              <app-control-messages [control]="f['type']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+              {{'partyOrganization.type' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+              <input type="text" class="form form-control" name="name" formControlName="name" onChange="genCodeParty();"
+                disabled>
+              <app-control-messages [control]="f['name']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-3 control-label vt-align-right">
+              {{'partyOrganization.code' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+              <input type="code" class="form form-control" name="code" formControlName="code" disabled>
+              <app-control-messages [control]="f['code']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+              {{'partyOrganization.documentFounding' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+              <data-picker 
+                [property]="f['documentId']" 
+                systemCode="political" 
+                operationKey="action.view"
+                adResourceKey="resource.partyOrganization" 
+                objectBO="DocumentBO" 
+                nameField="documentName"
+                codeField="documentNumber" 
+                selectField="documentId" 
+                [isDisplayCode]="true"
+                (onChange)="filterDataDocument();"
+                filterCondition=" and curdate() BETWEEN obj.effective_date and IFNULL(obj.expired_date, curdate()) and branch = 1 "
+                disabled='true'>
+              </data-picker>
+              <app-control-messages [control]="f['documentId']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-3 control-label vt-align-right">
+              {{'partyOrganizationTerminate.decisionParty' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+              <input type="text" class="form form-control" name="partyDecisionName" formControlName="partyDecisionName"
+                disabled>
+              <app-control-messages [control]="f['partyDecisionName']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+              {{'partyOrganization.foundingDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+              <date-picker [property]="f['foundingDate']" [disabled]='true'>
+              </date-picker>
+              <app-control-messages [control]="f['foundingDate']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-3 control-label vt-align-right">
+              {{'partyOrganization.effectiveDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+              <date-picker [property]="f['effectiveDate']" [disabled]='true'>
+              </date-picker>
+              <app-control-messages [control]="f['effectiveDate']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- Đầu mối hỗ trợ hồ sơ -->
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+                {{'partyOrganization.approvalReception' | translate}}
+            </label>    
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+                <data-picker
+                [property]="f['coordinatorId']"
+                operationKey="action.view"
+                adResourceKey="resource.partyOrganization"
+                objectBO="EmployeeBO"
+                codeField="employeeCode"
+                nameField="fullName"
+                emailField="email"
+                mobileNumberField="mobileNumber"
+                selectField="employeeId"
+              ></data-picker>
+              <app-control-messages [control]="f['coordinatorId']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- Đầu mối nghị quyết -->
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-sm- ui-lg-3 control-label vt-align-right">
+              {{'partyOrganization.authorization' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+              <data-picker [property]="f['authorizationId']" operationKey="action.view" adResourceKey="resource.partyOrganization"
+                objectBO="EmployeeBO" codeField="employeeCode" nameField="fullName" emailField="email" selectField="employeeId">
+              </data-picker>
+              <app-control-messages [control]="f['authorizationId']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- Đầu mối bí thư -->
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+              {{'partyOrganization.secretary' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+              <data-picker [property]="f['secretaryId']" operationKey="action.view" adResourceKey="resource.partyOrganization"
+                objectBO="EmployeeBO" codeField="employeeCode" nameField="fullName" emailField="email" selectField="employeeId">
+              </data-picker>
+              <app-control-messages [control]="f['secretaryId']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- Ban hành ngoài voffice -->
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-3 control-label vt-align-right">
+              {{'partyOrganization.deputySecretary' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+              <data-picker [property]="f['deputySecretaryId']" operationKey="action.view" adResourceKey="resource.partyOrganization"
+                objectBO="EmployeeBO" codeField="employeeCode" nameField="fullName" emailField="email" selectField="employeeId">
+              </data-picker>
+              <app-control-messages [control]="f['deputySecretaryId']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- Ban hành ngoài voffice -->
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+              {{'partyOrganization.signOutVoffice' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+              <label class="i-switch bg-info m-t-xs m-r" id="isSignOutVoffice">
+                <input type="checkbox" disabled="true" name="isSignOutVoffice" [value]="1" formControlName="isSignOutVoffice"/>
+                <i></i>
+              </label>
+              <app-control-messages [control]="f['isSignOutVoffice']"></app-control-messages>
+            </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                  {{'partyOrganization.order' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                  <input type="text" class="form form-control" name="order" formControlName="order" disabled>
+                  <app-control-messages [control]="f['order']"></app-control-messages>
+              </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- Upload ảnh con dấu -->
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-3 control-label vt-align-right">
+              {{'massUploadImgStamp' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+              <file-chooser
+              [property]="f['fileImage']"
+              [validMaxSize]="50"
+              validType="jpg,png"
+              [disabled]="true">
+            </file-chooser>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default card-info">
+        <div class="panel-heading vt-relative">
+          <strong>
+            <span class="ml-2 title-info">{{'partyOrganization.lstOrgRela' | translate}}</span>
+          </strong>
+        </div>
+        <div class="panel-body padding-xl ui-g" style="padding: 12px;">
+          <p-table 
+            [scrollable]="true"
+            [value]="lstFormOrgRelationConfig.controls" 
+            styleClass="controlOverflow"
+            tableStyleClass="table controls-table table-wrapper b-t b-b"
+            [resizableColumns]="true">
+            <ng-template pTemplate="colgroup" let-columns>
+              <colgroup>
+                <col style="width: 50px;">
+                <col style="width: 200px;">
+                <col style="width: 100px;">
+                <col style="width: 100px;">
+              </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th translate pResizableColumn>common.table.index</th>
+                <th pResizableColumn> {{'partyOrganization.choseOrgRela' | translate}}</th>
+                <th pResizableColumn> {{'partyOrganization.effectiveDate' | translate}}</th>
+                <th pResizableColumn> {{'partyOrganization.expiredDate' | translate}}</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-index="rowIndex">
+              <tr [formGroup]="item">
+                <td class="vt-align-center">
+                  {{index+1}}
+                </td>
+                <td>
+                  <org-selector 
+                    [property]="item.controls.organizationId" 
+                    operationKey="action.view"
+                    adResourceKey="resource.partyOrganization" 
+                    [defaultValue]="true" 
+                    (onChange)="setDateInfo(item);"
+                    [disabled]='true' 
+                    isRequiredField=true;>
+                  </org-selector>
+                  <app-control-messages [control]="item.controls.organizationId"></app-control-messages>
+                </td>
+                <td class="vt-align-center">
+                  {{item.controls.effectiveDate.value | displayDate}}
+                </td>
+                <td class="vt-align-center">
+                  {{item.controls.expiredDate.value | displayDate}}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+      <quality-rating-party-organization [partyOrganizationId]="partyOrganizationId"></quality-rating-party-organization>
+      <reward-party-organization [massOrganizationId]="partyOrganizationId" [branch]="0"></reward-party-organization>
+    </form>
+  </div>
+  <div *ngIf="!hasPermission('action.view')">
+    {{'common.haveNoPermission' | translate}}
+  </div>
+</div>

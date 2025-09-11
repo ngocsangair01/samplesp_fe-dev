@@ -1,0 +1,80 @@
+<div class="panel panel-default" *ngIf="(hasPermission('action.update') && isUpdate) || (hasPermission('action.insert') && isInsert)">
+  <form id="formSave" [formGroup]="formSave">
+    <div class="panel-heading vt-relative">
+      <strong class="text-u-c">
+        <i class="fa fa-th"></i>&nbsp;
+        <span *ngIf="!formSave.get('notificationId').value" translate> notificaion.addNoti</span>
+        <span *ngIf="formSave.get('notificationId').value" translate> notification.editNoti </span>
+        <!-- <span>{{'notificaion.addNoti' | translate}}</span> -->
+      </strong>
+    </div>
+    <div class="panel-body padding-xl ui-g">
+      <div class="ui-g-12 vt-row">
+        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+          {{'notification.branchName' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <!-- <multi-select-filter  [property]="f['notifyBranchList']"
+                                  [options]="notifyBranchList"
+                                  optionLabel="name"
+                                  optionValue="code"
+                                  [filterPlaceHolder]=" 'common.label.cboSelect'">
+            </multi-select-filter> -->
+          <select-filter
+            [property]="f['notifyBranch']"
+            [options]="notifyBranchList"
+            optionLabel="name"
+            optionValue="code"
+            [placeHolder]="'common.label.cboMustSelect'"
+          >
+          </select-filter>
+          <app-control-messages [control]="f['notifyBranch']"></app-control-messages>
+        </div>
+        <label class= "ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+          {{'notification.link' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <input maxlength="200" [autoFocus]="true" type="text" class="form form-control" name="link" formControlName="link">
+          <app-control-messages [control]="f['link']"></app-control-messages>
+        </div>
+      </div>
+
+      <div class="ui-g-12 vt-row">
+        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+          {{ 'notification.displayStartDate' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <date-picker
+            [property]="f['displayStartDate']">
+          </date-picker>
+          <app-control-messages [control]="f['displayStartDate']"></app-control-messages>
+        </div>
+        <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+          {{'notification.displayFinishDate' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <date-picker
+            [property]="f['displayFinishDate']">
+          </date-picker>
+          <app-control-messages [control]="f['displayFinishDate']"></app-control-messages>
+        </div>
+      </div>
+      <div class="ui-g-12 vt-row">
+        <label class= "ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+         {{'notification.content' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-9 ui-lg-9">
+          <textarea formControlName="notifyContent" id="notifyContent" cols="200" rows="6" class="form-control" maxlength="4000"></textarea>
+          <app-control-messages [control]="f['notifyContent']"></app-control-messages>
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer vt-area-button">
+      <button type="submit"  (click)="processSaveOrUpdate()" class="btn btn-sm btn-info" [innerHTML]="'common.button.icon.save' | translate"></button>
+      <button type="button" (click)="goBack()"  class="btn btn-sm btn-danger" [innerHTML]="'common.button.out' | translate"></button>
+    </div>
+  </form>
+</div>
+<div *ngIf="!(hasPermission('action.update') && isUpdate) && !(hasPermission('action.insert') && isInsert)">
+  {{'common.haveNoPermission' | translate}}
+</div>

@@ -1,0 +1,324 @@
+<div *ngIf="hasPermission('action.view')">
+  <div id="searchPage">
+    <div id="searchArea">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong class="text-u-c">
+              <i class="fa fa-th"></i>
+              {{'common.label.search.info' | translate}}
+            </strong>
+          </div>
+          <form id="formSearch" [formGroup]="formSearch">
+            <div class="panel-body padding-xl ui-g">
+              <div class="ui-g-12 vt-row">
+                <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                  {{'partyCongressEmployee.newPartyOrgName' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                  <party-org-selector
+                    [property]="f['partyOrganizationId']"
+                    operationKey="action.view"
+                    adResourceKey="resource.partyCongressEmployee"
+                    [autoFocus]="true"
+                  >
+                  </party-org-selector>
+                  <app-control-messages [control]="f['partyOrganizationId']"></app-control-messages>
+                </div>
+                <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                  {{'partyCongressEmployee.fullName' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                  <input type="text" name="fullName" class="form-control" formControlName="fullName" maxlength="200" />
+                  <app-control-messages [control]="f['fullName']"></app-control-messages>
+                </div>
+              </div>
+              <div class="ui-g-12 vt-row">
+                <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                  {{'partyCongressEmployee.currentPartyPosition' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                  <data-picker
+                    [property]="f['partyPositionId']"
+                    systemCode="political"
+                    operationKey="action.view"
+                    adResourceKey="resource.partyCongressEmployee"
+                    objectBO="PartyPositionBO"
+                    codeField="code"
+                    nameField="name"
+                    selectField="partyPositionId"
+                    filterCondition="AND (obj.exprited_date IS NULL OR DATE(obj.exprited_date) >= CURRENT_DATE)
+                                    AND obj.IS_ACTIVE = 1
+                                    ORDER BY obj.sort_order ASC">
+                  </data-picker>
+                  <app-control-messages [control]="f['partyPositionId']"></app-control-messages>
+                </div>
+                <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                    {{'partyCongressEmployee.newPartyPosition' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                  <data-picker
+                    [property]="f['newPartyPosition']"
+                    systemCode="political"
+                    operationKey="action.view"
+                    adResourceKey="resource.partyCongressEmployee"
+                    objectBO="PartyPositionBO"
+                    codeField="code"
+                    nameField="name"
+                    selectField="partyPositionId"
+                    filterCondition="AND (obj.exprited_date IS NULL OR DATE(obj.exprited_date) >= CURRENT_DATE)
+                                    AND obj.IS_ACTIVE = 1
+                                    ORDER BY obj.sort_order ASC">
+                  </data-picker>
+                  <app-control-messages [control]="f['newPartyPosition']"></app-control-messages>
+                </div>
+              </div>
+              <div class="ui-g-12 vt-row">
+                <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                  {{'partyCongressEmployee.isHaveProfiles' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                  <div class="form-check-inline ">
+                    <label class="i-checks">
+                      <input type="radio"class="form-check-input control-label" id="isHaveProfile_0" [value]="0" name="isHaveProfile" formControlName="isHaveProfile">
+                      <i></i>
+                      {{'app.organization.status.all' | translate}}
+                    </label>
+                  </div>
+                  <div class="form-check-inline">
+                    <label class="i-checks">
+                      <input type="radio"class="form-check-input control-label" id="isHaveProfile_1" [value]="1" name="isHaveProfile" formControlName="isHaveProfile">
+                      <i></i>
+                      {{'common.button.yes' | translate}}
+                    </label>
+                  </div>
+                  <div class="form-check-inline">
+                    <label class="i-checks">
+                      <input type="radio"class="form-check-input control-label" id="isHaveProfile_2" [value]="2" name="isHaveProfile" formControlName="isHaveProfile">
+                      <i></i>
+                      {{'common.button.no' | translate}}
+                    </label>
+                  </div>
+                  <app-control-messages [control]="f['isHaveProfile']"></app-control-messages>
+                </div>
+                <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                  {{'app.emp.tabMenu.partyMemberConcurrentProcess.tenure' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                  <select-filter
+                    [property]="f['tenureId']"
+                    [options]="tenureList"
+                    optionLabel="name"
+                    optionValue="categoryId"
+                    [placeHolder]="'common.label.cboSelectAll'">
+                  </select-filter>
+                  <app-control-messages [control]="f['tenureId']"></app-control-messages>
+                </div>
+              </div>
+            </div>
+            <div class="panel-footer vt-area-button">
+              <button type="submit" class="btn btn-sm btn-info" (click)="processSearch()" [innerHTML]="'common.button.icon.search' | translate" ></button>
+              <button type="button" *ngIf="hasPermission('action.insert')" (click)="prepareSaveOrUpdate()" class="btn btn-sm btn-info" [innerHTML]="'common.button.icon.addNew' | translate" style="margin-right: 10px;"></button>
+              <button type="button" *ngIf="hasPermission('action.export')" (click)="processExport()" class="btn btn-sm btn-info" [innerHTML]="'common.button.icon.exportFile' | translate" style="margin-right: 10px;"></button>
+              <button type="button" class="btn btn-sm btn-info" (click)="prepareImport()" *ngIf="hasPermission('action.import')" [innerHTML]="'partyCongressEmployee.import' | translate" ></button>
+              <button type="submit" class="btn btn-sm btn-info" (click)="processConfirm()" *ngIf="hasPermission('action.update')" [innerHTML]="'common.button.icon.confirm' | translate"></button>
+            </div>
+          </form>
+        </div>
+    </div>
+  </div>
+  <div id="listArea">
+      <div class="panel panel-default">
+        <div class="panel-heading vt-relative">
+          <strong class="text-u-c">
+            <i class="fa fa-th"></i>
+            {{'partyCongressEmployee.listTitle' | translate}}
+          </strong>
+        </div>
+        <div class="panel-body panel-table">
+          <p-table
+            #ptable
+            [value]="resultList.data"
+            [paginator]="true"
+            (onLazyLoad)="processSearch($event)"
+            [lazy]="true" [rows]="changeRow"
+            [totalRecords]="resultList.recordsTotal"
+            [scrollable]="true"
+            [lazyLoadOnInit]="false"
+            tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+            styleClass="controlOverflow"
+            [(selection)]="selectedGop"
+          >
+            <ng-template pTemplate="colgroup" let-columns>
+              <colgroup>
+                <col class="size-1">
+                <col *ngIf="hasPermission('action.update')" class="size-1">
+                <col *ngIf="hasPermission('action.update')" class="size-1">
+                <col *ngIf="hasPermission('action.delete')" class="size-1">
+                <col class="size-12">
+                <col class="size-6">
+                <col class="size-10">
+                <col class="size-5">
+                <col class="size-5">
+                <col class="size-6">
+                <col class="size-10">
+                <col class="size-12">
+                <col class="size-10">
+                <col class="size-8">
+                <col class="size-12">
+                <col class="size-10">
+                <col class="size-8">
+                <col class="size-12">
+                <col class="size-10">
+                <col class="size-10">
+                <col class="size-10">
+                <col class="size-8">
+                <col class="size-12">
+              </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th translate>common.table.index</th>
+                <th *ngIf="hasPermission('action.update')" style="width: 2.25em" translate>
+                  <p-tableHeaderCheckbox [disabled]="isDisableCheckAll"></p-tableHeaderCheckbox>
+                </th>
+                <th *ngIf="hasPermission('action.update')" translate >common.label.edit</th>
+                <th *ngIf="hasPermission('action.delete')" translate >common.label.delete</th>
+                <th [pSortableColumn]="'newPartyOrgName'">
+                  {{'partyCongressEmployee.newPartyOrgName' | translate}}
+                  <p-sortIcon [field]="'newPartyOrgName'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'employeeCode'">
+                  {{'partyCongressEmployee.employeeCode' | translate}}
+                  <p-sortIcon [field]="'employeeCode'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'fullName'">
+                  {{'partyCongressEmployee.fullName' | translate}}
+                  <p-sortIcon [field]="'fullName'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'dateOfBirth'">
+                  {{'partyCongressEmployee.dateOfBirth' | translate}}
+                  <p-sortIcon [field]="'dateOfBirth'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'partyAdmissionDate'">
+                  {{'partyCongressEmployee.admissionDate' | translate}}
+                  <p-sortIcon [field]="'partyAdmissionDate'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'soldierLevel'">
+                  {{'partyCongressEmployee.soldierLevel' | translate}}
+                  <p-sortIcon [field]="'soldierLevel'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'positionName'">
+                  {{'partyCongressEmployee.positionName' | translate}}
+                  <p-sortIcon [field]="'positionName'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'organizationName'">
+                  {{'partyCongressEmployee.organizationName' | translate}}
+                  <p-sortIcon [field]="'organizationName'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'currentPartyPosition'">
+                  {{'partyCongressEmployee.currentPartyPosition' | translate}}
+                  <p-sortIcon [field]="'currentPartyPosition'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'rewardForm'">
+                  {{'partyCongressEmployee.rewardForm' | translate}}
+                  <p-sortIcon [field]="'rewardForm'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'rewardDate'">
+                  {{'partyCongressEmployee.rewardDate' | translate}}
+                  <p-sortIcon [field]="'rewardDate'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'rewardReason'">
+                  {{'partyCongressEmployee.rewardReason' | translate}}
+                  <p-sortIcon [field]="'rewardReason'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'disciplineForm'">
+                  {{'partyCongressEmployee.disciplineForm' | translate}}
+                  <p-sortIcon [field]="'disciplineForm'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'disciplineDate'">
+                  {{'partyCongressEmployee.disciplineDate' | translate}}
+                  <p-sortIcon [field]="'disciplineDate'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'disciplineReason'">
+                  {{'partyCongressEmployee.disciplineReason' | translate}}
+                  <p-sortIcon [field]="'disciplineReason'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'newPartyPosition'">
+                  {{'partyCongressEmployee.newPartyPosition' | translate}}
+                  <p-sortIcon [field]="'newPartyPosition'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'partyOrganizationName'">
+                  {{'partyOrganization.party' | translate}}
+                  <p-sortIcon [field]="'partyOrganizationName'"></p-sortIcon>
+                </th>
+                <th [pSortableColumn]="'tenureName'">
+                  {{'app.emp.tabMenu.partyMemberConcurrentProcess.tenure' | translate}}
+                  <p-sortIcon [field]="'tenureName'"></p-sortIcon>
+                </th>
+                <th>
+                    {{'partyCongressEmployee.profile' | translate}}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+              <tr>
+                <td class="vt-align-center">{{index}}</td>
+                <td *ngIf="hasPermission('action.update')" class="vt-align-center">
+                  <span *ngIf="item.isConfirmed !== 1 && item.isCurrentTenure === 1">
+                    <p-tableCheckbox [value]="item"></p-tableCheckbox>
+                  </span>
+                  <span *ngIf="item.isConfirmed === 1">
+                    <i class="fa fa-check table-icon color-info"></i>
+                  </span>
+                </td>
+                <td *ngIf="hasPermission('action.update')" class="vt-align-center">
+                  <a class="btn-table edit" *ngIf="item.isConfirmed !== 1" (click)="prepareSaveOrUpdate(item)" title="{{'common.label.edit' | translate}}" ><i class="fa fa-edit"></i></a>
+                </td>
+                <td *ngIf="hasPermission('action.delete')" class="vt-align-center">
+                  <a class="btn-table delete" *ngIf="item.isConfirmed !== 1" (click)="processDelete(item.partyCongressEmployeeId)" title="{{'common.label.delete' | translate}}" ><i class="fa fa-trash-alt"></i></a>
+                </td>
+                <td class="vt-align-left">{{item.newPartyOrgName}}</td>
+                <td class="vt-align-center">{{item.employeeCode}}</td>
+                <td class="vt-align-left">{{item.fullName}}</td>
+                <td class="vt-align-center">{{item.dateOfBirth | displayDate}}</td>
+                <td class="vt-align-center">{{item.partyAdmissionDate | displayDate}}</td>
+                <td class="vt-align-left">{{item.soldierLevel}}</td>
+                <td class="vt-align-left">{{item.positionName}}</td>
+                <td class="vt-align-left">{{item.organizationName}}</td>
+                <td class="vt-align-left">{{item.currentPartyPosition}}</td>
+                <td class="vt-align-left">{{item.rewardForm}}</td>
+                <td class="vt-align-left">{{item.rewardDate}}</td>
+                <td class="vt-align-left">{{item.rewardReason}}</td>
+                <td class="vt-align-left">{{item.disciplineForm}}</td>
+                <td class="vt-align-left">{{item.disciplineDate}}</td>
+                <td class="vt-align-left">{{item.disciplineReason}}</td>
+                <td class="vt-align-left">{{item.newPartyPosition}}</td>
+                <td class="vt-align-left">{{item.partyOrganizationName}}</td>
+                <td class="vt-align-left">{{item.tenureName}}</td>
+                <td class="vt-align-left">
+                    <a *ngFor="let data of item.fileAttachment.file"
+                      style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 200px; display: block; overflow: hidden"
+                      (click)="downloadFile(data)">
+                        {{data.fileName}}
+                    </a>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr class="emptymessage">
+                <td [attr.colspan]="16" [innerHTML]="'app.noRecords' | translate">
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+              <table-footer (changeRow)="onTablePageChange($event)" [resultList]="resultList"></table-footer>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+  </div>
+</div>
+<div *ngIf="!hasPermission('action.view')">
+  {{'common.haveNoPermission' | translate}}
+</div>
+ 

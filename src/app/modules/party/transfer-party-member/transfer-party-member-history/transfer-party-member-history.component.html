@@ -1,0 +1,93 @@
+<div class="content vt-nopadding">
+  <div class="no-padding-left">
+    <div class="panel-default">
+      <div class="panel-heading vt-relative">
+        <strong>
+          {{'transferPartyMembers.historyApproval' | translate}}
+        </strong>
+        <div class="vt-absolute vt-shotcut-button-in-heading">
+          <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+            class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+        </div>
+      </div>
+      <div class="panel-body panel-table" style="padding: 0 12px 12px 12px;">
+        <p-table
+        #ptable
+        [value]="data"
+        [paginator]="true"
+        (onLazyLoad)="processSearchHis($event)"
+        [lazy]="true"
+        [rows]="changeRow"
+        [totalRecords]="recordsTotal"
+        [scrollable]="true" [lazyLoadOnInit]="false"
+        tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+        [resizableColumns]="true"
+        styleClass="controlOverflow">
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col style="width: 50px;">
+              <col style="width: 400px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col>
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th translate pResizableColumn>common.table.index</th>
+              <th [pSortableColumn]="'partyOrganizationName'" pResizableColumn>
+                {{'transferPartyMembers.historyPartyOrg' | translate}}
+                <p-sortIcon [field]="'partyOrganizationName'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'updatedDate'" pResizableColumn>
+                {{'propaganda.thoughtReport.dayUpdate' | translate}}
+                <p-sortIcon [field]="'updatedDate'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'approvedDate'" pResizableColumn>
+                {{'transferPartyMembers.approvedDateDecline' | translate}}
+                <p-sortIcon [field]="'approvedDate'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'approvalOrder'" pResizableColumn>
+                {{'transferPartyMembers.approvalOrder' | translate}}
+                <p-sortIcon [field]="'approvalOrder'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'status'" pResizableColumn>
+                {{'transferPartyMembers.status' | translate}}
+                <p-sortIcon [field]="'status'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'note'" pResizableColumn>
+                {{'transferPartyMembers.reasonDecline' | translate}}
+                <p-sortIcon [field]="'note'"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+            <tr>
+              <td class="vt-align-center">{{parseInt(resultList.first) + index}}</td>
+              <td class="vt-align-left">{{item.partyOrganizationName}}</td>
+              <td class="vt-align-center">{{item.updatedDate | displayDateTime}}</td>
+              <td class="vt-align-center">{{item.approvedDate|displayDate}}</td>
+              <td class="vt-align-center">{{item.approvalOrder}}</td>
+              <td class="vt-align-left">{{item.statusName}}</td>
+              <td class="vt-align-left" title={{item.note}}>{{item.note}}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr class="emptymessage">
+              <td [attr.colspan]="14" [innerHTML]="'app.noRecords' | translate">
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft">
+            <table-footer (changeRow)="onTablePageChange($event)"  [resultList]="resultList"></table-footer>
+          </ng-template>
+        </p-table>
+      </div>
+      <div class="panel-footer vt-area-button">
+        <button type="button" (click)="activeModal.close()" class="btn btn-sm vt-btn" [innerHTML]="'common.button.out' | translate"></button>
+      </div>
+    </div>
+  </div>
+</div>

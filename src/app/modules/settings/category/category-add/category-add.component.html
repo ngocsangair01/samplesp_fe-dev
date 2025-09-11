@@ -1,0 +1,80 @@
+<div class="content vt-nopadding">
+  <div class="no-padding-left">
+    <form id="frmSaveSysCat" [formGroup]="formSave">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+              <strong>
+                <span *ngIf="!formSave.get('categoryId').value" translate> app.settings.category.cat_add_title</span>
+                <span *ngIf="formSave.get('categoryId').value" translate> app.settings.category.cat_edit_title</span>
+              </strong>
+              <div class="vt-absolute vt-shotcut-button-in-heading">
+                <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+                  class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+              </div>
+          </div>
+          <div class="panel-body padding-xl ui-g">
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'app.settings.category.code' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <input type="text" class="form-control" formControlName="code" maxlength="50" [attr.disabled]="f['categoryId'].value ? true : null" [autoFocus]="!f['categoryId'].value">
+                <app-control-messages [control]="f['code']"></app-control-messages>
+              </div>
+
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'app.settings.category.name' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <input type="text" class="form-control" formControlName="name" maxlength="500" [autoFocus]="f['categoryId'].value">
+                <app-control-messages [control]="f['name']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'app.settings.category.cat_type_name' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <input type="text" class="form-control" [attr.disabled]="true" formControlName="categoryTypeName" maxlength="200">
+                <app-control-messages [control]="f['categoryTypeName']"></app-control-messages>
+              </div>
+
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'app.settings.category.sort_order' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <input type="text" class="form-control" formControlName="sortOrder" maxlength="4">
+                <app-control-messages [control]="f['sortOrder']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" translate>
+                app.settings.category.is_default
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <label class="i-switch bg-info m-t-xs m-r">
+                  <input type="checkbox" name="isDefault" [value]="1" formControlName="isDefault" />
+                  <i></i>
+                </label>
+                <app-control-messages [control]="f['isDefault']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'app.settings.category.description' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-8">
+                <textarea class="form-control" formControlName="description" maxlength="4000" rows="2">
+                </textarea>
+                <app-control-messages [control]="f['description']"></app-control-messages>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer vt-area-button">
+              <button type="submit" (click)="processSaveOrUpdate()" class="btn btn-sm vt-btn btn-submit" [innerHTML]="'common.button.icon.save' | translate"></button>
+              <button type="button" (click)="activeModal.close()" class="btn btn-sm vt-btn" [innerHTML]="'common.button.out' | translate"></button>
+          </div>
+        </div>
+    </form>
+  </div>
+</div>

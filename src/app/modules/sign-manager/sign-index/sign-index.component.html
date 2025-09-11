@@ -1,0 +1,6 @@
+<div *ngIf="hasPermission('action.view')">
+  <sign></sign>
+</div>
+<div *ngIf="!hasPermission('action.view')">
+{{'common.haveNoPermission' | translate}}
+</div>

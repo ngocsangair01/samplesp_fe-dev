@@ -1,0 +1,63 @@
+
+<div class="panel-body panel-table">
+  <p-table
+      #pTable
+      [value]="resultList.data"
+      [paginator]="true"
+      (onLazyLoad)="processSearch($event)"
+      [lazy]="true" [rows]="changeRow"
+      [totalRecords]="resultList.recordsTotal"
+      [scrollable]="true"
+      [lazyLoadOnInit]="false"
+      tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+      [resizableColumns]="true"
+      [(first)]="first"
+  >
+      <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+              <col style="width: 50px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+          </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header">
+          <tr>
+              <th translate pResizableColumn>common.table.index</th>
+              <th translate pResizableColumn>employee360.allowancePosition.name</th>
+              <th translate pResizableColumn>employee360.allowancePosition.number</th>
+              <th translate pResizableColumn>employee360.allowancePosition.wageTypeAmount</th>
+              <th translate pResizableColumn>employee360.allowancePosition.paymentFrequency</th>
+              <th translate pResizableColumn>employee360.allowancePosition.starDate</th>
+              <th translate pResizableColumn>employee360.allowancePosition.endDate</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-index="rowIndex">
+          <tr>
+              <td>{{index + 1}}</td>
+              <td>{{item.wageType === '2P02' ? 'Phụ cấp chức vụ' : ''}}</td>
+              <td>{{item.number}}</td>
+              <td>{{item.wagetypeAmount}}</td>
+              <td>{{item.paymentFrequency ? item.paymentFrequency : 'Hàng tháng'}}</td>
+              <td>
+                  {{item.startDate | displayDate}}
+              </td>
+              <td>
+                  {{item.endDate | displayDate}}
+              </td>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr class="emptymessage">
+            <td [attr.colspan]="7" [innerHTML]="'app.noRecords' | translate">
+            </td>
+        </tr>
+    </ng-template>
+      <ng-template pTemplate="paginatorleft">
+          <table-footer #tableFooter (changeRow)="onTablePageChange($event)" [resultList]="resultList"></table-footer>
+      </ng-template>
+  </p-table>
+</div>

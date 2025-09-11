@@ -1,0 +1,2011 @@
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Be Vietnam Pro',  sans-serif !important;
+    font-weight: 700;
+    color: rgba(38,1,0,1);
+}
+.label-wellcome-assessment{
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #BF8771;
+}
+.card-body {
+    padding: 0px !important;
+}
+.ui-scrollpanel-content {
+    overflow: auto;
+}
+.img-tech-custom{
+    color: #6E6058;
+    width: 26px !important;
+    height: 22px !important;
+    margin-top: 29.33px;
+    border-radius: 50%;
+}
+.content-time-period-name{
+    margin-top: 20.67px;
+}
+.label-time-custom{
+    margin: auto;
+    color: #D03D03;
+    width: 164px;
+    height: 16px;
+}
+
+.period-name-custom{
+    width: 257px;
+    height: 48px;
+    max-height: 48px;
+    margin: auto;
+    margin-top: 8px;
+}
+.span-period-name{
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: rgba(78,3,0,1);
+}
+
+.count-member-assessment{
+    margin-top:48px;
+    margin-bottom: 24px;
+}
+.count-member{
+    text-align: center;
+    margin: auto;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    color: #BF8771;
+}
+
+/*.card-custom{*/
+/*    padding-top: 12px !important;*/
+/*    padding-bottom: 12px !important;*/
+/*}*/
+
+.img-custom{
+    /*margin-top: 12px;*/
+    width: 160px !important;
+    height: 160px !important;
+    border-radius: 6px;
+    margin: 12px;
+}
+.img-custom:hover{
+    border: 1px solid #D03D03;
+}
+.name-employee-assessment{
+    width: 144px;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 22px;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.title-org-name{
+    width: 144px;
+    margin: 0 auto;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.2;
+    overflow: hidden;
+    max-height: 28px;
+    height: 28px;
+    color: #A6A39F;
+    margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+/*.assessemnt-result-custom{*/
+/*    margin-bottom: 30px;*/
+/*}*/
+#lstBtnDetail {
+    display: block;
+    margin: auto;
+    width: 100%;
+    height: 70px;
+    margin: auto;
+    position: fixed;
+    background-color: #fff;
+    right: 0;
+    bottom: 0;
+    -webkit-backface-visibility: hidden;
+}
+#lstBtnDetail .btn-danh-gia {
+    width: 65px;
+    height: 65px;
+}
+.ul-assessment-custom{
+    margin-bottom: 16px !important;
+}
+
+.container-custom{
+    position: relative;
+    margin-left: 368px;
+    margin-right: 368px;
+}
+.li-custom-balance-scale, .li-custom-file-dowload, .li-custom-envelope-square{
+    border: 1px solid rgba(191, 135, 113, 0.25);
+    border-radius: 25px;
+    width: 32px;
+    height: 32px;
+}
+.li-custom-balance-scale{
+    background: #BF8771;
+    margin-right: 16px !important;
+}
+.li-custom-file-dowload{
+    color: #BF8771;
+    background: #FFF4EB;
+    margin-right: 16px !important;
+}
+
+.li-custom-envelope-square{
+    color: #BF8771;
+    background: #FFF4EB;
+}
+
+a.btn-back-custom{
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+}
+.ic-back-preriod {
+    width: 1rem;
+    height: 1rem;
+    text-align: center;
+    margin-right: 0.375rem;
+}
+.fa-back-custom{
+    color: #D5C2BB;
+    display: flex;
+}
+.fa-chevron-left:before {
+    flex: 1;
+}
+.title-back-custom{
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.625rem;
+    color: #D5C2BB;
+}
+#list-page {
+    background-color: #fffbf5 !important
+}
+
+/*, .btn-back-custom:focus, .btn-back-custom::before, .btn-back-custom::after*/
+.btn-back-custom:hover{
+    border-color:#FFFEFC !important;
+    color: #FFFEFC !important;
+}
+
+.card-body-custom{
+    border-radius: 8px;
+    border: 1.5px solid rgba(246,183,109,0.6);
+    /*box-shadow: 0px 4px 30px 3px rgba(74, 25, 5, 0.08);*/
+}
+.card-body-custom:hover{
+    border: 1.5px solid rgba(246,183,109,1);
+}
+
+.header-assessment-custom{
+    display: flex;
+    align-items: center;
+    min-height: 4rem;
+    height: fit-content;
+    width: 100%;
+    padding: 0 1.125rem 0 1.875rem;
+    background: #FFFEFC;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.03);
+}
+
+.logo-page-back{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.col-md-4{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.col-lg-3 {
+    flex: 0 0 184px !important;
+    max-width: 184px !important;
+    /*max-height: 304px !important;*/
+}
+
+.info-employee-evaluated{
+    width: 382px;
+    height: fit-content;
+    background: #FFFFFF;
+    border-radius: 0.5rem ;
+    overflow: hidden;
+}
+.title-info-employee{
+    margin: 24px 20px 0px 40px;
+}
+
+.detail-info-empl{
+    margin: 32px 8px 0 44px;
+}
+.avatar-img-custom{
+    width: 168px;
+    height: 168px;
+    margin-bottom: 12px;
+}
+.image-avatar-custom{
+    width: 168px !important;
+    height: 168px !important;
+}
+.content-info-custom{
+    margin-left: 12px;
+}
+.title-soldier-level{
+    width: 100%;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #D03D03;
+}
+
+.title-employee-fullname{
+    margin-top: 2px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    color: #212529;
+}
+.title-employee-code{
+    width: 100%;
+    margin-top: 12px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #212529;
+}
+.title-emp-type-name{
+    width: 100%;
+    margin-top: 24px;
+}
+.title-info-other{
+    width: 306px;
+    margin-top: 18px;
+}
+
+/*.section-detail {*/
+/*    padding-right: 298px;*/
+/*}*/
+.container-detail-custom{
+    border: 1px solid #dee5e7;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    max-width: calc(100vw - 757px) !important;
+}
+.ui-panel-content-wrapper {
+    margin-top: -5px;
+}
+.emp_information_right {
+    width: fit-content;
+    min-width: calc(100vw - 757px);
+    max-width: calc(100vw - 459px)
+}
+
+.col-md-6 {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.content-custom{
+    width: 329px;
+    height: 232px;
+    /* max-width: 23%; */
+    margin: 12px 12px 28px 12px;
+    flex: unset;
+    max-width: unset;
+}
+
+.label-assessment-custom{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #7D7D7D;
+}
+.text-assessment-custom{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #212529;
+    margin-top: 4px;
+}
+.radio-button-custom{
+    width: 100%;
+    min-width: 145px;
+    display:flex;
+    padding: 14px 17px;
+    background: #FFFFFF;
+    border: 1.5px solid rgba(222, 222, 222, 0.5);
+    border-radius: 8px;
+}
+body .ui-menuitem-text:active{
+    color: #D03D03;
+}
+body .ui-menuitem-text{
+    color: #BF8771;
+}
+
+body .ui-radiobutton .ui-radiobutton-box.ui-state-active {
+    border: 1.5px solid #BF8771 !important;
+    background-color: #BF8771 !important;
+    color: #ffffff;
+}
+
+.assessment-col-custom{
+    border: 1.5px solid #DEDEDE;
+    border-radius: 8px;
+    background: #FFFFFF;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    width: 184px;
+}
+
+.assessment-col-custom:hover{
+    border: 1.5px solid #D03D03;
+}
+.title-icon-custom{
+    font-weight: 500;
+    font-size: 12px !important;
+    line-height: 16px;
+    color: #6E6058;
+    width: max-content !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+.wrapper-custom{
+    width: 876px;
+    margin: auto;
+    border-radius: 8px;
+}
+
+
+.form-untouched{
+    border: 2px solid #F5F2ED;
+    border-radius: 8px;
+}
+.form-untouched >>>  input {
+    font-size: 16px;
+    height: 3.25rem;
+}
+.form-untouched >>>  input::placeholder {
+    color: rgba(105, 87, 71, 0.4);
+}
+.auto-complete-assessment{
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+    border-radius: 5px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+body .ui-inputtext {
+    width: 818.5px;
+    height: 20px !important;
+    color: rgba(105, 87, 71, 0.4) !important;
+    background-color: #F5F5F5 !important;
+    margin-left: 20px !important;
+    border: none !important;
+}
+/*body .ui-autocomplete .ui-inputtext{*/
+/*    width: 818.5px !important;*/
+/*    height: 20px !important;*/
+/*    color: rgba(105, 87, 71, 0.4) !important;*/
+/*    background-color: #F5F5F5 !important;*/
+/*    margin-left: 20px !important;*/
+/*    border: none !important;*/
+/*}*/
+
+.ui-autocomplete{
+    font-size: 16px !important;
+    line-height: 20px !important;
+    font-weight: 400 !important;
+    border-radius: 5px !important;
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+}
+
+/* body .ui-inputtext {
+    width: 818.5px;
+    height: 20px;
+    color: rgba(105, 87, 71, 0.4) !important;
+    background-color: #F5F5F5;
+    margin-left: 20px;
+    border: none;
+} */
+
+
+
+.icon-search-custom{
+    position: absolute;
+    top: calc((100% - 25px) / 2);
+    right: 20px;
+    font-size:17.5px;
+    color:  rgba(105, 87, 71, 0.4);
+}
+.student-contain-custom{
+    flex-wrap: wrap;
+    margin-top: 56px;
+}
+.row-criteria {
+    width: 100%;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    padding-top: 0px !important;
+}
+#formAssessment {
+    height: calc(100vh - 134px);
+    overflow: auto
+}
+#formAssessment::-webkit-scrollbar {
+    display: none;
+}
+.title-evaluate-custom {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.info-header-right-position{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.info-name-code-employee{
+    margin-top: 2.5px;
+    width: fit-content;
+    float: left;
+}
+.info-name-employee{
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #D03D03;
+}
+.info-code-employee{
+    right: 0px;
+    float: right;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    color: #444444;
+    margin-top: 1px;
+}
+.avt-image-employee{
+    float: left;
+    margin: 0px 16px 0px 12px;
+    width: 44px;
+    height: 44px;
+}
+.img-avatar-empl{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid #BF8771;
+}
+.line-straight{
+    float:left;
+    height: 32px;
+    width: 1.5px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    border: 1.5px rgba(208, 61, 3, 0.1);
+    background-color: rgba(208, 61, 3, 0.1);
+}
+.title-evaluate {
+    color: #110505;
+}
+.btn-logout-custom{
+    float: left;
+    margin: 12px 3px 12px 19px !important;
+    width: 18px !important;
+    height: 20px !important;
+}
+.btn-logout-custom div {
+    cursor: pointer;
+}
+.fa-sign-out-cus{
+    color: #BF8771 !important;
+    width: 18px !important;
+    height: 20px !important;
+    font-size: 14px;
+}
+.main-custom{
+    background: #fffbf5;
+    margin-top: 2rem;
+}
+.info-employee-evaluated-cus{
+    padding: 35px 37px;
+}
+.butn-light-custom{
+    padding: 0 !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-color: #BF8771 !important;
+    background-color: #FFF4EB !important;
+}
+.fa-btn-custom{
+    width: 15px;
+    height: 15px;
+    color: #BF8771 !important;
+}
+.fa-btn-disable-custom{
+    width: 32px;
+    height: 32px;
+    color: #cccccc !important;
+}
+.custombar2.custombar3 .ui-scrollpanel-wrapper {
+    width: auto !important;
+    margin-left: 20.3% !important;
+}
+.criteria{
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+}
+.criteria .service-card-three .service-icon {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 0px !important;
+    -webkit-flex: 0 0 0px !important;
+    flex: 0 0 0px !important;
+    float: left;
+    max-width: 0px !important;
+    height: auto;
+    font-size: 0px !important;
+}
+.title-criteria-assessment{
+    height: 60px;
+    width: 100%;
+    margin-bottom: 8px;
+    background: #FFFFFF;
+    border: 1.5px solid rgba(222, 222, 222, 0.5);
+    border-radius: 8px;
+}
+.lb-criteria-assessment{
+    font-weight: 700;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    height: 20px !important;
+    color: #6E6058 !important;
+    text-transform: uppercase;
+    margin: 20px auto 20px 28px !important;
+}
+#fa-chevron-downup{
+    width: 8.25px !important;
+    height: 13.5px !important;
+    float: right;
+    margin: 26.25px 30.25px 25.5px auto !important;
+}
+#fa-chevron-downup:hover{
+    cursor: pointer;
+}
+.assessment-part {
+    margin-top: 1.75rem;
+}
+.assessment-part::after {
+    content: "";
+    height: 1px;
+    width: 100%;
+    margin-top: 1.75rem;
+    background-color: #EFEFEF;
+    display: block;
+}
+.criteria .service-card-three .service-info {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 100%;
+    -webkit-flex: 1 1 100%;
+    flex: 1 1 100%;
+    max-width: -webkit-calc(100%);
+    max-width: 100%;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.transition-common-custom::-webkit-scrollbar {
+    display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.transition-common-custom {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    overflow-x: hidden;
+}
+.row-list-detail{
+    height: 100%;
+    display: grid;
+    margin: auto;
+    column-gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(72px, 76px));
+    grid-auto-flow: column;
+    align-items: center;
+    box-shadow: 4px -4px 8px rgb(0 0 0 / 5%);
+}
+.container{
+    max-width: 1388px;
+    width: 1388px;
+}
+.transition-common-custom{
+    padding-top: 209px;
+    overflow-x: hidden;
+}
+.container-ass-cus{
+    position: relative;
+    height: calc(100vh - 209px);
+}
+/*.ui-autocomplete {*/
+/*    width: auto;*/
+/*    zoom: 1;*/
+/*    cursor: pointer;*/
+/*    box-shadow: none;*/
+/*    position: relative;*/
+/*    display: inline-block;*/
+/*}*/
+/*Sangbx start*/
+        /*PAGINATION PAGE 365 TO 1366*/
+.pagination-page.wrapper-custom {
+    margin: 1rem auto 0 auto !important;
+    height: 36px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: rgb(248, 245, 240);
+    border-radius: 25px;
+    border: none !important;
+}
+.pagination-page .tittle-pages {
+    font-weight: 700;
+    font-size: 0.875rem;
+    line-height: 20px;
+    color: #212529;
+}
+button.fa-pagination-custom
+    {
+    width: 1rem;
+    height: 1rem;
+    padding: 1rem;
+    border-radius: 25px !important;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    color: #BF8771 !important;
+    outline: none !important;
+    border: none !important;
+    background-color: transparent !important;
+}
+button:focus.fa-pagination-custom {
+    box-shadow:none !important;
+}
+        /* INPUT SEARCH */
+.fas.fa-info-circle{
+    color: #D03D03 !important;
+}
+
+/* .fas.fa-info-circle.absolute {
+    position: absolute;
+    right: 6px;
+    bottom:0px;
+} */
+.custombar2.custombar3.tab-level-history .ui-scrollpanel-content {
+    width: 100vw;
+    padding: 0 2rem;
+}
+body .panel-nation-assessment:before {
+    border-color: none !important;
+    border-bottom-color: unset !important;
+}
+.image-avatar {
+    background-size: cover;
+    background-position-y: -15px;
+    background-repeat: no-repeat;
+}
+.d-flex.grid-assessment {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin: 0;
+}
+.title-count-character.input {
+    bottom: 6px;
+}
+/*Sangbx end*/
+body .panel-nation.ui-overlaypanel .ui-overlaypanel-content{
+    width: unset !important;
+    overflow: unset !important;
+}
+.butn-light:hover {
+    background-color: #f94f4f;
+    color: #f94f4f;
+}
+.students span {
+    text-transform: unset;
+}
+/* start #243: [BUG ID: 5159] ĐGĐV - FE - MH danh sách cán bộ cần đánh giá lỗi khi tìm kiếm không có dữ liệu */
+.list-page .hero-content {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* end #243: [BUG ID: 5159] ĐGĐV - FE - MH danh sách cán bộ cần đánh giá lỗi khi tìm kiếm không có dữ liệu */
+
+/* binhptt start */
+.panel >>> .ui-panel .ui-panel-titlebar {
+    font-size: 15px;
+    color: #444444;
+    background-color: #ffffff !important;
+    border-radius: 5px;
+    border: 1px solid rgba(222, 222, 222, 0.5) !important;
+    list-style-type: upper-roman;
+    list-style-position: inside;
+}
+.panel >>> .ui-panel .ui-panel-titlebar .ui-panel-title {
+    text-transform: uppercase;
+}
+
+.container-detail-custom .steps-assessment .collapse-form-assessment {
+    padding: 5px 0;
+}
+/*
+.panel >>> .ui-panel .ui-panel-titlebar .ui-panel-title {
+    font-weight: 700 !important;
+} */
+
+.panel >>> .ui-panel .ui-panel-content {
+    border-bottom: 1px solid rgba(222, 222, 222, 0.5) !important;
+    border-right: 1px solid rgba(222, 222, 222, 0.5) !important;
+    border-left: 1px solid rgba(222, 222, 222, 0.5) !important;
+    padding-top: 0;
+}
+
+.panel >>> .ui-panel .ui-panel-titlebar .ui-panel-titlebar-icon {
+    color: #6E6058 !important;
+    margin: -19px 8px !important;
+}
+
+.panel >>> .ui-tabview.ui-tabview-top, .panel, .panel-default {
+    border: none !important;
+    /* border: none !important; */
+}
+.panel .title {
+    text-transform: uppercase;
+    font-weight: 700 !important;
+}
+/* binhptt end */
+.body-form-assessment-detail {
+    flex: 1;
+}
+.body-form-assessment-detail.disable-input textarea,
+.body-form-assessment-detail.disable-input input,
+.body-form-assessment-detail.disable-input p-radiobutton {
+    background: #F3F3F3 !important;
+}
+.assessment-text textarea,
+.assessment-text input {
+    color: #D03D03;
+    font-weight: 500;
+    padding: 12px 16px;
+}
+.body-form-assessment-detail.disable-input textarea,
+.body-form-assessment-detail.disable-input input {
+    color: #D03D03;
+}
+.header-assessment-custom .info-header-center {
+    flex: 1;
+}
+.ic-sign-out {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    background-size: 100% 110% !important;
+    background: url("../../../../../../assets/img/ic-logout.svg") no-repeat center;
+}
+.body-form-assessment-detail .container-detail-custom .title .icon-close,
+.body-form-assessment-detail .container-detail-custom .title .icon-check {
+  font-size: 24px;
+}
+.body-form-assessment-detail .container-detail-custom .title .icon-close {
+  color: #D03D03;
+}
+.body-form-assessment-detail .container-detail-custom .title .icon-check {
+  color: #06892B;
+}
+.row-list-detail .btn-danh-gia {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.row-list-detail .btn-danh-gia .title-icon-custom {
+    margin-bottom: 0;
+}
+@media (min-width: 768px) and (max-width: 1365px){
+    .container{
+        max-width: 305px !important;
+        width: 305px !important;
+    }
+    .transition-common-custom{
+        padding-top: 152px !important;
+    }
+    .container-ass-cus{
+        height: calc(100vh - 152px) !important;
+    }
+    .content-custom {
+        flex: 0 0 100% !important;
+        width: 305px !important;
+        max-width: 305px !important;
+        max-height: 202px !important;
+        margin: 10px 10px 26px 10px !important;
+    }
+
+    .label-wellcome-assessment{
+        width: 310px !important;
+        text-align: center;
+     }
+
+    .hero-content .hero-title {
+        margin-top: 10px !important;
+    }
+
+    .img-tech-custom{
+        color: #6E6058;
+        width: 19.5px !important;
+        height: 16.5px !important;
+        margin-top: 28px;
+        border-radius: 50%;
+    }
+    .content-time-period-name{
+        margin-top: 15.5px !important;
+    }
+    .period-name-custom{
+        height: 40px !important;
+        margin-top: 6px !important;
+    }
+    .span-period-name{
+        font-size: 14px !important;
+        line-height: 20px !important;
+    }
+    .count-member-assessment{
+        margin-top:40px !important;
+    }
+    .count-member{
+        font-size: 11px !important;
+    }
+    .row-custom{
+        width: 305px !important;
+        margin: auto !important;
+        height: 202px !important;
+    }
+    .col-lg-3 {
+        flex: 0 0 312px !important;
+        max-width: 312px !important;
+        /*max-height: 160px !important;*/
+    }
+    .inner-pages {
+        padding-top: 24px !important;
+    }
+
+    .wrapper-custom{
+        width: 484px;
+        border-radius: 8px;
+    }
+    .ui-autocomplete{
+        padding-top: 11px !important;
+        padding-bottom: 11px !important;
+    }
+    body .ui-inputtext {
+        width: 449.42px !important;
+    }
+    .container-custom{
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .list-page {
+        height: calc(100vh - 124px) !important;
+    }
+    .student-contain-custom{
+        margin-top: 36px !important;
+    }
+    .assessment-col-custom{
+        max-width: 312px !important;
+        flex: 0 0 312px !important;
+        height: 160px !important;
+    }
+    .avatar-img-custom{
+        float: left;
+    }
+    .avatar-img-custom{
+        width: 80px !important;
+        height: 80px !important;
+        margin: 0px 24px 0px 8px !important;
+    }
+    .image-avatar-custom {
+        width: 80px !important;
+        height: 80px !important;
+        background-position-y: -7px;
+    }
+    .img-custom{
+        width: 140px !important;
+        height: 140px !important;
+        margin: 10px !important;
+    }
+
+    .content-info-custom{
+        height: 80px !important;
+    }
+    .detail-info-cus{
+        margin-top: 40px !important;
+    }
+
+    .title-soldier-level{
+        height: 16px !important;
+        font-size: 11px !important;
+        line-height: 16px !important;
+    }
+
+    .title-employee-fullname{
+        height: 20px !important;
+        margin-top: 0px !important;
+        font-size: 16px !important;
+        line-height: 20px !important;
+    }
+    .title-employee-code{
+        height: 16px !important;
+        margin-top: 8px !important;
+        font-size: 11px !important;
+        line-height: 16px !important;
+    }
+
+    .title-emp-type-name{
+        margin-top: 0px !important;
+        height: 18px !important;
+        max-height: 18px !important;
+    }
+    .label-assessment-custom{
+        font-size: 12px !important;
+        line-height: 18px !important;
+        float: left;
+        width: 170px !important;
+    }
+    .text-assessment-custom{
+        margin-left: 186px !important;
+        font-size: 12px !important;
+        line-height: 18px !important;
+        width: 470px !important;
+        margin-top: 0px !important;
+    }
+
+    .title-info-other{
+        width: 100%;
+        margin-top: 8px;
+    }
+    .content-employee-assessment{
+        margin-top: -150px;
+        margin-left: 160px;
+        width: 140px;
+        height: 140px;
+        /*margin: 10px 10px 10px 0px;*/
+    }
+    .name-employee-assessment{
+        width: 124px !important;
+        /* margin: 8px 8px 4px 8px !important; */
+    }
+    .title-org-name{
+        width: 124px !important;
+        margin: 0px 8px 4px 8px;
+    }
+    .ul-assessment-custom{
+        margin-bottom: 8px !important;
+    }
+    .li-custom-balance-scale{
+        margin-right: 8px !important;
+    }
+    .li-custom-file-dowload{
+        margin-right: 8px !important;
+    }
+    .students ul {
+        padding: 0 !important;
+    }
+    .info-employee-assessment{
+        height: 102px !important;
+        max-height: 102px !important;
+    }
+    #formAssessment .info-employee-evaluated{
+        width: 100%;
+        height: 140px;
+        background: #FFFFFF ;
+        border: 1.5px solid rgba(222, 222, 222, 0.5) ;
+        border-radius: 8px;
+    }
+    #formAssessment.collapsed .info-employee-evaluated {
+        height: fit-content !important;
+    }
+    .line-info-emp-assessment{
+        margin: 20px 16px 0px 16px;
+        width: 656px;
+        height: 0px;
+        border: 1.5px solid rgba(222, 222, 222, 0.5);
+    }
+    .width-100vw-custom{
+        width: calc(100% - 64px) !important;
+        margin: auto;
+    }
+    /*.scroll-panel-custom{*/
+    /*    width: 100% !important;*/
+    /*}*/
+    .container-detail-custom{
+        margin-left: 32px !important;
+        margin-right: 32px !important;
+        max-width: calc(100vw - 64px) !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .emp_information_right {
+        width: calc(100vw - 64px);
+        min-width: unset;
+        max-width: unset;
+        margin: auto;
+    }
+    #formAssessment .body-form-assessment-detail{
+        width: 100vw;
+        transition: all 0.5s ease-in-out;
+    }
+    .detail-info-empl{
+        padding-top: 24px;
+        padding-left: 24px;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .header-assessment-custom{
+        padding-left: 1.75rem;
+    }
+    .info-name-code-employee{
+        margin-top: 2px !important;
+        width: fit-content;
+        float: left;
+    }
+    .info-name-employee{
+        font-size: 12px !important;
+        line-height: 16px !important;
+    }
+    .info-code-employee{
+        font-size: 11px !important;
+        line-height: 16px !important;
+        margin-top: 0px !important;
+    }
+    .avt-image-employee{
+        float: left;
+        margin: 0px 16px 0px 10px !important;
+        width: 36px !important;
+        height: 36px !important;
+    }
+    .img-avatar-empl{
+        width: 36px !important;
+        height: 36px !important;
+    }
+    .line-straight{
+        margin-top: 2px !important;
+        margin-bottom: 2px !important;
+    }
+    .btn-logout-custom{
+        margin: 9.67px 2.5px 9.67px 18.5px !important;
+        width: 15px !important;
+        height: 16.67px !important;
+    }
+    .fa-sign-out-cus{
+        width: 15px !important;
+        height: 16.67px !important;
+    }
+    .assessment-employee-dropdown-custom{
+        padding-right: 30px !important;
+    }
+    #lstBtnDetail {
+        margin: auto;
+        height: 70px !important;
+    }
+    .butn-light-custom{
+        width: 30px !important;
+        height: 30px !important;
+    }
+    .fa-btn-custom{
+        width: 13.5px !important;
+        height: 13.5px !important;
+    }
+    .fa-btn-disable-custom{
+        width: 30px !important;
+        height: 30px !important;
+    }
+    .lb-criteria-assessment{
+        font-size: 12px !important;
+        line-height: 18px !important;
+    }
+    .btn-prev-form {
+        left: 28px !important;
+        top: 460px !important;
+    }
+    .btn-next-form {
+        right: 28px !important;
+        top: 460px !important;
+    }
+}
+@media (max-width: 767px){
+    .radio-button-custom {
+        padding: 9px;
+    }
+    .body-form-assessment-detail .emp_information_right {
+        width: 100%;
+        min-width: unset;
+        max-width: unset;
+        margin: auto;
+    }
+    .row-criteria .criteria {
+        padding: 0 !important;
+    }
+    .panel >>> .ui-panel .ui-panel-content {
+        padding: 0;
+    }
+    .row-list-detail {
+        column-gap: unset;
+    }
+    .criteria .section-title {
+        margin-bottom: 10px;
+    }
+    .panel >>> .ui-panel .ui-panel-titlebar {
+        font-size: 12px;
+        padding-right: 4px;
+    }
+    .panel >>> .ui-panel .ui-panel-titlebar .ui-panel-titlebar-icon {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+    .body-form-assessment-detail .container-detail-custom .title .icon-close,
+    .body-form-assessment-detail .container-detail-custom .title .icon-check {
+        font-size: 16px;
+    }
+    .radio-button-custom {
+        min-width: unset;
+    }
+    .row-criteria.list-items {
+        padding: 0px 15px !important;
+    }
+    .criteria{
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+    .container{
+        max-width: 305px !important;
+        width: 305px !important;
+    }
+    .transition-common-custom{
+        padding-top: 112px !important;
+    }
+    .container-ass-cus{
+        height: calc(100vh - 112px) !important;
+    }
+    .content-custom {
+        flex: 0 0 100% !important;
+        width: 305px !important;
+        max-width: 305px !important;
+        max-height: 202px !important;
+        margin: 10px 10px 26px 10px !important;
+    }
+    .label-wellcome-assessment{
+       width: 310px !important;
+       text-align: center;
+    }
+    .hero-content .hero-title {
+       width: 290px !important;
+       text-align: center;
+       margin: auto !important;
+       margin-top: 10px !important;
+    }
+    .img-tech-custom{
+        color: #6E6058;
+        width: 19.5px !important;
+        height: 16.5px !important;
+        margin-top: 28px;
+        border-radius: 50%;
+    }
+    .content-time-period-name{
+        margin-top: 15.5px !important;
+    }
+    .period-name-custom{
+        height: 40px !important;
+        margin-top: 6px !important;
+    }
+    .span-period-name{
+        font-size: 14px !important;
+        line-height: 20px !important;
+    }
+    .count-member-assessment{
+        margin-top:40px !important;
+    }
+    .count-member{
+        font-size: 11px !important;
+    }
+
+    .avatar-img-custom{
+        float: left;
+        width: 80px !important;
+        height: 80px !important;
+        margin: 0px 12px 0px 4px !important;
+    }
+    .image-avatar-custom{
+        width: 68px !important;
+        height: 68px !important;
+        background-position-y: -7px;
+    }
+    .img-custom{
+        width: 100px !important;
+        height: 100px !important;
+        margin: 10px !important;
+    }
+    .content-info-custom{
+        margin: 0;
+        height: 80px !important;
+    }
+    .detail-info-cus{
+        width: 100% !important;
+        margin-top: 32px !important;
+    }
+    .title-soldier-level{
+        font-size: 11px !important;
+        line-height: 16px !important;
+    }
+    .title-employee-fullname{
+        height: 20px !important;
+        margin-top: 0px !important;
+        font-size: 16px !important;
+        line-height: 20px !important;
+    }
+    .btn-custom-assessment .btn-primary {
+        display: none;
+    }
+    .title-employee-code{
+        height: 16px !important;
+        margin-top: 8px !important;
+        font-size: 11px !important;
+        line-height: 16px !important;
+    }
+    .title-emp-type-name{
+        margin: 0px 8px !important;
+        height: 18px !important;
+        max-height: 18px !important;
+    }
+    .label-assessment-custom{
+        font-size: 12px;
+        line-height: 18px ;
+        float: left;
+        width: 88px;
+        min-width: 88px;
+    }
+    .text-assessment-custom{
+        font-size: 12px !important;
+        line-height: 18px !important;
+        margin-top: 0px !important;
+    }
+    .title-info-other{
+        padding: 12px 8px 0px 8px;
+        margin: 0;
+        width: 100%;
+        display: flex;
+    }
+    .name-employee-assessment{
+        /* margin: 8px 8px 4px 8px !important; */
+    }
+    .title-org-name{
+        margin: 0px 8px 4px 8px;
+    }
+    .ul-assessment-custom{
+        margin-bottom: 8px !important;
+    }
+    .students ul {
+        padding: 0px 11px;
+    }
+
+    /*.col-lg-3 {*/
+    /*    flex: 0 0 336px !important;*/
+    /*    max-width: 336px !important;*/
+    /*    !*max-height: 120px !important;*!*/
+    /*}*/
+    .col-lg-3 {
+        flex: 0 0 336px !important;
+        max-width: 336px !important;
+        height: 120px !important;
+        max-height: 120px !important;
+    }
+    .assessment-col-custom{
+        max-width: 336px !important;
+        flex: 0 0 336px !important;
+        height: 120px !important;
+    }
+
+    .wrapper-custom{
+        width: 336px;
+        border-radius: 8px;
+    }
+    body .ui-inputtext {
+        width: 301.42px !important;
+    }
+    .container-custom{
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .list-page {
+        height: calc(100vh - 116px) !important;
+    }
+    .student-contain-custom{
+        margin-top: 28px !important;
+    }
+    .assessment-col-custom{
+        width: 336px !important;
+        height: 120px !important;
+        max-width: 336px !important;
+    }
+    .content-employee-assessment{
+        margin-top: -110px;
+        margin-left: 120px;
+        width: 204px !important;
+        height: 100px !important;
+    }
+    .name-employee-assessment{
+        width: 188px !important;
+    }
+    .title-org-name{
+        width: 188px !important;
+    }
+    .info-employee-assessment{
+        height: 62px !important;
+        max-height: 62px !important;
+    }
+    .info-employee-evaluated-cus{
+        width: 100%;
+    }
+    #formAssessment .info-employee-evaluated{
+        width: 100%;
+        height: 105px !important;
+        background: #FFFFFF !important;
+        border: 1.5px solid rgba(222, 222, 222, 0.5) !important;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    #formAssessment.collapsed .info-employee-evaluated{
+        height: fit-content !important;
+    }
+    .line-info-emp-assessment{
+        margin: 16px 16px 0px 16px !important;
+        width: 304px !important;
+        height: 0px !important;
+        border: 1.5px solid rgba(222, 222, 222, 0.5) !important;
+    }
+    .width-100vw-custom{
+        width: calc(100% - 39px) !important;
+        margin: auto;
+    }
+    /*.scroll-panel-custom{*/
+    /*    width: 100% !important;*/
+    /*}*/
+    .container-detail-custom{
+        margin-left: 32px !important;
+        margin-right: 32px !important;
+        max-width: calc(100vw - 64px) !important;
+    }
+    .info-employee-evaluated-cus {
+        padding: 32px;
+    }
+    /*.criteria .service-card-three .service-icon {*/
+    /*    -webkit-box-flex: 0;*/
+    /*    -ms-flex: 0 0 0px !important;*/
+    /*    -webkit-flex: 0 0 0px !important;*/
+    /*    flex: 0 0 0px !important;*/
+    /*    float: left;*/
+    /*    max-width: 0px !important;*/
+    /*    height: auto;*/
+    /*    font-size: 0px !important;*/
+    /*}*/
+    /*.criteria .service-card-three .service-info {*/
+    /*    -webkit-box-flex: 1;*/
+    /*    -ms-flex: 1 1 100%;*/
+    /*    -webkit-flex: 1 1 100%;*/
+    /*    flex: 1 1 100%;*/
+    /*    max-width: -webkit-calc(100%);*/
+    /*    max-width: 100%;*/
+    /*    margin-top: -5px;*/
+    /*}*/
+    .body-form-assessment-detail{
+        float: none;
+        margin-left:0px !important;
+        width: 100vw !important;
+        height: calc(100vh - 305px) !important;
+        overflow-x: hidden;
+    }
+
+    .detail-info-empl{
+        padding-top: 16px;
+        padding-left: 16px;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    .info-name-code-employee{
+        margin-top: 2.5px;
+        width: fit-content;
+        float: left;
+    }
+    .hidden-info-employee{
+        height: 36px;
+    }
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        margin-right: 11px;
+        border: 1px solid rgba(208, 61, 3, 0.1);
+        border-radius: 8px;
+    }
+
+    .dropdown-content hidden-info-employee {
+        color: rgba(38,1,0,1);
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {background-color: #f1f1f1;}
+    .avt-image-employee-2:hover .dropdown-content {display: block;}
+    /*.avt-image-employee-2:hover .img-avatar-empl {background-color: #3e8e41;}*/
+
+
+    .avt-image-employee{
+        float: left;
+        margin: 0px 16px 0px 12px !important;
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    .avt-image-employee-2{
+        float: right;
+        margin: 14px auto !important;
+        width: 36px !important;
+        height: 36px !important;
+    }
+    .img-avatar-empl{
+        width: 36px !important;
+        height: 36px !important;
+    }
+    .line-straight{
+        float:left;
+        height: 32px;
+        width: 1.5px;
+        margin-top: 6px;
+        margin-bottom: 6px;
+        border: 1.5px rgba(208, 61, 3, 0.1);
+        background-color: rgba(208, 61, 3, 0.1);
+    }
+    .btn-logout-custom{
+        float: left;
+        margin: 12px 3px 12px 19px !important;
+        width: 18px !important;
+        height: 20px !important;
+    }
+    .fa-sign-out-cus{
+        color: #BF8771 !important;
+        width: 18px !important;
+        height: 20px !important;
+        font-size: 14px;
+    }
+    .assessment-employee-dropdown-custom{
+        padding-right: 30px !important;
+    }
+    .row-list-detail{
+        width: 100% !important;
+    }
+    .butn-light-custom{
+        width: 30px !important;
+        height: 30px !important;
+    }
+    .fa-btn-custom{
+        width: 13.5px !important;
+        height: 13.5px !important;
+    }
+    .fa-btn-disable-custom{
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    .title-criteria-assessment{
+        height: 76px !important;
+    }
+    .lb-criteria-assessment{
+        font-size: 12px !important;
+        line-height: 18px !important;
+        height: 40px !important;
+        max-height: 40px !important;
+        margin: 18px auto 18px 20px !important;
+        width: calc(100% - 70px);
+        max-width: calc(100% - 70px);
+    }
+    .label-rank {
+        height: max-content !important;
+        margin-top: 15px !important;
+        margin-left: 0PX !important;
+        text-align: center;
+    }
+
+    .assessment-rank {
+        flex-direction: column !important;
+    }
+    .control-assessment-spinner, .control-assessment-star{
+        flex: 0 0 100%;
+        max-width: 100% !important;
+        width: 100% !important;
+
+    }
+    .main-bar .butn1 {
+        padding: 5px 10px !important
+    }
+    .btn-prev-form {
+        left: 18px !important;
+    }
+    .content-info-custom .title-soldier-level label,
+    .content-info-custom .title-employee-fullname label,
+    .content-info-custom .title-employee-code label {
+        word-break: break-all;
+        width: 100%;
+    }
+    #lstBtnDetail {
+        height: 80px;
+    }
+    #lstBtnDetail .btn-danh-gia {
+        height: 64px;
+        width: 100%;
+    }
+    .butn-light-custom {
+        height: 30px;
+        width: 30px;
+        zoom: 1;
+    }
+    .title-icon-custom {
+        margin-top: 5px;
+    }
+    .btn-item {
+        zoom: 1;
+    }
+    .header-assessment-custom {
+        padding: 0 1.25rem;
+    }
+    .ic-back-preriod {
+        margin-right: 0.5rem;
+    }
+}
+@media (min-width: 1366px) and (max-width: 1919px) {
+    .assessment-part {
+        margin-top: 1.5rem;
+    }
+    .fa-back-custom{
+        display: inline-block;
+    }
+    .container{
+        max-width: 1008px !important;
+        width: 1008px !important;
+    }
+    .transition-common-custom{
+        padding-top: 152px !important;
+    }
+    .container-ass-cus{
+        height: calc(100vh - 152px) !important;
+    }
+    .label-wellcome-assessment{
+        font-size: 12px !important;
+        line-height: 16px !important;
+    }
+    .hero-content .hero-title {
+        font-size: 24px !important;
+        line-height: 32px !important;
+        margin-bottom: 3px !important;
+        margin-top: 10px !important;
+    }
+        .content-custom {
+        width: 316px !important;
+        max-width: 316px !important;
+        max-height: 202px !important;
+        margin: 10px 10px 26px 10px !important;
+    }
+
+    .img-tech-custom{
+        color: #6E6058;
+        width: 19.5px !important;
+        height: 16.5px !important;
+        margin-top: 28px;
+        border-radius: 50%;
+    }
+    .content-time-period-name{
+        margin-top: 15.5px !important;
+    }
+    .period-name-custom{
+        height: 40px !important;
+        margin-top: 6px !important;
+    }
+    .span-period-name{
+        font-size: 14px !important;
+        line-height: 20px !important;
+    }
+    .count-member-assessment{
+        margin-top:40px !important;
+    }
+    .count-member{
+        font-size: 11px !important;
+    }
+    .wrapper-custom{
+        width: 652px;
+        border-radius: 6px;
+    }
+    .ui-autocomplete{
+        font-size: 14px !important;
+        line-height: 18px !important;
+        padding-top: 13px !important;
+        padding-bottom: 13px !important;
+    }
+    body .ui-inputtext {
+        width: 617.42px !important;
+    }
+
+    .container-custom{
+        margin-left: 163px;
+        margin-right: 163px;
+    }
+    .form-untouched {
+        border-radius: 6px;
+    }
+    .icon-search-custom{
+        font-size: 14.5px;
+        right: 1.125rem;
+        top: calc((100% - 20px) / 2);
+    }
+    .list-page {
+        height: calc(100vh - 154px) !important;
+    }
+
+    .assessment-col-custom{
+        width: 160px !important;
+    }
+
+    image-avatar-custom{
+        width: 140px !important;
+        height: 140px !important;
+    }
+    .img-custom{
+        width: 140px !important;
+        height: 140px !important;
+        margin: 10px 10px 12px 10px !important;
+    }
+    .name-employee-assessment{
+        width: 124px !important;
+        font-size: 13px !important;
+        line-height: 18px !important;
+    }
+    .title-org-name{
+        width: 124px !important;
+        font-size: 11px !important;
+    }
+    /*.assessemnt-result-custom{*/
+    /*    margin-bottom: 40px !important;*/
+    /*}*/
+
+    .li-custom-balance-scale, .li-custom-file-dowload,.li-custom-envelope-square{
+        width: 30px !important;
+        height: 30px !important;
+    }
+    /*.stu-facebook-custom{*/
+    /*    width: 16.83px !important;*/
+    /*    height: 15.83px !important;*/
+    /*    color: #FFF4EB !important;*/
+    /*    padding: 8.5px 7.57px 7.67px 7.59px !important;*/
+    /*}*/
+
+
+    #balance-scale-custom{
+        color: #FFF4EB !important;
+        width: 16.83px !important;
+        height: 15.83px !important;
+        padding: 8.5px 7.57px 7.67px 7.59px !important;
+    }
+
+    /*.export-assessment-custom{*/
+    /*    width: 13.33px !important;*/
+    /*    height: 16.67px !important;*/
+    /*    color: #BF8771 !important;*/
+    /*    padding: 7.67px 9.33px !important;*/
+    /*}*/
+
+    #file-word-custom{
+        width: 13.33px !important;
+        height: 16.67px !important;
+        color: #BF8771 !important;
+        padding: 7.67px 9.33px !important;
+    }
+    /*.twitter-custom{*/
+    /*    width: 16.67px !important;*/
+    /*    height: 13.33px !important;*/
+    /*    color: #BF8771 !important;*/
+    /*    padding: 9.33px 7.67px !important;*/
+    /*}*/
+    #envelope-square-custom{
+        width: 16.67px !important;
+        height: 13.33px !important;
+        color: #BF8771 !important;
+        padding: 9.33px 7.67px !important;
+    }
+
+    .col-lg-3 {
+        flex: 0 0 160px !important;
+        max-width: 160px !important;
+        /*max-height: 300px !important;*/
+    }
+
+    .ul-assessment-custom{
+        margin-bottom: 14px !important;
+    }
+    /* .info-employee-evaluated{
+        width: 253px !important;
+        height: calc(100vh - 152px) !important;
+    } */
+    .title-info-employee{
+        margin: 24px 0px 0px 32px !important;
+    }
+    .detail-info-empl{
+        margin: 24px 0px 0px 32px !important;
+        padding-bottom: 8px;
+    }
+    .avatar-img-custom{
+        width: 120px !important;
+        height: 120px !important;
+        margin-left: 8px !important;
+        margin-top: 8px !important;
+        margin-bottom: 12px !important;
+    }
+    .image-avatar-custom{
+        width: 120px !important;
+        height: 120px !important;
+    }
+    .content-info-custom{
+        margin-left: 8px !important;
+    }
+    .title-soldier-level{
+        width: 100%;
+        font-size: 12px !important;
+        line-height: 18px !important;
+    }
+    .title-employee-fullname{
+        margin-top: 0px !important;
+        font-size: 18px !important;
+        line-height: 24px !important;
+    }
+    .title-employee-code{
+        width: 100%;
+        margin-top: 8px !important;
+        font-size: 12px !important;
+        line-height: 18px !important;
+    }
+    .title-emp-type-name{
+        width: 100%;
+        margin-top: 20px !important;
+    }
+    .label-assessment-custom{
+        font-size: 12px !important;
+        line-height: 18px !important;
+    }
+    .text-assessment-custom{
+        font-size: 12px !important;
+        line-height: 18px !important;
+        margin-top: 2px !important;
+    }
+
+    .title-info-other{
+        width: 100%;
+        margin-top: 16px !important;
+    }
+    .container-detail-custom{
+        max-width: calc(100vw - 522px) !important;
+        min-width: 650px;
+    }
+    .emp_information_right {
+        width: fit-content;
+        min-width: calc(100vw - 522px);
+        max-width: calc(100vw - 333px)
+    }
+    .body-form-assessment-detail{
+        height: calc(100vh - 143px);
+    }
+    .header-assessment-custom{
+        padding-left: 1.75rem;
+    }
+    .info-name-code-employee{
+        margin-top: 2px !important;
+        width: fit-content;
+        float: left;
+    }
+    .info-name-employee{
+        font-size: 12px !important;
+        line-height: 16px !important;
+    }
+    .info-code-employee{
+        font-size: 11px !important;
+        line-height: 16px !important;
+        margin-top: 0px !important;
+    }
+    .avt-image-employee{
+        float: left;
+        margin: 0px 16px 0px 10px !important;
+        width: 36px !important;
+        height: 36px !important;
+    }
+    .img-avatar-empl{
+        width: 36px !important;
+        height: 36px !important;
+    }
+    .line-straight{
+        margin-top: 2px !important;
+        margin-bottom: 2px !important;
+    }
+    .btn-logout-custom{
+        margin: 9.67px 2.5px 9.67px 18.5px !important;
+        width: 15px !important;
+        height: 16.67px !important;
+    }
+    .fa-sign-out-cus{
+        width: 15px !important;
+        height: 16.67px !important;
+    }
+    a.btn-back-custom{
+        font-size: 12px;
+    }
+    .title-back-custom{
+        font-size: 16px;
+        line-height: 1.375rem;
+    }
+    .info-employee-evaluated-cus{
+        padding: 32px 36px 32px 32px;
+    }
+    .info-employee-evaluated {
+        width: 265px;
+    }
+    .butn-light-custom{
+        width: 30px !important;
+        height: 30px !important;
+    }
+    .fa-btn-custom{
+        width: 13.5px !important;
+        height: 13.5px !important;
+    }
+    .fa-btn-disable-custom{
+        width: 30px !important;
+        height: 30px !important;
+    }
+    .custombar2.custombar3 .ui-scrollpanel-wrapper {
+        width: auto !important;
+        margin-left: 20.3% !important;
+    }
+    .criteria{
+        padding-left: 28px !important;
+        padding-right: 28px !important;
+    }
+    .lb-criteria-assessment{
+        font-size: 12px !important;
+        line-height: 18px !important;
+    }
+    /*.container {*/
+    /*    max-width: 844px !important;*/
+    /*}*/
+    .btn-next-form {
+        right: 125px !important;
+    }
+    .btn-prev-form {
+        left: 270px !important;
+    }
+    .title-evaluate {
+        font-size: 16px;
+    }
+    .form-untouched >>>  input {
+        height: 2.75rem;
+        font-size: 14px;
+    }
+}
+@media (max-width: 1366px) {
+    .assessment-part {
+        margin-top: 1.5rem;
+    }
+    #formAssessment {
+        height: calc(100vh - 64px - 70px);
+        overflow: auto;
+    }
+    .body-form-assessment-detail {
+        overflow: visible;
+        height: auto;
+    }
+    .section-detail {
+        padding: 0;
+    }
+    .li-custom-balance-scale {
+        height: 30px;
+        width: 30px;
+    }
+    .title-evaluate-custom {
+        justify-content: flex-start;
+    }
+    .title-evaluate {
+        line-height: 20px;
+    }
+    a.btn-back-custom {
+        font-size: 0.75rem;
+    }
+    .main-custom {
+        margin-top: 1.5rem;
+    }
+    .form-untouched >>>  input {
+        height: 2.5rem;
+        font-size: 14px;
+    }
+    .form-untouched {
+        border-radius: 25px;
+    }
+    .icon-search-custom{
+        right: 1rem;
+        top: calc((100% - 20px) / 2);
+        font-size: 14.5px;
+    }
+    .fa-back-custom{
+        display: inline-block;
+    }
+}
+@media (max-width: 375px) {
+    .info-employee-evaluated-cus {
+        padding: 20px;
+    }
+    .container-detail-custom {
+        margin-left: 20px !important;
+        margin-right: 20px !important;
+        max-width: calc(100vw - 40px) !important;
+    }
+    .assessment-col-custom {
+        width: fit-content !important;
+        max-width: unset !important;
+        flex: 1 !important;
+    }
+    .content-employee-assessment {
+        width: fit-content !important;
+    }
+    .name-employee-assessment ,
+    .title-org-name {
+        width: 100% !important;
+    }
+    .wrapper-custom {
+        width: 90% !important;
+    }
+}

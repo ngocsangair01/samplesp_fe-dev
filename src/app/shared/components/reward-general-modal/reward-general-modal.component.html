@@ -1,0 +1,256 @@
+<div class="content vt-nopadding">
+  <div class="no-padding-left">
+    <form id="frmSaveSysCat" [formGroup]="formSave">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong>
+            <span *ngIf="formSave.value.rewardObjectType == 1 && !isFormView"
+              translate>rewardGeneral.personal.employeeReward.modify</span>
+            <span *ngIf="formSave.value.rewardObjectType == 1 && isFormView"
+              translate>rewardGeneral.personal.employeeReward.view</span>
+            <span *ngIf="formSave.value.rewardObjectType == 2 && formSave.value.rewardType == 1 && !isFormView"
+              translate>rewardGeneral.group.partyReward.modify</span>
+            <span *ngIf="formSave.value.rewardObjectType == 2 && formSave.value.rewardType == 1 && isFormView"
+              translate>rewardGeneral.group.partyReward.view</span>
+            <span *ngIf="formSave.value.rewardObjectType == 2 && formSave.value.rewardType == 2 && !isFormView"
+              translate>rewardGeneral.group.groupReward.modify</span>
+            <span *ngIf="formSave.value.rewardObjectType == 2 && formSave.value.rewardType == 2 && isFormView"
+              translate>rewardGeneral.group.groupReward.view</span>
+            <span *ngIf="formSave.value.rewardObjectType == 2 && formSave.value.rewardType == 3 && !isFormView"
+              translate>rewardGeneral.group.womenReward.modify</span>
+            <span *ngIf="formSave.value.rewardObjectType == 2 && formSave.value.rewardType == 3 && isFormView"
+              translate>rewardGeneral.group.womenReward.view</span>
+            <span *ngIf="formSave.value.rewardObjectType == 2 && formSave.value.rewardType == 4 && !isFormView"
+              translate>rewardGeneral.group.youthReward.modify</span>
+            <span *ngIf="formSave.value.rewardObjectType == 2 && formSave.value.rewardType == 4 && isFormView"
+              translate>rewardGeneral.group.youthReward.view</span>
+          </strong>
+          <div class="vt-absolute vt-shotcut-button-in-heading">
+            <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+              class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+          </div>
+        </div>
+        <div class="panel-body padding-xl ui-g">
+          <div class="ui-g-12 vt-row" *ngIf="formSave.value.rewardObjectType == 2 && !isFormView">
+            <!-- Tập thể được khen thưởng -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'label.propaganda.proposal.mgmt.GroupRewads' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" >
+              <input type="text" class="form-control" formControlName="objectName" [attr.disabled]="formSave.value.rewardObjectType==2"
+                maxlength="200">
+              <app-control-messages [control]="f['objectName']"></app-control-messages>
+            </div>
+            <!-- Loại khen thưởng -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+              {{'label.commendations.type' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" >
+              <select-filter [property]="f['rewardCategory']" [options]="rewardCategoryList" optionLabel="name" optionValue="id" (onChange)="handleChaneValue()"
+                [placeHolder]="'common.label.cboSelectAll'">
+              </select-filter>
+              <app-control-messages [control]="f['rewardCategory']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row" *ngIf="formSave.value.rewardObjectType == 1 && !isFormView">
+            <!-- Mã nhân viên -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'common.label.partymembersCode' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" >
+              <input type="text" class="form-control" formControlName="employeeCode" [attr.disabled]="formSave.value.rewardObjectType==1"
+                maxlength="200" disabled>
+              <app-control-messages [control]="f['employeeCode']"></app-control-messages>
+            </div>
+            <!-- Họ và tên -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+              {{'common.label.fullName' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" >
+              <input type="text" class="form-control" formControlName="employeeName" [attr.disabled]="formSave.value.rewardObjectType==1"
+                maxlength="200" disabled>
+              <app-control-messages [control]="f['employeeName']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'employee360.insuranceProcess.inOut' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['isInside']" [options]="isInsideList" optionLabel="name" optionValue="id"
+                             [placeHolder]="'common.label.cboMustSelect'" [disabled]="true">
+              </select-filter>
+              <small *ngIf="isRequiredIsInside" class="text-danger errorMessage">* Trường bắt buộc</small>
+              <app-control-messages [control]="f['isInside']"></app-control-messages>
+            </div>
+            <!--            chức danh -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'assessment.positionName' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" >
+              <input type="text" class="form-control" formControlName="positionName"
+                     maxlength="200">
+              <app-control-messages [control]="f['positionName']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- phân loại khen thưởng -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'bonus.rewardType' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['rewardType']" [options]="rewardTypeListByUserToInsert" optionLabel="name" optionValue="id"
+                [placeHolder]="'common.label.cboMustSelect'" [disabled]="formSave.value.rewardObjectType==2||isFormView"
+                (onChange)="onChangeRewardType()">
+              </select-filter>
+              <app-control-messages [control]="f['rewardType']"></app-control-messages>
+            </div>
+            <!-- kỳ khen thưởng -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+              {{'bonus.periodType' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['periodType']" [options]="periodTypeList" optionLabel="name" optionValue="id"
+                [placeHolder]="'common.label.cboMustSelect'" [disabled]="isFormView">
+              </select-filter>
+              <app-control-messages [control]="f['periodType']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- số quyết định -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'bonus.decisionNumber' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form form-control" name="decisionNumber" formControlName="decisionNumber"
+                maxlength="200" [autoFocus]="true" [attr.disabled]="isFormView ? true : null">
+              <app-control-messages [control]="f['decisionNumber']"></app-control-messages>
+            </div>
+            <!-- ngày quyết định tập thể-->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required" *ngIf="formSave.value.rewardObjectType == 2 && !isFormView">
+              {{'bonus.decisionDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="formSave.value.rewardObjectType == 2 && !isFormView">
+              <date-picker [property]="f['decisionDate']" [disabled]="isFormView"></date-picker>
+              <app-control-messages [control]="f['decisionDate']"></app-control-messages>
+            </div>
+            <!-- Loại khen thưởng -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required" *ngIf="formSave.value.rewardObjectType == 1 && !isFormView">
+              {{'label.commendations.type' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="formSave.value.rewardObjectType == 1 && !isFormView">
+              <select-filter [property]="f['rewardCategory']" [options]="rewardCategoryList" optionLabel="name" optionValue="id" (onChange)="handleChaneValue()"
+                [placeHolder]="'common.label.cboSelectAll'">
+              </select-filter>
+              <app-control-messages [control]="f['rewardCategory']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'common.label.organization.terminataion.decisionLevel' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['decisionId']" [options]="decisionList" optionLabel="parValue" optionValue="parId"
+                             [placeHolder]="'common.label.cboMustSelect'">
+              </select-filter>
+              <small *ngIf="isRequiredDecision" class="text-danger errorMessage">* Trường bắt buộc</small>
+            </div>
+            <!-- ngày quyết định cá nhân-->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required" *ngIf="formSave.value.rewardObjectType == 1 && !isFormView">
+              {{'bonus.decisionDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="formSave.value.rewardObjectType == 1 && !isFormView">
+              <date-picker [property]="f['decisionDate']" [disabled]="isFormView" (onChanged)="genData()"></date-picker>
+              <app-control-messages [control]="f['decisionDate']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- năm khen thưởng -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'bonus.decisionYear' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['decisionYear']" [options]="yearList" optionLabel="decisionYear"
+                optionValue="decisionYear" [placeHolder]="'common.label.cboMustSelect'" [disabled]="isFormView">
+              </select-filter>
+              <app-control-messages [control]="f['decisionYear']"></app-control-messages>
+            </div>
+            <!-- Danh hiệu/Hình thức khen thưởng -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+              {{'rewardGeneral.rewardTitle' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['rewardTitleId']" [options]="rewardTitleIdList" optionLabel="name"
+                optionValue="rewardCategoryId" [placeHolder]="'common.label.cboMustSelect'" [disabled]="isFormView" (onChange)="getAmountOfMoney(this.formSave)">
+              </select-filter>
+              <app-control-messages [control]="f['rewardTitleId']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- Tiền thưởng -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'rewardGeneral.money' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form-control" formControlName="rewardMoney" name="rewardMoney"
+                [attr.disabled]="isFormView ? true : null" maxlength="15">
+              <app-control-messages [control]="f['rewardMoney']"></app-control-messages>
+            </div>
+            <!-- Nội dung khen thưởng -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'rewardGeneral.content' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form-control" formControlName="description"
+                [attr.disabled]="isFormView ? true : null" maxlength="200">
+              <app-control-messages [control]="f['description']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- File đính kèm -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'common.label.attachmentFile' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <multi-file-chooser [property]="f['attachedFiles']" htmlId="attachedFiles" [validMaxSize]="50"
+              validType="png,jpg,gif,tiff,bmp,xls,xlsx,doc,docx,pdf,rar,zip,7z" [disabled]="isFormView">
+              </multi-file-chooser>
+              <app-control-messages [control]="f['attachedFiles']"></app-control-messages>
+            </div>
+            <!-- Đơn vị công tác -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" *ngIf="formSave.value.rewardObjectType == 1 && !isFormView">
+              {{'rewardGeneral.workunit' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form-control" formControlName="organizationName"
+              [attr.disabled]="formSave.value.rewardObjectType==1" maxlength="200" *ngIf="formSave.value.rewardObjectType == 1 && !isFormView">
+              <app-control-messages [control]="f['organizationName']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- mã nhân viên -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [hidden]="true">
+              {{'bonus.empCode' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form form-control" name="objectId" formControlName="objectId" maxlength="200"
+                [autoFocus]="true" [hidden]="true">
+              <app-control-messages [control]="f['objectId']"></app-control-messages>
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row" [hidden]="true">
+          <input type="text" class="form form-control" name="rewardGeneralId" formControlName="rewardGeneralId"
+            maxlength="200" [autoFocus]="true">
+          <app-control-messages [control]="f['rewardGeneralId']"></app-control-messages>
+        </div>
+        <div class="panel-footer vt-area-button">
+          <button type="submit" (click)="processSaveOrUpdate()" class="btn btn-sm btn-info"
+            [innerHTML]="'common.button.icon.save' | translate" [hidden]="isFormView"></button>
+          <button type="button" (click)="activeModal.close()" class="btn btn-sm btn-danger"
+            [innerHTML]="'common.button.out' | translate"></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

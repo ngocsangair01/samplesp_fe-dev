@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28" height="28" viewBox="0 0 28 28">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_16701" data-name="Rectangle 16701" width="28" height="28" transform="translate(-4688 -1522)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Cài_đặt_icon_outline" data-name="Cài đặt icon outline" transform="translate(4688 1522)" clip-path="url(#clip-path)">
+    <rect id="Rectangle_16683" data-name="Rectangle 16683" width="21" height="20" rx="4" transform="translate(-4687 -1520)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <rect id="Rectangle_16685" data-name="Rectangle 16685" width="15.992" height="15.773" rx="7.886" transform="translate(-4675.992 -1511)"/>
+    <path id="Path_85890" data-name="Path 85890" d="M82.268,50.154a5.934,5.934,0,0,1,1.317-2.173.381.381,0,0,1,.4-.1l1.419.484a.769.769,0,0,0,.617-.054.712.712,0,0,0,.359-.484l.271-1.416a.36.36,0,0,1,.286-.282,6.607,6.607,0,0,1,2.629,0,.361.361,0,0,1,.286.282l.271,1.416a.71.71,0,0,0,.358.485.767.767,0,0,0,.618.053l1.419-.484a.381.381,0,0,1,.4.1,5.938,5.938,0,0,1,1.317,2.173.343.343,0,0,1-.113.378l-1.15.931a.686.686,0,0,0,0,1.076l1.15.931a.343.343,0,0,1,.113.378,5.934,5.934,0,0,1-1.317,2.173.381.381,0,0,1-.4.1L91.1,55.632a.769.769,0,0,0-.617.054.712.712,0,0,0-.359.484l-.271,1.416a.36.36,0,0,1-.287.282,6.6,6.6,0,0,1-2.628,0,.36.36,0,0,1-.287-.282l-.27-1.416a.71.71,0,0,0-.358-.485.767.767,0,0,0-.618-.053l-1.419.484a.381.381,0,0,1-.4-.1,5.934,5.934,0,0,1-1.317-2.173.343.343,0,0,1,.113-.378l1.15-.931a.685.685,0,0,0,0-1.076l-1.15-.931a.343.343,0,0,1-.113-.378ZM86.424,52a1.828,1.828,0,1,0,1.826-1.75A1.789,1.789,0,0,0,86.424,52Z" transform="translate(-4756.25 -1555.001)" fill="#eef2f4"/>
+    <text id="ICON" transform="translate(-4676 -1513)" fill="#eef2f4" font-size="5" font-family="Inter-Black, Inter" font-weight="800" letter-spacing="0.25em"><tspan x="-8.32" y="0">ICON</tspan></text>
+  </g>
+</svg>

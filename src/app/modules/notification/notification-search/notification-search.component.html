@@ -1,0 +1,191 @@
+<div id="searchPage">
+  <div id="searchArea">
+    <div class="panel panel-default">
+      <div class="panel-heading" translate>
+        <strong class="text-u-c">
+          <i class="fa fa-th"></i>
+          common.label.search.info
+        </strong>
+      </div>
+
+      <form id="formSearch" [formGroup]="formSearch">
+        <div class="panel-body padding-xl ui-g">
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'notification.branchName' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <multi-select-filter  [property]="f['notifyBranchList']"
+                                  [options]="notifyBranchList"
+                                  optionLabel="name"
+                                  optionValue="code"
+                                  [filterPlaceHolder]=" 'common.label.cboSelectAll'">
+              </multi-select-filter>
+              <app-control-messages [control]="f['notifyBranchList']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'label.notification.notifyContent' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input [autoFocus]="true" type="text" class="form form-control" name="notifyContent" formControlName="notifyContent">
+              <app-control-messages [control]="f['notifyContent']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'label.notification.startDisplayStartDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker
+                [property]="f['displayStartDate']">
+              </date-picker>
+              <app-control-messages [control]="f['displayStartDate']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'label.notification.endDisplayStartDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker
+                [property]="f['toDisplayStartDate']">
+              </date-picker>
+              <app-control-messages [control]="f['toDisplayStartDate']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'label.notification.startDisplayFinishDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker
+                [property]="f['displayFinishDate']">
+              </date-picker>
+              <app-control-messages [control]="f['displayFinishDate']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'label.notification.endDisplayFinishDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker
+                [property]="f['toDisplayFinishDate']">
+              </date-picker>
+              <app-control-messages [control]="f['toDisplayFinishDate']"></app-control-messages>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer vt-area-button" >
+          <button type="submit" class="btn btn-sm btn-info" (click)="processSearch()"  [innerHTML]="'common.button.icon.search' | translate" > </button>
+          <button type="button" *ngIf="hasPermission('action.insert')" class="btn btn-sm btn-info" (click)="prepareSaveOrUpdate()"  [innerHTML]="'common.button.icon.addNew' | translate"> </button>
+          <button type="button" *ngIf="hasPermission('action.export')" class="btn btn-sm btn-info" (click)="processExport()" [innerHTML]="'common.button.icon.exportFile' | translate"> </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="listArea">
+  <div class="panel panel-default">
+    <div class="panel-heading vt-relative">
+      <strong class="text-u-c">
+        <i class="fa fa-th"></i>
+        {{'label.notification.table' | translate}}
+      </strong>
+    </div>
+    <div class="panel-body panel-table">
+      <p-table
+        #ptable
+        [value]="resultList.data"
+        [paginator]="true"
+        (onLazyLoad)="processSearch($event)"
+        [lazy]="true" [rows]="changeRow"
+        [totalRecords]="resultList.recordsTotal"
+        [scrollable]="true"
+        [lazyLoadOnInit]="false"
+        tableStyleClass="table table-wrapper table-hover table-striped b-t b-b">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup class="ng-star-inserted">
+            <col class="size-1">
+            <col class="size-2" *ngIf="hasPermission('action.update')">
+            <col class="size-1" *ngIf="hasPermission('action.view')">
+            <col class="size-1" *ngIf="hasPermission('action.update')">
+            <col class="size-1" *ngIf="hasPermission('action.delete')">
+            <col class="size-8">
+            <col>
+            <col class="size-10">
+            <col class="size-5">
+            <col class="size-5">
+            <col class="size-7">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th translate>common.table.index</th>
+            <th  *ngIf="hasPermission('action.update')">{{'recieveNotificationGroup.requestNotification' | translate}}</th>
+            <th  *ngIf="hasPermission('action.view')">{{'common.label.view.detail' | translate}}</th>
+            <th  *ngIf="hasPermission('action.update')">{{'common.label.edit' | translate}}</th>
+            <th  *ngIf="hasPermission('action.delete')">{{'titleDelete' | translate}}</th>
+            <th [pSortableColumn]="'notifyBranch'">
+              {{'notification.branchName' | translate}}
+              <p-sortIcon [field]="'notifyBranch'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'notifyContent'">
+              {{'label.notification.notifyContent' | translate}}
+              <p-sortIcon [field]="'notifyContent'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'link'">
+              {{'label.notification.link' | translate}}
+              <p-sortIcon [field]="'link'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'displayStartDate'">
+              {{'label.notification.displayStartDate' | translate}}
+              <p-sortIcon [field]="'displayStartDate'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'displayFinishDate'">
+              {{'label.notification.displayFinishDate' | translate}}
+              <p-sortIcon [field]="'displayFinishDate'"></p-sortIcon>
+            </th>
+            <th>
+              {{'label.notification.displayStatus' | translate}}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+          <tr>
+            <td class="vt-align-center">{{index}}</td>
+            <td class="vt-align-center"  *ngIf="hasPermission('action.update')" >
+              <a  class="btn-table edit" (click)="prepareRequestNotification(item)" title="{{'recieveNotificationGroup.requestNotification' | translate}}" ><i class="fa fa-envelope"></i></a>
+            </td>
+            <td  class="vt-align-center"  *ngIf="hasPermission('action.view')"  >
+              <a class="btn-table eye" (click)="processView(item)" title="{{'common.button.table.hEye' | translate}}"><i class="fa fa-eye color-info"></i></a>
+            </td>
+            <td class="vt-align-center"  *ngIf="hasPermission('action.update')" >
+              <a  class="btn-table edit" (click)="prepareSaveOrUpdate(item)" title="{{'common.label.edit' | translate}}" ><i class="fa fa-edit"></i></a>
+            </td>
+            <td class="vt-align-center"  *ngIf="hasPermission('action.delete')">
+              <a class="btn-table delete" (click)="processDelete(item)" title="{{'common.button.delete' | translate}}" ><i class="fa fa-trash-alt"></i></a>
+            </td>
+            <td class="vt-align-left">{{item.notifyBranchName}} </td>
+            <td class="vt-align-left justify-format">{{item.notifyContent}}</td>
+            <td class="vt-align-left">{{item.link}}</td>
+            <td  class="vt-align-center">{{item.displayStartDate | displayDate}}</td>
+            <td class="vt-align-center">{{item.displayFinishDate | displayDate}}</td>
+            <td class="vt-align-left">
+              <div class="info label-status" *ngIf="item.status == 1" ></div>
+              <div class="success label-status" *ngIf="item.status == 2" ></div>
+              <div class="danger label-status" *ngIf="item.status == 3" ></div>
+              {{item.displayStatusName}}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr class="emptymessage">
+            <td [attr.colspan]="10" [innerHTML]="'app.noRecords' | translate">
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+          <table-footer (changeRow)="onTablePageChange($event)"  [resultList]="resultList"></table-footer>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+

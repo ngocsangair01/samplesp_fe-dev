@@ -1,0 +1,6 @@
+<div *ngIf="hasPermission('action.view')">
+  <fund-contribution-search></fund-contribution-search>
+</div>
+<div *ngIf="!hasPermission('action.view')">
+  {{'common.haveNoPermission' | translate}}
+</div>

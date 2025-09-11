@@ -1,0 +1,31 @@
+<div class="emptymessage" *ngIf="!isHaveConfig">
+  {{'organizationChart.haveNoConfig' | translate}}
+</div>
+<p-organizationChart
+  [value]="data"
+  selectionMode="single"
+  (onNodeSelect)="onNodeSelect($event)">
+  <ng-template let-node pTemplate="node">
+    <div [ngClass]="{'isDown': node.data.isDown}"></div>
+    <img *ngIf="data[0] === node" class="node-header user-img node" 
+    style="width: 150px !important; height: 100px !important; border-radius: 0% !important; background-color: transparent !important; padding: .0em .0em !important;"
+    src="../assets/images/logo-chart.jpg"/>
+
+    <div *ngIf="data[0] !== node" class="node-header ui-corner-top">
+      <div class="user-img" style="width: 35px !important; height: 35px !important;">
+        <img class="user-img node" style="width: 35px !important; height: 35px !important;" [src]="API_URL + node.data.avatar"/>
+      </div>
+      <!-- <div class="display-table flag-item">
+        <div class="table-cell flag-img">
+          <img [src]="node.data.avatar ? node.data.avatar : '../../../../../assets/images/noimage.png'"/>
+        </div>
+      </div> -->
+      <p style="font-weight: bold;" class="elepsis">{{ node.data.orgManager }}</p>
+      <p class="elepsis">{{ node.data.partyPosName === null || node.data.partyPosName === '' ? '&nbsp;' : node.data.partyPosName }}</p>
+    </div>
+    <div *ngIf="data[0] !== node" class="node-content">
+      <p style="font-weight: bold;" class="max2Row" title="{{ node.label }}">{{ node.label }}</p>
+      <!-- <p>Số đơn vị con: {{ node.data.childUnit }}</p> -->
+    </div>
+  </ng-template>
+</p-organizationChart>

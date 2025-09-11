@@ -1,0 +1,90 @@
+<div class="modal-body">
+  <div class="panel panel-default customFont">
+    <form id="formSave" [formGroup]="formSave">
+      <div class="panel-heading vt-relative">
+        <strong class="text">
+          <span *ngIf="mode == 'insert'"> Câp nhật tiến độ </span>
+          <span *ngIf="mode == 'update'"> Cập nhật tiến độ </span>
+          <span *ngIf="mode == 'view'"> Xem chi tiết bộ câu hỏi</span>
+        </strong>
+        <span class="modal-esc-btn btn-close" title="{{'common.button.close' | translate}}" (click)="onCloseAddModal();">
+          <i class="fa fa-times"></i>
+        </span>
+      </div>
+
+      <div class="panel-body padding-xl ui-g">
+        
+        <div class=" ui-g-12">
+          <div class="ui-g-12 ui-md-6">
+            <label class="ui-g-12 ui-md-4 control-label vt-align-right required" translate>
+              label.thorough-content.task.status
+            </label>
+            <div class="ui-g-12 ui-md-6">
+              <p-dropdown [options]="statusList" formControlName="status" optionLabel="name" (ngModelChange)="statusChange($event)"
+                [placeholder]="'common.label.cboSelect' | translate" [disabled]="isView">
+              </p-dropdown>
+              <app-control-messages [control]="f['status']"></app-control-messages>
+            </div>
+          </div>
+
+          <div class="ui-g-12 ui-md-6">
+            <label class="ui-g-12 ui-md-4 control-label vt-align-right required" translate>
+              label.thorough-content.update-progress.progress
+            </label>
+            <div class="ui-g-12 ui-md-6">
+              <input type="number" min="0" max="100" [readonly]="viewMode || isdisable" formControlName="progress" class="form-control" (ngModelChange)="progressChange($event)"
+              maxlength="250">
+              <div *ngIf="checkProgress()" class="errorMessageDiv show">
+                <small class="text-danger errorMessage ng-star-inserted">
+                  {{'thorough-content.task.imput.progress' | translate}}
+                </small>
+              </div>
+              <app-control-messages [control]="f['progress']"></app-control-messages>
+            </div>
+          </div>
+        </div>
+
+        <div class=" ui-g-12">
+          <div class="ui-g-12 ui-md-12">
+            <label class="ui-g-12 ui-md-2 control-label vt-align-right " translate>
+              label.thorough-content.update-progress.note
+            </label>
+            <div class="ui-g-12 ui-md-9">
+              <textarea formControlName="note" maxlength="5000" type="text" pInputText class="form-control" [readonly]="isView" placeholder="Nhập"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class=" ui-g-12">
+          <label class="ui-g-12 ui-md-2 control-label vt-align-right " translate>
+            label.thorough-content.task.check-list
+          </label>
+          <div class="ui-g-12 ui-md-9">
+            <div class="answer-row"  formArrayName="names">
+              <div *ngFor="let name of names.controls; let i = index" [formGroupName]="i" class="answer">
+                <div class="ui-g-12">
+                  <div class="d-flex">
+                    <div class="d-flex ui-md-4">
+                      <input  type="checkbox"  formControlName="isTrue" [attr.disabled]="isView?true:null" [id]="'checkCorrect'+i" style="margin-right: 10px;"/>
+                      <input formControlName="name" type="text" maxlength="5000" pInputText class="form-control" [readonly]="isView" placeholder="Nhập"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="panel-footer vt-area-button">
+        <button type="button" (click)="onCloseAddModal();" class="btn btn-sm btn-light btn-close"
+          [innerHTML]="'common.button.close' | translate"><i class="fa fa-times"></i></button>
+        <!-- <button *ngIf="isView && !parrentView" type="button" (click)="updateModal()" class="btn btn-sm btn-info"
+          [innerHTML]="'app.cds.evaluate.btn.update' | translate"><i class="fa fa-save"></i></button> -->
+        <button *ngIf="!isView" type="submit" (click)="saveInfor()" class="btn btn-sm btn-info"
+          [innerHTML]="'common.button.icon.save' | translate"><i class="fa fa-save"></i></button>
+      </div>
+    </form>
+  </div>
+</div>

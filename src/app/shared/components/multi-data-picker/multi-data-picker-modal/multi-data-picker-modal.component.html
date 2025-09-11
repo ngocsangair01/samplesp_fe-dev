@@ -1,0 +1,81 @@
+<div class="modal-body dataPickerModal">
+  <form [formGroup]="form">
+    <div class="panel panel-default">
+      <div class="panel-heading vt-relative">
+        <strong class="text-u-c">
+          <i class="fa fa-th"></i>&nbsp;
+          {{ titleChose | translate }}
+        </strong>
+        <div class="vt-absolute vt-shotcut-button-in-heading">
+          <span (click)="close()" title="{{'common.button.close' | translate}}" class="btn btn-span btn-sm btn-info btn-close"><i class="fa fa-times"></i></span>
+        </div>
+      </div>
+      <div class="panel-body modal-content-body">
+        <div class="grid-structure org-selector-content">
+          <div class="panel-background">
+            <div class="row" style="margin-top: 0px;">
+              <div class="col-md-12">
+                <div class="input-group orgSelector">
+                  <input type="text" class="form-control org-selector-input" name="codeInput" autoFocus
+                    placeholder="{{placeholder | translate}}"
+                    formControlName="codeInput"
+                    (keydown.arrowdown)="changeIndex(1)"
+                    (keydown.arrowup)="changeIndex(-1)"
+                    (keyup.enter)="onSelectEnter()"
+                    autocomplete="off"
+                    #inputSearch/>
+                  <div class="input-group-append">
+                    <button class="btn org-selector-addon" title="{{ 'common.label.search' | translate }}" type="button" (click)="processSearch(null)">
+                      <i class="fa fa-search color-info" style="font-size: 16px;"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="table-wrapper table-responsive" style="margin-top: 4px;">
+            <p-table [value]="resultList.data" [paginator]="true" (onLazyLoad)="processSearch($event)"
+              [lazy]="true" [rows]="10" [totalRecords]="resultList.recordsTotal" [responsive]="true" lazyLoadOnInit="false"
+              tableStyleClass="table table-wrapper table-hover table-striped b-t b-b">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th translate>common.button.table.hChose</th>
+                  <th class="size-8" pSortableColumn="codeField">
+                    {{l10nCodeField | translate}}
+                    <p-sortIcon field="codeField"></p-sortIcon>
+                  </th>
+                  <th class="size-00" pSortableColumn="nameField">
+                    {{l10nNameField | translate}}
+                    <p-sortIcon field="nameField"></p-sortIcon>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                <tr #row>
+                  <td class="vt-align-center">
+                      <input type="checkbox" (change)="change($event, item)" [checked] = "item.check ? true : false">
+                  </td>
+                  <td class="vt-align-center">{{item.codeField}}</td>
+                  <td>{{item.nameField}}<span *ngIf="item.emailField">({{item.emailField}})</span></td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr class="emptymessage">
+                  <td [attr.colspan]="3" [innerHTML]="'app.noRecords' | translate">
+                  </td>
+                </tr>
+            </ng-template>
+              <ng-template pTemplate="paginatorleft">
+                <table-footer (changeRow)="onTablePageChange($event)"  [resultList]="resultList"></table-footer>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer vt-area-button">
+        <button type="button" class="btn btn-sm btn-info"
+        (click)="chose()" [innerHTML]="'common.button.icon.select' | translate"></button>
+      </div>
+    </div>
+  </form>
+</div>

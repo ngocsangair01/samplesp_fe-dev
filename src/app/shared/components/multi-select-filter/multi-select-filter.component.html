@@ -1,0 +1,29 @@
+<p-multiSelect
+  [options]="listData"
+  [(ngModel)]="selectedValue"
+  [filter]="true"
+  (ngModelChange)="selectedChange()"
+  [disabled]="disabled ? true : false"
+  [appendTo]="appendTo"
+  [style]="{minHeight: '28px'}"
+  [panelStyle]="{minWidth:'103px;'}"
+  [filterPlaceHolder] = "filterPlaceHolder | translate"
+  [defaultLabel] = "filterPlaceHolder | translate"
+  [resetFilterOnHide] = "true"
+  [maxSelectedLabels] = "maxSelectedLabels"
+  >
+  <ng-template let-value pTemplate="selectedItems">
+    <div *ngIf="!showVertical">
+      <div  *ngFor="let val of value">
+        <span>- {{findLabelByValue(val)}}</span>
+      </div>
+    </div>
+    <div *ngIf="showVertical">
+      <span  *ngFor="let val of value; index as i">
+      <span *ngIf="i > 0">; {{findLabelByValue(val)}}</span>
+        <span *ngIf="i ==0">{{findLabelByValue(val)}}</span>
+    </span>
+    </div>
+    <span *ngIf="!value || value.length === 0">{{filterPlaceHolder | translate}}</span>
+  </ng-template>
+</p-multiSelect>

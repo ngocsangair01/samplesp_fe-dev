@@ -1,0 +1,149 @@
+<div class="modal-body">
+<!--    <div class="panel panel-default">-->
+<!--        &lt;!&ndash;header&ndash;&gt;-->
+<!--        <div class="panel-heading p-1 mx-3">-->
+<!--          <div class="title evaluation">-->
+<!--          {{'assessment.show.value.year' | translate}}-->
+<!--          </div>-->
+<!--          <div class="btn-close">-->
+<!--            <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}"-->
+<!--              class="btn btn-span btn-sm"><i class="fa fa-times"></i></button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;body&ndash;&gt;-->
+<!--        <div class="panel-body pb-0">-->
+<!--            <div class="title-info-other btn-custom-assessment pb-3">-->
+<!--                <button type="submit" class="btn btn-sm btn-primary mr-1" [ngClass]="option == 1 ? 'is-active' : ''"  [innerHTML]="'employee.assessment.previewEvaluate.staff' | translate" (click)="staff(1)"></button>-->
+<!--                <button type="submit" class="btn btn-sm btn-primary" [ngClass]="option == 2 ? 'is-active' : ''" [innerHTML]="'employee.assessment.previewEvaluate.partymember' | translate" (click)="staff(2)"></button>-->
+<!--            </div>-->
+<!--            <p-table-->
+<!--                #ptable-->
+<!--                [value]="dataAssessmentResults.data"-->
+<!--                [paginator]="true"-->
+<!--                (onLazyLoad)="processSearch($event)"-->
+<!--                [lazy]="true" [rows]="dataAssessmentResults.recordsTotal"-->
+<!--                [lazyLoadOnInit]="false"-->
+<!--                tableStyleClass="table controls-table table-wrapper b-t b-b"-->
+<!--                class="table-column assessment-table-mode"-->
+<!--            >-->
+<!--                <ng-template  pTemplate="colgroup">-->
+<!--                    <colgroup>-->
+<!--                        <col class="size-3">-->
+<!--                        <col>-->
+<!--                        <col>-->
+<!--                        <col>-->
+<!--                    </colgroup>-->
+<!--                </ng-template>-->
+<!--                <ng-template pTemplate="header">-->
+<!--                    <tr class="colunmN">-->
+<!--                        <th class="text-center" translate>common.table.index</th>-->
+<!--                        <th translate>employee.assessment.assessName</th>-->
+<!--                        <th translate>label.empArmyProposed.year</th>-->
+<!--                        <th translate>label.document.file.name</th>-->
+<!--                        <th translate>employee.assessment.criticalLevel</th>-->
+<!--                    </tr>-->
+<!--                </ng-template>-->
+<!--                <ng-template pTemplate="body" let-item let-index="rowIndex+1">-->
+<!--                    <tr class="table-unit">-->
+<!--                        <td class="columnSTT text-center">{{index}}</td>-->
+<!--                        <td>{{item.assessName}}</td>-->
+<!--                        <td>{{item.year}}</td>-->
+<!--                        <td class="vt-align-left">-->
+<!--                            <div *ngIf="!item.transCode && item.vtCriticalId">-->
+<!--                                <a class="text-link" (click)="processDownloadFile(item)">-->
+<!--                                    <span>{{ item.vtCriticalId}}.pdf</span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div *ngIf="item.transCode">-->
+<!--                                <div class="m-2" *ngFor="let data of item.listFileSign; let i = index">-->
+<!--                                    <a style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 200px; display: block; overflow: hidden"-->
+<!--                                    (click)="openModalViewFile(data, item.transCode)">-->
+<!--                                        <p>{{i+1}}. {{ data }}</p>-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </td>-->
+<!--                        <td>{{ option === 1 ? item.criticalLevel : item.qualityRatingName }}</td>-->
+<!--                    </tr>-->
+<!--                </ng-template>-->
+<!--                <ng-template pTemplate="emptymessage">-->
+<!--                    <tr class="emptymessage text-center">-->
+<!--                        <td [attr.colspan]="4" class="py-3" [innerHTML]="'app.noRecords' | translate"></td>-->
+<!--                    </tr>-->
+<!--                </ng-template>-->
+<!--                <ng-template pTemplate="paginatorleft">-->
+<!--                    <table-footer [resultList]="dataAssessmentResults"></table-footer>-->
+<!--                </ng-template>-->
+<!--            </p-table>-->
+<!--        </div>-->
+<!--        <div class="panel-footer">-->
+<!--        </div>-->
+<!--    </div>-->
+
+
+    <div class="panel panel-default">
+        <!--header-->
+        <div class="panel-heading p-1 mx-3" style="height: 59px !important;">
+            <div class="title evaluation">
+                {{'assessment.show.value.year' | translate}}
+            </div>
+            <div class="btn-close">
+                <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm btn-close"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <!--body-->
+        <div class="panel-body pb-0">
+            <div class="title-info-other btn-custom-assessment pb-3">
+                <button type="submit" class="btn btn-sm btn-primary mr-1" [ngClass]="option == 1 ? 'is-active' : ''"  [innerHTML]="'employee.assessment.previewEvaluate.staff' | translate" (click)="staff(1)"></button>
+                <button type="submit" class="btn btn-sm btn-primary" [ngClass]="option == 2 ? 'is-active' : ''" [innerHTML]="'employee.assessment.previewEvaluate.partymember' | translate" (click)="staff(2)"></button>
+            </div>
+        <p-table
+            #ptable
+            [value]="dataAssessmentResults"
+            [paginator]="true"
+            (onLazyLoad)="processSearch($event)"
+            [lazy]="true"
+            [lazyLoadOnInit]="false"
+            tableStyleClass="table controls-table table-wrapper b-t b-b"
+            class="table-column assessment-table-mode"
+        >
+            <ng-template  pTemplate="colgroup">
+                <colgroup>
+                    <col class="size-3">
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr class="colunmN">
+                    <th class="text-center" translate>common.table.index</th>
+                    <th translate>employee.assessment.assessName</th>
+                    <th translate>label.empArmyProposed.year</th>
+                    <th translate>employee.assessment.criticalLevel</th>
+                    <th translate>employee.assessment.signStatus</th>
+                    <th translate>employee.assessment.criticalLevelView</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                <tr class="table-unit">
+                    <td class="columnSTT text-center">{{index}}</td>
+                    <td>{{item.assessmentPeriodName}}</td>
+                    <td>{{item.assessmentYear}}</td>
+                    <td class="vt-align-left">
+                       {{item.assessmentResult}}
+                    </td>
+                    <td class="vt-align-left">
+                        <span *ngIf="item.signStatus == 3" >Đã hoàn thành</span>
+                        <span *ngIf="item.signStatus != 3" >Chưa hoàn thành</span>
+                    </td>
+                    <td><a target="_blank" href="http://congtacdang-congtacchinhtri.sangnn.vn/assessment/detail/{{item.assessmentPeriodId}}/{{item.employeeCode}}/" translate="">employee.assessment.criticalLevelView</a></td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div class="panel-footer">
+    </div>
+    </div>
+  </div>

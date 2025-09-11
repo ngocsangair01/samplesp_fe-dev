@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#28cd41"/>
+      <stop offset="1" stop-color="#32d74b"/>
+    </linearGradient>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_10992" data-name="Rectangle 10992" width="52" height="52" transform="translate(522 945)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Group_19674" data-name="Group 19674" transform="translate(-768 -629)">
+    <rect id="Rectangle_10618" data-name="Rectangle 10618" width="100" height="100" rx="24" transform="translate(768 629)" fill="url(#linear-gradient)"/>
+    <g id="Mask_Group_19465" data-name="Mask Group 19465" transform="translate(270 -292)" clip-path="url(#clip-path)">
+      <g id="chart-21" transform="translate(518.977 941.977)">
+        <path id="Path_63756" data-name="Path 63756" d="M50.791,55.023H7.256a1.814,1.814,0,0,1,0-3.628H50.791a1.814,1.814,0,0,1,0,3.628Z" fill="#fff"/>
+        <path id="Path_63757" data-name="Path 63757" d="M13.544,47.767H9.674a4.253,4.253,0,0,1-4.233-4.233V22.687a4.253,4.253,0,0,1,4.233-4.233h3.87a4.253,4.253,0,0,1,4.233,4.233V43.535A4.253,4.253,0,0,1,13.544,47.767Zm-3.87-25.71a.6.6,0,0,0-.6.6V43.535a.6.6,0,0,0,.6.6h3.87a.6.6,0,0,0,.6-.6V22.687a.6.6,0,0,0-.6-.6H9.674Z" fill="#fff"/>
+        <path id="Path_63758" data-name="Path 63758" d="M30.958,47.767h-3.87a4.253,4.253,0,0,1-4.233-4.233V14.971a4.253,4.253,0,0,1,4.233-4.233h3.87a4.253,4.253,0,0,1,4.233,4.233V43.535A4.253,4.253,0,0,1,30.958,47.767Zm-3.87-33.4a.6.6,0,0,0-.6.6V43.535a.6.6,0,0,0,.6.6h3.87a.6.6,0,0,0,.6-.6V14.971a.6.6,0,0,0-.6-.6Z" fill="#fff"/>
+        <path id="Path_63759" data-name="Path 63759" d="M48.372,47.767H44.5a4.253,4.253,0,0,1-4.233-4.233V7.256A4.253,4.253,0,0,1,44.5,3.023h3.87A4.253,4.253,0,0,1,52.6,7.256V43.535A4.253,4.253,0,0,1,48.372,47.767ZM44.5,6.651a.6.6,0,0,0-.6.6V43.535a.6.6,0,0,0,.6.6h3.87a.6.6,0,0,0,.6-.6V7.256a.6.6,0,0,0-.6-.6Z" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

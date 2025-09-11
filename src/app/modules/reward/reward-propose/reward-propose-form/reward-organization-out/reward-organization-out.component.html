@@ -1,0 +1,185 @@
+<div id="header-search" style="margin-right: 0.75rem; display: flex; justify-content: flex-end;">
+  <div class="vt-relative">
+    <form [formGroup]="formSearchNguoiHuong">
+      <div class="display-table" style="border: 1px solid rgba(246,183,109,0.6); border-radius: 8px; overflow: hidden;">
+        <div class="table-cell">
+          <button type="submit" class="icon-search input-search" (click)="filterFormSubsidizedSuggest()">
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="table-cell">
+          <input type="text" class="form-control input-search no-between-border" name="keyword"
+            formControlName="keyword" placeholder="{{'home.search.placeHolder' | translate}}"
+            appendTo="body">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<form id="formSave" [formGroup]="formRewardOrgOut" class="mt-3">
+  <div class="panel-body panel-table" style="padding: 12px;">
+    <p-table [scrollable]="true" [value]="formRewardOrgOut.controls" tableStyleClass="table table-wrapper table-hover table-striped b-t b-b" 
+      [paginator]="true" [(first)]="firstRowIndex" [rows]="pageSize" [totalRecords]="formRewardOrgOut.controls.length"
+      (onPage)="updateChooseAll(formRewardOrgOut.controls)" [resizableColumns]="true">
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col style="width: 50px;">
+          <col *ngIf="!isView && !isEditSelection && !isViewSelection && isSynthetic != 1 && !isAddSign && !isEditSign && !isViewSign && !isDisable" style="width: 100px;">
+          <col style="width: 100px;">
+          <col style="width: 100px;">
+          <col style="width: 100px;">
+          <col style="width: 100px;">
+          <col style="width: 100px;">
+          <col *ngIf="isEditSelection || isViewSelection" style="width: 100px;">
+          <col *ngIf="isEditSelection || isViewSelection" style="width: 100px;">
+          <col *ngIf="isEditSelection || isViewSelection" style="width: 150px;">
+          <col style="width: 150px;">
+          <col style="width: 150px;">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pResizableColumn translate>common.table.index</th>
+          <th pResizableColumn translate *ngIf="!isView && !isEditSelection && !isViewSelection && isSynthetic != 1 && !isAddSign && !isEditSign && !isViewSign && !isDisable">
+            <span>common.label.action</span>
+          </th>
+          <!-- to chuc duoc khen thuong -->
+          <th pResizableColumn translate><span [ngClass]="'required'">tabRewardGroup.rewardProposal.rewardGroupName</span></th>
+           <!-- Loai danh hieu khen thuong -->
+           <th pResizableColumn translate><span>label.commendations.type</span></th>
+          <!-- danh hieu/hinh thuc -->
+          <th pResizableColumn translate><span [ngClass]="'required'">rewardGeneral.rewardTitle</span></th>
+          <!-- tien thuong -->
+          <th pResizableColumn translate><span>rewardGeneral.money</span></th>
+          <!-- noi dung khen thuong -->
+          <th pResizableColumn translate><span>rewardGeneral.content</span>
+          </th>
+          <!-- Xét chọn -->
+          <th pResizableColumn translate *ngIf="isEditSelection || isViewSelection">
+            <span>label.rewardPropose.isChoose</span>
+            <div class="check">
+              <input type="checkbox" (change)="chooseAll($event, formRewardOrgOut.controls, 1)" #eleChooseAll [attr.disabled]="isViewSelection ? true: null" style="width: 18px; height: 1.5rem;">
+            </div>
+          </th>
+          <!-- Đề xuất lên -->
+          <th pResizableColumn translate *ngIf="isEditSelection || isViewSelection">
+            <span>label.rewardPropose.isSuggest</span>
+            <div class="check">
+              <input type="checkbox" (change)="chooseAll($event, formRewardOrgOut.controls, 2)" #eleSuggestAll [attr.disabled]="isViewSelection ? true: null" style="width: 18px; height: 1.5rem;">
+            </div>
+          </th>
+          <!-- lý do -->
+          <th pResizableColumn translate *ngIf="isEditSelection || isViewSelection"><span>label.rewardPropose.note</span>
+          </th>
+          <!-- so tai khoan -->
+          <th pResizableColumn translate><span [ngClass]="'required'">rewardPropose.accountNumber</span></th>
+          <!-- ten ngan hang -->
+          <th pResizableColumn translate><span [ngClass]="'required'">rewardPropose.bankName</span>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-index="rowIndex">
+        <tr [formGroup]="item" [ngClass]="{'d-none': item.controls.isHidden.value}">
+          <td class="vt-align-center">
+            {{index+1}}
+          </td>
+          <td class="vt-align-center" *ngIf="!isView && !isEditSelection && !isViewSelection && isSynthetic != 1 && !isAddSign && !isEditSign && !isViewSign && !isDisable">
+            <button class="btn-icon minus" type="button" (click)="remove(index, item)"
+              [innerHTML]="'common.icon.minus' | translate">
+              <span class="glyphicons glyphicons-minus icon-table delete" title="Xóa"></span>
+            </button>
+          </td>
+          <!-- to chuc duoc khen thuong -->
+          <td>
+            <input type="text" class="form form-control" name="objectNameGuest" formControlName="objectNameGuest" [title]="item.controls.objectNameGuest.value || ''"
+              maxlength="255" [attr.disabled]="isView || isViewSelection || isEditSelection || isSynthetic == 1 || isAddSign || isEditSign || isViewSign || isDisable ? true: null">
+            <app-control-messages [control]="item.controls.objectNameGuest"></app-control-messages>
+          </td>
+
+          <!-- Loại danh hiệu khen thưởng -->
+          <td>
+            <div class="text-left">
+              <div class="form-check-inline">
+                <label class="i-checks">
+                  <input [attr.disabled]="isView || isViewSelection || isAddSign || isEditSign || isViewSign? true: null" type="radio" class="form-check-input control-label" id="rewardCategory{{index}}_1" value="1" formControlName="rewardCategory">
+                  <i></i>
+                  {{'rewardCategory.titleReward' | translate}}
+                </label>
+              </div>
+              <div class="form-check-inline">
+                <label class="i-checks">
+                  <input [attr.disabled]="isView || isViewSelection || isAddSign || isEditSign || isViewSign? true: null" type="radio" class="form-check-input control-label" id="rewardCategory{{index}}_2" value="2" formControlName="rewardCategory">
+                  <i></i>
+                  {{'rewardCategory.formReward' | translate}}
+                </label>
+              </div>
+<!--              <div class="form-check-inline">-->
+<!--                <label class="i-checks">-->
+<!--                  <input [attr.disabled]="isView || isViewSelection || isAddSign || isEditSign || isViewSign? true: null" type="radio" class="form-check-input control-label" id="rewardCategory{{index}}_3" value="3" formControlName="rewardCategory">-->
+<!--                  <i></i>-->
+<!--                  {{'rewardCategory.otherReward' | translate}}-->
+<!--                </label>-->
+<!--              </div>-->
+            </div>
+          </td>
+
+          <!-- danh hieu/ hinh thuc khen thuong -->
+          <td>
+            <select-icon-filter [property]="item.controls.rewardTitleId" [options]="mapRewardTitleIdList[rewardType][item.controls.rewardCategory.value]" optionLabel="name"
+              optionValue="rewardCategoryId" [placeHolder]="'common.label.cboMustSelect'" appendTo="body"
+              [disabled]="isView || isViewSelection || isAddSign || isEditSign || isViewSign"
+              [rewardGroupType]="rewardTitleIdList" (onChange)="getAmountOfMoney(item)" [title]="item.controls.rewardTitleId.value ? item.controls.rewardTitleName.value : ''">
+            </select-icon-filter>
+            <app-control-messages [control]="item.controls.rewardTitleId"></app-control-messages>
+          </td>
+          <!-- Số tiền khen thưởng -->
+          <td class="vt-align-right">
+            <input *ngIf="isView || isViewSelection || isAddSign || isEditSign || isViewSign? true: null" type="text" style="text-align:right;" class="form form-control" name="amountOfMoney" min="0" formControlName="amountOfMoney"
+              maxlength="15" [attr.disabled]="isView || isViewSelection || isAddSign || isEditSign || isViewSign? true: null" [value]="item.value.amountOfMoney | currency: 'VND'">
+            <input *ngIf="isView || isViewSelection || isAddSign || isEditSign || isViewSign? null: true" type="text" style="text-align:right;" class="form form-control" name="amountOfMoney" min="0" formControlName="amountOfMoney"
+                   maxlength="15" [attr.disabled]="isView || isViewSelection || isAddSign || isEditSign || isViewSign? true: null">
+            <app-control-messages [control]="item.controls.amountOfMoney"></app-control-messages>
+          </td>
+          <!-- Nội dung khen thưởng -->
+          <td class="vt-align-center">
+            <textarea type="text" rows="2" name="description" class="form-control" [title]="item.controls.description.value || ''"
+            formControlName="description" maxlength="2000" [attr.disabled]="isView || isViewSelection || isAddSign || isEditSign || isViewSign? true: null">
+            </textarea>
+            <app-control-messages [control]="item.controls.description"></app-control-messages>
+          </td>
+          <!-- Xét chọn-->
+          <td class="vt-align-left" *ngIf="isEditSelection || isViewSelection">
+            <input type="checkbox" class="ui-chkbox ui-chkbox-box" style="height: 1.5rem;" name="isChoose" [value]="0"
+            formControlName="isChoose" [attr.disabled]="isViewSelection ? true: null" (change)="onChangeChooseOrSuggest(item, formRewardOrgOut.controls)" />
+          </td>
+          <!-- Từ chối -->
+          <td class="vt-align-left" *ngIf="isEditSelection || isViewSelection">
+            <input type="checkbox" class="ui-chkbox ui-chkbox-box" style="height: 1.5rem;" name="isSuggest" [value]="0"
+            formControlName="isSuggest" [attr.disabled]="isViewSelection ? true: null" (change)="onChangeChooseOrSuggest(item, formRewardOrgOut.controls)" />
+          </td>
+          <!-- lý do từ chối -->
+          <td class="vt-align-center" *ngIf="isEditSelection || isViewSelection" [title]="item.controls.reason.value || ''">
+            <textarea [autoFocus]="true" type="text" rows="2" name="reason" class="form-control"
+              formControlName="reason" maxlength="2000" [attr.disabled]="isViewSelection ? true: null">
+            </textarea>
+            <app-control-messages [control]="item.controls.reason"></app-control-messages>
+          </td>
+          <!-- so tai khoan -->
+          <td class="vt-align-left">
+            <input type="text" class="form form-control" name="accountNumber" min="0" formControlName="accountNumber"
+              [attr.disabled]="isView || isViewSelection || isEditSelection || isAddSign || isEditSign || isViewSign? true: null" maxlength="20">
+            <app-control-messages [control]="item.controls.accountNumber"></app-control-messages>
+          </td>
+          <!-- ten ngan hang -->
+          <td class="vt-align-center">
+            <input type="text" class="form form-control" name="bank" min="0" formControlName="bank" maxlength="255" [title]="item.controls.bank.value || ''"
+              [attr.disabled]="isView || isViewSelection || isEditSelection || isAddSign || isEditSign || isViewSign? true: null">
+            <app-control-messages [control]="item.controls.bank"></app-control-messages>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</form>
+<button *ngIf="!isView && !isEditSelection && !isViewSelection && isSynthetic != 1 && !isAddSign && !isEditSign && !isViewSign && !isDisable" class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="add()" [innerHTML]="'common.button.icon.addColumn' | translate">
+</button>

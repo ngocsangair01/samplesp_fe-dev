@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28" height="28" viewBox="0 0 28 28">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_16530" data-name="Rectangle 16530" width="28" height="28" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Top" clip-path="url(#clip-path)">
+    <g id="Group_43632" data-name="Group 43632" transform="translate(6.778 26.247) rotate(-90)">
+      <g id="Group_43631" data-name="Group 43631" transform="translate(0)">
+        <g id="Rectangle_16527" data-name="Rectangle 16527" transform="translate(0 13.131)" fill="#fff" stroke="#fff" stroke-width="1">
+          <rect width="14.882" height="1.313" rx="0.657" stroke="none"/>
+          <rect x="0.5" y="0.5" width="13.882" height="0.313" rx="0.157" fill="none"/>
+        </g>
+        <g id="Rectangle_16528" data-name="Rectangle 16528" transform="translate(0 6.566)" fill="#fff" stroke="#fff" stroke-width="1">
+          <rect width="23.636" height="1.313" rx="0.657" stroke="none"/>
+          <rect x="0.5" y="0.5" width="22.636" height="0.313" rx="0.157" fill="none"/>
+        </g>
+        <g id="Rectangle_16529" data-name="Rectangle 16529" fill="#fff" stroke="#fff" stroke-width="1">
+          <rect width="14.882" height="1.313" rx="0.657" stroke="none"/>
+          <rect x="0.5" y="0.5" width="13.882" height="0.313" rx="0.157" fill="none"/>
+        </g>
+      </g>
+      <path id="Path_85416" data-name="Path 85416" d="M2049.746-19.46l4.865,4.011-5.259,4.036,5.259-4.036Z" transform="translate(-2030.116 22.659)" fill="#339dff" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    </g>
+  </g>
+</svg>

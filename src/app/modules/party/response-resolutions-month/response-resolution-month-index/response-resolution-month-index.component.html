@@ -1,0 +1,6 @@
+<div *ngIf="hasPermission('action.view')">
+  <response-resolution-month-search></response-resolution-month-search>
+</div>
+<div *ngIf="!hasPermission('action.view')" translate>
+  common.haveNoPermission
+</div>

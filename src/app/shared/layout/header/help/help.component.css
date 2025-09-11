@@ -1,0 +1,51 @@
+.help-css{
+  width: 680px !important;
+  height: 805px;
+}
+
+.iframe-body{
+  width: 100%;
+  height: 100%;
+}
+
+.modal-dialog {
+  position: fixed;
+  margin: auto;
+  width: 420px;
+  height: 100%;
+  right: 0px;
+  z-index: 0;
+ }
+ .modal-content {
+  height: 100%;
+ }
+ .modal.right.fade .modal-dialog {
+  right: -260px;
+  -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+  -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+  -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+  transition: opacity 0.3s linear, right 0.3s ease-out;
+ }
+ .modal.right.fade.in .modal-dialog {
+  right: 0;
+ }
+ .modal-title {
+  white-space: nowrap;
+  text-align: left;
+     font-family: "PFBeauSansPro";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  color: rgba(49,57,73,1);
+ }
+ .close-icon {
+  overflow: visible;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  top: 24px;
+  transform: matrix(1,0,0,1,0,0);
+ }
+ .modal-body {
+  padding: 24px;
+ }

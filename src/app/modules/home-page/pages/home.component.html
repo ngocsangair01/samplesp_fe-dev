@@ -1,0 +1,93 @@
+<p-tabView (onChange)="change($event)">
+  <p-tabPanel *ngIf="hasPermission('action.view', 'resource.political')" [header]="'app.home.warning.political' | translate" [selected]="true" headerStyleClass="text-u-c">
+    <ng-template pTemplate="content">
+      <div class="col-md-12 e-styles-textboxdiv">
+        <home-political></home-political>
+      </div>
+    </ng-template>
+  </p-tabPanel>
+  <div *ngFor="let item of branchList, let i = index">
+    <p-tabPanel header="{{item.parName}}" headerStyleClass="text-u-c tab-index-{{i}}">
+      <ng-template pTemplate="content">
+        <div class="col-md-12 e-styles-textboxdiv">
+          <div class="row">
+            <div class="col-sm-4 col-md-4 col-xs-2" *ngFor="let element of listWarning">
+              <a class="display-table w100 " style="padding: 10px;"
+                (click)="exportOrMoveUrl(element.warningType, element.warningManagerId, element.url, element.name)"
+                [innerHTML]="element.tableCellWarningInfo">
+              </a>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-tabPanel>
+  </div>
+  <p-tabPanel *ngIf="hasPermission('action.view', 'resource.partyManager')" [header]="'app.home.warning.partyOrg' | translate" headerStyleClass="text-u-c">
+    <ng-template pTemplate="content">
+      <div class="col-md-12 e-styles-textboxdiv">
+        <home-warning [branch]="1"></home-warning>
+      </div>
+    </ng-template>
+  </p-tabPanel>
+  <p-tabPanel *ngIf="hasPermission('action.view', 'resource.monitoring')" [header]="'app.home.warning.checkMonitoring' | translate" headerStyleClass="text-u-c">
+    <ng-template pTemplate="content">
+      <div class="row">
+        <div class="col-md-6 e-styles-textboxdiv">
+          <home-punishment-chart></home-punishment-chart>
+        </div>
+        <div class="col-md-6 e-styles-textboxdiv">
+          <home-punishment-multi-chart></home-punishment-multi-chart>
+        </div>
+      </div>
+    </ng-template>
+  </p-tabPanel>
+  <p-tabPanel *ngIf="hasPermission('action.view', 'resource.employeeManager')" [header]="'app.home.warning.officer' | translate" headerStyleClass="text-u-c">
+    <ng-template pTemplate="content">
+      <div class="col-md-12 e-styles-textboxdiv">
+        <home-warning [branch]="2"></home-warning>
+      </div>
+      <div class="col-md-12 e-styles-textboxdiv">
+        <div class="row">
+          <div class="col-8 padding-chart" style="background-image: none">
+            <home-bar-chart></home-bar-chart>
+          </div>
+          <div class="col-4 padding-chart" style="background-image: none">
+            <home-pie-chart></home-pie-chart>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-tabPanel>
+  <p-tabPanel *ngIf="hasPermission('action.view', 'resource.securityProtection')" [header]="'app.home.warning.securityProtection' | translate" headerStyleClass="text-u-c">
+    <ng-template pTemplate="content">
+      <div class="col-md-12 e-styles-textboxdiv">
+        <home-warning [branch]="5"></home-warning>
+      </div>
+    </ng-template>
+  </p-tabPanel>
+  <p-tabPanel *ngIf="hasPermission('action.view', 'resource.population')" [header]="'app.home.warning.population' | translate" headerStyleClass="text-u-c">
+    <ng-template pTemplate="content">
+      <div class="col-md-12 e-styles-textboxdiv">
+        <home-warning [branch]="6"></home-warning>
+      </div>
+    </ng-template>
+  </p-tabPanel>
+</p-tabView>
+<br>
+<!-- Cấu hình đơn vị -->
+<div class="row" style = "display:none">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class=" panel-heading col-sm-12 col-md-12 col-xs-12 warning-block">
+        <strong class="text-u-c">
+          <span class="glyphicons glyphicons-git-merge">
+          </span>
+          <span translate>&nbsp; app.home.orgChart</span>
+        </strong>
+      </div>
+      <div class="panel-body padding-xl" style="overflow-x: scroll">
+        <home-tree-view #treeView></home-tree-view>
+      </div>
+    </div>
+  </div>
+</div>

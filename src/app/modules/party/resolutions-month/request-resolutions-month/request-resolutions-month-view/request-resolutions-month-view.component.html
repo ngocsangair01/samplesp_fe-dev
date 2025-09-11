@@ -1,0 +1,116 @@
+
+<div id="searchPage">
+    <div id="searchArea">
+      <div class="panel panel-default">
+        <div class="panel-heading" translate>
+          <strong class="text-u-c">
+            <i class="fa fa-th"></i>
+            label.resolutionsMonth.view
+          </strong>
+        </div>
+        <form id="formSave" [formGroup]="formSave">
+          <div class="panel-body padding-xl ui-g">
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'app.requestResolutionMonth.code' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <input type="text" class="form form-control" name="code" formControlName="code" [autoFocus]="true" maxlength="50" disabled>
+                <app-control-messages [control]="f['code']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+                {{'app.requestResolutionMonth.name' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <input type="text" class="form form-control" name="name" formControlName="name" maxlength="200" disabled>
+                <app-control-messages [control]="f['name']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'app.requestResolutionMonth.requestedDate' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <date-picker
+                  [property]="f['requestDate']"
+                  [disabled] = 'true'>
+                </date-picker>
+                <app-control-messages [control]="f['requestDate']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+                {{'app.requestResolutionMonth.finishDate' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <date-picker
+                  [property]="f['finishDate']"
+                  [disabled] = 'true'>
+                </date-picker>
+                <app-control-messages [control]="f['finishDate']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'app.requestResolutionMonth.partyOrgGivenRequest' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <party-org-selector
+                  [property]="f['partyOrganizationId']"
+                  operationKey="action.view"
+                  adResourceKey="resource.partyOrganization"
+                  [defaultValue]="true"
+                  isRequiredField = "true"
+                  disabled = "true"
+                  (onChange) = "onChangeUnit($event, partyOrgSelectorNotLeafOrg)"
+                  #partyOrgSelectorNotLeafOrg
+                >
+                </party-org-selector>
+                <app-control-messages [control]="f['partyOrganizationId']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right ">
+                {{'app.responseResolutionMonth.instructionFile' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <file-chooser
+                  [property]="f['attachFile']"
+                  htmlId="attachFile"
+                  validType="xls,xlsx,doc,docx,pdf"
+                  [disabled] = 'true'>
+                </file-chooser>
+                <app-control-messages [control]="f['attachFile']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'app.requestResolutionMonth.partyOrgPerformRequest' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <party-tree-selector
+                  operationKey="action.view"
+                  adResourceKey="resource.partyOrganization"
+                  height="735"
+                  #orgTree
+                  isGetAll = "true"
+                  [requestId] = "requestResolutionsMonthId"
+                  disabled ="true"
+                >
+                </party-tree-selector>
+                <app-control-messages [control]="f['lstNodeCheck']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right ">
+                Ghi chú
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                   <textarea maxlength="500" formControlName="description" id="description" cols="200" rows="3" class="form-control" disabled></textarea>
+                    <app-control-messages [control]="f['description']"></app-control-messages>
+              </div>
+            </div> 
+          </div>
+          <div class="vt-area-button">
+              <button type="button" (click)="goBack()" class="btn btn-sm btn-danger" [innerHTML]="'common.button.out' | translate"></button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+

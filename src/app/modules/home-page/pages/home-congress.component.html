@@ -1,0 +1,15 @@
+<div class="panel-body padding-xl ui-g" style="padding: 0 0 !important;">
+    <div class="ui-g-12 vt-row" >
+      <div class="ui-g-6" *ngFor="let item of resultList">
+        <label class="control-label ui-g-3 vt-align-right" title="{{item.documentName}}">{{item.documentName}}</label>
+        <div class="control-label ui-g-9" >
+          <a
+            style="color: rgb(0, 153, 255); text-overflow: ellipsis;display: block; overflow: hidden; padding-left: 15px;"
+            *ngFor="let file of item.listFile"
+            (click)="downloadFile(file)">
+          - {{file.fileName}}
+          </a>
+        </div>
+      </div> 
+    </div>
+</div>

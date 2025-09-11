@@ -1,0 +1,284 @@
+<div id="searchPage">
+  <div id="searchArea">
+    <div class="panel panel-default">
+      <div class="panel-heading" translate>
+        <strong>
+          common.label.search.info
+        </strong>
+      </div>
+      <form id="formSearch" [formGroup]="formSearch">
+        <div class="panel-body padding-xl ui-g">
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'propaganda.thoughtClassify' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text"
+                     class="form form-control"
+                     name="category"
+                     formControlName="category"
+                     maxlength="50" autocomplete="off">
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'app.settings.emailSmsDynamic.notificationForm' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['type']" [options]="typeList" optionLabel="label"
+                             optionValue="id" [placeHolder]="'common.label.cboSelectAll'">
+              </select-filter>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'common.label.employeeName' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text"
+                     class="form form-control"
+                     name="employeeName"
+                     formControlName="employeeName"
+                     maxlength="50" autocomplete="off">
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'common.label.status' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['status']" [options]="statusList" optionLabel="label"
+                             optionValue="id" [placeHolder]="'common.label.cboSelectAll'">
+              </select-filter>
+            </div>
+          </div>
+
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'common.label.employeeCode' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text"
+                     class="form form-control"
+                     name="employeeCode"
+                     formControlName="employeeCode"
+                     maxlength="50" autocomplete="off">
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'common.label.employeeEmail' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text"
+                     class="form form-control"
+                     name="employeeEmail"
+                     formControlName="employeeEmail"
+                     maxlength="50" autocomplete="off">
+            </div>
+          </div>
+
+          <!--            từ ngày - đến ngày-->
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'common.label.fromDateHistory' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker [property]="f['fromDate']" ></date-picker>
+              <app-control-messages [control]="f['fromDate']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'common.label.toDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker [property]="f['toDate']" ></date-picker>
+              <app-control-messages [control]="f['toDate']"></app-control-messages>
+            </div>
+          </div>
+
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'common.label.content' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <textarea type="text"
+                          class="form form-control"
+                          name="content"
+                          formControlName="content"
+                          maxlength="50" autocomplete="off">
+                    </textarea>
+              <app-control-messages [control]="f['content']"></app-control-messages>
+            </div>
+          </div>
+
+
+        </div>
+      </form>
+      <div class="panel-footer vt-area-button">
+        <button type="submit" class="btn btn-sm vt-btn btn-submit" (click)="processSearch()"
+                [innerHTML]="'common.button.icon.search' | translate"></button>
+        <button type="button" class="btn btn-sm btn-info" (click)="processApproved()"
+                [innerHTML]="'common.button.approved' | translate">
+        </button>
+
+        <button type="button" class="btn btn-sm btn-danger" (click)="processCancelAll()"
+                [innerHTML]="'common.button.cancelAllChoose' | translate">
+        </button>
+
+        <button type="button" class="btn btn-sm btn-danger" (click)="processQuickCancel()"
+                [innerHTML]="'common.button.quickCancel' | translate">
+        </button>
+
+        <button *ngIf="isHideSend === 1" type="submit" class="btn btn-sm btn-info" (click)="processSend()"
+                [innerHTML]="'common.button.sendSelection' | translate"></button>
+
+        <button *ngIf="isHideSend === 1" type="submit" class="btn btn-sm btn-info" (click)="sendSmsEmailAll()"
+                [innerHTML]="'common.button.sendAll' | translate"></button>
+        <button type="submit" *ngIf="hasPermission('action.calculate')" class="btn btn-sm vt-btn" (click)="test15()">15 minutes</button>
+        <button type="submit" *ngIf="hasPermission('action.calculate')" class="btn btn-sm vt-btn" (click)="test23()">23 hours</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="listArea" [ngClass]="isShowVertical?'display-list-vertical':''"
+     [ngStyle]="{'width': isShowVertical && !isShowHideVertical ? '100%' : '','height': isShowVertical && !isShowHideVertical ? '85vh' : ''}">
+  <div [ngClass]="isShowVertical?'panel panel-default display-max-vertical-height':'panel panel-default'">
+    <div class="panel-heading vt-relative vt-panel-heading-table">
+      <strong>
+        <img *ngIf="isShowVertical && !isShowHideVertical" alt="next" class="img-fluid icon-show-hide-search" src="./../../../../../../assets/images/home/Mask_Group_24371.png"  (click)="closeBasicSearch()">
+        {{'table.listEmailSmsHistory' | translate}}
+      </strong>
+      <div class="show-btn-right-header">
+        <button type="button" class="btn btn-sm vt-btn " (click)="processApproved()"
+                [innerHTML]="'common.button.approved' | translate">
+        </button>
+
+        <button type="button" class="btn btn-sm vt-btn " (click)="processCancelAll()"
+                [innerHTML]="'common.button.cancelAllChoose' | translate">
+        </button>
+
+        <button type="button" class="btn btn-sm vt-btn " (click)="processQuickCancel()"
+                [innerHTML]="'common.button.quickCancel' | translate">
+        </button>
+
+        <button *ngIf="isHideSend === 1" type="submit" class="btn btn-sm vt-btn" (click)="processSend()"
+                [innerHTML]="'common.button.sendSelection' | translate"></button>
+
+        <button *ngIf="isHideSend === 1" type="submit" class="btn btn-sm vt-btn" (click)="sendSmsEmailAll()"
+                [innerHTML]="'common.button.sendAll' | translate"></button>
+      </div>
+      </div>
+      <div class="panel-body panel-table table-container">
+        <p-table 
+          #ptable 
+          [value]="resultList.data" 
+          [paginator]="true" 
+          (onLazyLoad)="processSearch($event)"
+          [lazy]="true"
+          [rows]="changeRow"
+          [totalRecords]="resultList.recordsTotal" 
+          [scrollable]="true"
+          [resizableColumns]="true"
+          [lazyLoadOnInit]="false"
+          tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+          styleClass="controlOverflow"
+          >
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col style="width: 50px;">
+              <col style="width: 50px;">
+              <col style="width: 50px;">
+              <col style="width: 150px;">
+              <col style="width: 100px;">
+              <col style="width: 200px;">
+              <col style="width: 250px;">
+              <col style="width: 100px;">
+              <col style="width: 150px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th pResizableColumn translate></th>
+              <th pResizableColumn translate>common.table.index</th>
+              <th pResizableColumn translate>
+                <input type="checkbox" class="ui-chkbox ui-chkbox-box" style="height: 1.5rem;"
+                       name="isChooseAll" (change)="chooseAll($event, resultList)"/>
+                <i></i>
+              </th>
+              <th pResizableColumn >
+                {{'propaganda.thoughtClassify' | translate}}
+              </th>
+              <th pResizableColumn >
+                {{'app.settings.emailSmsDynamic.notificationForm' | translate}}
+              </th>
+              <th pResizableColumn >
+                {{'questionAndAnswer.label.title' | translate}}
+              </th>
+              <th pResizableColumn >
+                {{'common.label.content' | translate}}
+              </th>
+              <th pResizableColumn >
+                {{'EmployeeBO.employeeCode' | translate}}
+              </th>
+              <th pResizableColumn >
+                {{'EmployeeBO.fullName' | translate}}
+              </th>
+              <th pResizableColumn>
+                {{'common.label.createdDate' | translate}}
+              </th>
+              <th pResizableColumn >
+                {{'common.label.status' | translate}}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-index="rowIndex+1" >
+            <tr>
+              <td class="vt-align-center">
+                <div ngbDropdown class="d-inline-block">
+                  <div ngbDropdownToggle class="vt-action-hover">
+                    <img class="menu-icon" src="./../../../assets/images/home/Icon.svg">
+                  </div>
+                  <!-- View detail -->
+                  <div >
+                    <button class="dropdown-item" (click)="prepareView(item)"
+                            [innerHTML]="'common.button.table.viewdropdown' | translate">
+                    </button>
+                  </div>
+                </div>
+            </td>
+            <td class="vt-align-center">{{index}}</td>
+            <td class="vt-align-center">
+              <input type="checkbox" class="ui-chkbox ui-chkbox-box" style="height: 1.5rem;"
+                     *ngIf="item.status == 0" (change)="onChoose($event, item)"
+                     name="isChoose" [(ngModel)]="item.isChoose"
+              />
+              <i></i>
+            </td>
+            <td class="vt-align-left" [title]="item.category">{{item.category}}</td>
+            <td class="vt-align-left" [title]="item.type">{{item.type}}</td>
+            <td class="vt-align-left" [title]="item.title">{{item.title}}</td>
+            <td class="vt-align-left" [title]="item.content">
+              <span *ngIf="item.type=='email'" class="title-truncate" style="-webkit-box-orient: vertical;" [innerHTML]="item.content"></span>
+              <span *ngIf="item.type=='sms'" class="title-truncate" style="-webkit-box-orient: vertical;">{{item.content}}</span>
+            </td>
+            <td class="vt-align-right" [title]="item.employeeCode">{{item.employeeCode}}</td>
+            <td class="vt-align-left" [title]="item.employeeName">{{item.employeeName}}</td>
+            <td class="vt-align-center"> {{item.createdDate|date: 'dd/MM/yyyy HH:mm:ss.SS'}}</td>
+            <td class="vt-align-left">
+              <div *ngIf="item.status == 0" [title]="'propaganda.thoughtReport.label.notifyStatus.0'|translate"><span translate>propaganda.thoughtReport.label.notifyStatus.0</span></div>
+              <div *ngIf="item.status == 1" [title]="'propaganda.thoughtReport.label.notifyStatus.1'|translate"><span translate>propaganda.thoughtReport.label.notifyStatus.1</span></div>
+              <div *ngIf="item.status == 2" [title]="'propaganda.thoughtReport.label.notifyStatus.2'|translate"><span translate>propaganda.thoughtReport.label.notifyStatus.2</span></div>
+              <div *ngIf="item.status == 3" [title]="'propaganda.thoughtReport.label.notifyStatus.3'|translate"><span translate>propaganda.thoughtReport.label.notifyStatus.3</span></div>
+              <div *ngIf="item.status == -1" [title]="'propaganda.thoughtReport.label.notifyStatus.4'|translate"><span translate>propaganda.thoughtReport.label.notifyStatus.4</span></div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr class="emptymessage">
+            <td [attr.colspan]="14" [innerHTML]="'app.noRecords' | translate">
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+          <table-footer (changeRow)="onTablePageChange($event)"  [resultList]="resultList"></table-footer>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

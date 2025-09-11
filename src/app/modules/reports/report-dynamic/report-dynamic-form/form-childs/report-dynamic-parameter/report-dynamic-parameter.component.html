@@ -1,0 +1,102 @@
+<form id="formParameter" [formGroup]="formParameter">
+  <div class="panel panel-default">
+    <div class="panel-heading vt-relative" style="border: none;">
+      <strong>
+        <span translate> app.reportDynamic.parameterForm </span>
+      </strong>
+    </div>
+    <div class="panel-body panel-table" style="margin-top: unset; padding: 12px;">
+      <p><span style="font-weight: bold;">Chú ý: Các câu lệnh SQL trong param được nối chuỗi vs các câu lệnh SQL
+          Command. Cần viết theo đúng thứ tự.</span></p>
+      <p-table [value]="formParameter.controls" tableStyleClass="table controls-table table-wrapper b-t b-b" [resizableColumns]="true"
+               [scrollable]="true">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col style="width: 50px;">
+            <col style="width: 150px;">
+            <col style="width: 200px;">
+            <col style="width: 150px;">
+            <col style="width: 100px;">
+            <col style="width: 200px;">
+            <col style="width: 250px;">
+            <col style="width: 100px;">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn translate><span>common.table.index</span></th>
+            <th pResizableColumn translate><span
+                [ngClass]="{'required': formParameter.controls[0]? formParameter.controls[0].controls.parameterCode.isRequire : false}">app.reportDynamic.parameterCode</span>
+            </th>
+            <th pResizableColumn translate><span
+                [ngClass]="{'required': formParameter.controls[0]? formParameter.controls[0].controls.parameterName.isRequire : false}">app.reportDynamic.parameterName</span>
+            </th>
+            <th pResizableColumn translate><span
+                [ngClass]="{'required': formParameter.controls[0]? formParameter.controls[0].controls.dataType.isRequire : false}">app.reportDynamic.dataType</span>
+            </th>
+            <th pResizableColumn translate><span
+                [ngClass]="{'required': formParameter.controls[0]? formParameter.controls[0].controls.isRequire.isRequire : false}">app.reportDynamic.isRequire</span>
+            </th>
+            <th pResizableColumn translate><span
+                [ngClass]="{'required': formParameter.controls[0]? formParameter.controls[0].controls.description.isRequire : false}">app.reportDynamic.description</span>
+            </th>
+            <th pResizableColumn translate><span
+                [ngClass]="{'required': formParameter.controls[0]? formParameter.controls[0].controls.sqlCondition.isRequire : false}">app.reportDynamic.sqlCondition</span>
+            </th>
+            <th pResizableColumn translate><span>app.reportDynamic.add_delete</span></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-index="rowIndex">
+          <tr [formGroup]="item">
+            <td class="vt-align-center">
+              {{index+1}}
+            </td>
+            <td>
+              <dynamic-input [property]="item.controls.parameterCode" [maxLength]='200'>
+              </dynamic-input>
+              <app-control-messages [control]="item.controls.parameterCode"></app-control-messages>
+            </td>
+            <td>
+              <dynamic-input [property]="item.controls.parameterName" [maxLength]='200'>
+              </dynamic-input>
+              <app-control-messages [control]="item.controls.parameterName"></app-control-messages>
+            </td>
+            <td>
+              <select-filter [property]="item.controls.dataType" [options]="listDataType" optionLabel="parValue"
+                optionValue="parCode"
+                [placeHolder]="item.controls.dataType.isRequire ? 'common.label.cboMustSelect' : 'common.label.cboSelect'">
+              </select-filter>
+              <app-control-messages [control]="item.controls.dataType"></app-control-messages>
+            </td>
+            <td class="vt-align-center">
+              <label class="i-checks" [hidden]="item.controls.isRequire.isHide">
+                <input type="checkbox" class="form-check-input control-label" [value]="1" name="isRequire"
+                  formControlName="isRequire">
+                <i></i>
+              </label>
+              <app-control-messages [control]="item.controls.isRequire"></app-control-messages>
+            </td>
+            <td>
+              <dynamic-input [property]="item.controls.description" [rows]='5' [type]="'text-area'" [maxLength]='500'>
+              </dynamic-input>
+              <app-control-messages [control]="item.controls.description"></app-control-messages>
+            </td>
+            <td>
+              <dynamic-input [property]="item.controls.sqlCondition" [rows]='5' [type]="'text-area'">
+              </dynamic-input>
+              <app-control-messages [control]="item.controls.sqlCondition"></app-control-messages>
+            </td>
+            <td class="vt-align-center">
+              <button class="btn-icon plus" type="button" (click)="addGroup(index, item)"
+                [innerHTML]="'common.icon.plus' | translate">
+              </button>
+              <button class="btn-icon minus" type="button" (click)="removeGroup(index, item)"
+                [innerHTML]="'common.icon.minus' | translate">
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,59 @@
+<div class="panel-heading vt-relative">
+  <strong class="text-u-c"><i class="fa fa-th"></i>
+    <span translate> employee.assessment.title</span>
+  </strong>
+</div>
+<div class="panel-body panel-table">
+  <p-table
+    [value]="resultList.data"
+    [responsive]="true"
+    (onLazyLoad)="processSearch($event)"
+    [lazy]="true"
+    [rows]="resultList.recordsTotal"
+    [totalRecords]="resultList.recordsTotal"
+    [scrollable]="true"
+    [lazyLoadOnInit]="false"
+    tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+  >
+    <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+        <col class="size-1">
+        <col>
+        <col class="size-12">
+        <col class="size-6">
+        <col class="size-6">
+        <col style="width: 300px !important;">
+      </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th translate>common.table.index</th>
+        <th translate>employee.assessment.assessName</th>
+        <th translate>label.document.file.name</th>
+        <th translate>employee.assessment.validFrom</th>
+        <th translate>employee.assessment.validTo</th>
+        <th translate>employee.assessment.criticalLevel</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+      <tr>
+        <td class="vt-align-center">{{ index }}</td>
+        <td class="vt-align-left">{{ item.assessName }}</td>
+        <td class="vt-align-left">
+          <a class="text-link" (click)="processDownloadFile(item)">
+            <span>{{ item.vtCriticalId }}.pdf</span>
+          </a>
+        </td>
+        <td class="vt-align-center">{{ item.validFrom }}</td>
+        <td class="vt-align-center">{{ item.validTo }}</td>
+        <td class="vt-align-left">{{ item.criticalLevel }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr class="emptymessage">
+        <td [attr.colspan]="5" [innerHTML]="'app.noRecords' | translate">
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,0 +1,220 @@
+<div class="card-form">
+  <div class="clearfix">
+    <div class="left-nav-bar pull-left row-header">
+      <div>
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="goBack();">
+        <span *ngIf="!formSave.get('fundActivityId').value" class="title" translate>fundActivity.label.addActivity</span>
+        <span *ngIf="formSave.get('fundActivityId').value && isView === false" class="title"
+          translate>fundActivity.label.editActivity</span>
+        <span *ngIf="formSave.get('fundActivityId').value && isView === true" class="title"
+          translate>fundActivity.label.viewActivity</span>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+        <ul class="header-right sys-ul space-line">
+          <li>
+            <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="goBack();" [innerHTML]="'common.button.out' | translate">
+            </button>
+          </li>
+          <li *ngIf="!isView">
+            <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="processSaveOrUpdate()" [innerHTML]="'common.button.icon.save' | translate">
+            </button>
+          </li>
+          <li *ngIf="isView">
+            <button class="btn btn-sm vt-btn btn-submit mt-btn btn-header-right ng-star-inserted" type="button" (click)="navigate()" [innerHTML]="'common.button.icon.edit' | translate">
+            </button>
+          </li>
+        </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <div class="panel panel-default card-info">
+    <form id="formSave" [formGroup]="formSave">
+      <div class="panel-heading vt-relative">
+        <strong>
+          <!-- <span *ngIf="!formSave.get('fundActivityId').value" translate>fundActivity.label.addActivity</span>
+          <span *ngIf="formSave.get('fundActivityId').value && isView === false"
+            translate>fundActivity.label.editActivity</span>
+          <span *ngIf="formSave.get('fundActivityId').value && isView === true"
+            translate>fundActivity.label.viewActivity</span> -->
+          <span class="ml-2 title-info">Thông tin hoạt động</span>
+        </strong>
+      </div>
+      <div class="panel-body padding-xl ui-g">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right" [ngClass]="isView?'':'required'">
+            {{'fundActivity.label.activityType'|translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-3">
+            <select-filter [placeHolder]="'common.label.cboMustSelect'" [property]="f['activityTypeId']"
+              [options]="activityTypeList" optionLabel="name" optionValue="categoryId" [disabled]="isView">
+            </select-filter>
+            <app-control-messages [control]="f['activityTypeId']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right" [ngClass]="isView?'':'required'">
+            {{'fundActivity.label.activityName' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-3">
+            <input type="text" class="form form-control" maxlength="255" name="fundActivityName" formControlName="fundActivityName"
+              [attr.disabled]="isView?true:null" [autoFocus]="true" [ngClass]="isView?'':'required'">
+            <app-control-messages [control]="f['fundActivityName']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right" [ngClass]="isView?'':'required'">
+            {{'fundActivity.label.executedDate' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-3">
+            <date-picker [property]="f['executedDate']" [disabled]='isView'>
+            </date-picker>
+            <app-control-messages [control]="f['executedDate']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right" [ngClass]="isView?'':'required'">
+            {{'fundActivity.label.organizationName'|translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-3">
+            <org-selector [property]="f['organizationId']" operationKey="action.view"
+              adResourceKey="resource.fundActivity" [defaultValue]="false" [isRequiredField]="true" [disabled]="isView">
+            </org-selector>
+            <app-control-messages [control]="f['organizationId']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row" >
+          <label class="ui-g-12 ui-md-3 ui-lg-2 vt-align-right">
+          </label>
+          <div class="ui-g-12 ui-md-9 ui-lg-9">
+            <p-table [scrollable]="true" [value]="lstFormFundMangementConfig.controls" styleClass="controlOverflow"
+              tableStyleClass="table controls-table table-wrapper b-t b-b"
+              [resizableColumns]="true">
+              <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                  <col style="width: 50px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;" *ngIf="!isView">
+                </colgroup>
+              </ng-template>
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pResizableColumn>STT</th>
+                  <th pResizableColumn>
+                    <label class="required">{{'fundManagement.label.fundType' | translate}}</label>
+                  </th>
+                  <th pResizableColumn>
+                    <label class="required">{{'fundActivity.label.organization' | translate}}</label>
+                  </th>
+                  <th pResizableColumn>{{'fundActivity.label.funName' | translate}}</th>
+                  <th pResizableColumn>
+                    <label class="required">{{'fundActivity.label.activityCategory' | translate}}</label>
+                  </th>
+                  <th pResizableColumn>
+                    <label class="required">{{'fundActivity.label.executedMoney' | translate}}</label>
+                  </th>
+                  <th pResizableColumn *ngIf="!isView">{{'fundActivity.label.activityTool' | translate}}</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item let-index="rowIndex">
+                <tr [formGroup]="item">
+                  <td class="vt-align-center">
+                    {{index+1}}
+                  </td>
+                  <td>
+                    <select-filter [placeHolder]="'common.label.cboSelect'" [property]="item.controls.fundTypeId"
+                      [options]="fundTypeList" optionLabel="name" optionValue="fundTypeId"
+                      (onChange)="setActivityCategoryAndFundName(item)" [disabled]="isView">
+                    </select-filter>
+                    <app-control-messages [control]="item.controls.fundTypeId"></app-control-messages>
+                  </td>
+                  <td class="vt-align-center">
+                    <org-selector [property]="item.controls.organizationId" operationKey="action.view"
+                      adResourceKey="resource.fundActivity" [isRequiredField]="false" [defaultValue]="false"
+                      (onChange)="setActivityCategoryAndFundName(item)" [disabled]="isView">
+                    </org-selector>
+                    <app-control-messages [control]="item.controls.organizationId"></app-control-messages>
+                  </td>
+                  <td class="vt-align-center">
+                    <input type="text" class="form form-control" name="fundName" formControlName="fundName"
+                      disabled>
+                      <app-control-messages [control]="item.controls.fundName"></app-control-messages>
+                  </td>
+                  <td class="vt-align-left">
+                    <select-filter [placeHolder]="'common.label.cboSelect'" [property]="item.controls.activityCategoryId"
+                      [options]="item.controls.activityCategoryList.value" optionLabel="name"
+                      optionValue="activityCategoryId" [disabled]="isView">
+                    </select-filter>
+                    <app-control-messages [control]="item.controls.activityCategoryId"></app-control-messages>
+                  </td>
+                  <td class="vt-align-center">
+                    <input type="text" class="form form-control" maxlength="15" name="executedMoney" 
+                      formControlName="executedMoney" [attr.disabled]="isView?true:null" (change)="getTotal()">
+                    <app-control-messages [control]="item.controls.executedMoney"></app-control-messages>
+                  </td>
+                  <td class="vt-align-center" *ngIf="!isView">
+                    <button type="button" class="btn-icon plus" [title]="'titleAdd' | translate"
+                      (click)="addRow(index, item)" [attr.disabled]="isView?true:null"
+                      [innerHTML]="'common.icon.plus' | translate">
+                    </button>
+                    <button type="button" class="btn-icon minus" [title]="'titleDelete' | translate"
+                      (click)="removeRow(index, item)" [attr.disabled]="isView?true:null"
+                      [innerHTML]="'common.icon.minus' | translate">
+                    </button>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'fundActivity.label.ortherMoney' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-3">
+            <input type="text" class="form form-control" maxlength="15" name="ortherMoney" 
+                    formControlName="ortherMoney" [attr.disabled]="isView?true:null" (change)="getTotal()">
+            <app-control-messages [control]="f['ortherMoney']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right">
+            {{'fundActivity.label.totalExecutedMoney' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-3">
+            <input type="text" class="form form-control" name="totalExecutedMoney" formControlName="totalExecutedMoney"
+             disabled>
+              <app-control-messages [control]="f['totalExecutedMoney']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label *ngIf="isRemainingMoney === false" class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'fundActivity.label.note' | translate}}
+          </label>
+          <label *ngIf="isRemainingMoney === true" class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+            {{'fundActivity.label.note' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-9 ui-lg-9">
+            <textarea type="text" name="note" formControlName="note" id="note" maxlength="1000" class="form-control"
+              [attr.disabled]="isView? true : null"></textarea>
+              <div *ngIf="isRemainingMoney === true && trim(f['note'].value) " class="errorMessageDiv show" ng-reflect-klass="errorMessageDiv" ng-reflect-ng-class="[object Object]">
+                <small *ngIf="!isView" class="text-danger errorMessage ng-star-inserted"> * Hoạt động đã vượt quá số tiền còn lại của Quỹ. Vui lòng nhập thông tin ghi chú.</small>
+              </div>
+              <div *ngIf="isRemainingMoney === false"></div>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'common.label.attachmentFile' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-3">
+            <multi-file-chooser [property]="f['files']" fileName="fileAttachment" [validMaxSize]="50"
+              validType="png,jpg,gif,tiff,bmp,xls,xlsx,doc,docx,pdf,rar,zip,7z" [disabled]="isView"
+              [downLoadFile]="downLoadFile">
+            </multi-file-chooser>
+            <app-control-messages [control]="f['files']"></app-control-messages>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

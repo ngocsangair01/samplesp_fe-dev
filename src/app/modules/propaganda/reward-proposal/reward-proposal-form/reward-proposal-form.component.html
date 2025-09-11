@@ -1,0 +1,771 @@
+<div id="searchPage">
+  <div id="searchArea">
+    <div class="panel panel-default">
+      <form id="formSave" [formGroup]="formSave">
+        <div class="panel-heading">
+          <strong class="text-u-c">
+            <i class="fa fa-th"></i>
+            &nbsp;
+            <span *ngIf="!isEdit&&!isView" translate> tab.rewardProposal.rewardInfoInsert</span>
+            <span *ngIf="isEdit&&!isView" translate> tab.rewardProposal.rewardInfoEdit</span>
+            <span *ngIf="isView" translate> tab.rewardProposal.rewardInfoView</span>
+          </strong>
+        </div>
+        <div class="panel-body padding-xl ui-g">
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="isView?'':'required'">
+              {{'label.rewardProposal.organization' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <org-selector [property]="f['organizationId']" operationKey="action.view"
+                adResourceKey="resource.propaganda" [defaultValue]="true" [isRequiredField]="true"
+                [disabled]="isView || isEdit" (onChange)="getRewardProposalTypeList($event)">
+              </org-selector>
+              <app-control-messages [control]="f['organizationId']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" [ngClass]="isView?'':'required'">
+              {{'label.rewardProposal.employeeRequest' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <data-picker [property]="f['employeeId']" systemCode="political" operationKey="action.view"
+                adResourceKey="resource.propaganda" objectBO="EmployeeBO" codeField="employeeCode" nameField="fullName"
+                emailField="email" selectField="employeeId" [autoFocus]="isEdit" [isRequiredField]="true"
+                [disabled]="isView" [filterCondition]="' AND obj.status = 1'" mobileNumberField="mobileNumber">
+              </data-picker>
+              <app-control-messages [control]="f['employeeId']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="isView?'':'required'">
+              {{'label.rewardProposal.orgCode' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [placeHolder]="'common.label.cboMustSelect'" [property]="f['orgCode']"
+                [options]="orgCodeList" optionLabel="name" optionValue="code" [disabled]="isView"
+                (onChange)="onChangeOrgCode($event)">
+              </select-filter>
+              <app-control-messages [control]="f['orgCode']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" [ngClass]="isView?'':'required'">
+              {{'label.rewardProposal.deptCode' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3 nowrap">
+              <select-filter [placeHolder]="'common.label.cboMustSelect'" [property]="f['deptCode']"
+                [options]="deptCodeList" optionLabel="name" optionValue="code" [disabled]="isView"
+                (onChange)="getRewardProposalCode($event)">
+              </select-filter>
+              <app-control-messages [control]="f['deptCode']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="isView?'':'required'">
+              {{'label.rewardProposal.rewardProposalType' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [placeHolder]="'common.label.cboMustSelect'" [property]="f['rewardProposalType']"
+                [options]="rewardTypeList" optionLabel="label" optionValue="value" [disabled]="isView"
+                [isMultiLanguage]="true">
+              </select-filter>
+              <app-control-messages [control]="f['rewardProposalType']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'label.rewardProposal.rewardProposalCode' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" id="rewardProposalCode" class="form form-control" name="rewardProposalCode"
+                formControlName="rewardProposalCode" maxlength="150" [attr.disabled]="true">
+              <app-control-messages [control]="f['rewardProposalCode']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'label.rewardProposal.listReward' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <file-chooser-proposal [property]="f['rewardFile']" [validMaxSize]="50" validType="xls"
+                isChangeFile="reward-proposal" [disabled]="isView">
+              </file-chooser-proposal>
+              <br>
+              <a class="text-link" [hidden]="isView" (click)="processDownloadTemplate();">
+                <span translate><i class="fa fa-download"></i> app.common.downloadTemplate</span>
+              </a>
+              <app-control-messages [control]="f['rewardFile']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" [ngClass]="isView?'':'required'">
+              {{'label.rewardProposal.proposalDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker [property]="f['proposalDate']" [disabled]="isView">
+              </date-picker>
+              <app-control-messages [control]="f['proposalDate']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'label.rewardProposal.totalAmountReward' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" id="totalAmountReward" class="form form-control" name="totalAmountReward"
+                formControlName="totalAmountReward" maxlength="15" [attr.disabled]="true">
+              <app-control-messages [control]="f['totalAmountReward']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'label.rewardProposal.isSignVoffice' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <label class="i-switch bg-info m-t-xs m-r">
+                <input type="checkbox" name="isSignVoffice" [value]="1" formControlName="isSignVoffice" />
+                <i></i>
+              </label>
+            </div>
+          </div>
+          <div *ngIf="f['isSignVoffice'].value == 1" class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'label.rewardProposal.approvalDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker [property]="f['approvalDate']" [disabled]="true">
+              </date-picker>
+              <app-control-messages [control]="f['approvalDate']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'label.rewardProposal.documentNumber' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" id="documentNumber" class="form form-control" name="documentNumber"
+                formControlName="documentNumber" maxlength="100" [attr.disabled]="true">
+              <app-control-messages [control]="f['documentNumber']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'tab.rewardProposal.proposalMonth' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker [property]="f['proposalMonth']" [view]="'month'" [disabled]="isView"></date-picker>
+              <app-control-messages [control]="f['proposalMonth']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="isView?'':'required'">
+              {{'label.rewardProposal.contentProposal' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-9 required">
+              <textarea formControlName="content" id="content" cols="200" rows="3" class="form-control" maxlength="1000"
+                [attr.disabled]="isView?true:null"></textarea>
+              <app-control-messages [control]="f['content']"></app-control-messages>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer vt-area-button">
+          <button type="submit" *ngIf="!isView" (click)="processSaveOrUpdate()" class="btn btn-sm btn-info"
+            [innerHTML]="'common.button.icon.save' | translate"></button>
+          <button type="button" (click)="goBack();" class="btn btn-sm btn-danger"
+            [innerHTML]="'common.button.out' | translate"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div id="listArea">
+    <div class="panel panel-default">
+      <div class="panel-heading vt-relative">
+        <strong class="text-u-c">
+          <i class="fa fa-th"></i>
+          &nbsp;{{ 'title.rewardProposal.rewardDetailList' | translate }}
+        </strong>
+      </div>
+      <!-- tabView -->
+      <br />
+      <p-tabView>
+        <!-- Khen thuong tap the -->
+        <p-tabPanel header="{{'tab.rewardProposal.rewardGroup' | translate}}">
+          <form id="formSave" [formGroup]="formRewardGroup">
+            <div class="panel-body panel-table">
+              <p-table [scrollable]="true" [value]="formRewardGroup.controls"
+                tableStyleClass="table controls-table table-wrapper b-t b-b" styleClass="rewardGroupMinHeight">
+                <ng-template pTemplate="colgroup" let-columns>
+                  <colgroup>
+                    <col class="size-1">
+                    <col *ngIf="!isView" class="size-4">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                  </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th translate>common.table.index</th>
+                    <th translate *ngIf="!isView"><span>common.label.action</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardGroup.rewardProposal.organization</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardGroup.rewardProposal.rewardGroupName</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardGroup.rewardProposal.organizationName</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardGroup.rewardProposal.achievementsCommended</span></th>
+                    <th translate><span [ngClass]="isView?'':'required'">tabRewardGroup.rewardProposal.rewardType</span>
+                    </th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardGroup.rewardProposal.totalAmountReward</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.paymentPeriod</span>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-index="rowIndex">
+                  <tr [formGroup]="item">
+                    <td class="vt-align-center">
+                      {{index+1}}
+                    </td>
+                    <td *ngIf="!isView" class="vt-align-center">
+                      <button class="btn-icon minus" type="button" [title]="'titleDelete' | translate"
+                        (click)="removeRewardGroup(index, item)" [innerHTML]="'common.icon.minus' | translate">
+                      </button>
+                    </td>
+                    <td>
+                      <org-selector [property]="item.controls.organizationId" operationKey="action.view"
+                        adResourceKey="resource.partyOrganization" [defaultValue]="true" [isRequiredField]="true"
+                        [disabled]="isView">
+                      </org-selector>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="rewardGroup" name="rewardGroup" class="form-control"
+                        maxlength="255" [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.rewardGroup"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="organizationName" name="organizationName" class="form-control"
+                        maxlength="255" [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.organizationName"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="achievementsCommended" name="achievementsCommended"
+                        class="form-control" maxlength="255" [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.achievementsCommended"></app-control-messages>
+                    </td>
+                    <td>
+                      <select-filter [placeHolder]="'common.label.cboMustSelect'"
+                        [property]="item.controls.rewardFormId" [options]="rewardFormList" optionLabel="name"
+                        optionValue="propagandaRewardFormId" [disabled]="isView" appendTo="body">
+                      </select-filter>
+                      <app-control-messages [control]="item.controls.rewardFormId"></app-control-messages>
+                    </td>
+                    <td class="vt-align-right">
+                      <input type="number" formControlName="totalAmountReward" name="totalAmountReward"
+                        max="999999999999999" min="0" class="form-control" maxlength="15" min="0" max="999999999999999"
+                        (blur)="mathTotalAmountReward();" [attr.disabled]="isView?true:null"
+                        (keyup)="formatNumber(item.controls.totalAmountReward);"
+                        (keydown)="formatNumber(item.controls.totalAmountReward);">
+                      <app-control-messages [control]="item.controls.totalAmountReward"></app-control-messages>
+                    </td>
+                    <td>
+                      <date-picker [property]="item.controls.paymentPeriod" appendTo="body" [view]="'month'"
+                        [disabled]="isView?true:null">
+                      </date-picker>
+                      <app-control-messages [control]="item.controls.paymentPeriod"></app-control-messages>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </form>
+          <button *ngIf="!isView" class="btn-icon plus" type="button" [title]="'titleAdd' | translate"
+            style="margin-left: 1.2rem;" (click)="addRewardGroup()" [innerHTML]="'common.icon.plus' | translate">
+          </button>
+        </p-tabPanel>
+        <!-- Khen thuong CBCNV -->
+        <p-tabPanel header="{{'tab.rewardProposal.rewardEmployee' | translate}}">
+          <form id="formSave" [formGroup]="formRewardEmployee">
+            <div class="panel-body panel-table">
+              <p-table [scrollable]="true" [value]="formRewardEmployee.controls"
+                tableStyleClass="table controls-table table-wrapper b-t b-b" styleClass="rewardGroupMinHeight">
+                <ng-template pTemplate="colgroup" let-columns>
+                  <colgroup>
+                    <col class="size-1">
+                    <col *ngIf="!isView" class="size-4">
+                    <col class="size-6">
+                    <col class="size-8">
+                    <col class="size-9">
+                    <col class="size-7">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-10">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-8">
+                  </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th translate>common.table.index</th>
+                    <th translate *ngIf="!isView"><span>common.label.action</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.employeeId</span></th>
+                    <th translate><span>tabRewardEmployee.rewardProposal.memberName</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.rewardFormId</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.rewardReason</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.residentStatus</span></th>
+                    <th translate><span>tabRewardEmployee.rewardProposal.taxCode</span></th>
+                    <th translate><span>tabRewardEmployee.rewardProposal.idNumber</span></th>
+                    <th translate><span>tabRewardEmployee.rewardProposal.idNumberDate</span></th>
+                    <th translate><span>tabRewardEmployee.rewardProposal.idNumberPlace</span></th>
+                    <th translate>tabRewardEmployee.rewardProposal.accountNumber</th>
+                    <th translate>tabRewardEmployee.rewardProposal.bankName</th>
+                    <th translate><span>tabRewardEmployee.rewardProposal.addressPhone</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.totalAmountPayment</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.paymentPeriod</span></th>
+                    <th translate>tabRewardEmployee.rewardProposal.note</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-index="rowIndex">
+                  <tr [formGroup]="item">
+                    <td class="vt-align-center">
+                      {{index+1}}
+                    </td>
+                    <td *ngIf="!isView" class="vt-align-center">
+                      <button class="btn-icon minus" type="button" [title]="'titleDelete' | translate"
+                        (click)="removeRewardEmployee(index, item)" [innerHTML]="'common.icon.minus' | translate">
+                      </button>
+                    </td>
+                    <td>
+                      <data-picker [property]="item.controls.employeeId" systemCode="political"
+                        operationKey="action.view" adResourceKey="resource.propaganda" objectBO="EmployeeBO"
+                        codeField="fullName" nameField="employeeCode" emailField="email" selectField="employeeId"
+                        (onChange)="loadData($event,item)" [isRequiredField]="true" mobileNumberField="mobileNumber"
+                        [filterCondition]="' AND obj.status = 1'" [disabled]="isView">
+                      </data-picker>
+                      <app-control-messages [control]="item.controls.employeeId"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="memberName" name="memberName" class="form-control"
+                        maxlength="255" [attr.disabled]="true">
+                      <app-control-messages [control]="item.controls.memberName"></app-control-messages>
+                    </td>
+                    <td>
+                      <select-filter [placeHolder]="'common.label.cboMustSelect'"
+                        [property]="item.controls.rewardFormId" [options]="rewardFormList" optionLabel="name"
+                        optionValue="propagandaRewardFormId" [disabled]="isView" appendTo="body"
+                        (onChange)="mathTotalAmountReward();">
+                      </select-filter>
+                      <app-control-messages [control]="item.controls.rewardFormId"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="rewardReason" name="rewardReason" class="form-control"
+                        maxlength="255" [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.rewardReason"></app-control-messages>
+                    </td>
+                    <td>
+                      <select-filter [placeHolder]="'common.label.cboMustSelect'"
+                        [property]="item.controls.residentStatus" [options]="residentStatusList" optionLabel="label"
+                        optionValue="value" [disabled]="isView" appendTo="body" (onChange)="mathTotalAmountReward();">
+                      </select-filter>
+                      <app-control-messages [control]="item.controls.residentStatus"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="taxCode" name="taxCode" class="form-control" maxlength="255"
+                        [attr.disabled]="true">
+                      <app-control-messages [control]="item.controls.taxCode"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="idNumber" name="idNumber" class="form-control" maxlength="255"
+                        [attr.disabled]="true">
+                      <app-control-messages [control]="item.controls.idNumber"></app-control-messages>
+                    </td>
+                    <td>
+                      <date-picker [property]="item.controls.idNumberDate" appendTo="body" [disabled]="true">
+                      </date-picker>
+                      <app-control-messages [control]="item.controls.idNumberDate" [attr.disabled]="true">
+                      </app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="idNumberPlace" name="idNumberPlace" class="form-control"
+                        maxlength="255" [attr.disabled]="true">
+                      <app-control-messages [control]="item.controls.idNumberPlace"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="accountNumber" name="accountNumber" class="form-control"
+                        maxlength="100" [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.accountNumber"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="bankName" name="bankName" class="form-control" maxlength="255"
+                        [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.bankName"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="addressPhone" name="addressPhone" class="form-control"
+                        maxlength="500" [attr.disabled]="true">
+                      <app-control-messages [control]="item.controls.addressPhone"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="number" formControlName="totalAmountPayment" name="totalAmountPayment"
+                        class="form-control" maxlength="15" [attr.disabled]="isView?true:null" min="0"
+                        max="999999999999999" (blur)="mathTotalAmountReward();"
+                        (keyup)="formatNumber(item.controls.totalAmountPayment);"
+                        (keydown)="formatNumber(item.controls.totalAmountPayment);">
+                      <app-control-messages [control]="item.controls.totalAmountPayment"></app-control-messages>
+                    </td>
+                    <td>
+                      <date-picker [property]="item.controls.paymentPeriod" appendTo="body" [view]="'month'"
+                        [disabled]="isView?true:null">
+                      </date-picker>
+                      <app-control-messages [control]="item.controls.paymentPeriod"></app-control-messages>
+                    </td>
+                    <td>
+                      <textarea formControlName="note" name="note" class="form-control" maxlength="1000"
+                        [attr.disabled]="isView?true:null"></textarea>
+                      <app-control-messages [control]="item.controls.note"></app-control-messages>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </form>
+          <button *ngIf="!isView" class="btn-icon plus" type="button" [title]="'titleAdd' | translate"
+            (click)="addRewardEmployee()" [innerHTML]="'common.icon.plus' | translate" style="margin-left: 1.2rem;">
+          </button>
+        </p-tabPanel>
+        <!-- Khen thuong Vang Lai -->
+        <p-tabPanel header="{{'tab.rewardProposal.rewardHaunt' | translate}}">
+          <form id="formSave" [formGroup]="formRewardHaunt">
+            <div class="panel-body panel-table">
+              <p-table [scrollable]="true" [value]="formRewardHaunt.controls"
+                tableStyleClass="table controls-table table-wrapper b-t b-b" styleClass="rewardGroupMinHeight">
+                <ng-template pTemplate="colgroup" let-columns>
+                  <colgroup>
+                    <col class="size-1">
+                    <col *ngIf="!isView" class="size-4">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-7">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                  </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th translate>common.table.index</th>
+                    <th *ngIf="!isView" translate><span>common.label.action</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.memberName</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.rewardFormId</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.rewardReason</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.national</span></th>
+                    <th translate><span>tabRewardEmployee.rewardProposal.residentStatus</span></th>
+                    <th translate><span [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.taxCode</span>
+                    </th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.idNumber</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.idNumberDate</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.idNumberPlace</span></th>
+                    <th translate>tabRewardEmployee.rewardProposal.accountNumber</th>
+                    <th translate>tabRewardEmployee.rewardProposal.bankName</th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.addressPhone</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.totalAmountPayment</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.paymentPeriod</span></th>
+                    <th translate>tabRewardEmployee.rewardProposal.note</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-index="rowIndex">
+                  <tr [formGroup]="item">
+                    <td class="vt-align-center">
+                      {{index+1}}
+                    </td>
+                    <td *ngIf="!isView" class="vt-align-center">
+                      <button class="btn-icon minus" type="button" [title]="'titleDelete' | translate"
+                        (click)="removeRewardHaunt(index, item)" [innerHTML]="'common.icon.minus' | translate">
+                      </button>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="memberName" name="memberName" class="form-control"
+                        maxlength="255" [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.memberName"></app-control-messages>
+                    </td>
+                    <td>
+                      <select-filter [placeHolder]="'common.label.cboMustSelect'"
+                        [property]="item.controls.rewardFormId" [options]="rewardFormList" optionLabel="name"
+                        optionValue="propagandaRewardFormId" [disabled]="isView" appendTo="body">
+                      </select-filter>
+                      <app-control-messages [control]="item.controls.rewardFormId"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="rewardReason" name="rewardReason" class="form-control"
+                        maxlength="255" [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.rewardReason"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="national" name="national" class="form-control" maxlength="255"
+                        [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.national"></app-control-messages>
+                    </td>
+                    <td>
+                      <select-filter [placeHolder]="'common.label.cboMustSelect'"
+                        [property]="item.controls.residentStatus" [options]="residentStatusList" optionLabel="label"
+                        optionValue="value" [disabled]="true" appendTo="body">
+                      </select-filter>
+                      <app-control-messages [control]="item.controls.residentStatus"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="taxCode" name="taxCode" class="form-control" maxlength="255"
+                        [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.taxCode"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="idNumber" name="idNumber" class="form-control" maxlength="255"
+                        [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.idNumber"></app-control-messages>
+                    </td>
+                    <td>
+                      <date-picker [property]="item.controls.idNumberDate" appendTo="body" [disabled]='isView'>
+                      </date-picker>
+                      <app-control-messages [control]="item.controls.idNumberDate"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="idNumberPlace" name="idNumberPlace" class="form-control"
+                        maxlength="255" [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.idNumberPlace"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="accountNumber" name="accountNumber" class="form-control"
+                        maxlength="100" [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.accountNumber"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="bankName" name="bankName" class="form-control" maxlength="255"
+                        [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.bankName"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="addressPhone" name="addressPhone" class="form-control"
+                        maxlength="500" [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.addressPhone"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="number" formControlName="totalAmountPayment" name="totalAmountPayment"
+                        class="form-control" maxlength="15" [attr.disabled]="isView?true:null" min="0"
+                        max="999999999999999" (blur)="mathTotalAmountReward();"
+                        (keyup)="formatNumber(item.controls.totalAmountPayment);"
+                        (keydown)="formatNumber(item.controls.totalAmountPayment);">
+                      <app-control-messages [control]="item.controls.totalAmountPayment"></app-control-messages>
+                    </td>
+                    <td>
+                      <date-picker [property]="item.controls.paymentPeriod" appendTo="body" [view]="'month'"
+                        [disabled]="isView?true:null">
+                      </date-picker>
+                      <app-control-messages [control]="item.controls.paymentPeriod"></app-control-messages>
+                    </td>
+                    <td>
+                      <textarea formControlName="note" name="note" class="form-control" maxlength="1000"
+                        [attr.disabled]="isView?true:null"></textarea>
+                      <app-control-messages [control]="item.controls.note"></app-control-messages>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </form>
+          <button *ngIf="!isView" class="btn-icon plus" type="button" [title]="'titleAdd' | translate"
+            (click)="addRewardHaunt()" [innerHTML]="'common.icon.plus' | translate" style="margin-left: 1.2rem;">
+          </button>
+        </p-tabPanel>
+        <!-- Khen thuong khong cu tru -->
+        <p-tabPanel header="{{'tab.rewardProposal.rewardHomeless' | translate}}">
+          <form id="formSave" [formGroup]="formRewardHomeLess">
+            <div class="panel-body panel-table">
+              <p-table [scrollable]="true" [value]="formRewardHomeLess.controls"
+                tableStyleClass="table controls-table table-wrapper b-t b-b" styleClass="rewardGroupMinHeight">
+                <ng-template pTemplate="colgroup" let-columns>
+                  <colgroup>
+                    <col class="size-1">
+                    <col *ngIf="!isView" class="size-4">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-7">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                  </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th translate>common.table.index</th>
+                    <th *ngIf="!isView" translate><span>common.label.action</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.memberName</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.rewardFormId</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.rewardReason</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.national</span></th>
+                    <th translate><span>tabRewardEmployee.rewardProposal.residentStatus</span></th>
+                    <th translate>tabRewardEmployee.rewardProposal.taxCode</th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.idNumber</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.idNumberDate</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.idNumberPlace</span></th>
+                    <th translate>tabRewardEmployee.rewardProposal.accountNumber</th>
+                    <th translate>tabRewardEmployee.rewardProposal.bankName</th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.addressPhone</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.totalAmountPayment</span></th>
+                    <th translate><span
+                        [ngClass]="isView?'':'required'">tabRewardEmployee.rewardProposal.paymentPeriod</span></th>
+                    <th translate>tabRewardEmployee.rewardProposal.note</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-index="rowIndex">
+                  <tr [formGroup]="item">
+                    <td class="vt-align-center">
+                      {{index+1}}
+                    </td>
+                    <td *ngIf="!isView" class="vt-align-center">
+                      <button class="btn-icon minus" type="button" [title]="'titleDelete' | translate"
+                        (click)="removeRewardHomeLess(index, item)" [innerHTML]="'common.icon.minus' | translate">
+                      </button>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="memberName" name="memberName" class="form-control"
+                        maxlength="255" [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.memberName"></app-control-messages>
+                    </td>
+                    <td>
+                      <select-filter [placeHolder]="'common.label.cboMustSelect'"
+                        [property]="item.controls.rewardFormId" [options]="rewardFormList" optionLabel="name"
+                        optionValue="propagandaRewardFormId" appendTo="body" [disabled]='isView'>
+                      </select-filter>
+                      <app-control-messages [control]="item.controls.rewardFormId"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="rewardReason" name="rewardReason" class="form-control"
+                        maxlength="255" [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.rewardReason"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="national" name="national" class="form-control" maxlength="255"
+                        [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.national"></app-control-messages>
+                    </td>
+                    <td>
+                      <select-filter [placeHolder]="'common.label.cboMustSelect'"
+                        [property]="item.controls.residentStatus" [options]="residentStatusList" optionLabel="label"
+                        optionValue="value" [disabled]="true" appendTo="body">
+                      </select-filter>
+                      <app-control-messages [control]="item.controls.residentStatus"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="taxCode" name="taxCode" class="form-control" maxlength="255"
+                        [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.taxCode"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="idNumber" name="idNumber" class="form-control" maxlength="255"
+                        [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.idNumber"></app-control-messages>
+                    </td>
+                    <td>
+                      <date-picker [property]="item.controls.idNumberDate" appendTo="body" [disabled]='isView'>
+                      </date-picker>
+                      <app-control-messages [control]="item.controls.idNumberDate"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="idNumberPlace" name="idNumberPlace" class="form-control"
+                        maxlength="255" [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.idNumberPlace"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="accountNumber" name="accountNumber" class="form-control"
+                        maxlength="100" [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.accountNumber"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="bankName" name="bankName" class="form-control" maxlength="255"
+                        [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.bankName"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="addressPhone" name="addressPhone" class="form-control"
+                        maxlength="500" [attr.disabled]="isView?true:null">
+                      <app-control-messages [control]="item.controls.addressPhone"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="number" formControlName="totalAmountPayment" name="totalAmountPayment"
+                        class="form-control" maxlength="15"
+                        (blur)="blurTotalAmountPaymentHomeless(item);mathTotalAmountReward();"
+                        [attr.disabled]="isView?true:null" min="0" max="999999999999999"
+                        (keyup)="formatNumber(item.controls.totalAmountPayment);"
+                        (keydown)="formatNumber(item.controls.totalAmountPayment);">
+                      <app-control-messages [control]="item.controls.totalAmountPayment"></app-control-messages>
+                    </td>
+                    <td>
+                      <date-picker [property]="item.controls.paymentPeriod" appendTo="body" [view]="'month'"
+                        [disabled]="isView?true:null">
+                      </date-picker>
+                      <app-control-messages [control]="item.controls.paymentPeriod"></app-control-messages>
+                    </td>
+                    <td>
+                      <textarea formControlName="note" name="note" class="form-control" maxlength="1000"
+                        [attr.disabled]="isView?true:null"></textarea>
+                      <app-control-messages [control]="item.controls.note"></app-control-messages>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </form>
+          <button *ngIf="!isView" class="btn-icon plus" type="button" [title]="'titleAdd' | translate"
+            (click)="addRewardHomeLess()" [innerHTML]="'common.icon.plus' | translate" style="margin-left: 1.2rem;">
+          </button>
+        </p-tabPanel>
+      </p-tabView>
+    </div>
+  </div>
+  <div *ngIf="dataError">
+    <import-error [data]="dataError"></import-error>
+  </div>
+</div>

@@ -1,0 +1,247 @@
+.line-text {
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.nav .line-text {
+    padding-right: 10px;
+}
+
+/*Start style menu nav*/
+.flip-card {
+    perspective: 1000px;
+    border-right: 1px solid #ddd;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.flip-card-front {
+    background-color: #222222;
+}
+
+.flip-card-back {
+    transform: rotateY(180deg);
+    background-color: var(--background-color-nav);
+    color: #444 !important;
+}
+
+.icon-modification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 2px solid #eff3f033;
+    cursor: pointer;
+    height: 40px;
+}
+
+.icon-home {
+    display: flex;
+    flex-direction: column;
+    color: #b3b3c1;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 11px;
+    border-bottom: 2px solid #eff3f033;
+    cursor: pointer;
+    height: 70px;
+}
+
+.icon-home:hover {
+    color: #FFFFFF;
+}
+
+.icon-modification-out {
+    justify-content: left;
+    padding: 12px 16px;
+}
+
+:host ::ng-deep .left-extend .ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header > a {
+    align-items: flex-start;
+    padding: 12px 16px;
+    border-bottom: 2px solid #eff3f033 !important;
+}
+
+:host ::ng-deep .ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header > a {
+    align-items: flex-start;
+    text-align: center !important;
+    padding: 8px 5px;
+
+    border-bottom: 2px solid #eff3f033 !important;
+}
+
+:host ::ng-deep .ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header .ui-panelmenu-header-link .ui-menuitem-text {
+    overflow: hidden !important;
+    max-height: 2.4rem !important;
+    line-height: 1.15rem;
+    position: relative;
+}
+
+/*:host ::ng-deep .ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header .ui-panelmenu-header-link:hover {*/
+/*    color: #FFFFFF;*/
+/*}*/
+
+:host ::ng-deep .ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header .ui-panelmenu-header-link .ui-menuitem-text::after {
+    content: '..';
+    position: absolute;
+    bottom: -10px;
+    right: 45%;
+}
+
+:host ::ng-deep .ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header .ui-panelmenu-header-link .ui-menuitem-text:active,
+:host ::ng-deep .ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header .ui-panelmenu-header-link .ui-menuitem-text:hover {
+    font-weight: 500;
+    color: #FFFFFF;
+}
+
+:host ::ng-deep .left-extend .ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header .ui-panelmenu-header-link > div {
+    font-size: 14px !important;
+}
+
+
+:host ::ng-deep .ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header {
+    height: 90px !important;
+}
+
+:host ::ng-deep .ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header .ui-panelmenu-header-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90px !important;
+}
+
+:host ::ng-deep .left-extend .ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header .ui-panelmenu-header-link {
+    height: fit-content !important;
+}
+
+:host ::ng-deep .left-extend .ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header {
+    height: 100% !important;
+}
+
+/*:host ::ng-deep .left-extend .ui-panelmenu .ui-panelmenu-panel:forcus {*/
+
+/*}*/
+
+.transform-icon-in {
+    animation-duration: 2s;
+    transform: rotate(180deg);
+    transition: all 1s ease-out 0.2s;
+}
+
+.transform-icon-right {
+    animation-duration: 2s;
+    transform: rotate(180deg);
+    /*transition: all 1s ease-in-out 0.2s;*/
+}
+
+.transform-icon-up {
+    animation-duration: 2s;
+    /*transform: rotate(90deg);*/
+}
+
+.extend-menu {
+    width: 250px;
+}
+
+:host ::ng-deep .icon-menu {
+    /*background-image: url("src/assets/img/icon/icon-party-organization.svg");*/
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 20px;
+}
+
+.ml-35 {
+    margin-left: 35px !important;
+}
+
+.icon-home-change {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: left !important;
+    padding: 12px 9px !important;
+    height: 50px !important;
+}
+
+.item-active {
+    font-weight: 500 !important;
+}
+
+.none {
+    display: none;
+}
+
+.hidden-container {
+    height: 40px;
+    width: 72px;
+    background-color: #34495e;
+    box-shadow: 0 1px 2px rgba(17, 53, 65, 0.5);
+}
+
+:host ::ng-deep .ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header .ui-panelmenu-header-link .ui-menuitem-icon::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+}
+
+.text-home {
+    font-size: 14px;
+    font-family: "PFBeauSansPro";
+    margin-left: 19px;
+}
+
+.w-60 {
+    width: 60px !important;
+}
+.w-40 {
+    width: 40px !important;
+}
+
+/*mobile*/
+
+@media (min-width: 374px) and (max-width: 576px) {
+    .icon-home {
+        display: none;
+    }
+
+    .responsive-nav {
+        display: none;
+    }
+
+    .left-extend {
+        display: block !important;
+    }
+}
+.block {
+    display: block;
+}
+
+/**
+ chỉnh kích thước scroll
+ */
+::-webkit-scrollbar {
+    width: 0px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb:hover {
+    background: unset;
+}
+/*End style menu nav*/

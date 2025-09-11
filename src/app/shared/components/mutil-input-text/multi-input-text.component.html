@@ -1,0 +1,17 @@
+<div *ngFor="let textArea of property.controls; let i = index">
+  <div class="ui-g-12 vt-row">
+    <div style="display: flex;">
+      <textarea type="text" [disabled]="disabled" rows="4" class="form-control" id="{{i}}" value="{{textArea.value}}"
+        [(ngModel)]="textArea.value" (change)="changeValue()">
+    </textarea>
+
+      <button *ngIf="!disabled" style="margin-top: 54px;" type="button" [title]="'titleAdd' | translate"
+        (click)="addItem()" class="btn-icon plus" [innerHTML]="'common.icon.plus' | translate"></button>
+      <button *ngIf="!disabled" style="margin-top: 54px;" type="button" [title]="'titleDelete' | translate"
+        (click)="removeItem(i)" class="btn-icon minus" [innerHTML]="'common.icon.minus' | translate"></button>
+    </div>
+    <div>
+      <app-control-messages *ngIf="required" [control]="textArea"></app-control-messages>
+    </div>
+  </div>
+</div>

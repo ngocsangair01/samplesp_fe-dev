@@ -1,0 +1,14 @@
+.i-switch i:after {
+    left: 0;
+}
+
+:host ::ng-deep .ui-table .ui-table-scrollable-wrapper .ui-table-scrollable-view .ui-table-scrollable-body {
+    overflow: unset;
+}
+
+:host ::ng-deep .table-wrapper > tbody tr td:not(:first-child) {
+    /*border-left: 1px solid #dee5e7;*/
+    overflow: unset;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

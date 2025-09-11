@@ -1,0 +1,68 @@
+::ng-deep .min-height {
+    min-height: 300px ;
+}
+
+:host ::ng-deep .ui-tabview .ui-tabview-nav .ui-state-default a .ui-tabview-title {
+    white-space: nowrap;
+    line-height: 20px;
+    margin-top: -3px;
+    text-align: left;
+    font-family: "PFBeauSansPro";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px !important;
+    color: rgba(198,31,27,1) !important;
+}
+
+:host ::ng-deep .ui-tabview .ui-tabview-nav .ui-state-default {
+    width: fit-content;
+    height: 32px;
+    background: transparent 0% 0% no-repeat padding-box !important;
+    border: 1px solid rgba(198,31,27,1) !important;
+    color: #262626 !important;
+    border-radius: 8px;
+    opacity: 1;
+    padding-right: 0 !important;
+}
+
+:host ::ng-deep .ui-tabview .ui-tabview-nav .ui-state-active {
+    width: fit-content;
+    height: 32px;
+    background: rgba(198,31,27,1) 0% 0% no-repeat padding-box !important;
+    border: 1px solid rgba(198,31,27,1) !important;
+    color: white !important;
+    border-radius: 8px;
+    opacity: 1;
+    padding-right: 0 !important;
+}
+
+:host ::ng-deep .ui-tabview .ui-tabview-nav .ui-state-active:hover {
+    border: 1px solid #1991EB !important;
+}
+
+:host ::ng-deep .ui-tabview .ui-tabview-nav .ui-state-active a {
+    padding: 5px 15px 9px 15px !important;
+    background: #00A3F31F 0% 0% no-repeat padding-box !important;
+}
+
+:host ::ng-deep .ui-tabview .ui-tabview-nav .ui-state-active a .ui-tabview-title {
+    color: white !important;
+}
+
+:host ::ng-deep .ui-tabview.ui-tabview-top .ui-tabview-nav li.ui-state-active,
+:host ::ng-deep .ui-tabview.ui-tabview-top .ui-tabview-nav li.ui-state-default
+{
+    top: unset;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+:host ::ng-deep .ui-tabview .ui-tabview-panels .ui-tabview-panel .ui-table .ui-table-wrapper{
+    border-left: unset;
+    border-right: unset;
+}
+
+:host ::ng-deep .ui-tabview .ui-tabview-panels {
+    border-radius: unset;
+}

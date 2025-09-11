@@ -1,0 +1,80 @@
+<form id="formColumn" [formGroup]="formColumn">
+  <div class="panel panel-default">
+    <div class="panel-heading vt-relative">
+      <strong class="text-u-c">
+        <i class="fa fa-th"></i> <span translate> app.reportDynamic.columnForm </span>
+      </strong>
+      <div class="vt-absolute vt-shotcut-button-in-heading">
+        <button type="button" (click)="syncAlias()" class="btn btn-sm btn-info"
+          [innerHTML]="'common.button.icon.refresh' | translate" [disabled]="disabled"></button>
+      </div>
+    </div>
+    <div class="panel-body panel-table">
+      <p-table [value]="formColumn.controls" tableStyleClass="table controls-table table-wrapper b-t b-b"
+        (sortFunction)="customSort($event)" [customSort]="true">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col class="size-1">
+            <col class="size-11">
+            <col class="size-11">
+            <col class="size-11">
+            <col class="size-5">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th translate><span>common.table.index</span></th>
+            <th translate><span
+                [ngClass]="{'required': formColumn.controls[0] && formColumn.controls[0].controls.columnName.isRequire}">app.reportDynamic.column.name</span>
+            </th>
+            <th translate><span
+                [ngClass]="{'required': formColumn.controls[0] && formColumn.controls[0].controls.dataType.isRequire}">app.reportDynamic.column.dataType</span>
+            </th>
+            <th translate><span
+                [ngClass]="{'required': formColumn.controls[0] && formColumn.controls[0].controls.aliasName.isRequire}">app.templateDynamic.parameterNameFromSql</span>
+            </th>
+            <th translate><span>app.reportDynamic.add_delete</span></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-index="rowIndex">
+          <tr [formGroup]="item">
+            <td class="vt-align-center">
+              {{index+1}}
+            </td>
+            <td>
+              <dynamic-input [property]="item.controls.columnName" [maxLength]='200' [disabled]="disabled">
+              </dynamic-input>
+              <app-control-messages [control]="item.controls.columnName"></app-control-messages>
+            </td>
+            <td>
+              <select-filter [property]="item.controls.dataType" [options]="listDataType" optionLabel="parValue"
+                optionValue="parCode"
+                [placeHolder]="item.controls.dataType.isRequire ? 'common.label.cboMustSelect' : 'common.label.cboSelect'" [disabled]="disabled">
+              </select-filter>
+              <app-control-messages [control]="item.controls.dataType"></app-control-messages>
+            </td>
+            <td>
+              <dynamic-input [property]="item.controls.aliasName" [maxLength]='200'  [disabled]="disabled">
+              </dynamic-input>
+              <app-control-messages [control]="item.controls.aliasName"></app-control-messages>
+            </td>
+            <td class="vt-align-center">
+              <button class="btn-icon plus" type="button" (click)="addGroup(index, item)"
+                [innerHTML]="'common.icon.plus' | translate" [disabled]="disabled">
+              </button>
+              <button class="btn-icon minus" type="button" (click)="removeGroup(index, item)"
+                [innerHTML]="'common.icon.minus' | translate" [disabled]="disabled">
+              </button>
+              <button class="btn-icon plus" *ngIf="item.controls.sortOrder.value > 1" type="button" (click)="goUp(item)"
+                [innerHTML]="'common.icon.up' | translate" [disabled]="disabled">
+              </button>
+              <button class="btn-icon plus" *ngIf="item.controls.sortOrder.value < numIndex" type="button"
+                (click)="goDown(item)" [innerHTML]="'common.icon.down' | translate" [disabled]="disabled">
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</form>

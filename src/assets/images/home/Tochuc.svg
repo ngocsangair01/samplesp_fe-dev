@@ -1,0 +1,15 @@
+<svg id="Cán_bộ" data-name="Cán bộ" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="120" height="120" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#da251c"/>
+      <stop offset="1" stop-color="#6d130e"/>
+    </linearGradient>
+  </defs>
+  <rect id="Rectangle_13903" data-name="Rectangle 13903" width="120" height="120" rx="24" fill="url(#linear-gradient)"/>
+  <g id="layer1" transform="translate(21.669 26.544)">
+    <g id="g19710">
+      <path id="path19657-0" d="M-5907.162,1588.046a36.341,36.341,0,0,0,17.946,11.027,29.93,29.93,0,0,0,13.72.505,22.408,22.408,0,0,0,11.935-6.611,22.93,22.93,0,0,0,5.642-13.635,32.54,32.54,0,0,0-2.532-14.671,41.42,41.42,0,0,0-17.208-19.935,33.6,33.6,0,0,1,17.426,6.672,33.6,33.6,0,0,1,11.165,14.966,33.725,33.725,0,0,1,1.442,18.61,33.77,33.77,0,0,1-8.763,16.492,34,34,0,0,1-24.861,10.161,33.966,33.966,0,0,1-24.316-11.324l-10.738,10.748-6.942-6.933Z" transform="translate(5923.248 -1544.727)" fill="#ffec00" stroke="#ffec00" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <path id="path19683-5" d="M-5870.922,1560.293l-8.092,8.09,36.354,36.374-8.208,8.3-36.4-36.408-6.375,6.389-9.458-9.446,15.921-15.924a20.161,20.161,0,0,0,5.944-.278,20.513,20.513,0,0,0,5.473-1.931Z" transform="translate(5919.322 -1546.82)" fill="#ffec00" stroke="#ffec00" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+  </g>
+</svg>

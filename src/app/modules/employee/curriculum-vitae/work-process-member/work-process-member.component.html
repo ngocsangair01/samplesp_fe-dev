@@ -1,0 +1,147 @@
+<div class="card-emp">
+  <div id="curriculumvitaesecurity" class="card card-info">
+    <div class="card-header">
+      <div>
+        <img class="header-icon" [ngClass]="{'transform-icon': hideCurriculumvitaesecurity === true}" src="./../../../../../../assets/images/home/Group_18932.png" (click)="hideCurriculumvitaesecurity = !hideCurriculumvitaesecurity">
+        {{'protectsecurity.curriculumvitaesecurity.table.title' | translate}}
+      </div>
+    </div>
+    <div *ngIf="!hideCurriculumvitaesecurity" class="card-body">
+      <div class="panel-body panel-table">
+        <p-table
+          #pTable
+          [value]="resultList.data"
+          [paginator]="false"
+          (onLazyLoad)="processSearchSynchronized($event)"
+          [lazy]="true" [rows]="changeRow"
+          [totalRecords]="resultList.recordsTotal"
+          [scrollable]="true"
+          [lazyLoadOnInit]="false"
+          tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+          [resizableColumns]="true"
+          styleClass="controlOverflow"
+          [(selection)]="selectedGop"
+        >
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col style="width: 50px;">
+              <col style="width: 200px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col style="width: 200px;">
+              <col style="width: 200px;">
+              <col style="width: 200px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th translate pResizableColumn>
+                common.table.index
+              </th>
+              <!-- Vị trí trọng yếu -->
+              <th [pSortableColumn]="'isKeyPosition'" translate pResizableColumn>
+                employeeInfo.workProcess.keyPosition
+                <p-sortIcon [field]="'isKeyPosition'"></p-sortIcon>
+              </th>
+              <!-- loại quá trình -->
+              <th [pSortableColumn]="'type'" translate pResizableColumn>
+                partyMember.workProcess.type
+                <p-sortIcon [field]="'type'"></p-sortIcon>
+              </th>
+              <!-- ngày hiệu lực -->
+              <th [pSortableColumn]="'effectiveStartDate'" translate pResizableColumn>
+                employeeInfo.workProcess.effectiveDate
+                <p-sortIcon [field]="'effectiveStartDate'"></p-sortIcon>
+              </th>
+              <!-- ngày hết hiệu lực -->
+              <th [pSortableColumn]="'effectiveEndDate'" translate pResizableColumn>
+                employeeInfo.workProcess.expiredDate
+                <p-sortIcon [field]="'effectiveEndDate'"></p-sortIcon>
+              </th>
+              <!-- chức vụ -->
+              <th [pSortableColumn]="'positionName'" translate pResizableColumn>
+                employeeInfo.workProcess.position
+                <p-sortIcon [field]="'positionName'"></p-sortIcon>
+              </th>
+              <!-- đơn vị -->
+              <th [pSortableColumn]="'orgName'" translate pResizableColumn>
+                employeeInfo.workProcess.org
+                <p-sortIcon [field]="'orgName'"></p-sortIcon>
+              </th>
+              <!-- Số văn bản -->
+              <th [pSortableColumn]="'documentNumber'" translate pResizableColumn>
+                partyMember.workProcess.documentNumberTitle
+                <p-sortIcon [field]="'type'"></p-sortIcon>
+              </th>
+              <!-- ngày ký -->
+              <th [pSortableColumn]="'signDate'" translate pResizableColumn>
+                partyMember.workProcess.signDate
+                <p-sortIcon [field]="'type'"></p-sortIcon>
+              </th>
+              <!-- Loại vb -->
+              <th [pSortableColumn]="'documentTypeName'" translate pResizableColumn>
+                partyMember.workProcess.documentType
+                <p-sortIcon [field]="'type'"></p-sortIcon>
+              </th>
+              <!-- Lý do -->
+              <th [pSortableColumn]="'documentReasonName'" translate pResizableColumn>
+                partyMember.workProcess.documentReasonName
+                <p-sortIcon [field]="'type'"></p-sortIcon>
+              </th>
+              <!-- Khu vực công tác -->
+              <th [pSortableColumn]="'workingPlaceName'" translate pResizableColumn>
+                partyMember.workProcess.workPlace
+                <p-sortIcon [field]="'type'"></p-sortIcon>
+              </th>
+              <!-- file đính kèm -->
+              <th translate pResizableColumn>employeeInfo.workProcess.fileAttachments</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+            <tr>
+              <td class="vt-align-center">{{ index }}</td>
+              <td class="vt-align-center">
+                <p-checkbox [disabled]="item.isDisable === 1" name = "isKeyPosition" [value]="item" [(ngModel)]="selectedGop"></p-checkbox> <!--onChange="chooseKeyPosition(item)"-->
+              </td>
+              <td class="vt-align-center" translate>
+                <div *ngIf="item.type === 1" >workProcess.type.in</div>
+                <div *ngIf="item.type === 2" >workProcess.type.out</div></td>
+              <td class="vt-align-center" title="{{ item.effectiveStartDate | displayDate }}">{{ item.effectiveStartDate | displayDate }}</td>
+              <td class="vt-align-center" title="{{ item.effectiveEndDate | displayDate }}">{{ item.effectiveEndDate | displayDate }}</td>
+              <td class="vt-align-left" title="{{ item.positionName }}">{{ item.positionName }}</td>
+              <td class="vt-align-left" title="{{ item.orgName }}">{{ item.orgName }}</td>
+              <td class="vt-align-left" title="{{ item.documentNumber }}">{{ item.documentNumber }}</td>
+              <td class="vt-align-center" title="{{ item.signDate | displayDate }}">{{ item.signDate | displayDate }}</td>
+              <td class="vt-align-left" title="{{ item.documentTypeName }}">{{ item.documentTypeName }}</td>
+              <td class="vt-align-left" title="{{ item.documentReasonName }}">{{ item.documentReasonName }}</td>
+              <td class="vt-align-left" title="{{ item.workingPlaceName }}">{{ item.workingPlaceName }}</td>
+              <td class="vt-align-left">
+                <!-- <a *ngFor="let data of item.fileAttachment.file"
+                  style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 200px; display: block; overflow: hidden"
+                  (click)="downloadFile(data, item)">
+                    {{data.fileName}}
+                </a> -->
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr class="emptymessage">
+              <td [attr.colspan]="5" [innerHTML]="'app.noRecords' | translate">
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft">
+            <table-footer (changeRow)="onTablePageChange($event)"  [resultList]="resultList"></table-footer>
+          </ng-template>
+        </p-table>
+        <div class="panel-footer vt-area-button">
+          <button type="submit" (click)="processSaveKeyPosition()" class="btn btn-sm btn-info" [innerHTML]="'common.button.icon.save' | translate"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

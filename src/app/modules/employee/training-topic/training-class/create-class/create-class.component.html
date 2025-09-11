@@ -1,0 +1,128 @@
+<div class="card-form">
+  <div class="clearfix"  style="height: 100%">
+    <div class="left-nav-bar pull-left row-header"  style="height: 100%">
+      <div style="height: 100%">
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png"
+          (click)="previous()">
+        <span class="title" style="height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center; color: rgba(198,31,27,1); font-family: PFBeauSansPro">{{header}}</span>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+      <ul class="header-right sys-ul space-line">
+        <li >
+          <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="save()"
+            [innerHTML]="'common.button.icon.save' | translate">
+          </button>
+        </li>
+          <li>
+          <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="previous()"
+            [innerHTML]="'common.button.close' | translate">
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="info" style="padding-bottom: 20rem">
+  <form id="formSave" [formGroup]="formGroup">
+    <div class="panel panel-default card-info">
+      <div *ngIf="!isMobileScreen" class="panel-body padding-xl ui-g border-info-common">
+        <div class="ui-g-12 vt-row">
+            <!-- Chuyen de dao tao -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'label.training-class.training-topic' | translate}}</label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <input type="text" formControlName="titleTrainingTopic" class="form-control"
+                       maxlength="500" [readOnly]="true">
+                <app-control-messages [control]="f['titleTrainingTopic']"></app-control-messages>
+            </div>
+          <!-- Cấp triển khai -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.training-topic.org-tkqt' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" formControlName="thoroughLevelName" class="form-control"
+                     maxlength="500" [readOnly]="true">
+            <app-control-messages [control]="f['thoroughLevelName']"></app-control-messages>
+          </div>
+        </div>
+<!--          <div class="ui-g-12 vt-row">-->
+<!--             -->
+<!--          </div>-->
+        <!-- 1 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Ten lop hoc -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.training-class.class-name' | translate}}</label>
+          <div class="ui-g-12 ui-md-12 ui-lg-8">
+              <input type="text" formControlName="name" class="form-control"
+                     maxlength="250">
+              <app-control-messages [control]="f['name']"></app-control-messages>
+          </div>
+        </div>
+        <!-- 2 -->
+        <div class="ui-g-12 vt-row">
+            <!-- Link lop hoc -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.training-class.class-url' | translate}}</label>
+            <div class="ui-g-12 ui-md-12 ui-lg-8">
+                <input type="text" formControlName="url" class="form-control"
+                       maxlength="500" placeholder="https://">
+                <app-control-messages [control]="f['url']"></app-control-messages>
+            </div>
+        </div>
+        <!-- 3 -->
+        <div class="ui-g-12 vt-row">
+            <!-- id lop hoc -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.training-class.class-id' | translate}}</label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3 ">
+                <input type="text" formControlName="classId" class="form-control"
+                       maxlength="500">
+                <app-control-messages [control]="f['classId']"></app-control-messages>
+            </div>
+          <!-- Doi tuong dao tao -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.training-topic.training-objects' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" formControlName="objectTypeTraining" class="form-control"
+                     maxlength="500" [readOnly]="true">
+              <app-control-messages [control]="f['objectTypeTraining']"></app-control-messages>
+          </div>
+        </div>
+        <!-- 4 -->
+        <div class="ui-g-12 vt-row">
+            <!-- Ngày bắt đầu -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.training-topic.from-date' | translate}}</label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <date-picker  [property]="f['startDate']"></date-picker>
+                <app-control-messages [control]="f['startDate']"></app-control-messages>
+                <div *ngIf="validateStartDate()" class="errorMessageDiv show">
+                    <small class="text-danger errorMessage ng-star-inserted">
+                        {{'training-class.input.start-date' | translate}}
+                    </small>
+                </div>
+            </div>
+            <!-- ngay ket thuc -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.training-topic.to-date' | translate}}</label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <date-picker  [property]="f['endDate']"></date-picker>
+                <app-control-messages [control]="f['endDate']"></app-control-messages>
+                <div *ngIf="validateEndDate()" class="errorMessageDiv show">
+                    <small class="text-danger errorMessage ng-star-inserted">
+                        {{'training-class.input.end-date' | translate}}
+                    </small>
+                </div>
+            </div>
+        </div>
+        <!-- 6 -->
+
+      </div>
+    </div>
+
+  </form>
+</div>

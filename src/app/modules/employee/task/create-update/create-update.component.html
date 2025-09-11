@@ -1,0 +1,260 @@
+<div class="card-form">
+  <div class="clearfix">
+    <div class="left-nav-bar pull-left row-header">
+      <div>
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png"
+          (click)="previous()">
+        <span class="title">{{header}}</span>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+      <ul class="header-right sys-ul space-line">
+        <li *ngIf="!viewMode">
+          <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="save(false)"
+            [innerHTML]="'common.button.icon.task' | translate">
+          </button>
+        </li>
+        <li>
+          <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="previous()"
+            [innerHTML]="'common.button.close' | translate">
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <form id="formSave" [formGroup]="formGroup">
+    <div class="panel panel-default card-info">
+      <div *ngIf="!isMobileScreen" class="panel-body padding-xl ui-g border-info-common">
+        <!-- 2 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Tiêu đề -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.thorough-content.task.title' | translate}}</label>
+          <div class="ui-g-12 ui-md-12 ui-lg-8">
+            <input type="text" [readonly]="viewMode || editableThoroughed || parentThoroughDate" formControlName="title" class="form-control"
+              maxlength="250">
+            <app-control-messages [control]="f['title']"></app-control-messages>
+          </div>
+        </div>
+        <!-- 3 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Lĩnh vực -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.thorough-content.branch' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <p-dropdown [formControl]="f['branch']" [disabled]="viewMode || editableThoroughed"
+              [options]="branchOptions" [placeholder]="'placeholder.choose' | translate" [showClear]="true"
+              [filter]="true" [emptyFilterMessage]="emptyFilterMessage" [resetFilterOnHide]="true">
+            </p-dropdown>
+            <app-control-messages [control]="f['branch']"></app-control-messages>
+          </div>
+          <!-- Loại công việc -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.thorough-content.task.type' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <p-dropdown [optionLabel]="'name'" formControlName="type" [disabled]="viewMode || updateMode"
+              [options]="taskOptions" [placeholder]="'placeholder.choose' | translate" [showClear]="true" (ngModelChange)="onDropdownChange($event)"
+              [filter]="true" [emptyFilterMessage]="emptyFilterMessage" [resetFilterOnHide]="true">
+            </p-dropdown>
+            <app-control-messages [control]="f['type']"></app-control-messages>
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Đơn vị giao -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.thorough-content.task.assignment-unit' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <party-org-selector
+              #partyThoroughOrgSelector
+              [property]="f['assignmentUnit']"
+              operationKey="action.view"
+              adResourceKey="CTCT_THOROUGH_CONTENT"
+              [defaultValue]="true"
+              [disabled]="viewMode || editableThoroughed"
+              isRequiredField="true">
+            </party-org-selector>
+            <app-control-messages [control]="f['assignmentUnit']"></app-control-messages>
+          </div>
+          <!-- Người giao -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.thorough-content.task.assignor' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <data-picker #data [property]="f['assignor']" systemCode="political" operationKey="action.view"
+              adResourceKey="resource.punishment" objectBO="EmployeeBO" codeField="employeeCode" nameField="fullName"
+              emailField="email" [isRequiredField]="true" selectField="employeeId" 
+              [filterCondition]="filterCondition" [disabled]="viewMode" mobileNumberField="mobileNumber">
+            </data-picker>
+            <app-control-messages [control]="f['assignor']"></app-control-messages>
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="ui-g-12 vt-row" *ngIf="!isAssignee">
+          <!-- Đơn vị thực hiện org-multi-selector -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.thorough-content.task.assigned-unit' | translate}}</label>
+            <div class="ui-g-12 ui-md-12 ui-lg-8">
+            <multi-party-org-selector
+              #partyThoroughOrgSelector
+              [property]="f['assignedUnit']"
+              operationKey="action.view"
+              adResourceKey="CTCT_THOROUGH_CONTENT"
+            
+              [disabled]="viewMode || editableThoroughed"
+              isRequiredField="true">
+            </multi-party-org-selector>
+            <app-control-messages [control]="f['assignedUnit']"></app-control-messages>
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="ui-g-12 vt-row" *ngIf="isAssignee">
+          <!-- Đơn vị thực hiện org-multi-selector -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.thorough-content.task.assignee' | translate}}</label>
+          <div class="ui-g-12 ui-md-12 ui-lg-8">
+            <multi-data-picker
+                [property]="f['assignee']"
+                systemCode="political"
+                operationKey="action.view"
+                adResourceKey="resource.partyMember"
+                objectBO="EmployeeBO"
+                codeField="employeeCode"
+                nameField="fullName"
+                [disabled]="viewMode"
+                [filterCondition]="filterCondition"
+                emailField="email"
+                selectField="employeeId"
+                isNotSearchByOrgDomainData="true"
+        >
+        </multi-data-picker>
+            <app-control-messages [control]="f['assignee']"></app-control-messages>
+          </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Ngày bắt đầu -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.thorough-content.task.start-date' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <date-picker [disabled]="viewMode || editableThoroughed" [property]="f['assignedTime']"></date-picker>
+            <app-control-messages [control]="f['assignedTime']"></app-control-messages>
+            <!-- <div *ngIf="customValidateThoroughDate()" class="errorMessageDiv show">
+              <small class="text-danger errorMessage ng-star-inserted">
+                {{'thorough-content.input.thorough-date' | translate}}
+              </small>
+            </div> -->
+          </div>
+          <!-- Hạn hoàn thành -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.thorough-content.task.end-date' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <date-picker [disabled]="viewMode || editableThoroughed" [property]="f['deadline']"></date-picker>
+            <app-control-messages [control]="f['deadline']"></app-control-messages>
+            <div *ngIf="customValidateDate()" class="errorMessageDiv show">
+              <small class="text-danger errorMessage ng-star-inserted">
+                {{'thorough-content.task.input.end-date' | translate}}
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Trạng thái -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.thorough-content.task.status' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <p-dropdown [optionLabel]="'name'" [formControl]="f['status']" [disabled]="1"
+              [options]="statusOptions" [placeholder]="'placeholder.choose' | translate" [showClear]="true"
+              [filter]="true" [emptyFilterMessage]="emptyFilterMessage" [resetFilterOnHide]="true">
+            </p-dropdown>
+            <app-control-messages [control]="f['status']"></app-control-messages>
+          </div>
+          <!-- Mức ưu tiên -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'label.thorough-content.task.priority' | translate}}</label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <p-dropdown [optionLabel]="'name'" [formControl]="f['priority']" [disabled]="viewMode || editableThoroughed"
+              [options]="priorityOptions" [placeholder]="'placeholder.choose' | translate" [showClear]="true"
+              [filter]="true" [emptyFilterMessage]="emptyFilterMessage" [resetFilterOnHide]="true">
+            </p-dropdown>
+            <app-control-messages [control]="f['priority']"></app-control-messages>
+          </div>
+        </div>
+       
+        <!-- 10 -->
+        <div class="ui-g-12 vt-row">
+          <!-- Mô tả công việc -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.task.description' | translate}}</label>
+          <div class="ui-g-12 ui-md-12 ui-lg-8">
+            <p-editor formControlName="description" id="description" (onTextChange)="limitText($event)"
+              [readonly]="viewMode || description"></p-editor>
+          </div>
+        </div>
+        <!-- 11 -->
+        <!-- <div class="ui-g-12 vt-row"> -->
+          <!-- Liên kết nguồn -->
+          <!-- <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.source-link' | translate}}</label>
+          <div class="ui-g-12 ui-md-12 ui-lg-8">
+            <p-editor formControlName="detailContent" id="detailContent"
+              [readonly]="viewMode || editableThoroughed || parentThoroughDate"></p-editor>
+          </div>
+        </div> -->
+        <!-- 12 -->
+        <!-- <div class="ui-g-12 vt-row"> -->
+          <!-- Liên kết kết quả -->
+          <!-- <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.result-link' | translate}}</label>
+            <div class="ui-g-12 ui-md-12 ui-lg-8">
+              <p-editor formControlName="detailContent" id="detailContent"
+                [readonly]="viewMode || editableThoroughed || parentThoroughDate"></p-editor>
+            </div>
+        </div> -->
+
+        <div class=" ui-g-12">
+          <label class="ui-g-12 ui-md-2 control-label vt-align-right" translate>
+            label.thorough-content.task.check-list
+          </label>
+          <div class="ui-g-12 ui-md-9">
+            <button type="button" (click)="addChecklist()" [attr.disabled]="viewMode?true:null" class="btn btn-sm btn-info">Thêm checklist</button>
+            <div class="answer-row"  formArrayName="names">
+              <div *ngFor="let name of names.controls; let i = index" [formGroupName]="i" class="answer">
+                <div class="ui-g-12">
+                  <div class="d-flex">
+                    <div class="d-flex ui-md-4">
+                      <input  type="checkbox"  formControlName="isTrue" [attr.disabled]="viewMode?true:null" [id]="'checkCorrect'+i" style="margin-right: 10px;"/>
+                      <input formControlName="name" type="text" maxlength="5000" pInputText class="form-control" [readonly]="viewMode" placeholder="Nhập"/>
+                      <span type="button" (click)="removeChecklist(i)" [attr.disabled]="viewMode?true:null" *ngIf="!viewMode" style="text-decoration: underline; color: blue; margin-left: 10px; margin-top: 7px;">Xóa</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 13 -->
+        <div class="ui-g-12 vt-row">
+          <!-- File đính kèm -->
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'label.thorough-content.attached-file' | translate}}</label>
+          <div *ngIf="f['fileList']" class="ui-g-12 ui-md-12 ui-lg-8">
+            <multi-file-chooser-v2 #multiFileChooser class="attachment-file" [property]="f['fileList']" htmlId="fileList"
+              validType="png,jpg,gif,tiff,bmp,xls,xlsx,doc,docx,pdf" [validMaxSize]="10" [disabled]="viewMode || parentThoroughDate"
+              [disabledDelete]="f['status'].value.id == 1">
+            </multi-file-chooser-v2>
+            <app-control-messages [control]="f['fileList']"></app-control-messages>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,50 @@
+<div class="file-group" *ngFor="let fileAttr of this.property.fileAttachment; let i = index">
+  <a title="{{ fileAttr.fileName || ('controls.noFile' | translate) }}" href="javascript:;"
+    class="file-control v-from file-process" [ngClass]="{hasFile: fileAttr.file}">
+    <!-- <input type="file" *ngIf="!disabled"
+          style="width: auto; visibility:hidden;"
+          class="form-control"
+          (change)="onChange($event, fileAttr)"
+          id="{{'fileitem'+i}}"
+    >
+    <label for="{{'fileitem'+i}}" *ngIf="fileAttr.isTemp" class="file-container" >
+        <span class="file-text">{{ fileAttr.fileName }}</span>
+        <span class="file-button btn-chose-file">{{ 'controls.choseFile' | translate}}</span>
+    </div>
+    <label *ngIf="!fileAttr.isTemp" class="file-container hasFileAttachment" title="{{fileAttr.fileName}}">
+      <label for="{{'fileitem'+i}}">
+        <span class="file-text">{{ fileAttr.fileName }}</span>
+      </label>
+      <span *ngIf="!fileAttr.isTemp" class="file-button btn-chose-file" (click)="downloadFile(fileAttr)" [innerHTML]="'controls.downloadFile' | translate"></span>
+    </label> -->
+    <input type="file" *ngIf="!disabled" style="width: auto; visibility:hidden;" class="form-control"
+      (change)="onChange($event, fileAttr)" id="{{fileName + 'multifileitem' + i}}">
+    <label for="{{fileName + 'multifileitem' + i}}" *ngIf="fileAttr.isTemp" class="file-container">
+      <span class="file-text">{{ fileAttr.fileName }}</span>
+      <span class="file-button btn-chose-file">{{ 'controls.choseFile' | translate}}</span>
+    </label>
+    <div *ngIf="!fileAttr.isTemp" class="file-container hasFileAttachment" title="{{fileAttr.fileName}}">
+      <span class="file-text" (click)="downloadFile(fileAttr)">{{ fileAttr.fileName }}</span>
+      <span *ngIf="!fileAttr.isTemp" class="file-button btn-chose-file" (click)="downloadFile(fileAttr)"
+        [innerHTML]="'controls.downloadFile' | translate"></span>
+    </div>
+    <span *ngIf="!disabled" title="{{ 'controls.deleteFile' | translate}}" (click)="delete(fileAttr)"
+      class="btn-delete-file glyphicons glyphicons-minus-sign"></span>
+    <div class="file-action">
+      <button type="button" [title]="'titleAdd' | translate" *ngIf="!disabled" (click)="addItem(fileAttr)" class="btn-icon plus"
+        [innerHTML]="'common.icon.plus' | translate"></button>
+      <button type="button" [title]="'titleDelete' | translate" *ngIf="fileAttr.isTemp ? !disabled : false" (click)="removeItem(fileAttr)"
+        class="btn-icon minus" [innerHTML]="'common.icon.minus' | translate"></button>
+      <button *ngIf="moveFile && i > 0" class="btn-icon plus" type="button" [title]="'titleAdd' | translate"
+        (click)="upMoveFile(i)" [innerHTML]="'common.icon.up' | translate">
+      </button>
+      <button *ngIf="moveFile && i != this.property.fileAttachment.length - 1" class="btn-icon plus" type="button"
+        [title]="'titleAdd' | translate" (click)="downMoveFile(i)"
+        [innerHTML]="'common.icon.down' | translate">
+      </button>
+    </div>
+  </a>
+  <small *ngIf="fileAttr.errorKey" class="text-danger errorMessage">
+    {{ fileAttr.errorKey | translate:lang:{ fileType: validType, max: validMaxSize } }}
+  </small>
+</div>

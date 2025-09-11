@@ -1,0 +1,291 @@
+<div class="card-form">
+  <div class="clearfix">
+    <div class="left-nav-bar pull-left row-header">
+      <div>
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="goBack();">
+        <span *ngIf="isApprove" class="title" translate>subsidizedBeneficiary.label.subsidizedBeneficiary</span>
+        <span *ngIf="isView" class="title" translate>subsidizedBeneficiary.label.subsidizedBeneficiaryView</span>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+        <ul class="header-right sys-ul space-line">
+          <li>
+            <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="goBack();" [innerHTML]="'common.button.out' | translate">
+            </button>
+          </li>
+          <li *ngIf="!isView">
+            <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="processSaveOrUpdate(1)" [innerHTML]="'common.button.icon.save' | translate">
+            </button>
+          </li>
+          <li *ngIf="!isView">
+            <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="processSaveOrUpdate(2)" [innerHTML]="'subsidizedBeneficiary.label.approve' | translate">
+            </button>
+          </li>
+          <li *ngIf="!isView">
+            <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="processSaveOrUpdate(3)" [innerHTML]="'subsidizedBeneficiary.label.unApprove' | translate">
+            </button>
+          </li>
+        </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <div
+    *ngIf="(hasPermission('action.view') && isView) || (hasPermission('action.approval') && isApprove)">
+    <div class="panel panel-default card-info">
+      <form id="formSave" [formGroup]="formSave">
+        <div class="panel-heading vt-relative">
+          <strong>
+            <!-- <span *ngIf="isApprove" translate>subsidizedBeneficiary.label.subsidizedBeneficiary</span>
+            <span *ngIf="isView" translate>subsidizedBeneficiary.label.subsidizedBeneficiaryView</span> -->
+            <span class="ml-2 title-info">Thông tin xét duyệt đề xuất trợ cấp</span>
+          </strong>
+        </div>
+        <div class="panel-body padding-xl ui-g">
+          <div class="ui-g-12 vt-row">
+            <!-- tên đợt tro cap -->
+            <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+              {{'subsidizedPeriod.label.name' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-3 ui-lg-3">
+              <select-filter [property]="f['subsidizedPeriodId']" [options]="periodList" optionLabel="name"
+                optionValue="subsidizedPeriodId" [placeHolder]="'common.label.cboMustSelect'"
+                (onChange)="onPeriodChange()" [disabled]="true">
+              </select-filter>
+              <app-control-messages [control]="f['subsidizedPeriodId']"></app-control-messages>
+            </div>
+            <!-- đơn vị đề xuất -->
+            <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+              {{'subsidizedSuggest.label.proposeOrgId' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-3 ui-lg-3">
+              <select-filter [property]="f['proposeOrgId']" [options]="subsidizedBeneficialOgrIdList" optionLabel="name" [disabled]="true"
+                optionValue="organizationId" [placeHolder]="'common.label.cboMustSelect'" (onChange)="onProposeOrgChange()" >
+              </select-filter>
+              <app-control-messages [control]="f['proposeOrgId']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- đơn vị quyết định -->
+            <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+              {{'subsidizedPeriod.label.decisionOrgId' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-3 ui-lg-3">
+              <org-selector [property]="f['decisionOrgId']" operationKey="action.view" adResourceKey="resource.subsidized"
+                [disabled]="true">
+              </org-selector>
+              <app-control-messages [control]="f['decisionOrgId']"></app-control-messages>
+            </div>
+            <!-- đối tượng hưởng -->
+            <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+              {{'subsidizedPeriod.label.beneficiaryType' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-3 ui-lg-3">
+              <select-filter [property]="f['beneficiaryType']" [options]="beneficiaryTypeList" optionLabel="name"
+                optionValue="id" [placeHolder]="'common.label.cboMustSelect'" [disabled]="true">
+              </select-filter>
+              <app-control-messages [control]="f['beneficiaryType']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- năm -->
+            <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+              {{'subsidizedPeriod.label.decisionYear' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-3 ui-lg-3">
+              <select-filter [property]="f['decisionYear']" [options]="listYear" optionLabel="year" optionValue="year"
+                [placeHolder]="'common.label.cboMustSelect'" [disabled]="true">
+              </select-filter>
+              <app-control-messages [control]="f['decisionYear']"></app-control-messages>
+            </div>
+            <!-- Loại trợ cấp -->
+            <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+              {{'subsidizedPeriod.label.subsidizedType' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-3 ui-lg-3">
+              <select-filter [property]="f['subsidizedType']" [options]="subsidizedTypeList" optionLabel="name"
+                optionValue="catAllowanceId" [placeHolder]="'common.label.cboMustSelect'" [disabled]="true">
+              </select-filter>
+              <app-control-messages [control]="f['subsidizedType']"></app-control-messages>
+            </div>
+          </div>
+        </div>
+        <div class="listArea" style="padding: 10px;">
+          <div class="panel panel-default card-info">
+            <div class="panel-heading vt-relative">
+              <strong>
+                {{'subsidizedBeneficiary.label.subsidizedBeneficiaryList' | translate}}
+              </strong>
+              <div class="right-nav-bar pull-right">
+                <ul class="header-right1 header-right sys-ul space-line">
+                  <li class="vhr-search-empinfo">
+                    <div id="header-search">
+                      <div class="vt-relative">
+                        <form [formGroup]="formSearchNguoiHuong">
+                          <div class="display-table" style="border: solid 1px #6f7d85; border-radius: 8px; overflow: hidden;">
+                            <div class="table-cell">
+                              <button type="button" class="icon-search input-search" (click)="filterFormSubsidizedSuggest()">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                              </button>
+                            </div>
+                            <div class="table-cell">
+                              <input type="text" class="form-control input-search no-between-border" name="keyword"
+                                formControlName="keyword" placeholder="{{'home.search.placeHolder' | translate}}"
+                                appendTo="body">
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <button type="button" *ngIf="!isView && hasPermission('action.import')" class="btn btn-sm vt-btn"
+                      [innerHTML]="'bonusType.importFile' | translate" (click)="openFormImport()"></button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <form id="formSubsidizedSuggest" [formGroup]="formSubsidizedSuggest">
+              <div class="panel-body panel-table" style="padding: 16px;">
+                <p-table [scrollable]="true" [value]="listFilteredSubsidizedSuggest" [paginator]="true"
+                  [first]="firstRowIndex" [rows]="pageSize" [totalRecords]="listFilteredSubsidizedSuggest.length"
+                  tableStyleClass="table controls-table table-wrapper b-t b-b" styleClass="rewardGroupMinHeight" [resizableColumns]="true">
+                  <ng-template pTemplate="colgroup" let-columns>
+                    <colgroup>
+                      <col style="width: 50px;">
+                      <col style="width: 200px;">
+                      <col style="width: 200px;">
+                      <col style="width: 200px;">
+                      <col style="width: 200px;">
+                      <col style="width: 200px;">
+                      <col style="width: 100px;">
+                      <col style="width: 100px;">
+                      <col style="width: 100px;">
+                      <col style="width: 200px;">
+                      <col style="width: 200px;">
+                    </colgroup>
+                  </ng-template>
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th translate pResizableColumn>common.table.index</th>
+                      <!-- mã nhân viên -->
+                      <th translate pResizableColumn><span>subsidizedSuggest.label.employeeCode</span></th>
+                      <!-- tên nhân viên -->
+                      <th translate pResizableColumn><span>subsidizedSuggest.label.employeeName</span></th>
+                      <!-- Mối quan hệ -->
+                      <th translate pResizableColumn><span>subsidizedSuggest.label.relationship</span></th>
+                      <!-- địa chỉ thân nhân -->
+                      <th translate pResizableColumn><span>subsidizedResult.label.currentResidence</span></th>
+                      <!-- lý do -->
+                      <th translate pResizableColumn><span>subsidizedSuggest.label.note</span></th>
+                      <!-- số tiền -->
+                      <th translate pResizableColumn><span>subsidizedBeneficiary.label.money</span>
+                        <!-- Phê duyệt -->
+                      <th translate pResizableColumn><span>subsidizedBeneficiary.label.approvesubsidized</span></th>
+                      <!-- Từ chối -->
+                      <th translate pResizableColumn><span>subsidizedBeneficiary.label.unApprovesubsidized</span></th>
+                      <!-- lý do từ chối -->
+                      <th translate pResizableColumn><span>subsidizedBeneficiary.label.noteUpApprove</span></th>
+                      <!-- ngày xét duyệt -->
+                      <th translate pResizableColumn><span>subsidizedBeneficiary.label.approveDate</span>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-item let-index="rowIndex">
+                    <tr [formGroup]="formSubsidizedSuggest.controls[item]">
+                      <td class="vt-align-center">
+                        {{index+1}}
+                      </td>
+                      <!-- mã nhân viên -->
+                      <td>
+                        <data-picker [property]="formSubsidizedSuggest.controls[item].controls.employeeId" systemCode="political" operationKey="action.view"
+                          adResourceKey="resource.massMember" objectBO="EmployeeBO" codeField="employeeCode"
+                          nameField="fullName" emailField="email" selectField="employeeId" (onChange)="genData($event)"
+                          [isRequiredField]="true" [filterCondition]="employeeFilterCondition" [disabled]="true"
+                          isDisplayCode="true">
+                        </data-picker>
+                        <app-control-messages [control]="formSubsidizedSuggest.controls[item].controls.employeeId"></app-control-messages>
+                      </td>
+                      <!-- tên cán bộ -->
+                      <td class="vt-align-left">
+                        <input type="text" class="form form-control" name="employeeName" [attr.disabled]="true"
+                          formControlName="employeeName">
+                        <app-control-messages [control]="formSubsidizedSuggest.controls[item].controls.employeeName"></app-control-messages>
+                      </td>
+                      <!-- Mối quan hệ -->
+                      <td class="vt-align-left">
+                        <select-filter [property]="formSubsidizedSuggest.controls[item].controls.objectId" [options]="formSubsidizedSuggest.controls[item].listDataFamilyMember"
+                          optionLabel="information" optionValue="familyRelationshipId"
+                          [placeHolder]="'common.label.cboMustSelect'" appendTo="body" [disabled]="true">
+                        </select-filter>
+                        <app-control-messages [control]="formSubsidizedSuggest.controls[item].controls.objectId"></app-control-messages>
+                      </td>
+                      <!--địa chỉ thân nhân -->
+                      <td>
+                        <input type="text" class="form form-control" name="currentResidence" [attr.disabled]="true"
+                          formControlName="currentResidence" [attr.disabled]="true">
+                        <app-control-messages [control]="formSubsidizedSuggest.controls[item].controls.currentResidence"></app-control-messages>
+                      </td>
+                      <!-- lý do-->
+                      <td class="vt-align-left">
+                        <textarea type="text" rows="2" name="reason" class="form-control" formControlName="reason"
+                          maxlength="2000" [attr.disabled]="true">
+                        </textarea>
+                        <app-control-messages [control]="formSubsidizedSuggest.controls[item].controls.reason"></app-control-messages>
+                      </td>
+                      <!-- số tiền -->
+                      <td class="vt-align-right">
+                        <input type="number" class="form form-control" style="text-align:right;" name="subsidizedMoney"
+                          min="0" formControlName="subsidizedMoney" maxlength="20"
+                          [attr.disabled]="isView ? true: (moneyDisableArr[index]==false ? null : true)">
+                        <div *ngIf="moneyValidateArr[index] ? moneyValidateArr[index] : false"
+                          class="errorMessageDiv error-message-custom show" ng-reflect-klass="errorMessageDiv">
+                          <small class="text-danger errorMessage ng-star-inserted"> * Trường bắt buộc và Số tiền nhỏ nhất là 1 </small>
+                        </div>
+                      </td>
+                      <!-- phê duyệt-->
+                      <td class="vt-align-center">
+                        <input type="checkbox" formControlName="approve" [value]="1" (click)="onClickedApprove(true, index)"
+                          style="width: 23px;
+                        height: 23px;" [attr.disabled]="isView ? true: null" />
+                      </td>
+                      <!-- Từ chối -->
+                      <td class="vt-align-center">
+                        <input type="checkbox" formControlName="decline" [value]="1"
+                          (click)="onClickedApprove(false, index)" style="width: 23px;
+                          height: 23px;" [attr.disabled]="isView ? true: null" />
+                      </td>
+                      <!-- lý do từ chối -->
+                      <td class="vt-align-center">
+                        <textarea type="text" rows="2" name="refuseReason" class="form-control"
+                          formControlName="refuseReason" maxlength="2000"
+                          [attr.disabled]="isView ? true: (lyDoDisableArr[index]==false ? null : true)">
+                        </textarea>
+                        <div *ngIf="lyDoValidateArr[index] ? lyDoValidateArr[index] : false"
+                          class="errorMessageDiv error-message-custom show" ng-reflect-klass="errorMessageDiv">
+                          <small class="text-danger errorMessage ng-star-inserted"> * Trường bắt buộc </small>
+                        </div>
+                      </td>
+                      <!-- ngày phê duyệt -->
+                      <td class="vt-align-center">
+                        <date-picker [property]="formSubsidizedSuggest.controls[item].controls.approvedDate" [disabled]="true" appendTo="body">
+                        </date-picker>
+                        <app-control-messages [control]="formSubsidizedSuggest.controls[item].controls.approvedDate"></app-control-messages>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </form>
+            <button class="btn-icon plus" *ngIf="!isView && !isApprove" type="button" [title]="'titleAdd' | translate"
+              style="margin: 12px;" (click)="addRow()" [innerHTML]="'common.icon.plus' | translate">
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div
+    *ngIf="!hasPermission('action.view') && !hasPermission('action.approval')">
+    {{'common.haveNoPermission' | translate}}
+  </div>
+</div>

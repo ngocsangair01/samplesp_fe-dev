@@ -1,0 +1,121 @@
+<form id="formRewardCost" [formGroup] = "formRewardCost" style="padding: 12px;">
+  <div class="panel-body panel-table">
+    <p-table [scrollable]="true" [value]="formRewardCost.controls"
+             tableStyleClass="table controls-table table-wrapper b-t b-b" [paginator]="true"
+             [(first)]="firstRowIndex" [rows]="pageSize"
+             [totalRecords]="formRewardCost.controls.length">
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col class="size-1">
+          <col class="size-3">
+          <col class="size-10">
+          <col class="size-10">
+          <col class="size-10">
+          <col class="size-12">
+          <col class="size-12">
+          <col class="size-10">
+
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th translate>common.table.index</th>
+          <th translate><span>common.label.action</span></th>
+          <th translate><span [ngClass]="'required'">rewardPropose.org</span></th>
+          <th translate><span [ngClass]="'required'"> rewardPropose.content.payment </span></th>
+          <th translate><span [ngClass]="'required'"> rewardCategoryFunding.funding </span></th>
+          <th translate><span [ngClass]="'required'">rewardPropose.amountOfMoney</span></th>
+          <th translate><span>rewardPropose.content</span></th>
+          <th translate><span>rewardGeneral.representReceiveBonusOrgName</span></th>
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-index="rowIndex">
+        <tr [formGroup]="item" [ngClass]="{'d-none': item.controls.isHidden.value}">
+          <td class="vt-align-center">
+            {{index+1}}
+          </td>
+
+          <!-- thao tac -->
+          <td class="vt-align-center">
+            <button class="btn-icon minus" type="button" (click)="remove(index, item)"
+                    [innerHTML]="'common.icon.minus' | translate"
+                    [disabled]="isView ? true: null">
+            </button>
+          </td>
+
+          <!-- Đơn vị -->
+          <td class="vt-align-center">
+              <org-selector [property]="item.controls.objectIdsangnnMember" operationKey="action.view" [autoFocus]="true"
+                            adResourceKey="resource.rewardPropose" [defaultValue]="false" (onChange)="onProposeOrgChange($event)" [title]="item.value.orgName || ''"
+                            [disabled]="isView ? true: null" [isRequiredField]="true">
+            </org-selector>
+           <!-- <mass-org-selector *ngIf="rewardType == 2 || rewardType == 3 || rewardType == 4" [property]="item.controls.objectIdsangnnMember" operationKey="action.view"
+                               adResourceKey="resource.rewardPropose" [defaultValue]="false" [branch]="branch"
+                               [disabled]="isView ? true: null"
+                               [autoFocus]="true" [isRequiredField]="true">
+            </mass-org-selector>
+            <party-org-selector
+                    *ngIf="rewardType == 1"
+                    [property]="item.controls.objectIdsangnnMember"
+                    operationKey="action.view"
+                    adResourceKey="resource.rewardPropose"
+                    [defaultValue]="false"
+                    [isRequiredField]="true" [autoFocus]="true"
+                    [disabled]="isView ? true: null">
+            </party-org-selector>-->
+            <app-control-messages [control]="item.controls.objectIdsangnnMember"></app-control-messages>
+          </td>
+
+          <!-- Nội dung chi -->
+          <td>
+            <select-filter [placeHolder]="'common.label.cboSelect'" [property]="item.controls.rewardTitleId "
+                           [options]="rewardTitleList" optionLabel="name" optionValue="rewardCategoryId" appendTo="body"
+                           [disabled]="isView ">
+            </select-filter>
+            <app-control-messages [control]="item.controls.rewardTitleId "></app-control-messages>
+          </td>
+          <!-- Nguồn kinh phí -->
+          <td>
+            <select-filter [placeHolder]="'common.label.cboSelect'" [property]="item.controls.fundingCategoryId "
+                           [options]="fundingCategoryList" optionLabel="funding" optionValue="fundingCategoryId" appendTo="body"
+                           [disabled]="isView">
+            </select-filter>
+            <app-control-messages [control]="item.controls.fundingCategoryId "></app-control-messages>
+          </td>
+          <!-- Số tiền -->
+          <td class="vt-align-right">
+            <input *ngIf="isView? true: null" type="text" class="form form-control"
+                   [attr.disabled]="isView? true: null"
+                   formControlName="amountOfMoney" [value]="item.value.amountOfMoney | currency: 'VND'">
+            <input *ngIf="isView ? null: true"
+                   type="text" class="form form-control"
+                   [attr.disabled]="isView? true: null"
+                   formControlName="amountOfMoney">
+            <app-control-messages [control]="item.controls.amountOfMoney"></app-control-messages>
+          </td>
+
+          <!-- Nội dung -->
+          <td class="vt-align-left">
+          <textarea type="text" rows="2" name="description" class="form-control"
+                    [attr.disabled]="isView ? true: null"
+                    formControlName="description" maxlength="2000" >
+            </textarea>
+            <app-control-messages [control]="item.controls.description"></app-control-messages>
+          </td>
+
+          <td class="vt-align-center">
+            <org-selector [property]="item.controls.representReceiveBonusOrgId" operationKey="action.view"
+                          adResourceKey="resource.rewardPropose" [defaultValue]="false" (onChange)="onProposeOrgChange($event)" [title]="item.value.orgName || ''"
+                          [disabled]="isView ? true: null" isRequiredField=true;>
+            </org-selector>
+            <app-control-messages [control]="item.controls.representReceiveBonusOrgId"></app-control-messages>
+          </td>
+
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</form>
+<button *ngIf="!isView" type="button" (click)="add()" [innerHTML]="'common.button.icon.addColumn' | translate">
+</button>

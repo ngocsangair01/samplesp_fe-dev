@@ -1,0 +1,35 @@
+.modal {
+    text-align: center;
+    padding: 0!important;
+}
+  
+.modal::before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+}
+  
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.card-header {
+    white-space: nowrap;
+    text-align: left;
+    font-family: "PFBeauSansPro";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    color: rgba(198,31,27,1);
+    letter-spacing: 0.12px;
+    background-color: #fff;
+}
+
+.card-footer {
+    padding: 0;
+    background-color: #fff;
+}

@@ -1,0 +1,314 @@
+<div class="collapse pos-rlt bg-header clearfix show" [ngClass]="{'':!isShowLogoTitle}"
+     kendoRippleContainer>
+    <ng-container *ngIf="isShowLogoTitle">
+        <div class="left-nav-bar menu-title pull-left row-header" style="margin-left: unset">
+            <div class="left-nav-bar pull-left waves-effect waves-light" style="padding-right: 4px;">
+                <img [routerLink]="['/home']" src="assets/images/home/newLogo.svg" class="logo-icon">
+            </div>
+            <div class="left-nav-bar pull-left waves-light" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;  margin-bottom: 12px">
+                <span class="header-title" style="line-height:10px">{{'app.header.title1' | translate}}</span>
+                <span class="header-title" style="margin-right:55px; line-height: 10px">{{'app.header.title2' | translate}}</span>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!isShowLogoTitle && !isMenuMobile">
+        <div class="left-nav-bar menu-title pull-left row-header" style="margin-left: unset">
+            <div class="left-nav-bar pull-left waves-effect waves-light" style="padding-right: 4px;">
+                <img [routerLink]="['/home']" src="assets/images/home/newLogo.svg" class="logo-icon">
+            </div>
+            <div class="left-nav-bar pull-left waves-light" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;  margin-bottom: 12px">
+                <span class="header-title" style="line-height:10px">{{'app.header.title1' | translate}}</span>
+                <span class="header-title" style="margin-right:55px; line-height: 10px">{{'app.header.title2' | translate}}</span>
+            </div>
+            <div class="m-r-md item" *ngFor="let item of vpsItems" (click)="navigateMenu(vpsItems,item)"
+                 (mouseenter)="onHover(item)" (mouseleave)="onHoverLeave()">
+                <div class=" header-title-wrapper ">
+                    <label id="label">  {{item.name}} </label>
+                    <img *ngIf=" item.isActive" src="assets/img/icon/icon_under_status.svg">
+                    <li class="list-style">
+                        <div *ngIf="userMenuByParent && userMenuByParent.length" class="popup-more">
+                            <div class="search-box">
+                                <div class="item label-pupop" *ngFor="let menuItem of userMenuByParent"
+                                     (click)="navigateMenu(userMenuByParent,menuItem)">
+                                    {{menuItem.name}}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </div>
+
+            </div>
+            <div class="list-style">
+                <img *ngIf="subVpsItems && subVpsItems.length" class="icon-more" src="assets/img/icon/Icon-more.svg">
+                <div class="popup-more">
+                    <div class="search-box">
+                        <ng-container style="position: relative">
+                            <div class="item label-pupop" *ngFor="let subItem of subVpsItems"
+                                 (click)="navigateMenu(subVpsItems,subItem)"
+                                 (mouseenter)="onHover(subItem)"
+                                 (mouseleave)="onHoverLeave()">
+                                {{subItem.name}}
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!isShowLogoTitle && isMenuMobile">
+        <p-dropdown [options]="vpsItems" optionLabel="name" (onChange)="navigate($event)"></p-dropdown>
+    </ng-container>
+    <div class="right-nav-bar pull-right left-option">
+        <ul class="header-right sys-ul space-line vt-row">
+            <li style="height: 28px">
+                <header-search></header-search>
+            </li>
+            <li ngbDropdown placement="bottom-right" style=" height: 20px;">
+                <a ngbDropdownToggle>
+                    <img src="./../../../../assets/images/home/thong_bao.svg" alt="" style="height: 16px; width: 16px">
+                </a>
+                <div ngbDropdownMenu aria-labelledby="notify-dropdown" class="dropdown-menu card-notify">
+                    <div class="row">
+                        <div class="col-12 col-xxl-12 col-xl-12 col-lg-12 col-md-12">
+                            <div class="notify-title">Thông báo</div>
+                        </div>
+                    </div>
+                    <hr class="divider-notify">
+                    <div *ngFor="let item of resultList; index as i" class="row card-noti">
+                        <div *ngIf="item.notifyBranch === 1" class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                            <img class="notify-icon" src="./../../../assets/images/home/Tochuc.svg" alt="">
+                        </div>
+                        <div *ngIf="item.notifyBranch === 2" class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                            <img class="notify-icon" src="./../../../assets/images/home/Cán bộ.svg" alt="">
+                        </div>
+                        <div *ngIf="item.notifyBranch === 3" class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                            <img class="notify-icon" src="./../../../assets/images/home/Tuyenhuan.svg" alt="">
+                        </div>
+                        <div *ngIf="item.notifyBranch === 4" class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                            <img class="notify-icon" src="./../../../assets/images/home/Quanchung.svg" alt="">
+                        </div>
+                        <div *ngIf="item.notifyBranch === 5" class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                            <img class="notify-icon" src="./../../../assets/images/home/Kiemtragiamsat.svg" alt="">
+                        </div>
+                        <div *ngIf="item.notifyBranch === 6" class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                            <img class="notify-icon" src="./../../../assets/images/home/Chínhach dan van.svg" alt="">
+                        </div>
+                        <div *ngIf="item.notifyBranch === 7" class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                            <img class="notify-icon" src="./../../../assets/images/home/Baoveanninh.svg" alt="">
+                        </div>
+                        <div *ngIf="item.notifyBranch === 8" class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                            <img class="notify-icon" src="./../../../assets/images/home/Tochuc.svg" alt="">
+                        </div>
+                        <div *ngIf="item.notifyBranch === 9" class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                            <img class="notify-icon" src="./../../../assets/images/home/Tochuc.svg" alt="">
+                        </div>
+                        <div *ngIf="item.notifyBranch === 10" class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                            <img class="notify-icon" src="./../../../assets/images/home/Quanchung.svg" alt="">
+                        </div>
+                        <div *ngIf="item.notifyBranch === 11" class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                            <img class="notify-icon" src="./../../../assets/images/home/Quanchung.svg" alt="">
+                        </div>
+                        <div *ngIf="item.notifyBranch === 12" class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                            <img class="notify-icon" src="./../../../assets/images/home/Quanchung.svg" alt="">
+                        </div>
+                        <div class="col-10 col-xxl-10 col-xl-10 col-lg-10 col-md-10">
+                            <div class="notify-name" style="-webkit-box-orient: vertical;">{{item.notifyContent}}</div>
+                            <div class="notify-type">{{item.notifyBranchName}}</div>
+                            <div>
+                                <img class="time-icon" src="./../../../assets/images/home/time.svg" alt="">
+                                <span class="notify-time">{{item.displayStartDate | displayDateNotification}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li ngbDropdown placement="bottom-right" style=" height: 30px;">
+                <a style="font-size: 16px" class="btn-header btn-arrow-down" ngbDropdownToggle id="market-dropdown"
+                   [title]="'app.common.title.selectTheme' | translate ">
+                    <!--                    <img src="../../../../assets/images/fill-color.png" style="width: 20px;"/>-->
+                    <span style="color: rgba(198,31,27,1)" class="fa fa-palette icon-checked"></span>
+                </a>
+                <div ngbDropdownMenu aria-labelledby="market-dropdown" class="select-theme">
+                    <div class="row">
+                        <div class="contentPageDemo col-md-6" style="padding: 0px 10px 0px 20px">
+                            <a href="javascript:;" class="pageDemo page1 active" ng-class="{active: selectedTheme==1}"
+                               (click)="fSelectedTheme(1)">
+                                <span class="pageDemoMenu"></span>
+                                <span class="pageDemoHeader"></span>
+                                <span class="pageDemoContent">
+                                    <span *ngIf="selectedTheme==1" class="fa fa-check icon-checked"></span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="contentPageDemo col-md-6" style="padding: 0px 20px 0px 10px">
+                            <a href="javascript:;" class="pageDemo page2" ng-class="{active: selectedTheme==2}"
+                               (click)="fSelectedTheme(2)">
+                                <span class="pageDemoMenu"></span>
+                                <span class="pageDemoHeader"></span>
+                                <span class="pageDemoContent">
+                                    <span *ngIf="selectedTheme==2" class="fa fa-check icon-checked"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="contentPageDemo col-md-6" style="padding: 0px 10px 0px 20px">
+                            <a href="javascript:;" class="pageDemo page3" ng-class="{active: selectedTheme==3}"
+                               (click)="fSelectedTheme(3)">
+                                <span class="pageDemoMenu"></span>
+                                <span class="pageDemoHeader"></span>
+                                <span class="pageDemoContent">
+                                    <span *ngIf="selectedTheme==3" class="fa fa-check icon-checked"></span>
+                                </span>
+                            </a>
+                        </div>
+
+                        <div class="contentPageDemo col-md-6" style="padding: 0px 20px 0px 10px">
+                            <a href="javascript:;" class="pageDemo page4" ng-class="{active: selectedTheme==4}"
+                               (click)="fSelectedTheme(4)">
+                                <span class="pageDemoMenu"></span>
+                                <span class="pageDemoHeader"></span>
+                                <span class="pageDemoContent">
+                                    <span *ngIf="selectedTheme==4" class="fa fa-check icon-checked"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="contentPageDemo col-md-6" style="padding: 0px 10px 0px 20px">
+                            <a href="javascript:;" class="pageDemo page0" ng-class="{active: selectedTheme==0}"
+                               (click)="fSelectedTheme(0)">
+                                <span class="pageDemoMenu"></span>
+                                <span class="pageDemoHeader"></span>
+                                <span class="pageDemoContent">
+                                    <span *ngIf="selectedTheme==0" class="fa fa-check icon-checked"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li style="height: 30px">
+                <help #helpView></help>
+            </li>
+
+            <li ngbDropdown placement="bottom-right">
+                <a class="btn-header btn-arrow-down" ngbDropdownToggle style="height: 35px">
+                    <img class="image-user" [src]="API_URL + userInfo.avatar" alt="">
+                </a>
+                <div ngbDropdownMenu aria-labelledby="info-dropdown" class="dropdown-menu">
+                    <div class="card-user" style="height: auto">
+                        <div class="row">
+                            <div class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                                <img class="image-avatar" [src]="API_URL + userInfo.avatar" alt="">
+                            </div>
+                            <div class="col-10 col-xxl-10 col-xl-10 col-lg-10 col-md-10">
+                                <div class="user-name">{{name}}</div>
+                                <div class="user-type">{{organizationName}}</div>
+                            </div>
+                        </div>
+                        <hr class="divider-user">
+                        <div class="row card-info">
+                            <div class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                                <img class="info-icon-ava" src="./../../../assets/images/home/user card.svg"
+                                     alt="">
+                            </div>
+                            <div class="col-5 col-xxl-5 col-xl-5 col-lg-5 col-md-5">
+                                <div class="user-title">Số thẻ Đảng:</div>
+                            </div>
+                            <div class="col-5 col-xxl-5 col-xl-5 col-lg-5 col-md-5">
+                                <div class="info-label">{{partyNumber}}</div>
+                            </div>
+                        </div>
+                        <div class="row card-info">
+                            <div class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                                <img class="info-icon-ava" src="./../../../assets/images/home/tabler_user.svg"
+                                     alt="">
+                            </div>
+                            <div class="col-8 col-xxl-8 col-xl-8 col-lg-8 col-md-8">
+                                <div class="user-title">Chức danh Đảng:</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-11 col-xxl-11 col-xl-11 col-lg-11 col-md-11">
+                                    <div class="user-info" style="white-space: initial">{{strPartyCongressTitle}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row card-info">
+                            <div class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                                <img class="info-icon-ava" src="./../../../assets/images/home/tabler_user.svg"
+                                     alt="">
+                            </div>
+                            <div class="col-5 col-xxl-5 col-xl-5 col-lg-5 col-md-5">
+                                <div class="user-title">Chức danh chính quyền:</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-11 col-xxl-11 col-xl-11 col-lg-11 col-md-11">
+                                    <div class="user-info" style="white-space: initial">
+                                        {{mainPositionName}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row card-info">
+                            <div class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                                <img class="info-icon-ava"
+                                     src="./../../../assets/images/home/Email.svg" alt="">
+                            </div>
+                            <div class="col-4 col-xxl-4 col-xl-4 col-lg-4 col-md-4">
+                                <div class="user-title">Email:</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-11 col-xxl-11 col-xl-11 col-lg-11 col-md-11">
+                                    <div class="user-info" style="white-space: initial">{{email}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="divider-user">
+                        <div class="row card-info" style="margin-bottom: 14px">
+                            <div class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                                <img class="info-icon-ava" src="./../../../assets/images/home/Mask_Group_1297.png"
+                                     alt="">
+                            </div>
+                            <div class="col-5 col-xxl-5 col-xl-5 col-lg-5 col-md-5" (click)="logout()">
+                                <div class="logout">Đăng xuất</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+    <!-- nabar right -->
+    <!-- <ul class="nav navbar-nav navbar-right">
+      <li class="search-header">
+        <div class="form-group">
+          <div class="input-group hidden-sm">
+            <span class="input-group-btn btn-search">
+              <button type="submit" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></button>
+            </span>
+            <input type="text" class="form-control input-search input-sm bg-light no-border rounded padder" placeholder="Search">
+            <div class="dropdown hidden-sm dropdown-search" dropdown>
+              <a href class="dropdown-toggle" dropdown-toggle><b class="caret right-search"></b></a>
+              <ul class="dropdown-menu animated fadeInRight w">
+                <li>
+                  <label><input type="checkbox"> feild 1</label>
+                </li>
+                <li>
+                  <label><input type="checkbox"> feild 1</label>
+                </li>
+                <li>
+                  <label><input type="checkbox"> feild 1</label>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul> -->
+    <!-- / navbar right -->
+</div>
+<!-- / navbar collapse -->

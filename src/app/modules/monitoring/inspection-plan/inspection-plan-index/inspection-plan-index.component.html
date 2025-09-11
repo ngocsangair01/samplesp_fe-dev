@@ -1,0 +1,6 @@
+  <div *ngIf="hasPermission('action.view')">
+    <inspection-plan-search></inspection-plan-search>
+  </div>
+  <div *ngIf="!hasPermission('action.view')">
+    {{'common.haveNoPermission' | translate}}
+  </div>

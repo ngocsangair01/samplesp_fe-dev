@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_11149" data-name="Rectangle 11149" width="24" height="24" transform="translate(1460 7194)" fill="#fff" stroke="#ad0025" stroke-width="0.5"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_19514" data-name="Mask Group 19514" transform="translate(-1460 -7194)" clip-path="url(#clip-path)">
+    <g id="Group_19790" data-name="Group 19790" transform="translate(1460.023 7194.023)">
+      <path id="Path_63936" data-name="Path 63936" d="M11.977,1.871A11.976,11.976,0,0,0,2.991,21.765a.936.936,0,0,0,.7.317H20.261a.936.936,0,0,0,.7-.317A11.976,11.976,0,0,0,11.977,1.871Zm7.85,18.339H4.126a10.09,10.09,0,0,1-2.211-5.427h.892a.936.936,0,1,0,0-1.871H1.914A10.009,10.009,0,0,1,4.2,7.395l.631.631A.936.936,0,1,0,6.154,6.7l-.631-.631a10.009,10.009,0,0,1,5.518-2.286v.893a.936.936,0,0,0,1.871,0V3.786a10.1,10.1,0,0,1,9.127,9.127h-.893a.936.936,0,1,0,0,1.871h.892a10.09,10.09,0,0,1-2.211,5.427ZM16.473,8.028l-3.287,3.287a2.808,2.808,0,1,0,1.323,1.323L17.8,9.351a.936.936,0,1,0-1.323-1.323Zm-4.5,6.756a.936.936,0,1,1,.936-.936A.936.936,0,0,1,11.977,14.784Z" fill="#fff" stroke="#ad0025" stroke-width="0.5"/>
+    </g>
+  </g>
+</svg>

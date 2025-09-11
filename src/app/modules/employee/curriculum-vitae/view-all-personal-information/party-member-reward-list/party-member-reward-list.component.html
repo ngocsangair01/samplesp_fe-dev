@@ -1,0 +1,74 @@
+<div class="panel-body panel-table">
+  <p-table #ptable 
+    [value]="resultList.data" 
+    [paginator]="true" 
+    (onLazyLoad)="processSearchDetail($event)" 
+    [lazy]="true"
+    [rows]="changeRow"
+    [totalRecords]="resultList.recordsTotal" 
+    [scrollable]="true" 
+    [lazyLoadOnInit]="false"
+    tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+    [resizableColumns]="true" 
+  >
+    <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+        <col style="width: 50px;">
+        <col style="width: 50px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 200px;">
+        <col style="width: 100px;">
+      </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th translate pResizableColumn>common.table.index</th>
+        <th translate pResizableColumn>employee360.reward.rwPuType</th>
+        <th translate pResizableColumn>employee360.reward.rwDocument</th>
+        <th translate pResizableColumn>employee360.reward.rwLevel</th>
+        <th translate pResizableColumn>employee360.reward.rwType</th>
+        <th translate pResizableColumn>employee360.reward.rwForm</th>
+        <th translate pResizableColumn>employee360.reward.rwReason</th>
+        <th translate pResizableColumn>employee360.reward.rwSignDate</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+      <tr>
+        <td class="vt-align-center">{{index}}</td>
+        <td class="vt-align-center">
+          {{item.rwPuType}}
+        </td>
+        <td class="vt-align-left">
+          {{item.rwDocument}}
+        </td>
+        <td class="vt-align-left">
+          {{item.rwLevel}}
+        </td>
+        <td class="vt-align-left">
+          {{item.rwType}}
+        </td>
+        <td class="vt-align-left">
+          {{item.rwForm}}
+        </td>
+        <td class="vt-align-left">
+          {{item.rwReason}}
+        </td>
+        <td class="vt-align-center">
+          {{item.rwSignDate | displayDate}}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr class="emptymessage">
+        <td [attr.colspan]="10" [innerHTML]="'app.noRecords' | translate">
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <table-footer (changeRow)="onTablePageChange($event)"  [resultList]="resultList"></table-footer>
+    </ng-template>
+  </p-table>
+</div>

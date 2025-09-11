@@ -1,0 +1,78 @@
+<div id="listArea">
+  <div class="panel-default">
+    <div class="panel-heading vt-relative">
+      <strong class="text-u-c">
+        <i class="fa fa-th"></i>
+        {{'transferPartyMembers.historyApproval' | translate}}
+      </strong>
+      <div class="vt-absolute vt-shotcut-button-in-heading">
+        <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}" class="btn btn-span btn-sm btn-info btn-close"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <div class="panel-body panel-table">
+      <p-table
+      #ptable
+      [value]="data"
+      [paginator]="true"
+      (onLazyLoad)="processSearchHis($event)"
+      [lazy]="true"
+      [rows]="changeRow"
+      [totalRecords]="recordsTotal"
+      [scrollable]="true" [lazyLoadOnInit]="false"
+      tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+      styleClass="controlOverflow">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col class="size-1">
+            <col class="size-6">
+            <col class="size-5">
+            <col class="size-5">
+            <col class="size-10">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th translate>common.table.index</th>
+            <th [pSortableColumn]="'statusName'">
+              {{'transferPartyMembers.status' | translate}}
+              <p-sortIcon [field]="'statusName'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'createdDate'">
+              {{'transferPartyMembers.approvedDateDecline' | translate}}
+              <p-sortIcon [field]="'createdDate'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'createdBy'">
+              {{'transferPartyMembers.approvedMembDecline' | translate}}
+              <p-sortIcon [field]="'createdBy'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'decription'">
+              {{'transferPartyMembers.description' | translate}}
+              <p-sortIcon [field]="'decription'"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+          <tr>
+            <td class="vt-align-center">{{parseInt(resultList.first) + index}}</td>
+            <td class="vt-align-left">{{item.statusName}}</td>
+            <td class="vt-align-center">{{item.createdDate|displayDateTime}}</td>
+            <td class="vt-align-center">{{item.createdBy}}</td>
+            <td class="vt-align-left">{{item.decription}}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr class="emptymessage">
+            <td [attr.colspan]="14" [innerHTML]="'app.noRecords' | translate">
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+          <table-footer (changeRow)="onTablePageChange($event)"  [resultList]="resultList"></table-footer>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="panel-footer vt-area-button">
+      <button type="button" (click)="activeModal.close()" class="btn btn-sm btn-danger" [innerHTML]="'common.button.out' | translate"></button>
+    </div>
+  </div>
+</div>

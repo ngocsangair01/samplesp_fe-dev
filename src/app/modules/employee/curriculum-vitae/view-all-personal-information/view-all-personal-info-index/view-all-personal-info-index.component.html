@@ -1,0 +1,974 @@
+<div *ngIf="hasPermission('action.view')">
+  <div class="card-emp">
+    <emp-info [EmployeeInfo]="employeeBean"></emp-info>
+  </div>
+  <div class="row" style="padding: 16px; height: 83vh; overflow-y: scroll;">
+    <div class="employeeTabs">
+      <div class="panel panel-default card-info">
+        <div class="panel-heading" translate>
+          <strong class="title">
+            employee360.title
+          </strong>
+        </div>
+        <div *ngIf="!isMobileScreen" class="panel-body padding-xl ui-g no-padding-bottom" style="padding: 0 12px 12px 12px !important;">
+          <div class="ui-g-12 vt-row" >
+            <personal-information-view></personal-information-view>
+          </div>
+          <!-- Diễn biến lương chức danh + Diễn biến lương bảo hiểm -->
+          <div class="ui-g-12 vt-row">
+            <div class="ui-g-12 ui-md-6 col-lg-6 no-padding-left">
+              <div class="warning-item display-table w100 card-item">
+                <span class="table-cell warning-icon">
+                  <span class="font-icon bg-danger"><i class="glyphicons glyphicons-usd"></i></span>
+                </span>
+                <span class="table-cell warning-info" translate>
+                  <strong>
+                    employee360.salaryProcess
+                  </strong><br>
+                  <span translate>employee360.salaryProcess.detail</span>
+                </span>
+                <a class="text-link align-bottom-right" (click)="processShowDetail('salaryProcess');">{{'common.button.linkViewDetail' | translate}}</a>
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-6 col-lg-6 no-padding-right">
+              <div class="warning-item display-table w100 card-item">
+                <span class="table-cell warning-icon">
+                  <span class="font-icon bg-danger"><i class="glyphicons glyphicons-directions"></i></span>
+                </span>
+                <span class="table-cell warning-info" translate>
+                  <strong>
+                    employee360.insuranceProcess
+                  </strong><br>
+                  <span translate>employee360.insuranceProcess.detail</span>
+                </span>
+                <a class="text-link align-bottom-right" (click)="processShowDetail('insuranceProcess');">{{'common.button.linkViewDetail' | translate}}</a>
+              </div>
+            </div>
+          </div>
+          <div [ngClass]="{'show': isOpenSalaryProcess === true}" [hidden]="isOpenSalaryProcess === false" class="ui-g-12 vt-row">
+            <!-- Chi tiết diễn biến lương chức danh -->
+            <div class="ui-g-12 vt-row">
+              <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                <div class="panel-heading vt-relative">
+                  <strong>
+                    {{ 'employee360.salaryProcess' | translate }}
+                  </strong>
+                  <div class="vt-absolute vt-shotcut-button-in-heading">
+                    <button (click)="processCloseDetail('salaryProcess');" title="{{'common.button.close' | translate}}"
+                      class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                  </div>
+                </div>
+                <salary-process-list></salary-process-list>
+              </div>
+            </div>
+          </div>
+          <div [ngClass]="{'show': isOpenInsuranceProcess === true}" [hidden]="isOpenInsuranceProcess === false" class="ui-g-12 vt-row">
+            <!-- Chi tiết diễn biến lương bảo hiểm -->
+            <div class="ui-g-12 vt-row">
+              <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                <div class="panel-heading vt-relative">
+                  <strong>
+                    {{ 'employee360.insuranceProcess' | translate }}
+                  </strong>
+                  <div class="vt-absolute vt-shotcut-button-in-heading">
+                    <button (click)="processCloseDetail('insuranceProcess');" title="{{'common.button.close' | translate}}"
+                      class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                  </div>
+                </div>
+                <insurance-salary-process-list #insuranceSalaryProcessList></insurance-salary-process-list>
+              </div>
+            </div>
+          </div>
+          <div [ngClass]="{'show': isViewMore === true}" [hidden]="isViewMore === false">
+            <!-- Quá trình phụ cấp lương + Quá trình tham gia BHXH -->
+            <div class="ui-g-12 vt-row">
+              <div class="ui-g-12 ui-md-6 col-lg-6 no-padding-left">
+                <div class="warning-item display-table w100 card-item">
+                  <span class="table-cell warning-icon">
+                    <span class="font-icon bg-danger"><i class="glyphicons glyphicons-paragraph"></i></span>
+                  </span>
+                  <span class="table-cell warning-info" translate>
+                    <strong>
+                      employee360.allowanceProcess
+                    </strong><br>
+                    <span translate>employee360.allowanceProcess.detail</span>
+                  </span>
+                  <a class="text-link align-bottom-right" (click)="processShowDetail('allowanceProcess')">{{'common.button.linkViewDetail' | translate}}</a>
+                </div>
+              </div>
+              <div class="ui-g-12 ui-md-6 col-lg-6 no-padding-right">
+                <div class="warning-item display-table w100 card-item">
+                  <span class="table-cell warning-icon">
+                    <span class="font-icon bg-danger"><i class="glyphicons glyphicons-hospital"></i></span>
+                  </span>
+                  <span class="table-cell warning-info" translate>
+                    <strong>
+                      employee360.insuranceProcess2
+                    </strong><br>
+                    {{empInsurance}}
+                  </span>
+                  <a class="text-link align-bottom-right" (click)="processShowDetail('insuranceProcess2')">{{'common.button.linkViewDetail' | translate}}</a>
+                </div>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenAllowanceProcess === true}" [hidden]="isOpenAllowanceProcess === false" class="ui-g-12 vt-row">
+              <!-- Chi tiết quá trình phụ cấp lương -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.allowanceProcess' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('allowanceProcess');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <!-- danh sách phụ cấp lương -->
+                  <alowance-position-list #alowancePositionList></alowance-position-list>
+                </div>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenInsuranceProcess2 === true}" [hidden]="isOpenInsuranceProcess2 === false" class="ui-g-12 vt-row">
+              <!-- Chi tiết quá trình tham gia BHXH -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.insuranceProcess2' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('insuranceProcess2');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <insurance-process-list #insuranceProcessList></insurance-process-list>
+                </div>
+              </div>
+            </div>
+            <!-- Quá trình công tác + Quá trình đào tạo và nghiên cứu -->
+            <div class="ui-g-12 vt-row">
+              <div class="ui-g-12 ui-md-6 col-lg-6 no-padding-left">
+                <div class="warning-item display-table w100 card-item">
+                  <span class="table-cell warning-icon">
+                    <span class="font-icon bg-danger"><i class="glyphicons glyphicons-calendar"></i></span>
+                  </span>
+                  <span class="table-cell warning-info" translate>
+                    <strong>
+                      employee360.workProcess
+                    </strong><br>
+                  <span >{{workingProcess}}</span>
+                  </span>
+                  <a class="text-link align-bottom-right" (click)="processShowDetail('workProcess');">{{'common.button.linkViewDetail' | translate}}</a>
+                </div>
+              </div>
+              <div class="ui-g-12 ui-md-6 col-lg-6 no-padding-right">
+                <div class="warning-item display-table w100 card-item">
+                  <span class="table-cell warning-icon">
+                    <span class="font-icon bg-danger"><i class="glyphicons glyphicons-wallet"></i></span>
+                  </span>
+                  <span class="table-cell warning-info" translate>
+                    <strong>
+                      employee360.educationProcess
+                    </strong><br>
+                    {{educationLevel}}
+                  </span>
+                  <a class="text-link align-bottom-right" (click)="processShowDetail('educationProcess');">{{'common.button.linkViewDetail' | translate}}</a>
+                </div>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenWorkProcess === true}" [hidden]="isOpenWorkProcess === false" class="ui-g-12 vt-row">
+              <!-- Chi tiết quá trình công tác -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.workProcess' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('workProcess');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <work-process-list #workProcessList></work-process-list>
+                </div>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenEducationProcess === true}" [hidden]="isOpenEducationProcess === false" class="ui-g-12 vt-row">
+              <!-- Chi tiết quá trình đào tạo và nghiên cứu -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.educationProcess' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('educationProcess');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                    <education-process-list #educationProcessList></education-process-list>
+                </div>
+              </div>
+            </div>
+            <!-- Quá trình diện đối tượng + Quá trình công tác Đảng -->
+            <div class="ui-g-12 vt-row">
+              <div class="ui-g-12 ui-md-6 col-lg-6 no-padding-left">
+                <div class="warning-item display-table w100 card-item">
+                  <span class="table-cell warning-icon">
+                    <span class="font-icon bg-danger"><i class="glyphicons glyphicons-nameplate-alt"></i></span>
+                  </span>
+                  <span class="table-cell warning-info" translate>
+                    <strong>
+                      employee360.empTypeProcess
+                    </strong><br>
+                  <span>{{empTypeName}}</span>
+                  </span>
+                  <a class="text-link align-bottom-right" (click)="processShowDetail('empTypeProcess');">{{'common.button.linkViewDetail' | translate}}</a>
+                </div>
+              </div>
+              <div class="ui-g-12 ui-md-6 col-lg-6 no-padding-right">
+                <div class="warning-item display-table w100 card-item">
+                  <span class="table-cell warning-icon">
+                    <span class="font-icon bg-danger"><i class="glyphicons glyphicons-star-empty"></i></span>
+                  </span>
+                  <span class="table-cell warning-info" translate>
+                    <strong>
+                      employee360.partyProcess
+                    </strong><br>
+                  <span>{{partyProcess}}</span>
+                  </span>
+                  <a class="text-link align-bottom-right" (click)="processShowDetail('partyProcess');">{{'common.button.linkViewDetail' | translate}}</a>
+                </div>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenEmpTypeProcess === true}" [hidden]="isOpenEmpTypeProcess === false" class="ui-g-12 vt-row">
+              <!-- Chi tiết quá trình trình diện đối tượng -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.empTypeProcess' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('empTypeProcess');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <emp-type-process-list #empTypeList></emp-type-process-list>
+                </div>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenPartyProcess === true}" [hidden]="isOpenPartyProcess === false" class="ui-g-12 vt-row">
+              <!-- Chi tiết quá trình công tác Đảng -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.partyProcess' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('partyProcess');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <party-member-concurrent-process-list #partyMemberConcurrentProcessList></party-member-concurrent-process-list>
+                </div>
+              </div>
+            </div>
+            <!-- Khen thưởng/kỷ luật + Thành tích nổi bật -->
+            <div class="ui-g-12 vt-row">
+              <div class="ui-g-12 ui-md-6 col-lg-6 no-padding-left">
+                <div class="warning-item display-table w100 card-item">
+                  <span class="table-cell warning-icon">
+                    <span class="font-icon bg-danger"><i class="glyphicons glyphicons-cup"></i></span>
+                  </span>
+                  <span class="table-cell warning-info" translate>
+                    <strong>
+                      employee360.reward
+                    </strong><br>
+                    {{rewardOrDiscipline}}
+                  </span>
+                  <a class="text-link align-bottom-right" (click)="processShowDetail('reward');">{{'common.button.linkViewDetail' | translate}}</a>
+                </div>
+              </div>
+              <div class="ui-g-12 ui-md-6 col-lg-6 no-padding-left">
+                <div class="warning-item display-table w100 card-item">
+                  <span class="table-cell warning-icon">
+                    <span class="font-icon bg-danger"><i class="glyphicons glyphicons-brightness-increase"></i></span>
+                  </span>
+                  <span class="table-cell warning-info" translate>
+                    <strong>
+                      employee360.relicFeatured
+                    </strong><br>
+                    {{relicName}}
+                  </span>
+                  <a class="text-link align-bottom-right" (click)="processShowDetail('relicFeature');">{{'common.button.linkViewDetail' | translate}}</a>
+                </div>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenReward === true}" [hidden]="isOpenReward === false" class="ui-g-12 vt-row">
+              <!-- Chi tiết khen thưởng/kỷ luật -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.reward' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('reward');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <party-member-reward-list #partyMemberRewardlist></party-member-reward-list>
+                </div>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenRelicFeature === true}" [hidden]="isOpenRelicFeature === false" class="ui-g-12 vt-row">
+              <!-- Chi tiết thành tích nổi bật -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.relicFeatured' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('relicFeature');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <relic-featured-list #relicFeaturedList></relic-featured-list>
+                </div>
+              </div>
+            </div>
+            <!-- Sáng kiến ý tưởng + Hồ sơ kèm theo -->
+            <div class="ui-g-12 vt-row">
+              <div class="ui-g-12 ui-md-6 col-lg-6 no-padding-left">
+                <div class="warning-item display-table w100 card-item">
+                  <span class="table-cell warning-icon">
+                    <span class="font-icon bg-danger"><i class="glyphicons glyphicons-lightbulb"></i></span>
+                  </span>
+                  <span class="table-cell warning-info" translate>
+                    <strong>
+                      employee360.idea
+                    </strong><br>
+                    {{ideaInno}}
+                  </span>
+                  <a class="text-link align-bottom-right" (click)="processShowDetail('idea');">{{'common.button.linkViewDetail' | translate}}</a>
+                </div>
+              </div>
+              <div class="ui-g-12 ui-md-6 col-lg-6 no-padding-right">
+                <div class="warning-item display-table w100 card-item">
+                  <span class="table-cell warning-icon">
+                    <span class="font-icon bg-danger"><i class="glyphicons glyphicons-notes-2"></i></span>
+                  </span>
+                  <span class="table-cell warning-info" translate>
+                    <strong>
+                      employee360.profile
+                    </strong><br>
+                    <a
+                      style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 200px; display: block; overflow: hidden"
+                      (click)="downloadFile()">
+                      {{strEmpFileName}}
+                    </a>
+                  </span>
+                  <a class="text-link align-bottom-right"(click)="processShowDetail('profile');" >{{'common.button.linkViewDetail' | translate}}</a>
+                </div>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenIdea === true}" [hidden]="isOpenIdea === false" class="ui-g-12 vt-row">
+              <!-- Chi tiết sáng kiến ý tưởng -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.idea' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('idea');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <idea-inno-list #ideaInnoList></idea-inno-list>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <!-- Chi tiết hồ sơ kèm theo -->
+              <div [ngClass]="{'show': isOpenProfile === true}" [hidden]="isOpenProfile === false" class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.profile' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('profile');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <employee-profile-list #employeeProfileList></employee-profile-list>
+                </div>
+              </div>
+            </div>
+            <!-- Quan hệ gia đình + Thông tin đánh giá cán bộ năm -->
+            <div class="ui-g-12 vt-row">
+              <div class="ui-g-12 ui-md-6 col-lg-6 no-padding-left">
+                <div class="warning-item display-table w100 card-item">
+                  <span class="table-cell warning-icon">
+                    <span class="font-icon bg-danger"><i class="glyphicons glyphicons-family"></i></span>
+                  </span>
+                  <span class="table-cell warning-info" translate>
+                    <strong>
+                      employee360.familyRelationship
+                    </strong><br>
+                    {{numberOfEmpFamilyRelationship}}
+                  </span>
+                  <a class="text-link align-bottom-right" (click)="processShowDetail('familyRelationship');">{{'common.button.linkViewDetail' | translate}}</a>
+                </div>
+              </div>
+              <div class="ui-g-12 ui-md-6 col-lg-6 no-padding-right">
+                <div class="warning-item display-table w100 card-item">
+                  <span class="table-cell warning-icon">
+                    <span class="font-icon bg-danger"><i class="glyphicons glyphicons-equalizer"></i></span>
+                  </span>
+                  <span class="table-cell warning-info" translate>
+                    <strong>
+                      employee360.assessment
+                    </strong><br>
+                    <a
+                      style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 200px; display: block; overflow: hidden"
+                      (click)="processDownloadFile()">
+                      {{employeeAssessment}}
+                    </a>
+                  </span>
+                  <a class="text-link align-bottom-right" (click)="processShowDetail('assessment');">{{'common.button.linkViewDetail' | translate}}</a>
+                </div>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenFamilyRelationship === true}" [hidden]="isOpenFamilyRelationship === false" class="ui-g-12 vt-row">
+              <!-- Chi tiết quan hệ gia đình -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.familyRelationship' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('familyRelationship');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <family-relationship-list #familyRelationshipList></family-relationship-list>
+                </div>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenAssessment === true}" [hidden]="isOpenAssessment === false" class="ui-g-12 vt-row">
+              <!-- Chi tiết thông tin đánh giá cán bộ năm -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.assessment' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('assessment');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <assessment-list #assessmentList></assessment-list>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-align-center">
+            <a class="text-link" (click)="viewMore()"
+              [ngClass]="{'show': isViewMore === false}" [hidden]="isViewMore === true"
+              [innerHTML]="'common.button.viewMore' | translate"
+            >
+            </a>
+            <a class="text-link" (click)="viewMore()"
+              [ngClass]="{'show': isViewMore === true}" [hidden]="isViewMore === false"
+              [innerHTML]="'common.button.viewLess' | translate"
+            >
+            </a>
+          </div>
+        </div>
+        <div *ngIf="isMobileScreen" class="panel-body padding-xl ui-g no-padding-bottom" style="padding: 0 12px 12px 12px !important;">
+          <div class="ui-g-12 vt-row" >
+            <personal-information-view></personal-information-view>
+          </div>
+          <!-- Diễn biến lương chức danh + Diễn biến lương bảo hiểm -->
+          <div class="ui-g-12 vt-row">
+            <div class="warning-item display-table w100 card-item">
+              <span class="table-cell warning-icon">
+                <span class="font-icon bg-danger"><i class="glyphicons glyphicons-usd"></i></span>
+              </span>
+              <span class="table-cell warning-info" translate>
+                <strong>
+                  employee360.salaryProcess
+                </strong><br>
+                <span translate>employee360.salaryProcess.detail</span>
+              </span>
+              <a class="text-link align-bottom-right" (click)="processShowDetail('salaryProcess');">{{'common.button.linkViewDetail' | translate}}</a>
+            </div>
+          </div>
+          <div [ngClass]="{'show': isOpenSalaryProcess === true}" [hidden]="isOpenSalaryProcess === false" class="ui-g-12 vt-row">
+            <!-- Chi tiết diễn biến lương chức danh -->
+            <div class="ui-g-12 vt-row">
+              <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                <div class="panel-heading vt-relative">
+                  <strong>
+                    {{ 'employee360.salaryProcess' | translate }}
+                  </strong>
+                  <div class="vt-absolute vt-shotcut-button-in-heading">
+                    <button (click)="processCloseDetail('salaryProcess');" title="{{'common.button.close' | translate}}"
+                      class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                  </div>
+                </div>
+                <salary-process-list></salary-process-list>
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <div class="warning-item display-table w100 card-item">
+              <span class="table-cell warning-icon">
+                <span class="font-icon bg-danger"><i class="glyphicons glyphicons-directions"></i></span>
+              </span>
+              <span class="table-cell warning-info" translate>
+                <strong>
+                  employee360.insuranceProcess
+                </strong><br>
+                <span translate>employee360.insuranceProcess.detail</span>
+              </span>
+              <a class="text-link align-bottom-right" (click)="processShowDetail('insuranceProcess');">{{'common.button.linkViewDetail' | translate}}</a>
+            </div>
+          </div>
+          <div [ngClass]="{'show': isOpenInsuranceProcess === true}" [hidden]="isOpenInsuranceProcess === false" class="ui-g-12 vt-row">
+            <!-- Chi tiết diễn biến lương bảo hiểm -->
+            <div class="ui-g-12 vt-row">
+              <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                <div class="panel-heading vt-relative">
+                  <strong>
+                    {{ 'employee360.insuranceProcess' | translate }}
+                  </strong>
+                  <div class="vt-absolute vt-shotcut-button-in-heading">
+                    <button (click)="processCloseDetail('insuranceProcess');" title="{{'common.button.close' | translate}}"
+                      class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                  </div>
+                </div>
+                <insurance-salary-process-list></insurance-salary-process-list>
+              </div>
+            </div>
+          </div>
+          <div [ngClass]="{'show': isViewMore === true}" [hidden]="isViewMore === false">
+            <!-- Quá trình phụ cấp lương + Quá trình tham gia BHXH -->
+            <div class="ui-g-12 vt-row">
+              <div class="warning-item display-table w100 card-item">
+                <span class="table-cell warning-icon">
+                  <span class="font-icon bg-danger"><i class="glyphicons glyphicons-paragraph"></i></span>
+                </span>
+                <span class="table-cell warning-info" translate>
+                  <strong>
+                    employee360.allowanceProcess
+                  </strong><br>
+                  <span translate>employee360.allowanceProcess.detail</span>
+                </span>
+                <a class="text-link align-bottom-right" (click)="processShowDetail('allowanceProcess')">{{'common.button.linkViewDetail' | translate}}</a>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenAllowanceProcess === true}" [hidden]="isOpenAllowanceProcess === false">
+              <!-- Chi tiết quá trình phụ cấp lương -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.allowanceProcess' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('allowanceProcess');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                   <!-- danh sách phụ cấp lương -->
+                  <alowance-position-list #alowancePositionList></alowance-position-list>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <div class="warning-item display-table w100 card-item">
+                <span class="table-cell warning-icon">
+                  <span class="font-icon bg-danger"><i class="glyphicons glyphicons-hospital"></i></span>
+                </span>
+                <span class="table-cell warning-info" translate>
+                  <strong>
+                    employee360.insuranceProcess2
+                  </strong><br>
+                  {{empInsurance}}
+                </span>
+                <a class="text-link align-bottom-right" (click)="processShowDetail('insuranceProcess2')">{{'common.button.linkViewDetail' | translate}}</a>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenInsuranceProcess2 === true}" [hidden]="isOpenInsuranceProcess2 === false">
+              <!-- Chi tiết quá trình tham gia BHXH -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.insuranceProcess2' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('insuranceProcess2');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <insurance-process-list #insuranceProcessList></insurance-process-list>
+                </div>
+              </div>
+            </div>
+            <!-- Quá trình công tác + Quá trình đào tạo và nghiên cứu -->
+            <div class="ui-g-12 vt-row">
+              <div class="warning-item display-table w100 card-item">
+                <span class="table-cell warning-icon">
+                  <span class="font-icon bg-danger"><i class="glyphicons glyphicons-calendar"></i></span>
+                </span>
+                <span class="table-cell warning-info" translate>
+                  <strong>
+                    employee360.workProcess
+                  </strong><br>
+                <span >{{workingProcess}}</span>
+                </span>
+                <a class="text-link align-bottom-right" (click)="processShowDetail('workProcess');">{{'common.button.linkViewDetail' | translate}}</a>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenWorkProcess === true}" [hidden]="isOpenWorkProcess === false">
+              <!-- Chi tiết quá trình công tác -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.workProcess' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('workProcess');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <work-process-list #workProcessList></work-process-list>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <div class="warning-item display-table w100 card-item">
+                <span class="table-cell warning-icon">
+                  <span class="font-icon bg-danger"><i class="glyphicons glyphicons-wallet"></i></span>
+                </span>
+                <span class="table-cell warning-info" translate>
+                  <strong>
+                    employee360.educationProcess
+                  </strong><br>
+                  {{educationLevel}}
+                </span>
+                <a class="text-link align-bottom-right" (click)="processShowDetail('educationProcess');">{{'common.button.linkViewDetail' | translate}}</a>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenEducationProcess === true}" [hidden]="isOpenEducationProcess === false">
+              <!-- Chi tiết quá trình đào tạo và nghiên cứu -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.educationProcess' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('educationProcess');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                    <education-process-list #educationProcessList></education-process-list>
+                </div>
+              </div>
+            </div>
+            <!-- Quá trình diện đối tượng + Quá trình công tác Đảng -->
+            <div class="ui-g-12 vt-row">
+              <div class="warning-item display-table w100 card-item">
+                <span class="table-cell warning-icon">
+                  <span class="font-icon bg-danger"><i class="glyphicons glyphicons-nameplate-alt"></i></span>
+                </span>
+                <span class="table-cell warning-info" translate>
+                  <strong>
+                    employee360.empTypeProcess
+                  </strong><br>
+                <span>{{empTypeName}}</span>
+                </span>
+                <a class="text-link align-bottom-right" (click)="processShowDetail('empTypeProcess');">{{'common.button.linkViewDetail' | translate}}</a>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenEmpTypeProcess === true}" [hidden]="isOpenEmpTypeProcess === false">
+              <!-- Chi tiết quá trình trình diện đối tượng -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.empTypeProcess' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('empTypeProcess');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <emp-type-process-list #empTypeList></emp-type-process-list>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <div class="warning-item display-table w100 card-item">
+                <span class="table-cell warning-icon">
+                  <span class="font-icon bg-danger"><i class="glyphicons glyphicons-star-empty"></i></span>
+                </span>
+                <span class="table-cell warning-info" translate>
+                  <strong>
+                    employee360.partyProcess
+                  </strong><br>
+                <span>{{partyProcess}}</span>
+                </span>
+                <a class="text-link align-bottom-right" (click)="processShowDetail('partyProcess');">{{'common.button.linkViewDetail' | translate}}</a>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenPartyProcess === true}" [hidden]="isOpenPartyProcess === false">
+              <!-- Chi tiết quá trình công tác Đảng -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.partyProcess' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('partyProcess');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <party-member-concurrent-process-list #partyMemberConcurrentProcessList></party-member-concurrent-process-list>
+                </div>
+              </div>
+            </div>
+            <!-- Khen thưởng/kỷ luật + Thành tích nổi bật -->
+            <div class="ui-g-12 vt-row">
+              <div class="warning-item display-table w100 card-item">
+                <span class="table-cell warning-icon">
+                  <span class="font-icon bg-danger"><i class="glyphicons glyphicons-cup"></i></span>
+                </span>
+                <span class="table-cell warning-info" translate>
+                  <strong>
+                    employee360.reward
+                  </strong><br>
+                  {{rewardOrDiscipline}}
+                </span>
+                <a class="text-link align-bottom-right" (click)="processShowDetail('reward');">{{'common.button.linkViewDetail' | translate}}</a>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenReward === true}" [hidden]="isOpenReward === false">
+              <!-- Chi tiết khen thưởng/kỷ luật -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.reward' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('reward');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <party-member-reward-list #partyMemberRewardlist></party-member-reward-list>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <div class="warning-item display-table w100 card-item">
+                <span class="table-cell warning-icon">
+                  <span class="font-icon bg-danger"><i class="glyphicons glyphicons-brightness-increase"></i></span>
+                </span>
+                <span class="table-cell warning-info" translate>
+                  <strong>
+                    employee360.relicFeatured
+                  </strong><br>
+                  {{relicName}}
+                </span>
+                <a class="text-link align-bottom-right" (click)="processShowDetail('relicFeature');">{{'common.button.linkViewDetail' | translate}}</a>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenRelicFeature === true}" [hidden]="isOpenRelicFeature === false">
+              <!-- Chi tiết thành tích nổi bật -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.relicFeatured' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('relicFeature');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <relic-featured-list #relicFeaturedList></relic-featured-list>
+                </div>
+              </div>
+            </div>
+            <!-- Sáng kiến ý tưởng + Hồ sơ kèm theo -->
+            <div class="ui-g-12 vt-row">
+              <div class="warning-item display-table w100 card-item">
+                <span class="table-cell warning-icon">
+                  <span class="font-icon bg-danger"><i class="glyphicons glyphicons-lightbulb"></i></span>
+                </span>
+                <span class="table-cell warning-info" translate>
+                  <strong>
+                    employee360.idea
+                  </strong><br>
+                  {{ideaInno}}
+                </span>
+                <a class="text-link align-bottom-right" (click)="processShowDetail('idea');">{{'common.button.linkViewDetail' | translate}}</a>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenIdea === true}" [hidden]="isOpenIdea === false">
+              <!-- Chi tiết sáng kiến ý tưởng -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.idea' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('idea');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <idea-inno-list #ideaInnoList></idea-inno-list>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <div class="warning-item display-table w100 card-item">
+                <span class="table-cell warning-icon">
+                  <span class="font-icon bg-danger"><i class="glyphicons glyphicons-notes-2"></i></span>
+                </span>
+                <span class="table-cell warning-info" translate>
+                  <strong>
+                    employee360.profile
+                  </strong><br>
+                  <a
+                    style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 200px; display: block; overflow: hidden"
+                    (click)="downloadFile()">
+                    {{strEmpFileName}}
+                  </a>
+                </span>
+                <a class="text-link align-bottom-right"(click)="processShowDetail('profile');" >{{'common.button.linkViewDetail' | translate}}</a>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <!-- Chi tiết hồ sơ kèm theo -->
+              <div [ngClass]="{'show': isOpenProfile === true}" [hidden]="isOpenProfile === false">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.profile' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('profile');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <employee-profile-list #employeeProfileList></employee-profile-list>
+                </div>
+              </div>
+            </div>
+            <!-- Quan hệ gia đình + Thông tin đánh giá cán bộ năm -->
+            <div class="ui-g-12 vt-row">
+              <div class="warning-item display-table w100 card-item">
+                <span class="table-cell warning-icon">
+                  <span class="font-icon bg-danger"><i class="glyphicons glyphicons-family"></i></span>
+                </span>
+                <span class="table-cell warning-info" translate>
+                  <strong>
+                    employee360.familyRelationship
+                  </strong><br>
+                  {{numberOfEmpFamilyRelationship}}
+                </span>
+                <a class="text-link align-bottom-right" (click)="processShowDetail('familyRelationship');">{{'common.button.linkViewDetail' | translate}}</a>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenFamilyRelationship === true}" [hidden]="isOpenFamilyRelationship === false">
+              <!-- Chi tiết quan hệ gia đình -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.familyRelationship' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('familyRelationship');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <family-relationship-list #familyRelationshipList></family-relationship-list>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <div class="warning-item display-table w100 card-item">
+                <span class="table-cell warning-icon">
+                  <span class="font-icon bg-danger"><i class="glyphicons glyphicons-equalizer"></i></span>
+                </span>
+                <span class="table-cell warning-info" translate>
+                  <strong>
+                    employee360.assessment
+                  </strong><br>
+                  <a
+                    style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 200px; display: block; overflow: hidden"
+                    (click)="processDownloadFile()">
+                    {{employeeAssessment}}
+                  </a>
+                </span>
+                <a class="text-link align-bottom-right" (click)="processShowDetail('assessment');">{{'common.button.linkViewDetail' | translate}}</a>
+              </div>
+            </div>
+            <div [ngClass]="{'show': isOpenAssessment === true}" [hidden]="isOpenAssessment === false">
+              <!-- Chi tiết thông tin đánh giá cán bộ năm -->
+              <div class="ui-g-12 vt-row">
+                <div class="panel panel-default card-info" [ngStyle]="{'width': !isMobileScreen ? '92vw' : '83vw'}">
+                  <div class="panel-heading vt-relative">
+                    <strong>
+                      {{ 'employee360.assessment' | translate }}
+                    </strong>
+                    <div class="vt-absolute vt-shotcut-button-in-heading">
+                      <button (click)="processCloseDetail('assessment');" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+                    </div>
+                  </div>
+                  <assessment-list #assessmentList></assessment-list>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-align-center">
+            <a class="text-link" (click)="viewMore()"
+              [ngClass]="{'show': isViewMore === false}" [hidden]="isViewMore === true"
+              [innerHTML]="'common.button.viewMore' | translate"
+            >
+            </a>
+            <a class="text-link" (click)="viewMore()"
+              [ngClass]="{'show': isViewMore === true}" [hidden]="isViewMore === false"
+              [innerHTML]="'common.button.viewLess' | translate"
+            >
+            </a>
+          </div>
+        </div>
+        <div class="panel-footer vt-area-button">
+          <button type="button" (click)="goBack()" class="btn btn-sm btn-danger" [innerHTML]="'common.button.out' | translate"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!hasPermission('action.view')" translate>
+  common.haveNoPermission
+</div>

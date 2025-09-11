@@ -1,0 +1,55 @@
+<div *ngIf="isHiddenMenu" class="app-aside-fixed aside-wrap hidden-container "
+     [ngClass]="{'w-60':isHiddenMenu,'none': isMenuMobile}"
+     (click)="displayReturnMenu()">
+    <div class="icon-modification" [ngClass]="{'border-none':isHiddenMenu}">
+        <img [ngClass]="{'transform-icon-up': isHiddenMenu}" style="height: 20px;"
+             src="./assets/img/icon/icon-down.svg" title="{{'navMenu.arrowRight' | translate}}">
+    </div>
+</div>
+<div *ngIf="isMenuMobile" class="app-aside-fixed aside-wrap hidden-container "
+     [ngClass]="{'w-40':isMenuMobile}"
+     (click)="displayMobileMenu()">
+    <div class="icon-modification" [ngClass]="{'icon-modification-out': isMenuMobile,'border-none':isMenuMobile}">
+        <img [ngClass]="{}" style="height: 20px;"
+             src="./assets/img/icon/icon-left.svg" title="{{'navMenu.arrowRight' | translate}}">
+    </div>
+</div>
+<div class="flip-card aside-wrap left-menu" [ngClass]="{'extend-menu': isExtendMenu,'none': isHiddenMenu && !isExtendMenu}">
+    <div class="nav-scroll-panel">
+        <div class="flip-card-inner">
+            <div class="flip-card-front">
+                <nav class="navi clearfix">
+                    <p-slideMenu
+                            [model]="items"
+                            [style]="{width: '100%', height: '100%'}"
+                    ></p-slideMenu>
+                </nav>
+            </div>
+            <div class="flip-card-back" id="nav-container">
+                <nav class="navi clearfix vps-menus">
+                    <div (click)="onMinium()" class="icon-modification"
+                         [ngClass]="{'icon-modification-out': isExtendMenu,'none': isHiddenMenu && !isExtendMenu}">
+                        <img [ngClass]="{'transform-icon-in': isExtendMenu}"
+                             src="./assets/img/icon/icon-left.svg" title="{{'navMenu.arrowRight' | translate}}"
+                             style="height: 22px;width: 22px;">
+                        <div *ngIf="isExtendMenu" class="text-md btn-block text-white">Thu Gọn</div>
+                    </div>
+                    <div [ngClass]="{'icon-home-change':isExtendMenu} " class="icon-home"
+                         (mouseenter)="onHoverHome($event, true)" (mouseleave)="onHoverHome($event, false)"
+                         (click)="navigate('/home')">
+                        <img *ngIf="!isHoverHome" src="./assets/img/icon/icon-home.svg"
+                             style="height: 24px;width: 24px;">
+                        <img *ngIf="isHoverHome" src="./assets/img/icon/icon-home-bold.svg"
+                             style="height: 24px;width: 24px;">
+                        <div [ngClass]="{'m-t-xs':!isExtendMenu, 'text-home':isExtendMenu} ">Trang chủ</div>
+                    </div>
+                    <p-panelMenu [ngClass]="{'left-extend': isExtendMenu}" [model]="vpsItems"
+                                 (click)="onClick($event)"
+                                 [style]="{'width':'100%',height:'fit-content'}"
+                    >
+                    </p-panelMenu>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

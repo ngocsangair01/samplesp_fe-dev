@@ -1,0 +1,33 @@
+
+<div *ngIf="lstFormConfig && lstFormConfig.controls">
+  <div *ngFor="let item of lstFormConfig.controls; let i = index;" class="ui-grid-row">
+    <div class="ui-g-12 ui-md-6 ui-lg-9">
+      <document-picker
+        [property]="item.controls.documentId"
+        [nameInput]="getNameDocument(item)"
+        [disabled]="disabled"
+        (onChange)="onChose($event, item)"
+      ></document-picker>
+    </div>
+    <div style="padding-left: 0px" class="ui-g-12 ui-md-6 ui-lg-3">
+      <button style="margin-right: 3px; margin-left: 1px;" 
+        class="btn-icon plus"
+        type="button" 
+        [title]="'titleAdd' | translate" 
+        [innerHTML]="'common.icon.plus' | translate"
+        (click)="addRow(i, item)"
+        [disabled] = "disabled ? true : false"
+      >
+      </button>
+      <button 
+        type="button" 
+        [title]="'titleDelete' | translate"
+        class="btn-icon minus"
+        [innerHTML]="'common.icon.minus' | translate"
+        (click)="removeRow(i, item)"
+        [disabled] = "disabled ? true : false"
+      >
+      </button> 
+    </div>
+  </div>
+</div>

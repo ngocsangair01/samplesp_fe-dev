@@ -1,0 +1,476 @@
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-xxl-10 col-xl-10 col-lg-10 col-md-12" style="padding: unset">
+            <div class="position-relative z-index-100 mt-lg-3 mt-sm-2">
+                <div class="menu">
+<!--                    <div class="" data-placement="bottom" href="index.html" rel="tooltip">-->
+<!--                        <img alt="logo" class="logo" src="./../../../assets/images/home/logo.svg">-->
+<!--                        <span class="text-white fw-bold title">Công tác Đảng, Công tác Chính trị</span>-->
+<!--                    </div>-->
+                    <header-search-custom></header-search-custom>
+                    <div class="">
+                        <ul class="nav justify-content-end text-white end-icon">
+                            <li ngbDropdown placement="bottom-right">
+                                <a class="nav-link" ngbDropdownToggle>
+                                    <img src="./../../../assets/images/home/notification.svg" alt="">
+                                </a>
+                                <div ngbDropdownMenu aria-labelledby="notify-dropdown"
+                                     class="dropdown-menu card-notify">
+                                    <div class="row">
+                                        <div class="col-12 col-xxl-12 col-xl-12 col-lg-12 col-md-12">
+                                            <div class="notify-title">Thông báo</div>
+                                        </div>
+                                    </div>
+                                    <hr class="divider-notify">
+                                    <div *ngFor="let item of resultList; index as i" class="row card-noti">
+                                        <div *ngIf="item.notifyBranch === 1"
+                                             class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <img class="notify-icon" src="./../../../assets/images/home/to_chuc.svg"
+                                                 alt="">
+                                        </div>
+                                        <div *ngIf="item.notifyBranch === 2"
+                                             class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <img class="notify-icon" src="./../../../assets/images/home/Cán bộ.svg"
+                                                 alt="">
+                                        </div>
+                                        <div *ngIf="item.notifyBranch === 3"
+                                             class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <img class="notify-icon" src="./../../../assets/images/home/tuyen_huan.svg"
+                                                 alt="">
+                                        </div>
+                                        <div *ngIf="item.notifyBranch === 4"
+                                             class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <img class="notify-icon" src="./../../../assets/images/home/quan_chung.svg"
+                                                 alt="">
+                                        </div>
+                                        <div *ngIf="item.notifyBranch === 5"
+                                             class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <img class="notify-icon"
+                                                 src="./../../../assets/images/home/giam_sat.svg" alt="">
+                                        </div>
+                                        <div *ngIf="item.notifyBranch === 6"
+                                             class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <img class="notify-icon"
+                                                 src="./../../../assets/images/home/chinh_sach.svg" alt="">
+                                        </div>
+                                        <div *ngIf="item.notifyBranch === 7"
+                                             class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <img class="notify-icon" src="./../../../assets/images/home/bao_ve_an_ninh.svg"
+                                                 alt="">
+                                        </div>
+                                        <div *ngIf="item.notifyBranch === 8"
+                                             class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <img class="notify-icon" src="./../../../assets/images/home/to_chuc.svg"
+                                                 alt="">
+                                        </div>
+                                        <div *ngIf="item.notifyBranch === 9"
+                                             class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <img class="notify-icon" src="./../../../assets/images/home/to_chuc.svg"
+                                                 alt="">
+                                        </div>
+                                        <div *ngIf="item.notifyBranch === 10"
+                                             class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <img class="notify-icon" src="./../../../assets/images/home/quan_chung.svg"
+                                                 alt="">
+                                        </div>
+                                        <div *ngIf="item.notifyBranch === 11"
+                                             class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <img class="notify-icon" src="./../../../assets/images/home/quan_chung.svg"
+                                                 alt="">
+                                        </div>
+                                        <div *ngIf="item.notifyBranch === 12"
+                                             class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <img class="notify-icon" src="./../../../assets/images/home/quan_chung.svg"
+                                                 alt="">
+                                        </div>
+                                        <div class="col-10 col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sm-10">
+                                            <div class="notify-name"
+                                                 style="-webkit-box-orient: vertical;">{{item.notifyContent}}</div>
+                                            <div class="notify-type">{{item.notifyBranchName}}</div>
+                                            <div>
+                                                <img class="time-icon" src="./../../../assets/images/home/time.svg"
+                                                     alt="">
+                                                <span class="notify-time">{{item.displayStartDate | displayDateNotification}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a class="nav-link" data-toggle="modal" data-target="#settingModal">
+                                    <img src="./../../../assets/images/home/setting-2.svg" alt="">
+                                </a>
+                            </li>
+                            <li ngbDropdown placement="bottom-right">
+                                <a class="nav-link nav-image-user" ngbDropdownToggle>
+                                    <img class="image-user" [src]="API_URL + userInfo?.avatar" alt="">
+                                </a>
+                                <div ngbDropdownMenu aria-labelledby="info-dropdown" class="dropdown-menu">
+                                    <div class="card-user" style="height: auto">
+                                        <div class="row">
+                                            <div class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                                                <img class="image-avatar" [src]="API_URL + userInfo?.avatar" alt="">
+                                            </div>
+                                            <div class="col-10 col-xxl-10 col-xl-10 col-lg-10 col-md-10">
+                                                <div class="user-name">{{name}}</div>
+                                                <div class="user-type">{{organizationName}}</div>
+                                            </div>
+                                        </div>
+                                        <hr class="divider-user">
+                                        <div class="row card-info">
+                                            <div class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                                                <img class="info-icon-ava"
+                                                     src="./../../../assets/images/home/user card.svg" alt="">
+                                            </div>
+                                            <div class="col-5 col-xxl-5 col-xl-5 col-lg-5 col-md-5">
+                                                <div class="user-title">Số thẻ Đảng:</div>
+                                            </div>
+                                            <div class="col-5 col-xxl-5 col-xl-5 col-lg-5 col-md-5">
+                                                <div class="info-label">{{partyNumber}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="row card-info">
+                                            <div class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                                                <img class="info-icon-ava"
+                                                     src="./../../../assets/images/home/tabler_user.svg" alt="">
+                                            </div>
+                                            <div class="col-8 col-xxl-8 col-xl-8 col-lg-8 col-md-8">
+                                                <div class="user-title">Chức danh Đảng:</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-11 col-xxl-11 col-xl-11 col-lg-11 col-md-11">
+                                                    <div class="user-info" style="white-space: initial" >{{strPartyCongressTitle}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row card-info">
+                                            <div class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                                                <img class="info-icon-ava"
+                                                     src="./../../../assets/images/home/tabler_user.svg" alt="">
+                                            </div>
+                                            <div class="col-10 col-xxl-10 col-xl-10 col-lg-10 col-md-10">
+                                                <div class="user-title">Chức danh chính quyền:</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-11 col-xxl-11 col-xl-11 col-lg-11 col-md-11">
+                                                    <div class="user-info" style="white-space: initial" >
+                                                        {{mainPositionName}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row card-info">
+                                            <div class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                                                <img class="info-icon-ava"
+                                                     src="./../../../assets/images/home/Email.svg" alt="">
+                                            </div>
+                                            <div class="col-4 col-xxl-4 col-xl-4 col-lg-4 col-md-4">
+                                                <div class="user-title">Email:</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-11 col-xxl-11 col-xl-11 col-lg-11 col-md-11">
+                                                    <div class="user-info" style="white-space: initial" >{{email}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="divider-user">
+                                        <div class="row card-info" style="margin-bottom: 14px">
+                                            <div class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                                                <img class="info-icon-ava"
+                                                     src="./../../../assets/images/home/Mask_Group_1297.png" alt="">
+                                            </div>
+                                            <div class="col-5 col-xxl-5 col-xl-5 col-lg-5 col-md-5" (click)="logout()">
+                                                <div class="logout">Đăng xuất</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="settingModal" tabindex="-1" role="dialog" aria-labelledby="settingModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title">Cài đặt</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                      <svg class="close-icon" viewBox="230 30 8 8">
+                        <path d="M 234.9389953613281 33.9994010925293 L 237.8029937744141 31.14179992675781 C 238.0639953613281 30.88059997558594 238.0639953613281 30.45709991455078 237.8029937744141 30.19589996337891 C 237.5420074462891 29.93470001220703 237.1179962158203 29.93470001220703 236.8569946289062 30.19589996337891 L 234 33.06019973754883 L 231.1430053710938 30.19589996337891 C 230.8820037841797 29.93470001220703 230.4579925537109 29.93470001220703 230.1970062255859 30.19589996337891 C 229.9360046386719 30.45709991455078 229.9360046386719 30.88059997558594 230.1970062255859 31.14179992675781 L 233.0610046386719 33.9994010925293 L 230.1970062255859 36.85710144042969 C 230.0709991455078 36.98220062255859 230 37.15240097045898 230 37.33000183105469 C 230 37.50759887695312 230.0709991455078 37.67789840698242 230.1970062255859 37.80300140380859 C 230.3220062255859 37.92910003662109 230.4920043945312 38 230.6699981689453 38 C 230.8470001220703 38 231.0180053710938 37.92910003662109 231.1430053710938 37.80300140380859 L 234 34.93870162963867 L 236.8569946289062 37.80300140380859 C 236.9819946289062 37.92910003662109 237.1529998779297 38 237.3300018310547 38 C 237.5079956054688 38 237.6779937744141 37.92910003662109 237.8029937744141 37.80300140380859 C 237.9290008544922 37.67789840698242 238 37.50759887695312 238 37.33000183105469 C 238 37.15240097045898 237.9290008544922 36.98220062255859 237.8029937744141 36.85710144042969 L 234.9389953613281 33.9994010925293 Z">
+                        </path>
+                      </svg>
+                    </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="setting">
+                    <div class="setting-title">
+                        Cài đặt hình nền
+                    </div>
+                    <div class="row background">
+                        <div class="col-6 col-xxl-6 col-xl-6 col-lg-6 col-md-6" style="text-align: center;">
+                            <img class="image-background" src="./../../../assets/images/home/1.png"
+                                 (click)="fSelectedBackground(1)">
+                        </div>
+                        <div class="col-6 col-xxl-6 col-xl-6 col-lg-6 col-md-6" style="text-align: center;">
+                            <img class="image-background"
+                                 src="./../../../assets/images/home/2.png"
+                                 (click)="fSelectedBackground(2)">
+                        </div>
+                    </div>
+                    <div class="row background">
+                        <div class="col-6 col-xxl-6 col-xl-6 col-lg-6 col-md-6" style="text-align: center;">
+                            <img class="image-background" src="./../../../assets/images/home/3.png"
+                                 (click)="fSelectedBackground(3)">
+                        </div>
+                        <div class="col-6 col-xxl-6 col-xl-6 col-lg-6 col-md-6" style="text-align: center;">
+                            <img class="image-background" src="./../../../assets/images/home/4.png"
+                                 (click)="fSelectedBackground(4)">
+                        </div>
+                    </div>
+                    <div class="row background">
+                        <div class="col-6 col-xxl-6 col-xl-6 col-lg-6 col-md-6" style="text-align: center;">
+                            <img class="image-background" src="./../../../assets/images/home/5.png"
+                                 (click)="fSelectedBackground(5)">
+                        </div>
+                        <div class="col-6 col-xxl-6 col-xl-6 col-lg-6 col-md-6" style="text-align: center;">
+                            <img class="image-background" src="./../../../assets/images/home/6.png"
+                                 (click)="fSelectedBackground(6)">
+                        </div>
+                    </div>
+                    <div class="row background">
+                        <div class="col-6 col-xxl-6 col-xl-6 col-lg-6 col-md-6" style="text-align: center;">
+                            <img class="image-background" src="./../../../assets/images/home/7.png"
+                                 (click)="fSelectedBackground(7)">
+                        </div>
+                        <div class="col-6 col-xxl-6 col-xl-6 col-lg-6 col-md-6" style="text-align: center;">
+                          <img class="image-background" src="./../../../assets/images/home/8.png"
+                               (click)="fSelectedBackground(8)">
+                      </div>
+                    </div>
+                    <div class="row background">
+                      <div class="col-6 col-xxl-6 col-xl-6 col-lg-6 col-md-6" style="text-align: center;">
+                          <img class="image-background" src="./../../../assets/images/home/9.png"
+                               (click)="fSelectedBackground(9)">
+                      </div>
+                      <div class="col-6 col-xxl-6 col-xl-6 col-lg-6 col-md-6" style="text-align: center;">
+                        <img class="image-background" src="./../../../assets/images/home/10.png"
+                             (click)="fSelectedBackground(10)">
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                            <img class="info-icon" src="./../../../assets/images/home/Mask_Group_24486.png">
+                        </div>
+                        <div class="col-10 col-xxl-10 col-xl-10 col-lg-10 col-md-10 info">
+                            <span class="upload-info">Tải lên hình ảnh kích thước tối đa <span class="color-info">2MB và 4 hình ảnh khác.</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-xxl-9 col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                <div class="row">
+                    <div class="card-time">
+                        <div class="date-time me-auto p-2">
+                            <h2>{{time}}</h2>
+                            <p>{{date}}</p>
+                        </div>
+                    </div>
+<!--                    <div class="col-xxl-9 col-xl-9 col-lg-9 col-md-8 col-sm-12 card-meeting">-->
+<!--                        <div class="date-meeting d-flex">-->
+<!--                            <div class="title-meeting d-grid">-->
+<!--                                <p class="calendar-meeting">Lịch</p>-->
+<!--                                <p class="calendar-meeting">Họp</p>-->
+<!--                            </div>-->
+<!--                            <div class="item-meeting">-->
+<!--                                <div class="data-meeting">-->
+<!--                                    <p>Thống nhất kế hoạch triển-->
+<!--                                        khai phần mềm CTD</p>-->
+<!--                                    <h6>14:00 - 16:00-->
+<!--                                        Ngày mai - 20/04/2023</h6>-->
+<!--                                    <h6>Phòng Cây Bách (T2)- Trụ-->
+<!--                                        sở Tập đoàn</h6>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="item-meeting">-->
+<!--                                <div class="data-meeting">-->
+<!--                                    <p>Thống nhất kế hoạch triển-->
+<!--                                        khai phần mềm CTD</p>-->
+<!--                                    <h6>14:00 - 16:00-->
+<!--                                        Ngày mai - 20/04/2023</h6>-->
+<!--                                    <h6>Phòng Cây Bách (T2)- Trụ-->
+<!--                                        sở Tập đoàn</h6>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                </div>
+                <div class="divider"></div>
+                <div class="row" style="justify-content: space-around">
+                    <div class="col-12 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="row" style="padding-left: 65px; padding-right: 65px">
+                                        <div *ngIf="isTH" class="col-4 col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-4">
+                                            <div class="item-card"><a  class="card" (click)="navigate('CTCT_TH','/population/dashboard')">
+                                                <img src="./../../../assets/images/home/tuyen_huan.svg" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="menu-label-item">Tuyên huấn</h5>
+                                                </div>
+                                            </a></div>
+                                        </div>
+                                        <div *ngIf="isTCD" class="col-4 col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-4">
+                                            <div class="item-card"  (click)="navigate('CTCT_TCD','/party-organization/home')"><a  class="card">
+                                                <img src="./../../../assets/images/home/to_chuc.svg" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="menu-label-item">Tổ chức xây dựng Đảng</h5>
+                                                </div>
+                                            </a></div>
+                                        </div>
+                                        <div *ngIf="isKTGS" class="col-4 col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-4">
+                                            <div class="item-card"  (click)="navigate('CTCT_KTGS','/monitoring-inspection/dashboard')"><a  class="card">
+                                                <img src="./../../../assets/images/home/giam_sat.svg" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="menu-label-item">Kiểm tra giám sát</h5>
+                                                </div>
+                                            </a></div>
+                                        </div>
+                                        <div *ngIf="isCB" class="col-4 col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-4">
+                                            <div class="item-card" (click)="navigate('CTCT_CB','/employee/dashboard')"><a  class="card">
+                                                <img src="./../../../assets/images/home/can_bo.svg" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="menu-label-item">Cán bộ</h5>
+                                                </div>
+                                            </a></div>
+                                        </div>
+                                        <div *ngIf="isBVAN" class="col-4 col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-4">
+                                            <div class="item-card" (click)="navigate('CTCT_BVAN','/security-guard/dashboard')"><a class="card">
+                                                <img src="./../../../assets/images/home/bao_ve_an_ninh.svg" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="menu-label-item">Bảo vệ an ninh</h5>
+                                                </div>
+                                            </a></div>
+                                        </div>
+                                        <div *ngIf="isDV" class="col-4 col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-4">
+                                            <div class="item-card" (click)="navigate('CTCT_DV','/population/dashboard')"><a class="card" >
+                                                <img src="./../../../assets/images/home/chinh_sach.svg" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="menu-label-item">Chính sách - Dân vận</h5>
+                                                </div>
+                                            </a></div>
+                                        </div>
+                                        <div *ngIf="isCTQC" class="col-4 col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-4" >
+                                            <div class="item-card" (click)="navigate('CTCT_CTQC','/mass/dashboard')">
+                                                <a  class="card">
+                                                    <img src="./../../../assets/images/home/quan_chung.svg" class="card-img-top" alt="...">
+                                                    <div class="card-body">
+                                                        <h5 class="menu-label-item">Quần chúng</h5>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-4">
+                                            <div class="item-card"  (click)="openNewTab()"><a class="card">
+                                                <img src="./../../../assets/images/home/tin_tuc.svg" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5>Tin tức</h5>
+                                                </div>
+                                            </a></div>
+                                        </div>
+                                        <div class="col-4 col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-4 item">
+                                            <div class="item-card"  (click)="openAssessment()"><a class="card">
+                                                <img src="./../../../assets/images/home/danh_gia.svg" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="menu-label-item">NXĐG Cán bộ, Đảng viên</h5>
+                                                </div>
+                                            </a></div>
+                                        </div>
+                                        <div *ngIf="isSHVB" class="col-4 col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-4">
+                                            <div class="item-card" (click)="openTabWebAi()"><a class="card">
+                                                <img src="./../../../assets/images/home/so_hoa.svg" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5>Số hoá văn bản</h5>
+                                                </div>
+                                            </a></div>
+                                        </div>
+
+<!--                                        <div class="col-4 col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-4">-->
+<!--                                            <div class="item-card"  (click)="openNewTab()"><a class="card">-->
+<!--                                                <img src="./../../../assets/images/home/Tintuc.svg" class="card-img-top" alt="...">-->
+<!--                                                <div class="card-body">-->
+<!--                                                    <h5>Tin tức ngành</h5>-->
+<!--                                                </div>-->
+<!--                                            </a></div>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-3 col-md-2 col-lg-2 col-xl-2 col-xxl-2 col-sm-3">-->
+<!--                                            <div class="item-card"  (click)="navigate('CTCT_KTL','/reports/report-dynamic/export-new')"><a class="card">-->
+<!--                                                <img src="./../../../assets/images/home/Tintuc.svg" class="card-img-top" alt="...">-->
+<!--                                                <div class="card-body">-->
+<!--                                                    <h5>Báo cáo</h5>-->
+<!--                                                </div>-->
+<!--                                            </a></div>-->
+<!--                                        </div>-->
+                                        <div *ngIf="isCD" class="col-4 col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-4">
+                                            <div class="item-card"><a  class="card" (click)="navigate('CTCT_CD','/settings/category')">
+                                                <img src="./../../../assets/images/home/cai_dat.svg" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5>Cài đặt</h5>
+                                                </div>
+                                            </a></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+<!--                                <div class="carousel-item">-->
+<!--                                    <div class="row">-->
+<!--                                        <div class="col-4 col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-4">-->
+<!--                                            <div class="item-card"  (click)="openNewTab()"><a class="card">-->
+<!--                                                <img src="./../../../assets/images/home/Tintuc.svg" class="card-img-top" alt="...">-->
+<!--                                                <div class="card-body">-->
+<!--                                                    <h5>Tin tức ngành</h5>-->
+<!--                                                </div>-->
+<!--                                            </a></div>-->
+<!--                                        </div>-->
+<!--                                        <div *ngIf="isCD" class="col-4 col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-4">-->
+<!--                                            <div class="item-card"><a  class="card" (click)="navigate('CTCT_CD','/settings/category')">-->
+<!--                                                <img src="./../../../assets/images/home/Cài đặt.svg" class="card-img-top" alt="...">-->
+<!--                                                <div class="card-body">-->
+<!--                                                    <h5>Cài đặt</h5>-->
+<!--                                                </div>-->
+<!--                                            </a></div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                               data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                               data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<div id="background"></div>

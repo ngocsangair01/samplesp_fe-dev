@@ -1,0 +1,28 @@
+.card-info {
+    border-top: 1px solid #D7E2E3;
+    border-bottom: 1px solid #D7E2E3;
+    border-left: 1px solid #D7E2E3;
+    border-right: 1px solid #D7E2E3;
+}
+
+.panel-heading {
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+}
+
+:host ::ng-deep .ui-table .ui-table-scrollable-wrapper .ui-table-scrollable-view .ui-table-scrollable-body {
+    overflow: unset;
+}
+
+/* mobile*/
+@media (min-width: 374px) and (max-width: 576px){
+    .title {
+        font-size: 14px !important;
+    }
+    :host ::ng-deep .attachment-file .file-group .file-control .file-action {
+        position: initial !important;
+        margin-top: 3px !important;
+    }
+}

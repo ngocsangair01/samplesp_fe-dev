@@ -1,0 +1,14 @@
+
+    <div class="panel-body padding-xl ui-g" style="padding-bottom: 0;">
+        <div class="ui-g-8 ui-g-offset-2">
+            <input [formControl]="activity" class="form-control">
+            <app-control-messages [control]="activity"></app-control-messages>
+        </div>
+        <div class="panel-footer vt-area-button ui-g-12">
+    
+            <button type="submit" class="btn btn-sm btn-info" (click)="save()"
+                [innerHTML]="'common.button.icon.save' | translate"></button>
+        </div>
+    </div>
+            
+ 

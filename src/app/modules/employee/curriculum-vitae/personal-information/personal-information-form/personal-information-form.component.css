@@ -1,0 +1,230 @@
+.image-avatar {
+    background-repeat: no-repeat, repeat;
+    background-position: center;
+    background-size: cover;
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin: auto;
+}
+
+.card-info {
+    margin-bottom: 6px;
+    overflow: hidden;
+    border-radius: 8px !important;
+}
+
+.card-emp {
+    height: 76vh !important;
+    overflow-y: scroll;
+}
+
+.i-switch i:after {
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    width: 18px;
+    background-color: #fff;
+    border-radius: 50%;
+    content: "";
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+    transition: margin-left 0.3s;
+    left: 1px;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    margin-left: 10px;
+   }
+   ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+   }
+   ::-webkit-scrollbar-thumb {
+    background: #888;
+   }
+   ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+   }
+
+.card-header {
+    white-space: nowrap;
+    text-align: left;
+    font-family: "PFBeauSansPro";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    color: rgba(198,31,27,1);
+    letter-spacing: 0.12px;
+    background-color: #fff;
+}
+
+.info {
+    margin-bottom: 10px;
+}
+
+.emp-name {
+    white-space: nowrap;
+    text-align: left;
+    font-family: "PFBeauSansPro";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(78,3,0,1);
+    letter-spacing: 0.12px;
+}
+
+.emp-age {
+    position: absolute;
+    overflow: visible;
+    width: 60px;
+    height: 24px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: 'PFBeauSansPro';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    color: rgba(78,3,0,0.7);
+    letter-spacing: 0.12px;
+    padding-left: 5px;
+    margin-left: 23px;
+}
+
+.age-icon {
+    width: 16px;
+    height: 16px;
+    overflow: visible;
+}
+
+.info-label {
+    white-space: nowrap;
+    text-align: left;
+    font-family: "PFBeauSansPro";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    color: rgba(78,3,0,0.7);
+    letter-spacing: 0.12px;
+}
+
+.info-icon {
+    width: 16px;
+    height: 16px;
+    overflow: visible;
+    margin-right: 5px;
+}
+
+.info-emp {
+    text-align: left;
+    font-family: "PFBeauSansPro";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    color: rgba(38,1,0,1);
+    letter-spacing: 0.12px;
+}
+
+.header-icon {
+    overflow: visible;
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.transform-icon {
+    transform: rotate(180deg);
+}
+
+label {
+    text-align: right;
+    font-family: "PFBeauSansPro";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14.88px;
+    color: rgba(38,1,0,1);
+}
+
+body .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem .ui-menuitem-link .ui-menuitem-text {
+    color: rgba(170,11,5,1) !important;
+}
+
+.export-info {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.export-icon {
+    width: 16px;
+    height: 16px;
+}
+
+::ng-deep angular2-multiselect .cuppa-dropdown .selected-list .c-btn {
+    border-radius: 8px;
+}
+
+/* mobile*/
+@media (min-width: 374px) and (max-width: 576px){
+    .card-header {
+        font-size: 14px !important;
+    }
+
+    .header-icon {
+        width: 14px !important;
+        height: 14px !important;
+        margin-right: 3px !important;
+    }
+
+    .image-avatar {
+        width: 80px !important;
+        height: 80px !important;
+    }
+
+    .emp-name {
+        font-size: 12px !important;
+    }
+    
+    .emp-age {
+        font-size: 12px !important;
+        margin-top: 3px !important;
+        margin-left: 8px !important;
+    }
+    
+    .age-icon {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    .export-icon {
+        width: 12px !important;
+        height: 12px !important;
+    }
+    .export-info {
+
+        justify-content: flex-start !important;
+        margin-top: 3px !important;
+    }
+
+    .info {
+        padding-left: 3px !important;
+    }
+
+    :host ::ng-deep .attachment-file .file-group .file-control .file-action {
+        position: initial !important;
+        margin-top: 3px !important;
+    }
+}
+
+label.ui-g-12.ui-md-6.ui-lg-4.control-label.vt-align-left{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.panel-body.panel-table{
+    margin-top: unset;
+}
+
+
+

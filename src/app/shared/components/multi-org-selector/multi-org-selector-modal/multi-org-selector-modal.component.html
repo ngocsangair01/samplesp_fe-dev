@@ -1,0 +1,128 @@
+<div class="modal-body orgSelectorModal">
+  <form [formGroup]="form">
+    <div class="panel panel-default">
+      <div class="panel-heading vt-relative">
+        <strong class="text-u-c">
+          <i class="fa fa-th"></i>&nbsp;
+          <span translate>app.orgSelector.title</span>
+        </strong>
+        <div class="vt-absolute vt-shotcut-button-in-heading">
+          <label class="control-label" style="padding-top: 0">
+            {{'organization.viewUnitExpried' | translate}}
+          </label>
+          &nbsp;
+          <label class="i-switch bg-warning m-t-xs m-r">
+            <input type="checkbox" name="status" [value]="1" formControlName="showOrgExpried"
+              (ngModelChange)="onShowOrgExpried($event)" />
+            <i></i>
+          </label>
+          <button type="button"  class="btn btn-span btn-sm btn-info btn-close"
+            title="{{'common.button.close' | translate}}" type="button" (click)="close()">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <div class="panel-body modal-content-body">
+        <div class="grid-structure org-selector-content">
+          <div class="content-left">
+            <p-scrollPanel [style]="{width: '100%', height: '500px'}" styleClass="custombar2 clearfix">
+              <div>
+                <p-tree [value]="nodes" selectionMode="single" [(selection)]="selectedNode"
+                  (onNodeSelect)="nodeSelect($event)" (onNodeExpand)="actionLazyRead($event)"
+                  [ngClass]="{'show-org-expried' : showOrgExpried}"></p-tree>
+              </div>
+            </p-scrollPanel>
+          </div>
+          <div class="content-right form-group">
+            <div class="panel-background">
+              <div class="row" style="margin-top: 0px;">
+                <div class="col-md-6">
+                  <input type="text" class="form-control org-selector-input"
+                    placeholder="{{placeholdercode | translate}}" formControlName="code" #inputCodeSearch
+                    (keydown.arrowdown)="changeIndex(1)" (keydown.arrowup)="changeIndex(-1)"
+                    (keyup.enter)="onSelectEnter()" autocomplete="off" (focus)="checkFocus = 0" />
+                  <app-control-messages [control]="this.form.get('code')"></app-control-messages>
+                </div>
+                <div class="col-md-6" style="padding-left: 0px;">
+                  <div class="input-group orgSelector">
+                    <input type="text" class="form-control org-selector-input"
+                      placeholder="{{placeholdername | translate}}" formControlName="name" #inputNameSearch
+                      (keydown.arrowdown)="changeIndex(1)" (keydown.arrowup)="changeIndex(-1)"
+                      (keyup.enter)="onSelectEnter()" autocomplete="off" (focus)="checkFocus = 1" />
+                    <app-control-messages [control]="this.form.get('name')"></app-control-messages>
+                    <div class="input-group-append">
+                      <button class="btn org-selector-addon" type="button" (click)="processSearch(null)"
+                        title="{{'common.button.table.hSearch' | translate}}">
+                        <i class="fa fa-search color-info" style="font-size: 16px;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="table-wrapper table-responsive" style="margin-top: 4px;">
+              <p-table [value]="resultList.data" [paginator]="true" (onLazyLoad)="processSearch($event)"
+                [lazyLoadOnInit]="false" [lazy]="true" [rows]="10" [totalRecords]="resultList.recordsTotal"
+                [responsive]="true" [ngClass]="{'show-org-expried' : showOrgExpried}"
+                tableStyleClass="table table-wrapper table-hover table-striped b-t b-b">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>
+                        {{'common.button.table.hChose' | translate}}
+                      <input type="checkbox" (change)="chooseAll($event)">
+                    </th>
+                    <th class="size-6" pSortableColumn="code">
+                      {{'app.organization.code' | translate}}
+                      <p-sortIcon field="code"></p-sortIcon>
+                    </th>
+                    <th class="size-00" pSortableColumn="name">
+                      {{'app.organization.name' | translate}}
+                      <p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th class="size-7" pSortableColumn="effectiveDate">
+                      {{'app.organization.effectiveDate' | translate}}
+                      <p-sortIcon field="effectiveDate"></p-sortIcon>
+                    </th>
+                    <th class="size-7" pSortableColumn="expiredDate">
+                      {{'app.organization.expiredDate' | translate}}
+                      <p-sortIcon field="expiredDate"></p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                  <!-- isExpried -->
+                  <tr #row [ngClass]="{'org-has-expried': item.isExpried === 1}">
+                    <td class="vt-align-center">
+                      <input type="checkbox" (change)="change($event, item)" [checked]="item.check ? true : false">
+                    </td>
+                    <td class="vt-align-center">{{item.code}}</td>
+                    <td>{{item.name}}</td>
+                    <td class="vt-align-center">
+                      {{item.effectiveDate | displayDate}}
+                    </td>
+                    <td class="vt-align-center">
+                      {{item.expiredDate | displayDate}}
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr class="emptymessage">
+                    <td [attr.colspan]="3" [innerHTML]="'app.noRecords' | translate">
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="paginatorleft">
+                  <table-footer  [resultList]="resultList"></table-footer>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer vt-area-button">
+        <button type="button" class="btn btn-sm btn-info" (click)="chose()"
+          [innerHTML]="'common.button.icon.select' | translate"></button>
+      </div>
+    </div>
+  </form>
+</div>

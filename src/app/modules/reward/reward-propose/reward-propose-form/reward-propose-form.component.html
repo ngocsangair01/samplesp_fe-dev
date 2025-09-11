@@ -1,0 +1,294 @@
+<div class="card-reward">
+  <div class="clearfix">
+    <div class="left-nav-bar pull-left row-header">
+      <div>
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="goBack();">
+        <span *ngIf="isInsert" class="title" translate> tab.rewardPropose.label.rewardInfoInsert</span>
+        <span *ngIf="isEdit" class="title" translate> tab.rewardPropose.label.rewardInfoUpdate</span>
+        <span *ngIf="isView" class="title" translate> tab.rewardPropose.label.rewardInfoView</span>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+        <ul class="header-right sys-ul space-line">
+            <li>
+              <button class="btn btn-sm vt-btn ng-star-inserted" type="button" (click)="goBack();" [innerHTML]="'common.button.out' | translate">
+              </button>
+            </li>
+            <li *ngIf="isView && f['status'].value === 1">
+              <button class="btn btn-sm vt-btn btn-submit ng-star-inserted" type="button" (click)="navigateEdit(f['rewardProposeId'].value)"
+                      [innerHTML]="'common.button.icon.edit' | translate">
+              </button>
+            </li>
+            <li *ngIf="!isView">
+              <button class="btn btn-sm vt-btn btn-submit ng-star-inserted" type="button" (click)="processSaveOrUpdate(3)" [innerHTML]="'common.button.icon.save' | translate">
+              </button>
+            </li>
+            <li *ngIf="!isView && f['isRequiredSign'].value">
+              <button class="btn btn-sm vt-btn btn-submit ng-star-inserted" type="button" (click)="signDocument(1);" [innerHTML]="'common.button.icon.register' | translate">
+              </button>
+            </li>
+            <li *ngIf="isView && !f['isRequiredSign'].value && f['status'].value === 1">
+              <button class="btn btn-sm vt-btn btn-submit ng-star-inserted" type="button" (click)="sendApprove(2);" [innerHTML]="'common.button.icon.sent' | translate">
+              </button>
+            </li>
+            <li>
+              <button class="btn btn-sm vt-btn btn-submit ng-star-inserted" type="button" (click)="onPreviewFile()" [innerHTML]="'common.button.icon.viewReward' | translate">
+              </button>
+            </li>
+        </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <form id="formSave" [formGroup]="formSave">
+    <div *ngIf="(hasPermission('action.update') && isEdit) || (hasPermission('action.insert') && isInsert || isView ) ">
+      <div class="panel panel-default card-info">
+        <div class="panel-heading">
+          <strong>
+            <!-- <span *ngIf="isInsert" translate> tab.rewardPropose.label.rewardInfoInsert</span>
+            <span *ngIf="isEdit" translate> tab.rewardPropose.label.rewardInfoUpdate</span>
+            <span *ngIf="isView" translate> tab.rewardPropose.label.rewardInfoView</span> -->
+            <span class="ml-2 title-info">Thông tin đề xuất khen thưởng</span>
+          </strong>
+        </div>
+        <div class="panel-body padding-xl ui-g">
+          <!-- Phân loại khen thưởng -->
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'rewardPropose.rewardType' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3 position-relative">
+              <select-filter [placeHolder]="'common.label.cboMustSelect'" [property]="f['rewardType']"
+                             [options]="rewardTypeListByUserToInsert" optionLabel="name" optionValue="id" (onChange)="onRewardTypeChange($event)"
+                             [disabled]="isView || formRewardDecide.length > 0 || isDisable">
+              </select-filter>
+              <app-control-messages [control]="f['rewardType']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- Tên đề xuất -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'rewardPropose.rewardProposeName' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form form-control" name="name" formControlName="name" maxlength="200"
+                [attr.disabled]="isView ? true : null">
+              <app-control-messages [control]="f['name']"></app-control-messages>
+            </div>
+            <!-- Đơn vị đề xuất -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+              {{'rewardPropose.rewardDecideOrg' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <org-selector [property]="f['proposeOrgId']" operationKey="action.view" adResourceKey="resource.rewardPropose" [defaultValue]="true"
+                [disabled]="isView || formRewardDecide.length > 0 || isDisable" (onChange)="onProposeOrgChange($event)">
+              </org-selector>
+              <app-control-messages [control]="f['proposeOrgId']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- kỳ khen thưởng -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'rewardPropose.periodType' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['periodType']" [options]="lstPeriodType" optionLabel="name" optionValue="id"
+                             [placeHolder]="'common.label.cboMustSelect'" [disabled]="isView || formRewardDecide.length > 0 || isDisable">
+              </select-filter>
+              <app-control-messages [control]="f['periodType']"></app-control-messages>
+            </div>
+            <!-- Đơn vị xét duyệt -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+              {{'rewardPropose.reviewOrganization' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <org-selector [property]="f['approvalOrgId']" [rootId]="rootOrgId" [disabled]="isView" (onChange)="onChangeOrgApproval($event)">
+              </org-selector>
+              <app-control-messages [control]="f['approvalOrgId']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!--          loại đề xuất-->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'rewardPropose.proposalType' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [placeHolder]="'common.label.cboSelect'" [property]="f['proposalType']" [options]="proposalTypeOptions"
+                             optionLabel="name" optionValue="value" [disabled]="isView  ? true : null">
+              </select-filter>
+              <small *ngIf="isRequiredProposalType" class="text-danger errorMessage">* Trường bắt buộc</small>
+              <app-control-messages [control]="f['proposalType']"></app-control-messages>
+            </div>
+  
+            <!-- Đơn vị trình ký quyết định -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+              {{'rewardPropose.signOrganization' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <org-selector #signOrgElement [property]="f['signOrgId']" [rootId]="rootOrgId"
+              [defaultValue]="true" [disabled]="isView" (onChange)="onSignOgrChange($event)"></org-selector>
+              <app-control-messages [control]="f['signOrgId']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- năm -->
+            <label class="ui-g-12 ui-md-5 ui-lg-2 control-label vt-align-right required">
+              {{'rewardPropose.year' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter class="year" [property]="f['proposeYear']" [options]="listYear" optionLabel="year" optionValue="year"
+                [placeHolder]="'common.label.cboMustSelect'" [disabled]="isView || formRewardDecide.length > 0 || isDisable">
+              </select-filter>
+              <app-control-messages [control]="f['proposeYear']"></app-control-messages>
+            </div>
+            <!-- Người tạo -->
+            <label class="ui-g-12 ui-md-3 control-label vt-align-right" *ngIf="isView">
+              {{'common.label.createdBy' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="isView">
+              <input type="text" class="form form-control" name="createdBy" formControlName="createdBy" maxlength="200"
+                [attr.disabled]="true">
+              <app-control-messages [control]="f['createdBy']"></app-control-messages>
+            </div>
+            <!-- File đính kèm -->
+            <label class="ui-g-12 ui-md-3 control-label vt-align-right" *ngIf="isInsert">
+              {{'common.label.attachmentFile' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="isInsert">
+              <multi-file-chooser class="attachment-file" [property]="f['attachedFiles']" fileName="attachedFiles" [validMaxSize]="50"
+                validType="png,jpg,gif,tiff,bmp,xls,xlsx,doc,docx,pdf,rar,zip,7z"
+                [disabled]="isView  ? true : null">
+              </multi-file-chooser>
+              <app-control-messages [control]="f['attachedFiles']"></app-control-messages>
+            </div>
+            <!-- File đính kèm -->
+            <label class="ui-g-12 ui-md-3 control-label vt-align-right" *ngIf="isEdit">
+              {{'common.label.attachmentFile' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="isEdit">
+              <multi-file-chooser [property]="f['attachedFiles']" fileName="attachedFiles" [validMaxSize]="50"
+                validType="png,jpg,gif,tiff,bmp,xls,xlsx,doc,docx,pdf,rar,zip,7z"
+                [disabled]="isView  ? true : null">
+              </multi-file-chooser>
+              <app-control-messages [control]="f['attachedFiles']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row" *ngIf="isView">
+            <!-- Trạng thái -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'common.label.status' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3 position-relative">
+              <select-filter [placeHolder]="'common.label.cboSelectAll'" [property]="f['status']" [options]="listStatus"
+                optionLabel="name" optionValue="id" [disabled]="true">
+              </select-filter>
+              <app-control-messages [control]="f['status']"></app-control-messages>
+            </div>
+            <!-- Ngày tạo -->
+            <label class="ui-g-12 ui-md-3 control-label vt-align-right">
+              {{'common.label.createdDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker [property]="f['createdDate']" [disabled]="true">
+              </date-picker>
+              <app-control-messages [control]="f['createdDate']"></app-control-messages>
+            </div>
+          </div>
+          <!-- Trình ký lãnh đạo đơn vị -->
+          <div class="ui-g-12 vt-row">
+            <div class="ui-g-6">
+              <label class="ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right">
+                {{'rewardPropose.isRequiredSign' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-2 ui-lg-2">
+                <input type="checkbox" name="isRequiredSign"  formControlName="isRequiredSign" [attr.disabled]="isView ? true : null" style="width: 18px;
+                height: 1.5rem;" [value]="0" (change)="onChangeRequiredSign($event)">
+              </div>
+              <label class="ui-g-8 ui-md-2 ui-lg-3 control-label vt-align-right label-info">
+                {{'rewardPropose.isSynthetic' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-4 ui-lg-1 checkbox-info">
+                <input type="checkbox" name="isSynthetic"  formControlName="isSynthetic" [attr.disabled]="isView ? true : null" style="width: 18px;
+                height: 1.5rem;" [value]="0" (change)="onChangeSynthetic($event)">
+              </div>
+            </div>
+            <!-- File đính kèm -->
+            <label class="ui-g-12 ui-md-2 control-label vt-align-right" *ngIf="isView">
+              {{'common.label.attachmentFile' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="isView">
+              <multi-file-chooser [property]="f['attachedFiles']" fileName="attachedFiles" [validMaxSize]="50"
+                validType="png,jpg,gif,tiff,bmp,xls,xlsx,doc,docx,pdf,rar,zip,7z"
+                [disabled]="isView  ? true : null">
+              </multi-file-chooser>
+              <app-control-messages [control]="f['attachedFiles']"></app-control-messages>
+            </div>
+          </div>
+          <div [ngClass]="{'isHidden' : !formSave.controls['isSynthetic'].value}">
+            <reward-decide-table [dataFormRewardDecide]="formRewardDecideTable.asObservable()" [resetForm]="resetFormDecide.asObservable()"
+                  (eventAddDecide)="addRewardDecide()"
+                (renderDataDecide)="renderDataDecide($event)" >
+            </reward-decide-table>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-12 import-file">
+            <button type="button" class="btn btn-sm btn-info btn-import-file" *ngIf="!isView && hasPermission('action.import')" (click)="openFormImport()" [innerHTML]="'bonusType.importFile' | translate"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="(hasPermission('action.update') && isEdit) || (hasPermission('action.insert') && isInsert || isView ) ">
+      <!-- <div class="panel panel-default">
+        <div class="panel-body padding-xl ui-g"> -->
+          <div style="width: 100%;">
+            <p-tabView class="tab-view">
+              <p-tabPanel header="{{'rewardPropose.label.rewardProposeDetail' | translate}}">
+                <p-tabView [(activeIndex)]="activeIndex" class="tab-item">
+                  <!-- Khen thuong tap the -->
+                  <p-tabPanel header="{{'tab.rewardPropose.group' | translate}} ({{formRewardGroupInside ? formRewardGroupInside.value.length : 0}})">
+                    <reward-group-position [resetFormArray]="resetFormArray.asObservable()" [setData]="setData.asObservable()" [isDisable]="f['isSynthetic'].value"
+                                            (formRewardGroupOutput)="getFormRewardGroupInside($event)" [isHideProposeSign]="false" [isViewFile]="true" [processingData]="processingData"
+                                            [dataImportGroupInsangnn]="dataImportGroupInsangnn.asObservable()" [pageFocus]="pageFocus.asObservable()"></reward-group-position>
+                  </p-tabPanel>
+                  <!-- Khen thuong CBCNV -->
+                  <p-tabPanel header="{{'tab.rewardPropose.rewardEmployee' | translate}} ({{formRewardPersonInside ? formRewardPersonInside.value.length : 0}})">
+                    <reward-employee-position [resetFormArray]="resetFormArray.asObservable()" [isDisable]="f['isSynthetic'].value" [isViewFile]="true" [hideIncludeStatement]="true"
+                                              [setData]="setData.asObservable()" (formRewarPersonalOutput)="getFormRewardPersonalInside($event)" [processingData]="processingData"
+                                              [dataImportStaffInsangnn]="dataImportStaffInsangnn.asObservable()" [isHideProposeSign]="false" [pageFocus]="pageFocus.asObservable()">
+                    </reward-employee-position>
+                  </p-tabPanel>
+                  <!-- Tap the ngoai sangnn -->
+                  <p-tabPanel header="{{'tab.rewardPropose.organizationOut' | translate}} ({{formRewardGroupOutside ? formRewardGroupOutside.value.length: 0}})">
+                    <reward-organization-out [resetFormArray]="resetFormArray.asObservable()" [isDisable]="f['isSynthetic'].value" [processingData]="processingData"
+                                              [setData]="setData.asObservable()" (formRewardOrgOutside)="getFormRewardGroupOutSide($event)"
+                                              [dataImportGroupOutsangnn]="dataImportGroupOutsangnn.asObservable()" [pageFocus]="pageFocus.asObservable()">
+                    </reward-organization-out>
+                  </p-tabPanel>
+                  <!-- Ca nhan ngoai sangnn -->
+                  <p-tabPanel header="{{'tab.rewardPropose.individualsOut' | translate}} ({{formRewardPersonOutside ? formRewardPersonOutside.value.length: 0}})">
+                    <reward-individuals-out [resetFormArray]="resetFormArray.asObservable()" [isDisable]="f['isSynthetic'].value" [processingData]="processingData"
+                                            [setData]="setData.asObservable()" (formRewardIndividualOutside)="getFormRewardPersonalOutSide($event)"
+                                            [dataImportStaffOutsangnn]="dataImportStaffOutsangnn.asObservable()" [pageFocus]="pageFocus.asObservable()">
+                    </reward-individuals-out>
+                  </p-tabPanel>
+                </p-tabView>
+              </p-tabPanel>
+              <!-- Chi phí -->
+              <p-tabPanel header="{{'tab.rewardPropose.cost' | translate}} ">
+                <reward-cost [resetFormArray]="resetFormArray.asObservable()"
+                              [setData]="setData.asObservable()"
+                              [pageFocus]="pageFocus.asObservable()"
+                              (formRewardOrgCost) = "getFormRewardOrgCost($event)"
+                              [dataRewardCost]="dataRewardCost.asObservable()">
+                </reward-cost>
+              </p-tabPanel>
+            </p-tabView>
+          </div>
+        <!-- </div>
+      </div> -->
+    </div>
+  </form>
+  <div
+    *ngIf="(!hasPermission('action.update') && isEdit) || (!hasPermission('action.insert') && isInsert || (!hasPermission('action.update') && isApprove))">
+    {{'common.haveNoPermission' | translate}}
+  </div>
+</div>

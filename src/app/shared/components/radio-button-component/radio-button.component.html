@@ -1,0 +1,3 @@
+<p-radioButton *ngFor="let config of configs" [style.marginRight]="'10px'"
+[formControl]="property" [name]="name" [value]="config.value"
+[label]="config.label" (onClick)="onClick.emit()" [disabled]="disabled"></p-radioButton>

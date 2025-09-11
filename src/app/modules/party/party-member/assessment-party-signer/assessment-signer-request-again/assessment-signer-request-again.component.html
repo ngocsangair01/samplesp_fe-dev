@@ -1,0 +1,65 @@
+<div class="modal-body">
+  <div class="panel-default">
+    <div class="panel-heading vt-relative">
+      <strong class="text-u-c">
+        <i class="fa fa-th"></i>
+        {{'assessmentPartyOrg.import.title' | translate}}
+      </strong>
+      <div class="vt-absolute vt-shotcut-button-in-heading">
+        <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+          class="btn btn-span btn-sm btn-info btn-close"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <form id="formSave" [formGroup]="formSave">
+      <div class="panel-body padding-xl ui-g">
+        <!-- row 1 -->
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'assessmentPartyOrganization.titleField.partyOrg' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <party-org-selector
+              [property]="f['partyOrganizationId']"
+              operationKey="action.view"
+              adResourceKey="resource.assessmentPartyOrganization"
+              [defaultValue]="true"
+              [disabled]="true"
+            ></party-org-selector>
+            <app-control-messages [control]="f['partyOrganizationId']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+            {{'assessmentPartyOrganization.titleField.periodName' | translate}}
+          </label>
+          <label class="ui-g-12 ui-md-6 ui-lg-3" style="padding-top: 10px;">
+            {{f['assessmentPeriodName'].value}}
+          </label>
+        </div>
+        <!-- row 2 -->
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'assessmentPartyOrganization.titleField.levelOrder' | translate}}
+          </label>
+          <label class="ui-g-12 ui-md-6 ui-lg-3" style="padding-top: 10px;">
+              {{f['assessmentLevelOrderName'].value}}
+          </label>
+        </div>
+        <!-- row 3 -->
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'assessmentPartyOrganization.titleField.enterReason' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-9">
+            <textarea type="text-area" rows="4" class="form-control" formControlName="reason" maxlength="1000"></textarea>
+            <app-control-messages [control]="f['reason']"></app-control-messages>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer vt-area-button">
+        <button type="submit"
+          class="btn btn-sm btn-info" [innerHTML]="'assessmentPartyOrg.button.assessmentAgain' | translate">
+        </button>
+        <button type="button" (click)="activeModal.close()" class="btn btn-sm btn-danger" [innerHTML]="'common.button.out' | translate"></button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+.card-header {
+    white-space: nowrap;
+    text-align: left;
+    font-family: "PFBeauSansPro";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    color: rgba(198,31,27,1);
+    letter-spacing: 0.12px;
+    background-color: #fff;
+}
+
+.card-footer {
+    padding: 0;
+    background-color: #fff;
+}
+
+input[type='checkbox']:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.checkbox-lable:has(input:disabled){
+    background-color: rgba(254,248,232,1) !important;
+}
+
+input:disabled + i{
+    opacity: 0.5;
+    cursor: not-allowed !important;
+}

@@ -1,0 +1,21 @@
+<div class="file-group" title="{{ fileName || ('controls.noFile' | translate) }}">
+  <a href="javascript:;" class="file-control v-from file-process" [ngClass]="{hasFile: files}">
+    <input *ngIf="!disabled" type="file" style="width: auto; visibility:hidden;" class="form-control"
+      (change)="onChange($event)" [attr.id]="htmlId" #file>
+    <label [attr.for]="htmlId" class="file-container" *ngIf="files !== emptyFile"
+      title="{{'fileChoser.noFile' | translate}}">
+      <span class="file-text">{{ fileName || ('controls.noFile' | translate) }}</span>
+      <span class="file-button btn-chose-file">{{ 'controls.choseFile' | translate}}</span>
+    </label>
+    <div class="file-container hasFileAttachment" *ngIf="files === emptyFile" title="{{fileName}}">
+      <span class="file-text" (click)="downloadFile()">{{ fileName || ('controls.noFile' | translate) }}</span>
+      <span class="file-button btn-chose-file" (click)="downloadFile()"
+        [innerHTML]="'controls.downloadFile' | translate"></span>
+    </div>
+    <span *ngIf="!disabled" title="{{ 'controls.deleteFile' | translate}}" (click)="delete()"
+      class="btn-delete-file glyphicons glyphicons-minus-sign"></span>
+  </a>
+  <small *ngIf="isError" class="text-danger errorMessage">
+    {{ fileErrorText | translate:lang:{ fileType: validType, max: validMaxSize } }}
+  </small>
+</div>

@@ -1,0 +1,126 @@
+<div class="card-emp">
+  <form id="formPositionWomen" [formGroup]="formPositionWomen">
+    <div id="positionWomen" class="card card-info">
+      <div class="card-header">
+        <img class="header-icon" [ngClass]="{'transform-icon': hidePositionWomen === true}" src="./../../../../../../assets/images/home/Group_18932.png" (click)="hidePositionWomen = !hidePositionWomen">
+        <span translate> app.settings.mappingPosition.listTitleWomen </span>
+        <div class="vt-absolute vt-shotcut-button-in-heading">
+          <button type="button" (click)="prepareInsertPopulationProcess()" class="btn btn-sm vt-btn btn-submit" [innerHTML]="'common.button.icon.addNew' | translate"></button>
+        </div>
+      </div>
+      <div *ngIf="!hidePositionWomen" class="card-body">
+        <div class="panel-body panel-table">
+          <p-table
+            [value]="formPositionWomen.controls"
+            [scrollable]="true"
+            tableStyleClass="table controls-table table-wrapper b-t b-b"
+            [resizableColumns]="true"
+            styleClass="rewardGroupMinHeight"
+          >
+            <ng-template pTemplate="colgroup" let-columns>
+              <colgroup class="ng-star-inserted">
+                <col style="width: 50px;">
+                <col style="width: 50px;">
+                <col style="width: 200px;">
+                <col style="width: 200px;">
+                <col style="width: 100px;">
+                <col style="width: 100px;">
+                <col style="width: 100px;">
+                <col style="width: 100px;" *ngIf="!view">
+              </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th translate pResizableColumn><span></span></th>
+                <th translate pResizableColumn><span>common.table.index</span></th>
+                <th translate pResizableColumn><span>massMember.organization</span></th>
+                <th translate pResizableColumn><span>massMember.massPosition</span></th>
+                <th translate pResizableColumn><span>generalStandard.effectiveDate</span></th>
+                <th translate pResizableColumn>generalStandard.expiredDate</th>
+                <th translate pResizableColumn>label.mass.titlemgmt.isHighestTitle</th>
+                <th translate pResizableColumn *ngIf="!view"></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-index="rowIndex">
+              <tr [formGroup]="item">
+                <td class="vt-align-center" style="overflow: initial !important;">
+                  <div ngbDropdown class="d-inline-block">
+                      <div ngbDropdownToggle class="vt-action-hover">
+                          <img class="menu-icon" src="./../../../assets/images/home/Icon.svg">
+                      </div>
+                      <div ngbDropdownMenu class="vt-border-radius">
+                        <!-- Sửa -->
+                        <button *ngIf="hasPermission('action.update')" class="dropdown-item"
+                                (click)="prepareSaveOrUpdate(item)"
+                                [innerHTML]="'common.button.table.acteditdropdown' | translate">
+                        </button>
+                        <!-- Xóa -->
+                        <button *ngIf="hasPermission('action.delete')" class="dropdown-item"
+                                (click)="processDeleteProcess(item)"
+                                [innerHTML]="'common.button.icon.delete' | translate">
+                        </button>
+                      </div>
+                  </div>
+                </td>
+                <td class="vt-align-center">
+                  {{index+1}}
+                </td>
+                <td>
+                  <mass-org-selector [property]="item.controls.massOrganizationId" operationKey="action.view"
+                    adResourceKey="resource.massMember" [defaultValue]="true" [branch]="1" [disabled]="view"
+                    [autoFocus]="true" [isRequiredField]="true" (onChange)="onChangeMassOrg($event, massOrgSelector)">
+                  </mass-org-selector>
+                  <app-control-messages [control]="item.controls.massOrganizationId"></app-control-messages>
+                </td>
+                <td>
+                  <data-picker [property]="item.controls.massPositionId" systemCode="political" operationKey="action.view"
+                    adResourceKey="resource.massMember" objectBO="MassPositionBO" codeField="code" nameField="name"
+                    selectField="massPositionId" [disabled]="view" [filterCondition]="filterCondition"
+                    [orderField]="orderField" [isRequiredField]="true" (onChange)="onChangePosition($event, item)"
+                    [nameData]="women">
+                  </data-picker>
+                  <app-control-messages [control]="item.controls.massPositionId"></app-control-messages>
+                </td>
+                <td>
+                  <date-picker [property]="item.controls.effectiveDate" [disabled]="view" appendTo="body">
+                  </date-picker>
+                  <app-control-messages [control]="item.controls.effectiveDate"></app-control-messages>
+                </td>
+                <td>
+                  <date-picker [property]="item.controls.expiredDate" [disabled]="view" appendTo="body">
+                  </date-picker>
+                  <app-control-messages [control]="item.controls.expiredDate"></app-control-messages>
+                </td>
+                <td class="vt-align-center">
+                  <label class="i-checks" *ngIf="!view">
+                    <input type="checkbox" name="isHighest" formControlName="isHighest"
+                      (change)="setHighest(item, $event.target.value)" />
+                    <i></i>
+                  </label>
+                  <i class="fa fa-check color-info" *ngIf="item.controls.isHighest.value === 1 && view"></i>
+                </td>
+                <td class="vt-align-center" *ngIf="!view">
+                  <button class="btn-icon minus" type="button" (click)="remove(index)"
+                    [innerHTML]="'common.icon.minus' | translate">
+                  </button>
+                  <button class="btn-icon plus" *ngIf="item.controls.sortOrder.value > 1" type="button" (click)="goUp(item)"
+                    [innerHTML]="'common.icon.up' | translate">
+                  </button>
+                  <button class="btn-icon plus" *ngIf="item.controls.sortOrder.value < numIndexWomen" type="button"
+                    (click)="goDown(item)" [innerHTML]="'common.icon.down' | translate">
+                  </button>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr class="emptymessage">
+                <td [attr.colspan]="13" [innerHTML]="'app.noRecords' | translate">
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

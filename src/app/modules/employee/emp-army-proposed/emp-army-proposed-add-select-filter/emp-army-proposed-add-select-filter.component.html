@@ -1,0 +1,13 @@
+<div style="display: flex">
+  <div class="ui-g-12 ui-md-6 ui-lg-1 control-label vt-align-left" >
+    {{property}}
+  </div>
+  <div class="ui-g-12 ui-md-6 ui-lg-5">
+    <select-filter [property]="form.controls.listCheck"
+                   [options]="listProposed"
+                   optionLabel="label" optionValue="value" class="vt-align-left"
+                   [placeHolder]="'common.label.cboMustSelect'"
+                   (onChange)="getChangeSelectProposed(form)">
+    </select-filter>
+  </div>
+</div>

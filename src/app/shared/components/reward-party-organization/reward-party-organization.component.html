@@ -1,0 +1,126 @@
+<div id="listArea">
+  <div class="panel panel-default card-info">
+    <div class="panel-heading vt-relative">
+      <strong>
+        <span *ngIf="branch == 0" class="ml-2 title-info" translate>rewardOrganization.listTitle</span>
+        <span *ngIf="branch == 1" class="ml-2 title-info" translate>RewardWoman.header</span>
+        <span *ngIf="branch == 2" class="ml-2 title-info" translate>RewardYouth.header</span>
+        <span *ngIf="branch == 3" class="ml-2 title-info" translate>RewardUnion.header</span>
+      </strong>
+    </div>
+    <div class="panel-body panel-table" style="padding: 32px 12px 12px 12px;">
+      <p-table #ptable [value]="resultList.data" [paginator]="true" (onLazyLoad)="processSearch($event)"
+        [lazy]="true" [rows]="changeRow" [totalRecords]="resultList.recordsTotal" [scrollable]="true" [lazyLoadOnInit]="false"
+        tableStyleClass="table table-wrapper table-hover table-striped b-t b-b" styleClass="controlOverflow" [resizableColumns]="true">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col style="width: 50px;">
+            <col style="width: 100px;">
+            <col style="width: 100px;">
+            <col style="width: 100px;">
+            <col style="width: 100px;">
+            <col style="width: 100px;">
+            <col style="width: 100px;">
+            <col style="width: 100px;">
+            <col style="width: 100px;">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th translate pResizableColumn>common.table.index</th>
+            <th [pSortableColumn]="'rewardType'" pResizableColumn>
+              {{'bonus.rewardType' | translate}}
+              <p-sortIcon [field]="'rewardType'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'periodType'" pResizableColumn>
+              {{'bonus.periodType' | translate}}
+              <p-sortIcon [field]="'periodType'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'decisionNumber'" pResizableColumn>
+              {{'bonus.decisionNumber' | translate}}
+              <p-sortIcon [field]="'decisionNumber'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'decisionDate'" pResizableColumn>
+              {{'bonus.decisionDate' | translate}}
+              <p-sortIcon [field]="'decisionDate'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'decisionYear'" pResizableColumn>
+              {{'bonus.decisionYear' | translate}}
+              <p-sortIcon [field]="'decisionYear'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'rewardTitleName'" pResizableColumn>
+              {{'bonus.rewardTitleId' | translate}}
+              <p-sortIcon [field]="'rewardTitleName'"></p-sortIcon>
+            </th>
+            <th pResizableColumn>
+              {{'bonus.rewardMerit' | translate}}
+            </th>
+            <th translate pResizableColumn>common.label.action</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+          <tr>
+            <td class="vt-align-center">{{index}}</td>
+            <td class="vt-align-center">
+              <div *ngIf="item.rewardType==1">{{'rewardType.party' | translate}}</div>
+              <div *ngIf="item.rewardType==2">{{'rewardType.group' | translate}}</div>
+              <div *ngIf="item.rewardType==3">{{'rewardType.women' | translate}}</div>
+              <div *ngIf="item.rewardType==4">{{'rewardType.youth' | translate}}</div>
+            </td>
+            <td class="vt-align-center">
+              <div *ngIf="item.periodType==1">{{'periodType.periodic' | translate}}</div>
+              <div *ngIf="item.periodType==2">{{'periodType.unexpected' | translate}}</div>
+            </td>
+            <td class="vt-align-center">{{item.decisionNumber}}</td>
+            <td class="vt-align-center">{{item.decisionDate | displayDate}}</td>
+            <td class="vt-align-center">{{item.decisionYear}}</td>
+            <td class="vt-align-center">{{item.rewardTitleName}}</td>
+            <td class="vt-align-center">
+              <div *ngIf="item.fileAttachment != null">
+                <a *ngFor="let certificate of item.fileAttachment.fileCertificate" style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 200px; display: block; overflow: hidden" (click)="viewFile(certificate)">
+                    {{certificate.fileName}}
+                </a>
+              </div>
+            </td>
+            <td class="vt-align-center" style="overflow: initial!important;">
+              <div *ngIf="item.formSource == 'MANAGE'" style="overflow: initial!important;">
+                <div ngbDropdown class="d-inline-block">
+                  <button class="btn btn-sm btn-info" ngbDropdownToggle translate>common.label.action</button>
+                  <div ngbDropdownMenu>
+                    <!-- Xem chi tiết -->
+                    <div *ngIf="hasPermission('action.view')">
+                      <button class="dropdown-item" (click)="prepareView(item)"
+                        [innerHTML]="'common.button.table.viewdropdown' | translate">
+                      </button>
+                    </div>
+                    <!-- Sửa -->
+                    <div *ngIf="hasPermission('action.update')">
+                      <button class="dropdown-item" (click)="prepareSaveOrUpdate(item)"
+                        [innerHTML]="'common.button.table.acteditdropdown' | translate">
+                      </button>
+                    </div>
+                    <!-- Xóa -->
+                    <div *ngIf="hasPermission('action.delete')">
+                      <button class="dropdown-item" (click)="processDelete(item)"
+                        [innerHTML]="'common.button.removedropdown' | translate">
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr class="emptymessage">
+            <td [attr.colspan]="7" [innerHTML]="'app.noRecords' | translate">
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+          <table-footer (changeRow)="onTablePageChange($event)" [resultList]="resultList"></table-footer>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

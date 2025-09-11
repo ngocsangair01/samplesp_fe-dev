@@ -1,0 +1,84 @@
+<div *ngIf="hasPermission('action.export')">
+  <div class="panel panel-default card-info">
+    <div class="panel-heading">
+      <strong>
+        {{'employeeAssessmentReport.title' | translate}}
+      </strong>
+    </div>
+    <form [formGroup]="formReport">
+      <div *ngIf="!isMobileScreen" class="panel-body padding-xl ui-g">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+            {{'common.label.unit' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-3">
+            <org-selector
+              [property]="f['organizationId']"
+              operationKey="action.view"
+              adResourceKey="resource.employeeManager"
+              [defaultValue]="true"
+              [autoFocus]="true"
+              [isRequiredField]="true">
+            </org-selector>
+            <app-control-messages [control]="f['organizationId']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right required">
+            {{'employeeAssessmentReport.period' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-3">
+            <select-filter
+              [property]="f['periodAccessId']"
+              [options]="periodList"
+              optionLabel="assessName"
+              optionValue="vtAssessmentPeriodId"
+              [placeHolder]="'common.label.cboMustSelect'"
+              (onChange)="onChangePeriod($event)">
+            </select-filter>
+            <app-control-messages [control]="f['periodAccessId']"></app-control-messages>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isMobileScreen" class="panel-body padding-xl ui-g">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+            {{'common.label.unit' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+            <org-selector
+              [property]="f['organizationId']"
+              operationKey="action.view"
+              adResourceKey="resource.employeeManager"
+              [defaultValue]="true"
+              [autoFocus]="true"
+              [isRequiredField]="true">
+            </org-selector>
+            <app-control-messages [control]="f['organizationId']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-3 control-label vt-align-right required">
+            {{'employeeAssessmentReport.period' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+            <select-filter
+              [property]="f['periodAccessId']"
+              [options]="periodList"
+              optionLabel="assessName"
+              optionValue="vtAssessmentPeriodId"
+              [placeHolder]="'common.label.cboMustSelect'"
+              (onChange)="onChangePeriod($event)">
+            </select-filter>
+            <app-control-messages [control]="f['periodAccessId']"></app-control-messages>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer vt-area-button">
+        <button type="submit" (click)="processExportReport('detail')" class="btn btn-sm vt-btn" [innerHTML]="'common.button.icon.exportDetail' | translate"></button>
+        <button type="submit" (click)="processExportReport('total')" class="btn btn-sm vt-btn" [innerHTML]="'common.button.icon.exportTotal' | translate"></button>
+      </div>
+    </form>
+  </div>
+</div>
+<div *ngIf="!hasPermission('action.export')">
+  {{'common.haveNoPermission' | translate}}
+</div>

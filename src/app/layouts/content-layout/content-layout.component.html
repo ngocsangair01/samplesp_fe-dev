@@ -1,0 +1,29 @@
+<div class="app app-header-fixed app-aside-fixed"
+     [ngClass]="{'app-aside-folded': isMinium, 'app-aside-flipped': true, 'curtail-header': isCurtailLayout}">
+    <app-header
+        #header
+        [currentUrl]="currentUrl"
+        class="app-header navbar"
+        [ngClass]="{'curtail-header': isCurtailLayout,
+        'm-l-60 min-md-header':isExtendLayout && !isMobileLayout,
+        'm-l-40 min-sm-header':isExtendLayout && isMobileLayout}"
+        (navViewChange)="navViewChange($event)"
+        (navFlipChange)="navFlipChange($event)"
+    ></app-header>
+
+    <app-nav class="app-aside hidden-xs bg-black" (headerViewChange)="headerViewChange($event)"></app-nav>
+
+    <div class="app-content"
+         [ngClass]="{'container-layout': isCurtailLayout, 'container-layout-extend':isExtendLayout}">
+        <div class="app-content-body fade-in-up">
+            <!--      <div *ngIf="!disableBreadCrumb" style="padding: 16px 15px 0 15px;">-->
+            <!--        <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>-->
+            <!--      </div>-->
+            <div class="content">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+
+    <app-footer [isCurtailLayout]="isCurtailLayout" [isExtendLayout]="isExtendLayout"></app-footer>
+</div>

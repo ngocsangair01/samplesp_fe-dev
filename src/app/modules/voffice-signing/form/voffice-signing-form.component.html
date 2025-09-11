@@ -1,0 +1,533 @@
+<div class="card-form">
+  <div class="clearfix">
+    <div class="left-nav-bar pull-left row-header">
+      <div>
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="onClose();">
+        <span class="title">{{titleSignInfor | translate}}</span>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+        <ul class="header-right sys-ul space-line">
+          <li *ngIf="hasPermission('action.update')">
+            <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="saveOrUpdate();" [innerHTML]="'common.button.icon.save' | translate">
+            </button>
+          </li>
+            <li *ngIf="hasPermission('action.view')">
+              <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="preview();" [innerHTML]="'common.button.table.preview' | translate">
+              </button>
+            </li>
+            <li *ngIf="hasPermission('action.update')">
+              <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="onSignature();" [innerHTML]="'common.button.icon.register' | translate">
+              </button>
+            </li>
+            <li>
+              <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="onClose();" [innerHTML]="'common.button.out' | translate">
+              </button>
+            </li>
+            <li *ngIf="hasPermission('action.update') && signType == 'reward-propose-sign'">
+              <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="passSign();" [innerHTML]="'common.button.icon.passSign' | translate">
+              </button>
+            </li>
+        </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <form [formGroup]="formGroup">
+    <div class="page">
+      <div class="detail-area">
+        <div class="panel panel-default card-info">
+          <div class="panel-heading">
+            <strong>
+              <span class="ml-2 title-info">Thông tin chi tiết trình ký</span>
+            </strong>
+          </div>
+          <!--pannel-body div-->
+          <div *ngIf="!isMobileScreen" class="panel-body padding-xl ui-g">
+            <!-- Tài khoản sso start -->
+            <div class="ui-g-12 vt-row" style="display: none;">
+              <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+                {{'common.label.userVoffice' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-3">
+                <input (blur)="submitVoffice()" type="text" formControlName="vofficeUser" name="vofficeUser" class="form-control" maxlength="100" [autoFocus]="true">
+                <app-control-messages [control]="f['vofficeUser']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right required">
+                {{'common.label.passwordVoffice' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-3">
+                <input (blur)="submitVoffice()" type="password" formControlName="vofficePassword" name="vofficePassword" class="form-control"
+                  maxlength="100">
+                <app-control-messages [control]="f['vofficePassword']"></app-control-messages>
+              </div>
+            </div>
+            <!-- Tài khoản sso end -->
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right  required">
+                {{'label.resolutionsMonth.extractingTextContent' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-3">
+                <input type="text" formControlName="extractingTextContent" name="extractingTextContent"
+                  class="form-control" required maxlength="250" [attr.disabled]="isDefaultValue ? true : null" [title]="f['extractingTextContent'].value">
+                <app-control-messages [control]="f['extractingTextContent']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right required">
+                {{'label.resolutionsMonth.professions' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-3">
+                <select-filter [property]="f['professions']" [options]="listCbb" optionLabel="parName"
+                  optionValue="parValue" [placeHolder]="'common.label.cboMustSelect'" [disabled]="isDefaultValue ? true : null">
+                </select-filter>
+                <app-control-messages [control]="f['professions']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+                {{'label.resolutionsMonth.formalityText' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-3">
+                <select-filter [property]="f['formalityText']" [options]="listTextF" optionLabel="parName"
+                  optionValue="parValue" [placeHolder]="'common.label.cboMustSelect'" [disabled]="isDefaultValue ? true : null">
+                </select-filter>
+                <app-control-messages [control]="f['formalityText']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right required">
+                {{'document.label.confidentiality' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-3">
+                <select-filter [property]="f['confidentiality']" [options]="listConfidentiality"  optionLabel="name"
+                  optionValue="categoryId" [placeHolder]="'common.label.cboMustSelect'" [disabled]="isDefaultValue ? true : null">
+                </select-filter>
+                <app-control-messages [control]="f['confidentiality']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+                <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+                  {{'label.resolutionsMonth.textSymbols' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-3 ui-lg-3">
+                  <input type="text" formControlName="textSymbols" name="textSymbols" class="form-control" required
+                    maxlength="100">
+                  <app-control-messages [control]="f['textSymbols']"></app-control-messages>
+                </div>
+                <!-- #209 Bổ sung văn bản đính kèm lấy từ voffice -->
+                <label *ngIf="isFromResolution || isFromAssessment || isFromAssessmentSigner" class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                  <i
+                    style="color: #66b3ff;"
+                    [pTooltip]="'vofficeSign.warningLogin' | translate"
+                    tooltipPosition="top"
+                    class="fas fa-info-circle"
+                  ></i>
+                  {{'common.label.attachedDocuments' | translate}}
+                </label>
+                <div style="padding: 0px;" class="ui-g-12 ui-md-6 ui-lg-4">
+                  <multi-document-picker
+                    #multiDocumentPicker
+                  >
+                  </multi-document-picker>
+                </div>
+                <!-- Bổ úng văn bản end -->
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+                {{'common.label.fileSign' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-3">
+                <div *ngIf = "!isMultibleFile && f['signFile']" >
+                  <file-chooser [property]="f['signFile']" [validMaxSize]="50"  validType="pdf" [disabled] = "isReportSubmission ? true : false">
+                   </file-chooser>
+                   <app-control-messages [control]="f['signFile']"></app-control-messages>
+                </div>
+                <div *ngIf = "isMultibleFile">
+                  <multi-file-chooser
+                  [property]="f['listSignFile']"
+                  [validMaxSize]="50"
+                  [disabled] = "isReportSubmission ? true : false"
+                  [moveFile] = "true"
+                  validType="pdf,vpdf"
+                  >
+                </multi-file-chooser>
+                <app-control-messages [control]="f['listSignFile']"></app-control-messages>
+                </div>
+                <br *ngIf="f['signType'].value === 'transfer-party-member'">
+                <a *ngIf="f['signType'].value === 'transfer-party-member'" class="text-link"
+                  (click)="processDownloadTransferPartyMemberTemplate();">
+                  <span translate><i class="fa fa-download"></i> app.common.downloadTemplate</span>
+                </a>
+                <ng-container *ngFor="let item of templateFileSigns">
+                  <a class="text-link"
+                    (click)="downloadTemplateSign(item);">
+                    <span>- {{item.name}}</span><br/>
+                  </a>
+                </ng-container>
+              </div>
+              <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right">
+                {{ keyFileExtra | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-3">
+                <multi-file-chooser 
+                [property]="f['attachedDocuments']" 
+                fileName="attachedDocuments" 
+                [validMaxSize]="50"
+                validType="pdf,vpdf" 
+                [disabled] = "isReportSubmission ? true : false"
+                [moveFile] = "true">
+                </multi-file-chooser>
+                <app-control-messages [control]="f['attachedDocuments']"></app-control-messages>
+              </div>
+            </div>
+            <!-- start Bổ sung luồng ban hành tự động cho nghị quyết -->
+            <div class="ui-g-12 vt-row" *ngIf="isNormalConfidentiality || isFromResolution">
+              <!-- Ban hành tự động chỉ áp dụng với trình ký có độ mật "Thường" -->
+              <label *ngIf="isNormalConfidentiality" class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+                {{ 'vofficeSign.label.isAutoPromulgate' | translate }}
+              </label>
+              <div *ngIf="isNormalConfidentiality" class="ui-g-12 ui-md-3 ui-lg-3">
+                <label class="i-switch bg-info m-t-xs m-r" id="isAutoPromulgate">
+                  <input type="checkbox" name="isAutoPromulgate" [value]="1" formControlName="isAutoPromulgate"/>
+                  <i></i>
+                </label>
+              </div>
+              <!-- Tự động chuyển văn bản chỉ áp dụng cho Trình ký RNQ -->
+              <label
+                *ngIf="isFromResolution"
+                [ngClass]="isNormalConfidentiality? 'ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right': 'ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right'"
+              >
+                {{ 'vofficeSign.label.isAutoTransferDocuemnt' | translate }}
+              </label>
+              <div *ngIf="isFromResolution" class="ui-g-12 ui-md-3 ui-lg-3">
+                <label class="i-switch bg-info m-t-xs m-r" id="isAutoTransferDocuemnt">
+                  <input type="checkbox" name="isAutoTransferDocuemnt" [value]="1" formControlName="isAutoTransferDocuemnt"/>
+                  <i></i>
+                </label>
+              </div>
+            </div>
+            <!-- end Bổ sung luồng ban hành tự động cho nghị quyết -->
+            <!-- start Bổ sung file biểu mẫu -->
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+                {{'common.label.appendixFileForm2' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-3">
+                <multi-file-chooser 
+                  [property]="f['appendixFileForm']" 
+                  fileName="appendixFileForm" 
+                  [validMaxSize]="50"
+                  validType="png,jpg,gif,tiff,bmp,xls,xlsx,doc,docx,pdf,vpdf,rar,zip,7z"
+                  [moveFile] = "true"
+                  [disabled] = "disableActionFileAppendix">
+                </multi-file-chooser>
+                <app-control-messages [control]="f['appendixFileForm']"></app-control-messages>
+              </div>
+            </div>
+            <!-- end Bổ sung file biểu mẫu phụ lục -->
+          </div>
+          <div *ngIf="isMobileScreen" class="panel-body padding-xl ui-g">
+            <!-- Tài khoản sso start -->
+            <div class="ui-g-12 vt-row" style="display: none;">
+              <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+                {{'common.label.userVoffice' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                <input (blur)="submitVoffice()" type="text" formControlName="vofficeUser" name="vofficeUser" class="form-control" maxlength="100" [autoFocus]="true">
+                <app-control-messages [control]="f['vofficeUser']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row" style="display: none;">
+              <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-3 control-label vt-align-right required">
+                {{'common.label.passwordVoffice' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                <input (blur)="submitVoffice()" type="password" formControlName="vofficePassword" name="vofficePassword" class="form-control"
+                  maxlength="100">
+                <app-control-messages [control]="f['vofficePassword']"></app-control-messages>
+              </div>
+            </div>
+            <!-- Tài khoản sso end -->
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right  required">
+                {{'label.resolutionsMonth.extractingTextContent' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                <input type="text" formControlName="extractingTextContent" name="extractingTextContent"
+                  class="form-control" required maxlength="250" [attr.disabled]="isDefaultValue ? true : null" [title]="f['extractingTextContent'].value">
+                <app-control-messages [control]="f['extractingTextContent']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-3 control-label vt-align-right required">
+                {{'label.resolutionsMonth.professions' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                <select-filter [property]="f['professions']" [options]="listCbb" optionLabel="parName"
+                  optionValue="parValue" [placeHolder]="'common.label.cboMustSelect'" [disabled]="isDefaultValue ? true : null">
+                </select-filter>
+                <app-control-messages [control]="f['professions']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+                {{'label.resolutionsMonth.formalityText' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                <select-filter [property]="f['formalityText']" [options]="listTextF" optionLabel="parName"
+                  optionValue="parValue" [placeHolder]="'common.label.cboMustSelect'" [disabled]="isDefaultValue ? true : null">
+                </select-filter>
+                <app-control-messages [control]="f['formalityText']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-3 control-label vt-align-right required">
+                {{'document.label.confidentiality' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                <select-filter [property]="f['confidentiality']" [options]="listConfidentiality"  optionLabel="name"
+                  optionValue="categoryId" [placeHolder]="'common.label.cboMustSelect'" [disabled]="isDefaultValue ? true : null">
+                </select-filter>
+                <app-control-messages [control]="f['confidentiality']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+                {{'label.resolutionsMonth.textSymbols' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                <input type="text" formControlName="textSymbols" name="textSymbols" class="form-control" required
+                  maxlength="100">
+                <app-control-messages [control]="f['textSymbols']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <!-- #209 Bổ sung văn bản đính kèm lấy từ voffice -->
+              <label *ngIf="isFromResolution || isFromAssessment || isFromAssessmentSigner" class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                <i
+                  style="color: #66b3ff;"
+                  [pTooltip]="'vofficeSign.warningLogin' | translate"
+                  tooltipPosition="top"
+                  class="fas fa-info-circle"
+                ></i>
+                {{'common.label.attachedDocuments' | translate}}
+              </label>
+              <div style="padding: 0px;" class="ui-g-12 ui-md-6 ui-lg-4">
+                <multi-document-picker
+                  class="attachment-file"
+                  #multiDocumentPicker
+                >
+                </multi-document-picker>
+              </div>
+              <!-- Bổ úng văn bản end -->
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+                {{'common.label.fileSign' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                <div *ngIf = "!isMultibleFile && f['signFile']" >
+                  <file-chooser class="attachment-file" [property]="f['signFile']" [validMaxSize]="50"  validType="pdf" [disabled] = "isReportSubmission ? true : false">
+                   </file-chooser>
+                   <app-control-messages [control]="f['signFile']"></app-control-messages>
+                </div>
+                <div *ngIf = "isMultibleFile">
+                  <multi-file-chooser
+                  class="attachment-file"
+                  [property]="f['listSignFile']"
+                  [validMaxSize]="50"
+                  [disabled] = "isReportSubmission ? true : false"
+                  [moveFile] = "true"
+                  validType="pdf,vpdf"
+                  >
+                </multi-file-chooser>
+                <app-control-messages [control]="f['listSignFile']"></app-control-messages>
+                </div>
+                <br *ngIf="f['signType'].value === 'transfer-party-member'">
+                <a *ngIf="f['signType'].value === 'transfer-party-member'" class="text-link"
+                  (click)="processDownloadTransferPartyMemberTemplate();">
+                  <span translate><i class="fa fa-download"></i> app.common.downloadTemplate</span>
+                </a>
+                <ng-container *ngFor="let item of templateFileSigns">
+                  <a class="text-link"
+                    (click)="downloadTemplateSign(item);">
+                    <span>- {{item.name}}</span><br/>
+                  </a>
+                </ng-container>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-3 control-label vt-align-right">
+                {{ keyFileExtra | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                <multi-file-chooser
+                class="attachment-file" 
+                [property]="f['attachedDocuments']" 
+                fileName="attachedDocuments" 
+                [validMaxSize]="50"
+                validType="pdf,vpdf" 
+                [disabled] = "isReportSubmission ? true : false"
+                [moveFile] = "true">
+                </multi-file-chooser>
+                <app-control-messages [control]="f['attachedDocuments']"></app-control-messages>
+              </div>
+            </div>
+            <!-- start Bổ sung luồng ban hành tự động cho nghị quyết -->
+            <div class="ui-g-12 vt-row" *ngIf="isNormalConfidentiality || isFromResolution">
+              <!-- Ban hành tự động chỉ áp dụng với trình ký có độ mật "Thường" -->
+              <label *ngIf="isNormalConfidentiality" class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right">
+                {{ 'vofficeSign.label.isAutoPromulgate' | translate }}
+              </label>
+              <div *ngIf="isNormalConfidentiality" class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                <label class="i-switch bg-info m-t-xs m-r" id="isAutoPromulgate">
+                  <input type="checkbox" name="isAutoPromulgate" [value]="1" formControlName="isAutoPromulgate"/>
+                  <i></i>
+                </label>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <!-- Tự động chuyển văn bản chỉ áp dụng cho Trình ký RNQ -->
+              <label
+                *ngIf="isFromResolution"
+                [ngClass]="isNormalConfidentiality? 'ui-g-12 ui-md-3 ui-sm-3 ui-lg-3 control-label vt-align-right': 'ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right'"
+              >
+                {{ 'vofficeSign.label.isAutoTransferDocuemnt' | translate }}
+              </label>
+              <div *ngIf="isFromResolution" class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                <label class="i-switch bg-info m-t-xs m-r" id="isAutoTransferDocuemnt">
+                  <input type="checkbox" name="isAutoTransferDocuemnt" [value]="1" formControlName="isAutoTransferDocuemnt"/>
+                  <i></i>
+                </label>
+              </div>
+            </div>
+            <!-- end Bổ sung luồng ban hành tự động cho nghị quyết -->
+            <!-- start Bổ sung file biểu mẫu -->
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right">
+                {{'common.label.appendixFileForm2' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                <multi-file-chooser
+                  class="attachment-file" 
+                  [property]="f['appendixFileForm']" 
+                  fileName="appendixFileForm" 
+                  [validMaxSize]="50"
+                  validType="png,jpg,gif,tiff,bmp,xls,xlsx,doc,docx,pdf,vpdf,rar,zip,7z"
+                  [moveFile] = "true"
+                  [disabled] = "disableActionFileAppendix">
+                </multi-file-chooser>
+                <app-control-messages [control]="f['appendixFileForm']"></app-control-messages>
+              </div>
+            </div>
+            <!-- end Bổ sung file biểu mẫu phụ lục -->
+          </div>
+        </div>
+        <!-- Thêm tab chọn đối tượng nhận văn bản *ngIf="isAutoTransferDocuemnt" -->
+        <div class="panel panel-default card-info" *ngIf="isAutoTransferDocuemnt">
+          <div class="panel-heading">
+            <strong>
+              <span class="ml-2 title-info">{{ 'vofficeSign.label.listDocumentReceiver' | translate }}</span>
+            </strong>
+          </div>
+          <div class="panel-body panel-table" style="padding: 0 10px 10px;">
+            <transfer-auto-tab #transferAutoTab [lstPromulgate]="lstPromulgate" [disabled]="!isAuthenVoffice"></transfer-auto-tab>
+          </div>
+        </div>
+        <!--  -->
+        <div class="panel panel-default card-info">
+          <div class="panel-heading">
+            <strong>
+              <span class="ml-2 title-info">{{'managerSign.listSignerTitle' | translate}}</span>
+            </strong>
+          </div>
+          <div class="panel-body panel-table" style="padding: 0 10px 10px;">
+            <p-table [scrollable]="true" [value]="formSigner.controls"
+              tableStyleClass="table controls-table table-wrapper b-t b-b"
+              [resizableColumns]="true">
+              <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                  <col style="width: 50px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;">
+                  <col style="width: 100px;">
+                </colgroup>
+              </ng-template>
+              <ng-template pTemplate="header">
+                <tr>
+                  <th translate pResizableColumn>common.table.index</th>
+                  <th translate pResizableColumn><span class="required">managerSign.listSigner.employeeId</span></th>
+                  <th translate pResizableColumn><span class="required">managerSign.listSigner.positionOrg</span></th>
+                  <th translate pResizableColumn>vofficeSigning.imageSign.chose</th>
+                  <th translate pResizableColumn>common.label.order</th>
+                  <th translate pResizableColumn>managerSign.listSigner.signImageIndex</th>
+                  <th translate pResizableColumn>common.label.action</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item let-index="rowIndex">
+                <tr [formGroup]="item">
+                  <td class="vt-align-center">
+                    {{index+1}}
+                  </td>
+                  <td>
+                    <data-picker [property]="item.controls.employeeId" systemCode="political" operationKey="action.view"
+                      adResourceKey="resource.signDocument" objectBO="EmployeeBO" codeField="employeeCode"
+                      nameField="fullName" emailField="email" selectField="employeeId" mobileNumberField="mobileNumber"
+                      (onChange)="onChangeEmployee($event, item)" isNotSearchByOrgDomainData="true"
+                      [filterCondition]="' AND obj.status = 1'" [isRequiredField]="true">
+                    </data-picker>
+                    <app-control-messages [control]="item.controls.employeeId"></app-control-messages>
+                  </td>
+                  <td style="overflow: unset">
+                    <select-filter [property]="item.controls.userVofficeId" [options]="item.listVofficeUser"
+                      optionLabel="label" optionValue="value" [placeHolder]="'common.label.cboMustSelect'">
+                    </select-filter>
+                    <app-control-messages [control]="item.controls.userVofficeId"></app-control-messages>
+                  </td>
+                  <td class="vt-align-left">
+                    <span *ngIf="item.signatureImages">
+                      <label *ngFor="let signatureImage of item.signatureImages; index as i" class="i-checks">
+                        <input type="radio" class="form-check-input control-label"
+                          id="{{'signImageId_' + index + '_' + i}}" [value]="signatureImage.staffImageSignId"
+                          formControlName="signImageId" [attr.disabled]="item.controls.showSignImage.value == 1 ? null : true">
+                        <i></i>
+                        <img [src]="signatureImage.attachBytes" width="80" height="70">
+                      </label>
+                    </span>
+                    <span *ngIf="!item.signatureImages">
+                      {{'assessmentResult.notFoundSignatureImage' | translate}}
+                    </span>
+                    <app-control-messages [control]="item.controls.signImageId"></app-control-messages>
+                  </td>
+                  <td class="vt-align-center">
+                    <button *ngIf="index > 0" class="btn-icon plus" type="button" [title]="'titleAdd' | translate"
+                      (click)="upSigner(index)" [innerHTML]="'common.icon.up' | translate">
+                    </button>
+                    <button *ngIf="index != formSigner.controls.length - 1" class="btn-icon plus" type="button"
+                      [title]="'titleAdd' | translate" (click)="downSigner(index)"
+                      [innerHTML]="'common.icon.down' | translate">
+                    </button>
+                  </td>
+                  <td class="vt-align-center">
+                    <label class="i-switch bg-info m-t-xs m-r">
+                      <input type="checkbox" class="form form-control" formControlName="showSignImage" [value]="1"  (change)="onChangeSignImage(item)"  [attr.disabled]="!item.signatureImages || item.signatureImages.length==0 ? true : null "/>
+                      <i></i>
+                    </label>
+                  </td>
+                  <td class="vt-align-center">
+                    <button class="btn-icon plus" type="button" [title]="'titleAdd' | translate"
+                      (click)="addSigner(index)" [innerHTML]="'common.icon.plus' | translate">
+                    </button>
+                    <button class="btn-icon minus" type="button" [title]="'titleDelete' | translate"
+                      (click)="removeSigner(index)" [innerHTML]="'common.icon.minus' | translate">
+                    </button>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

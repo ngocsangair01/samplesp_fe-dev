@@ -1,0 +1,13 @@
+<p-autoComplete [formControl]="property" [suggestions]="filteredList"  field="label"
+  (completeMethod)="getEmpInfo($event)" [minLength]="1" [maxlength]="100" (onSelect)="onSelect()"
+  (onClear)="onClear($event)" (onBlur)="onBlur()" placeholder="Nhập email, mã hoặc tên nhân viên" style="width: 100%;"
+  [inputStyle]="inputStyle" [style]="{padding:0, width: '100%'}">
+  <ng-template let-employee pTemplate="item">
+    <div style="border-bottom: 1px;">
+      <div>{{employee.fullName}}</div>
+      <div>{{employee.email}}</div>
+      <div>{{employee.employeeCode}}</div>
+    </div>
+
+  </ng-template>
+</p-autoComplete>

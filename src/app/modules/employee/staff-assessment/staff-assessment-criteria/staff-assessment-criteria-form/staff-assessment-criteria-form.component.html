@@ -1,0 +1,867 @@
+<div class="content vt-nopadding">
+  <div class="no-padding-left">
+    <form id="formSave" [formGroup]="formSave">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong>
+            <span *ngIf="!isEditMode && !isView " translate>add.staff.assessment.criteria</span>
+            <span *ngIf="isEditMode" translate>edit.staff.assessment.criteria</span>
+            <span *ngIf="isView " translate>view.staff.assessment.criteria</span>
+          </strong>
+          <div class="vt-absolute vt-shotcut-button-in-heading">
+            <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+              class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+          </div>
+        </div>
+        <div class="panel-body padding-xl ui-g">
+          <!-- Row 1 Start -->
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right " [ngClass]="'required'">
+              {{'label.table.staff.assessment.criteria.code' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input 
+                type="text" 
+                class="form form-control" 
+                name="assessmentCriteriaCode" 
+                formControlName="assessmentCriteriaCode" 
+                [autoFocus]="assessmentCriteriaId == null" 
+                maxlength="50" 
+                [attr.disabled]="isView?true:null"
+                >
+              <app-control-messages [control]="f['assessmentCriteriaCode']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" [ngClass]="'required'">
+              {{'label.table.staff.assessment.criteria.name' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input 
+                type="text" 
+                class="form form-control" 
+                name="assessmentCriteriaName" 
+                formControlName="assessmentCriteriaName" 
+                maxlength="500"  
+                [attr.disabled]="isView?true:null"
+              >
+              <app-control-messages [control]="f['assessmentCriteriaName']"></app-control-messages>
+            </div>
+          </div>
+          <!-- Row 1 End -->
+
+          <!-- Row 2 Start -->
+          <div class="ui-g-12 vt-row" >
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right " [ngClass]="'required'">
+              {{'label.table.staff.assessment.criteria.group' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <data-picker
+                #data 
+                [property]="f['assessmentCriteriaGroupId']" 
+                systemCode="assessment" 
+                operationKey="action.view"
+                adResourceKey="resource.assessmentCriteriaGroup" 
+                objectBO="AssessmentCriteriaGroupBO" 
+                codeField="assessmentCriteriaGroupCode" 
+                nameField="assessmentCriteriaGroupName"
+                selectField="assessmentCriteriaGroupId" 
+                filterCondition=" AND obj.assessment_criteria_group_status = 2"
+                [disabled]="isView || isFromGroupSearch"
+                >
+              </data-picker>
+              <app-control-messages [control]="f['assessmentCriteriaGroupId']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'staff.assessment.criteria.icon' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter-icon
+                [property]="f['settingIconId']"
+                [options]="settingIconList"
+                optionLabel="iconName"
+                optionValue="settingIconId"
+                [isMultiLanguage]="false"
+                [placeHolder]="'common.label.cboMustSelect'"
+                [disabled]="isView"
+              >
+              </select-filter-icon>
+              <app-control-messages [control]="f['settingIconId']"></app-control-messages>
+            </div>
+          </div>
+          <!-- Row 2 End -->
+
+          <!-- Row 3 -->
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'staff.assessment.criteria.component.key' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <label class="i-switch bg-info m-t-xs m-r" id="isKey">
+                <input type="checkbox" name="isKey" [value]="1" formControlName="isKey" [attr.disabled]="isView?true:null"/>
+                <i></i>
+              </label>
+              <app-control-messages [control]="f['isKey']"></app-control-messages>
+            </div>
+          </div>
+          <!-- Row 4 Start -->
+          <!-- Select fieldType -->
+          <!-- Start -->
+          <div class="ui-g-12 vt-row" >
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right " [ngClass]="'required'">
+              {{'staff.assessment.criteria.component.type' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter
+                [property]="f['fieldType']" 
+                [options]="fieldTypeList"
+                optionLabel="name"
+                optionValue="id"
+                [isMultiLanguage]="false"
+                [placeHolder]="'common.label.cboMustSelect'"
+                (onChange)="onChangeFieldType($event)"
+                [disabled]="isView"
+              >
+              </select-filter>
+              <app-control-messages [control]="f['fieldType']"></app-control-messages>
+            </div>
+            <!-- End -->
+
+            <!-- FieldType : TextBox  -->
+            <!-- Start -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" *ngIf="f['fieldType'].value === assessmentFieldType.TEXT_BOX" >
+              {{'staff.assessment.criteria.default.value' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="f['fieldType'].value === assessmentFieldType.TEXT_BOX">
+              <input 
+              type="text" 
+              class="form form-control" 
+              name="fieldDefaultValue" 
+              formControlName="fieldDefaultValue" 
+              [attr.disabled]="isView?true:null"
+              >
+              <app-control-messages [control]="f['fieldDefaultValue']"></app-control-messages>
+            </div>
+            <!-- End -->
+
+            <!-- FieldType : TextArea -->
+            <!-- Start -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" *ngIf="f['fieldType'].value === assessmentFieldType.TEXTAREA" >
+              {{'staff.assessment.criteria.default.value' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="f['fieldType'].value === assessmentFieldType.TEXTAREA">
+              <textarea type="text-area" rows="4" class="form-control" formControlName="fieldDefaultValue" [attr.disabled]="isView ? true : null" ></textarea>
+              <app-control-messages [control]="f['fieldDefaultValue']"></app-control-messages>
+            </div>
+            <!-- End -->
+
+            <!-- FieldType : Date -->
+            <!-- Start -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" *ngIf="f['fieldType'].value === assessmentFieldType.DATE">
+              {{'staff.assessment.criteria.date' | translate}} 
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="f['fieldType'].value === assessmentFieldType.DATE">
+              <date-picker
+                [property]="f['fieldDefaultValue']"
+                [disabled]="isView">
+              </date-picker>
+              <app-control-messages [control]="f['fieldDefaultValue']"></app-control-messages>
+            </div>
+            <!-- End -->
+
+            <!-- FieldType : DateTime -->
+            <!-- Start -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" *ngIf="f['fieldType'].value === assessmentFieldType.DATE_TIME">
+              {{'staff.assessment.criteria.dateTime' | translate}} 
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="f['fieldType'].value === assessmentFieldType.DATE_TIME">
+              <date-picker
+                [showTime]="true"
+                [property]="f['fieldDefaultValue']"
+                [disabled]="isView">
+              </date-picker>
+              <app-control-messages [control]="f['fieldDefaultValue']"></app-control-messages>
+            </div>
+          <!-- End -->
+          
+          <!-- FieldType : Time -->
+          <!-- Start -->
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" *ngIf="f['fieldType'].value === assessmentFieldType.TIME">
+              {{'staff.assessment.criteria.time' | translate}} 
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="f['fieldType'].value === assessmentFieldType.TIME">
+              <date-picker
+                [timeOnly]="true"
+                [property]="f['fieldDefaultValue']"
+                [disabled]="isView"
+              >
+              </date-picker>
+              <app-control-messages [control]="f['fieldDefaultValue']"></app-control-messages>
+            </div>
+          <!-- End -->
+
+          <!-- FieldType : Spinner -->
+          <!-- Start -->
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" *ngIf="f['fieldType'].value === assessmentFieldType.SPINNER">
+            {{'staff.assessment.criteria.explain.value' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="f['fieldType'].value === assessmentFieldType.SPINNER">
+            <textarea type="text-area" rows="4" class="form-control" formControlName="assessmentCriteriaExplain" [attr.disabled]="isView ? true : null"></textarea>
+            <app-control-messages [control]="f['assessmentCriteriaExplain']"></app-control-messages>
+          </div>
+          <!-- End -->
+
+          <!-- FieldType : Star -->
+          <!-- Start -->
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" *ngIf="f['fieldType'].value === assessmentFieldType.STAR">
+            {{'staff.assessment.criteria.explain.value' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="f['fieldType'].value === assessmentFieldType.STAR">
+            <textarea type="text-area" rows="4" class="form-control" formControlName="assessmentCriteriaExplain" [attr.disabled]="isView ? true : null" ></textarea>
+            <app-control-messages [control]="f['assessmentCriteriaExplain']"></app-control-messages>
+          </div>
+          <!-- End -->
+
+          <!-- FieldType : From To -->
+          <!-- Start -->
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" *ngIf="f['fieldType'].value === assessmentFieldType.FROM_TO" >
+            {{'staff.assessment.criteria.explain.value' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="f['fieldType'].value === assessmentFieldType.FROM_TO">
+            <textarea type="text-area" rows="4" class="form-control" formControlName="assessmentCriteriaExplain" [attr.disabled]="isView ? true : null" ></textarea>
+            <app-control-messages [control]="f['assessmentCriteriaExplain']"></app-control-messages>
+          </div>
+          <!-- End -->
+
+          <!-- FieldType : Tỷ lệ -->
+          <!-- Start -->
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" *ngIf="f['fieldType'].value === assessmentFieldType.PERCENT" >
+            {{'staff.assessment.criteria.explain.value' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="f['fieldType'].value === assessmentFieldType.PERCENT">
+            <textarea type="text-area" rows="4" class="form-control" formControlName="assessmentCriteriaExplain" [attr.disabled]="isView ? true : null" ></textarea>
+            <app-control-messages [control]="f['assessmentCriteriaExplain']"></app-control-messages>
+          </div>
+          <!-- End -->
+
+          </div>
+          <!-- Row 4 End -->
+
+          <!-- Row 5 Start -->
+
+          <!-- FieldType : Tỷ lệ -->
+          <!-- Start -->
+          <div class="ui-g-12 vt-row" *ngIf="f['fieldType'].value === assessmentFieldType.PERCENT">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'staff.assessment.criteria.default.value' | translate}} 
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input 
+                (change)="trimZerosFieldDefaultValue(f['fieldDefaultValue'].value)" 
+                type="text" 
+                formControlName="fieldDefaultValue" 
+                name="fieldDefaultValue" 
+                class="form-control"
+                maxlength="10" 
+                [attr.disabled]="isView ? true : null">
+              <app-control-messages [control]="f['fieldDefaultValue']"></app-control-messages>
+            </div>
+          </div>
+          <!-- End -->
+
+          <!-- FieldType : From To -->
+          <!-- Start -->
+          <div class="ui-g-12 vt-row" *ngIf="f['fieldType'].value === assessmentFieldType.FROM_TO">
+            <form id="formDate" [formGroup]="formFromTo">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'staff.assessment.criteria.from.date' | translate}} 
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker
+                [property]="fFromTo['from']"
+                [disabled]="isView">
+              </date-picker>
+              <app-control-messages [control]="fFromTo['from']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'staff.assessment.criteria.to.date' | translate}} 
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker
+                [property]="fFromTo['to']"
+                [disabled]="isView">
+              </date-picker>
+              <app-control-messages [control]="fFromTo['to']"></app-control-messages>
+            </div>
+          </form>
+          </div>
+          <!-- End -->
+
+          <!-- FieldType : TextBox -->
+          <!-- Start -->
+          <div class="ui-g-12 vt-row" *ngIf="f['fieldType'].value === assessmentFieldType.TEXT_BOX">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right " >
+              {{'staff.assessment.criteria.placeholder.value' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input 
+              type="text" 
+              class="form form-control" 
+              name="fieldPlaceholderValue" 
+              formControlName="fieldPlaceholderValue" 
+              [attr.disabled]="isView ? true : null"
+              >
+              <app-control-messages [control]="f['fieldPlaceholderValue']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" >
+              {{'staff.assessment.criteria.explain.value' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <textarea type="text-area" rows="4" class="form-control" formControlName="assessmentCriteriaExplain" [attr.disabled]="isView ? true : null" ></textarea>
+              <app-control-messages [control]="f['assessmentCriteriaExplain']"></app-control-messages>
+            </div>
+          </div>
+          <!-- End -->
+
+          <!-- FieldType : TextArea -->
+          <!-- Start -->
+          <div class="ui-g-12 vt-row" *ngIf="f['fieldType'].value === assessmentFieldType.TEXTAREA">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'staff.assessment.criteria.placeholder.value' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <textarea type="text-area" rows="4" class="form-control" formControlName="fieldPlaceholderValue" [attr.disabled]="isView ? true : null"></textarea>
+              <app-control-messages [control]="f['fieldPlaceholderValue']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" >
+              {{'staff.assessment.criteria.explain.value' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <textarea type="text-area" rows="4" class="form-control" formControlName="assessmentCriteriaExplain" [attr.disabled]="isView ? true : null"></textarea>
+              <app-control-messages [control]="f['assessmentCriteriaExplain']"></app-control-messages>
+            </div>
+          </div>
+          <!-- End -->
+
+          <!-- FieldType : Combobox -->
+          <!-- Start -->
+          <div class="ui-g-12 vt-row" *ngIf="f['fieldType'].value === assessmentFieldType.COMBO_BOX">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right " >
+              {{'staff.assessment.criteria.explain.value' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <textarea type="text-area" rows="4" class="form-control" formControlName="assessmentCriteriaExplain" [attr.disabled]="isView ? true : null" ></textarea>
+              <app-control-messages [control]="f['assessmentCriteriaExplain']"></app-control-messages>
+            </div>
+          </div>
+          <!-- End -->
+
+          <!-- FieldType : Radio Button -->
+          <!-- Start -->
+          <div class="ui-g-12 vt-row" *ngIf="f['fieldType'].value === assessmentFieldType.RADIO_BUTTON">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right " >
+              {{'staff.assessment.criteria.explain.value' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <textarea type="text-area" rows="4" class="form-control" formControlName="assessmentCriteriaExplain" [attr.disabled]="isView ? true : null" ></textarea>
+              <app-control-messages [control]="f['assessmentCriteriaExplain']"></app-control-messages>
+            </div>
+          </div>
+          <!-- End -->
+
+          <!-- FieldType : Spinner -->
+          <!-- Start -->
+          <div class="ui-g-12 vt-row">
+          <div class="ui-g-12 " *ngIf="f['fieldType'].value === assessmentFieldType.SPINNER">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right " >
+              {{'staff.assessment.criteria.default.value' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-7 ui-lg-3">
+              <label>
+                {{f['fieldDefaultValue'].value}}
+              </label>
+              <p-slider
+                formControlName="fieldDefaultValue"
+                [disabled]="spinnerDisable || isView"
+                [max] = "spinnerMax"
+                [min] = "spinnerMin"
+                [step] = "spinnerStep"
+              ></p-slider>
+              <app-control-messages [control]="f['fieldDefaultValue']"></app-control-messages>
+            </div>
+          </div>
+        </div>
+          <!-- End -->
+
+          <!-- FieldType : Star -->
+          <div class="ui-g-12 vt-row" *ngIf="f['fieldType'].value === assessmentFieldType.STAR">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right " >
+              {{'staff.assessment.criteria.default.value' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3 assessment-star" *ngIf="stars > 0">
+              <p-rating
+                formControlName="fieldDefaultValue" 
+                [disabled]="disabledStar || isView" 
+                [stars]="stars"
+                [cancel]="cancelStar"
+              >
+              </p-rating>
+              <app-control-messages [control]="f['fieldDefaultValue']"></app-control-messages>
+            </div>
+          </div>
+          <!-- Start -->
+
+          <!-- Row 5 End -->
+
+          <!-- Row 6 Start -->
+          <!-- FieldType : TextBox -->
+          <!-- Start -->
+          <div class="ui-g-12 vt-row" *ngIf="f['fieldType'].value === assessmentFieldType.TEXT_BOX">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right " >
+              {{'staff.assessment.criteria.maximum.length' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input 
+              type="text" 
+              class="form form-control" 
+              name="maxLength" 
+              formControlName="maxLength" 
+              maxlength="10"
+              [attr.disabled]="isView ? true : null"
+              >
+              <app-control-messages [control]="f['maxLength']"></app-control-messages>
+            </div>
+          </div>
+          <!-- End -->
+
+          <!-- FieldType : TextArea -->
+          <!-- Start -->
+          <div class="ui-g-12 vt-row" *ngIf="f['fieldType'].value === assessmentFieldType.TEXTAREA">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right " >
+              {{'staff.assessment.criteria.maximum.length' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input 
+              type="text" 
+              class="form form-control" 
+              name="maxLength" 
+              formControlName="maxLength" 
+              maxlength="10"
+              [attr.disabled]="isView ? true : null"
+              >
+              <app-control-messages [control]="f['maxLength']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right " [ngClass]="'required'" >
+              {{'staff.assessment.criteria.rows.length' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input 
+              type="text" 
+              class="form form-control" 
+              name="assessmentCriteriaRows" 
+              formControlName="assessmentCriteriaRows" 
+              maxlength="10"
+              [attr.disabled]="isView ? true : null"
+              >
+              <app-control-messages [control]="f['assessmentCriteriaRows']"></app-control-messages>
+            </div>
+          </div>
+          <!-- End -->
+          <!-- Row 6 End -->
+
+          <!-- Row 7 Start -->
+          <!-- FieldType : Combobox -->
+          <!-- Start -->
+          <div *ngIf="f['fieldType'].value === assessmentFieldType.COMBO_BOX">
+              <form id="formCombobox" [formGroup]="formCombobox" >
+                <div class="panel-body panel-table">
+                  <p-table 
+                  [scrollable]="true" 
+                  [value]="formCombobox.controls"
+                  tableStyleClass="table controls-table table-wrapper b-t b-b" 
+                  styleClass="comboboxGroupMinHeight"
+                  [(selection)]="lstSelected"
+                  >
+                  <ng-template pTemplate="colgroup" let-columns >
+                    <colgroup>
+                      <col class="size-1">
+                      <col class="size-6">
+                      <col class="size-6">
+                      <col class="size-10">
+                      <col *ngIf="!isView" class="size-6">
+                    </colgroup>
+                  </ng-template>
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th translate>common.table.index</th>
+                      <th translate>staff.assessment.criteria.is.default.value</th>
+                      <th translate><span class="required">staff.assessment.criteria.label</span></th>
+                      <th translate><span class="required">staff.assessment.criteria.value</span></th>
+                      <th *ngIf="!isView" translate>common.label.action</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-item let-index="rowIndex">
+                    <tr [formGroup]="item" >
+                      <td class="vt-align-center">
+                        {{index+1}}
+                      </td>
+                      <td class="vt-align-center">
+                        <input [attr.disabled]="isView ? true : null" type="checkbox" class="control-label" (click)="checkOnlyCheckbox($event, index, 'isFieldDefaultValue')"
+                          [value]="1" formControlName="isFieldDefaultValue" [attr.disabled]="isView ? true : null">
+                      </td>
+                      <td class="vt-align-center">
+                        <input type="text" formControlName="label" name="label" class="form-control"
+                          maxlength="255" [attr.disabled]="isView ? true : null" >
+                        <app-control-messages [control]="item.controls.label"></app-control-messages>
+                      </td>
+                      <td class="vt-align-center">
+                        <input (change)="trimZeros(item)" type="text" formControlName="value" name="value" class="form-control"
+                          maxlength="255" [attr.disabled]="isView ? true : null">
+                        <app-control-messages [control]="item.controls.value"></app-control-messages>
+                      </td>
+                      <td *ngIf="!isView" class="vt-align-center">
+                        <button *ngIf="!isView" class="btn-icon plus" type="button" [title]="'titleAdd' | translate"
+                          (click)="addCombobox(index, item)" [innerHTML]="'common.icon.plus' | translate">
+                        </button>
+                        <button *ngIf="!isView" class="btn-icon minus" type="button" [title]="'titleDelete' | translate"
+                          (click)="removeCombobox(index, item)" [innerHTML]="'common.icon.minus' | translate">
+                        </button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                  </p-table>
+                </div>
+              </form>
+          </div>
+          <!-- End -->
+
+          <!-- FieldType : Radio Button -->
+          <!-- Start -->
+          <div *ngIf="f['fieldType'].value === assessmentFieldType.RADIO_BUTTON">
+            <form id="formCombobox" [formGroup]="formCombobox" >
+              <div class="panel-body panel-table">
+                <p-table 
+                [scrollable]="true" 
+                [value]="formCombobox.controls"
+                tableStyleClass="table controls-table table-wrapper b-t b-b" 
+                styleClass="comboboxGroupMinHeight"
+                [(selection)]="lstSelected"
+                >
+                <ng-template pTemplate="colgroup" let-columns >
+                  <colgroup>
+                    <col class="size-1">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-10">
+                    <col *ngIf="!isView" class="size-6">
+                  </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th translate>common.table.index</th>
+                    <th translate>staff.assessment.criteria.is.default.value</th>
+                    <th translate><span class="required">staff.assessment.criteria.label</span></th>
+                    <th translate><span class="required">staff.assessment.criteria.value</span></th>
+                    <th *ngIf="!isView" translate>common.label.action</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-index="rowIndex">
+                  <tr [formGroup]="item" >
+                    <td class="vt-align-center">
+                      {{index+1}}
+                    </td>
+                    <td class="vt-align-center">
+                      <input [attr.disabled]="isView ? true : null" type="checkbox" class="control-label" (click)="checkOnlyCheckbox($event, index, 'isFieldDefaultValue')"
+                        [value]="1" formControlName="isFieldDefaultValue">
+                    </td>
+                    <td class="vt-align-center">
+                      <input type="text" formControlName="label" name="label" class="form-control"
+                        maxlength="255" [attr.disabled]="isView ? true : null">
+                      <app-control-messages [control]="item.controls.label"></app-control-messages>
+                    </td>
+                    <td class="vt-align-center">
+                      <input (change)="trimZeros(item)" type="text" formControlName="value" name="value" class="form-control"
+                        maxlength="255" [attr.disabled]="isView ? true : null" >
+                      <app-control-messages [control]="item.controls.value"></app-control-messages>
+                    </td>
+                    <td *ngIf="!isView" class="vt-align-center">
+                      <button *ngIf="!isView" class="btn-icon plus" type="button" [title]="'titleAdd' | translate"
+                        (click)="addCombobox(index, item)" [innerHTML]="'common.icon.plus' | translate">
+                      </button>
+                      <button *ngIf="!isView" class="btn-icon minus" type="button" [title]="'titleDelete' | translate"
+                        (click)="removeCombobox(index, item)" [innerHTML]="'common.icon.minus' | translate">
+                      </button>
+                    </td>
+                  </tr>
+                </ng-template>
+                </p-table>
+              </div>
+            </form>
+        </div>
+        <!-- End -->
+
+          <!-- FieldType : Star -->
+          <!-- Start -->
+          <div class="ui-g-12 vt-row" *ngIf="f['fieldType'].value === assessmentFieldType.STAR" >
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right " [ngClass]="'required'" >
+              {{'staff.assessment.criteria.big.assessment.value' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input 
+                type="text" 
+                class="form form-control" 
+                name="assessmentMaxValue" 
+                formControlName="assessmentMaxValue" 
+                maxlength="2"
+                (change)="onChangeAssessmentMaxValueOfStar($event.target.value)"
+                [attr.disabled]="isView ? true : null"
+              >
+              <app-control-messages [control]="f['assessmentMaxValue']"></app-control-messages>
+            </div>
+          </div>
+          <!-- End -->
+
+          <!-- FieldType : Spinner -->
+          <!-- Start -->
+          <div class="panel panel-default" *ngIf="f['fieldType'].value === assessmentFieldType.SPINNER">
+            <div class="ui-g-12 vt-row" >
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" >
+                {{'staff.assessment.criteria.small.assessment.value' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <input 
+                type="text" 
+                class="form form-control" 
+                name="assessmentMinValue" 
+                formControlName="assessmentMinValue" 
+                maxlength="10"
+                (change)="onChangeAssessmentMinValue($event.target.value)"
+                [attr.disabled]="isView ? true : null"
+                >
+                <app-control-messages [control]="f['assessmentMinValue']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="'required'">
+                {{'staff.assessment.criteria.big.assessment.value' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-2 ">
+                <input
+                  type="text"
+                  class="form form-control"
+                  name="assessmentMaxValue"
+                  formControlName="assessmentMaxValue"
+                  maxlength="10"
+                  (change)="onChangeAssessmentMaxValue($event.target.value)"
+                  [attr.disabled]="isView ? true : null"
+                >
+                <app-control-messages [control]="f['assessmentMaxValue']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" >
+                {{'staff.assessment.criteria.jump' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-2">
+                <input 
+                type="text" 
+                class="form form-control" 
+                name="step" 
+                formControlName="step" 
+                maxlength="10"
+                (change)="onChangeAssessmentStepValue($event.target.value)"
+                [attr.disabled]="isView ? true : null"
+                >
+                <app-control-messages [control]="f['step']"></app-control-messages>
+              </div>
+            </div>
+            <form id="formSpinner" [formGroup]="formSpinner" >
+              <div class="panel-body panel-table" >
+                <p-table 
+                  [scrollable]="true" 
+                  [value]="formSpinner.controls"
+                  tableStyleClass="table controls-table table-wrapper b-t b-b" 
+                  styleClass="spinnerGroupMinHeight"
+                  >
+                  <ng-template pTemplate="colgroup" let-columns >
+                    <colgroup>
+                      <col class="size-1">
+                      <col class="size-6">
+                      <col class="size-6">
+                      <col class="size-6">
+                      <col class="size-4">
+                      <col *ngIf="!isView" class="size-5">
+                    </colgroup>
+                  </ng-template>
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th translate>common.table.index</th>
+                      <th translate><span class="required">rank_staff_assessment_criteria_name</span></th>
+                      <th translate><span class="required">staff.assessment.criteria.start.value</span></th>
+                      <th translate><span class="required">staff.assessment.criteria.end.value</span></th>
+                      <th translate><span class="required">staff.assessment.criteria.color</span></th>
+                      <th *ngIf="!isView" translate>common.label.action</th>
+                  </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-item let-index="rowIndex">
+                    <tr [formGroup]="item">
+                      <td class="vt-align-center">
+                        {{index+1}}
+                      </td>
+                      <td class="vt-align-center">
+                        <input type="text" formControlName="assessmentCriteriaRankName" name="assessmentCriteriaRankName" class="form-control"
+                          maxlength="500" [attr.disabled]="isView ? true : null" >
+                        <app-control-messages [control]="item.controls.assessmentCriteriaRankName"></app-control-messages>
+                      </td>
+                      <td class="vt-align-center">
+                        <input (change)="trimZerosStartValue(item)" type="text" formControlName="startValue" name="startValue" class="form-control"
+                          maxlength="10" [attr.disabled]="isView ? true : null" >
+                        <app-control-messages [control]="item.controls.startValue"></app-control-messages>
+                      </td>
+                      <td class="vt-align-center">
+                        <input (change)="trimZerosEndValue(item)" type="text" formControlName="endValue" name="endValue" class="form-control"
+                          maxlength="10" [attr.disabled]="isView ? true : null">
+                        <app-control-messages [control]="item.controls.endValue"></app-control-messages>
+                      </td>
+                      <td class="vt-align-center">
+                        <input
+                          style="width: 40px;margin-left: 44px;"
+                          type="color"
+                          formControlName="colorPicker"
+                          class="form-control"
+                          [attr.disabled]="isView ? true : null"
+                        >
+                        <app-control-messages [control]="item.controls.colorPicker"></app-control-messages>
+                      </td>
+                      <td class="vt-align-center" *ngIf="!isView">
+                        <button *ngIf="!isView" class="btn-icon plus" type="button" [title]="'titleAdd' | translate"
+                          (click)="addSpinner(index, item)" [innerHTML]="'common.icon.plus' | translate">
+                        </button>
+                        <button *ngIf="!isView" class="btn-icon minus" type="button" [title]="'titleDelete' | translate"
+                          (click)="removeSpinner(index, item)" [innerHTML]="'common.icon.minus' | translate">
+                        </button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </form>
+          </div>
+          <!-- End -->
+
+          <!-- FieldType : Star -->
+          <!-- Start -->
+          <div class="panel panel-default" *ngIf="f['fieldType'].value === assessmentFieldType.STAR">
+            <form id="formSpinner" [formGroup]="formSpinner" >
+              <div class="panel-body panel-table">
+                <p-table 
+                  [scrollable]="true" 
+                  [value]="formSpinner.controls"
+                  tableStyleClass="table controls-table table-wrapper b-t b-b" 
+                  styleClass="spinnerGroupMinHeight"
+                  >
+                  <ng-template pTemplate="colgroup" let-columns >
+                    <colgroup>
+                      <col class="size-1">
+                      <col class="size-6">
+                      <col class="size-6">
+                      <col class="size-6">
+                      <col class="size-4">
+                      <col *ngIf="!isView" class="size-5">
+                    </colgroup>
+                  </ng-template>
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th translate>common.table.index</th>
+                      <th translate><span class="required">rank_staff_assessment_criteria_name</span></th>
+                      <th translate><span class="required">staff.assessment.criteria.start.value</span></th>
+                      <th translate><span class="required">staff.assessment.criteria.end.value</span></th>
+                      <th translate><span class="required">staff.assessment.criteria.color</span></th>
+                      <th *ngIf="!isView" translate>common.label.action</th>
+                  </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-item let-index="rowIndex">
+                    <tr [formGroup]="item">
+                      <td class="vt-align-center">
+                        {{index+1}}
+                      </td>
+                      <td class="vt-align-center">
+                        <input type="text" formControlName="assessmentCriteriaRankName" name="assessmentCriteriaRankName" class="form-control"
+                          maxlength="500" [attr.disabled]="isView ? true : null">
+                        <app-control-messages [control]="item.controls.assessmentCriteriaRankName"></app-control-messages>
+                      </td>
+                      <td class="vt-align-center">
+                        <input (change)="trimZerosStartValue(item)" type="text" formControlName="startValue" name="startValue" class="form-control"
+                          maxlength="10" [attr.disabled]="isView ? true : null">
+                        <app-control-messages [control]="item.controls.startValue"></app-control-messages>
+                      </td>
+                      <td class="vt-align-center">
+                        <input (change)="trimZerosEndValue(item)" type="text" formControlName="endValue" name="endValue" class="form-control"
+                          maxlength="10" [attr.disabled]="isView ? true : null" >
+                        <app-control-messages [control]="item.controls.endValue"></app-control-messages>
+                      </td>
+                      <td class="vt-align-center">
+                        <input
+                        style="width: 40px;margin-left: 44px;"
+                        type="color"
+                        formControlName="colorPicker"
+                        class="form-control"
+                        [attr.disabled]="isView ? true : null"
+                        >
+                        <app-control-messages [control]="item.controls.colorPicker"></app-control-messages>
+                      </td>
+                      <td class="vt-align-center" *ngIf="!isView">
+                        <button *ngIf="!isView" class="btn-icon plus" type="button" [title]="'titleAdd' | translate"
+                          (click)="addSpinner(index, item)" [innerHTML]="'common.icon.plus' | translate">
+                        </button>
+                        <button *ngIf="!isView"  class="btn-icon minus" type="button" [title]="'titleDelete' | translate"
+                          (click)="removeSpinner(index, item)" [innerHTML]="'common.icon.minus' | translate">
+                        </button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </form>
+          </div>
+          <!-- End -->
+          <!-- Row 7 End -->
+
+          <!-- Row 8 Start -->
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'staff.assessment.criteria.scoring.guide' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-9">
+              <textarea maxlength="1000" style="height: 75px;" class="form form-control" name="scoringGuide" formControlName="scoringGuide" [attr.disabled]="isView ? true : null"></textarea>
+              <app-control-messages [control]="f['scoringGuide']"></app-control-messages>
+            </div>
+          </div>
+          <!-- Row 8 End -->
+
+          <!-- Row 9 Start -->
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'label.table.staff.assessment.criteria.note' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-9">
+              <textarea maxlength="1000" style="height: 75px;" class="form form-control" name="note" formControlName="note" [attr.disabled]="isView ? true : null"></textarea>
+              <app-control-messages [control]="f['note']"></app-control-messages>
+            </div>
+          </div>
+          <!-- Row 9 End -->
+
+          <!-- Row 10 Start -->
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'staff.assessment.criteria.fieldSqlValue' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-9">
+              <textarea style="height: 75px;" class="form form-control" name="fieldSqlValue" formControlName="fieldSqlValue" [attr.disabled]="isView ? true : null"></textarea>
+              <app-control-messages [control]="f['fieldSqlValue']"></app-control-messages>
+            </div>
+          </div>
+          <!-- Row 10 End -->
+        </div>
+        <div class="panel-footer vt-area-button">
+          <button *ngIf="!isView" type="submit" (click)="processSaveOrUpdate()" class="btn btn-sm vt-btn btn-submit" [innerHTML]="'common.button.icon.save' | translate"></button>
+          <button type="button" (click)="activeModal.close()" class="btn btn-sm vt-btn" [innerHTML]="'common.button.out' | translate"></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

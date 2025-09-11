@@ -1,0 +1,69 @@
+<div id="listArea">
+  <div class="panel panel-default">
+    <div class="panel-heading vt-relative">
+      <strong>
+        Danh sách nghị quyết lãnh đạo
+      </strong>
+    </div>
+    <div class="panel-body panel-table">
+      <p-table #ptable 
+        [value]="resultList.data"
+        [paginator]="true" 
+        (onLazyLoad)="processGetListResponseResolution($event)" 
+        [lazy]="true" [rows]="changeRow"
+        [totalRecords]="resultList.recordsTotal" 
+        [scrollable]="true" 
+        [lazyLoadOnInit]="false"
+        tableStyleClass="table table-wrapper table-hover table-striped b-t b-b">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col class="size-1">
+            <col class="size-3">
+            <col class="size-5">
+            <col class="size-8">
+            <col class="size-5">
+            <col class="size-3">
+            <col class="size-2">
+            <col class="size-2">
+            <col class="size-3">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th translate>common.table.index</th>
+            <th>Số, ký hiệu</th>
+            <th>Tên yêu cầu</th>
+            <th>Trích yếu nội dung</th>
+            <th>Tổ chức Đảng thực hiện</th>
+            <th>Đầu mối nghị quyết</th>
+            <th>Trạng thái</th>
+            <th>Ngày hết hạn</th>
+            <th>Thời hạn</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+          <tr>
+            <td class="vt-align-center">{{index}}</td>
+            <td class="vt-align-left" style="word-break: break-all;">{{item.textSymbols}}</td>
+            <td class="vt-align-left"><a [routerLink]="" (click)="routerNavigateSign(item)">{{item.reqName}}</a></td>
+            <td class="vt-align-left">{{item.extractingTextContent}}</td>
+            <td class="vt-align-left">{{item.partyOrganizationName}}</td>
+            <td class="vt-align-left">{{item.employeeName}} ({{item.email}})</td>
+            <td class="vt-align-left">{{item.statusString}}</td>
+            <td class="vt-align-center">{{item.finishDate | displayDate}}</td>
+            <td class="vt-align-center">{{item.amountDate}}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr class="emptymessage">
+            <td [attr.colspan]="10" [innerHTML]="'app.noRecords' | translate">
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+          <table-footer (changeRow)="onTablePageChange($event)" [resultList]="resultList"></table-footer>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

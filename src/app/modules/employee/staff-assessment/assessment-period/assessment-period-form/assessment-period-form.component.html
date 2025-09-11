@@ -1,0 +1,987 @@
+<div class="card-form">
+    <div class="clearfix">
+      <div class="left-nav-bar pull-left row-header">
+        <div>
+          <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="goBack();">
+          <span *ngIf="isInsert" class="title" translate> label.assessmentPeriod.insert</span>
+          <span *ngIf="isEdit" class="title" translate> label.assessmentPeriod.update</span>
+          <span *ngIf="isView" class="title" translate> label.assessmentPeriod.view</span>
+        </div>
+      </div>
+      <div class="right-nav-bar pull-right left-option">
+          <ul class="header-right sys-ul space-line">
+            <li>
+              <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="goBack();" [innerHTML]="'common.button.out' | translate">
+              </button>
+            </li>
+            <li *ngIf="!isView">
+              <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="processSaveOrUpdate()" [innerHTML]="'common.button.icon.save' | translate">
+              </button>
+            </li>
+            <li *ngIf="isView">
+                <button class="btn btn-sm vt-btn btn-submit mt-btn btn-header-right ng-star-inserted" type="button" (click)="navigate()" [innerHTML]="'common.button.icon.edit' | translate">
+                </button>
+            </li>
+          </ul>
+      </div>
+    </div>
+</div>
+<div class="info">
+    <div [ngClass]="isShowVertical?'show-title':''">
+        <div id="searchPage"
+             [ngStyle]="{'width': isShowVertical && !isShowHideVertical ? '0%' : '', 'min-width': isShowVertical && !isShowHideVertical ? '0%' : ''}"
+             [ngClass]="isShowVertical?'display-search-vertical':'display-search-not-vertical'">
+            <div id="searchArea" [ngClass]="isShowVertical?'display-max-vertical-height':''">
+                <div class="panel panel-default card-info">
+                    <div class="panel-heading">
+                        <strong>
+                            <!-- <span *ngIf="isInsert" translate> label.assessmentPeriod.insert</span>
+                            <span *ngIf="isEdit" translate> label.assessmentPeriod.update</span>
+                            <span *ngIf="isView" translate> label.assessmentPeriod.view</span> -->
+                            <span class="ml-2 title-info">Thông tin kỳ đánh giá</span>
+                        </strong>
+                    </div>
+                    <form id="formSave" [formGroup]="formSave">
+                        <div *ngIf="!isMobileScreen" class="panel-body padding-xl ui-g">
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+                                    {{'assessmentPeriod.name' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-3">
+                                    <input [autoFocus]="true" type="text" class="form form-control"
+                                           name="assessmentPeriodName"
+                                           formControlName="assessmentPeriodName" [attr.disabled]="isView?true:null"
+                                           maxlength="500">
+                                    <app-control-messages [control]="f['assessmentPeriodName']"></app-control-messages>
+                                </div>
+                                <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right required">
+                                    {{'assessmentPeriod.type' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-3">
+                                    <select-filter
+                                            [placeHolder]="'common.label.cboMustSelect'"
+                                            [property]="f['assessmentTypeId']"
+                                            [options]="assessmentTypeList"
+                                            [disabled]="isView"
+                                            optionLabel="name"
+                                            optionValue="categoryId"
+                                            (onChange)="handleChaneAssessmentType()">
+                                    </select-filter>
+                                    <app-control-messages [control]="f['assessmentTypeId']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+                                    {{'assessmentPeriod.formula' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-3">
+                                    <select-filter
+                                            [placeHolder]="'common.label.cboMustSelect'"
+                                            [property]="f['formulaId']"
+                                            [options]="formulaList"
+                                            [disabled]="isView"
+                                            optionLabel="assessmentFormulaName"
+                                            optionValue="assessmentFormulaId"
+                                            (onChange)="onchangeFormula($event)"
+                                            [disabled]="isEdit">
+                                    </select-filter>
+                                    <app-control-messages [control]="f['formulaId']"></app-control-messages>
+                                </div>
+                                <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right required">
+                                    {{'employee.report.year' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-3">
+                                    <select-filter
+                                            [property]="f['year']"
+                                            [options]="yearList"
+                                            optionLabel="year"
+                                            optionValue="year"
+                                            [placeHolder]="'common.label.cboMustSelect'"
+                                    >
+                                    </select-filter>
+                                    <app-control-messages [control]="f['year']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+                                    {{'common.label.startDate' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-3">
+                                    <date-picker [property]="f['effectiveDate']" [disabled]="isView"></date-picker>
+                                    <app-control-messages [control]="f['effectiveDate']"></app-control-messages>
+                                </div>
+                                <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right">
+                                    {{'common.label.endDate' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-3">
+                                    <date-picker [property]="f['expiredDate']" [disabled]="isView"></date-picker>
+                                    <app-control-messages [control]="f['expiredDate']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+                                    {{'label.resolutionsMonth.extractingTextContent' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-3">
+                                    <input type="text" class="form form-control" name="extractingTextContent"
+                                           formControlName="extractingTextContent" [attr.disabled]="isView?true:null"
+                                           maxlength="250">
+                                    <app-control-messages [control]="f['extractingTextContent']"></app-control-messages>
+                                </div>
+                                <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right required">
+                                    {{'label.resolutionsMonth.professions' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-3">
+                                    <select-filter
+                                            [property]="f['professions']"
+                                            [options]="listCbb"
+                                            optionLabel="parName"
+                                            optionValue="parValue"
+                                            [disabled]="isView"
+                                            [placeHolder]="'common.label.cboMustSelect'">
+                                    </select-filter>
+                                    <app-control-messages [control]="f['professions']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+                                    {{'label.resolutionsMonth.formalityText' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-3">
+                                    <select-filter
+                                            [property]="f['formalityText']"
+                                            [options]="listTextF"
+                                            optionLabel="parName"
+                                            optionValue="parValue"
+                                            [disabled]="isView"
+                                            [placeHolder]="'common.label.cboMustSelect'"
+                                    >
+                                    </select-filter>
+                                    <app-control-messages [control]="f['formalityText']"></app-control-messages>
+                                </div>
+                                <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right required">
+                                    {{'label.resolutionsMonth.textSymbols' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-3">
+                                    <input type="text" class="form form-control" name="textSymbols"
+                                           formControlName="textSymbols" [attr.disabled]="isView?true:null" maxlength="100">
+                                    <app-control-messages [control]="f['textSymbols']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+                                    {{'staff.assessment.criteria.icon' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-3">
+                                    <select-filter-icon
+                                            [property]="f['settingIconId']"
+                                            [options]="settingIconList"
+                                            optionLabel="iconName"
+                                            optionValue="settingIconId"
+                                            [isMultiLanguage]="false"
+                                            [disabled]="isView"
+                                            [placeHolder]="'common.label.cboMustSelect'"
+                                    >
+                                    </select-filter-icon>
+                                    <app-control-messages [control]="f['settingIconId']"></app-control-messages>
+                                </div>
+                                <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right">
+                                    {{'label.assessmentPeriod.sendAssessmentResult' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-3">
+                                    <div class="form-check">
+                                        <label class="i-checks">
+                                            <input type="checkbox" name="sendEmail" [value]="1"
+                                                   [attr.disabled]="isView?true:null" formControlName="sendEmail"/>
+                                            <i></i>
+                                            {{'assessmentPeriod.sendEmail' | translate}}
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="i-checks">
+                                            <input type="checkbox" name="sendSms" [value]="1"
+                                                   [attr.disabled]="isView?true:null"
+                                                   formControlName="sendSms"/>
+                                            <i></i>
+                                            {{'assessmentPeriod.sendSMS' | translate}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+                                    {{'assessmentPeriod.description' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-9 ui-lg-9">
+                                <textarea type="text-area" rows="3" class="form-control" formControlName="description"
+                                          [attr.disabled]="isView?true:null" maxlength="1000"></textarea>
+                                    <app-control-messages [control]="f['description']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+                                    {{'assessmentPeriod.file.form.header' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-3">
+                                    <file-chooser
+                                            [property]="f['fileHeader']"
+                                            [validMaxSize]="50"
+                                            htmlId="fileHeader"
+                                            validType="doc,docx">
+                                    </file-chooser>
+                                    <app-control-messages [control]="f['fileHeader']"></app-control-messages>
+                                </div>
+                                <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right">
+                                    {{'assessmentPeriod.file.form.footer' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-3">
+                                    <file-chooser
+                                            [property]="f['fileFooter']"
+                                            [validMaxSize]="50"
+                                            [disabled]="isView"
+                                            htmlId="fileFooter"
+                                            validType="doc,docx">
+                                    </file-chooser>
+                                    <app-control-messages [control]="f['fileFooter']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+                                    {{ 'vofficeSign.label.isAutoPromulgate' | translate }}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-2">
+                                    <label class="i-switch bg-info m-t-xs m-r" id="isAutoPromulgate">
+                                        <input type="checkbox" name="isAutoPromulgate" [value]="1"
+                                               formControlName="isAutoPromulgate"/>
+                                        <i></i>
+                                    </label>
+                                </div>
+                                <label class="ui-g-12 ui-md-3 ui-lg-4 control-label vt-align-right">
+                                    {{'protectsecurity.mainproject.label.assessmentPartyMemberTitle' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-3 nowrap">
+                                    <select-filter
+                                            [placeHolder]="'common.label.cboSelectAll'"
+                                            [property]="f['assessmentObject']"
+                                            [options]="assessmentObjectList"
+                                            optionLabel="name"
+                                            optionValue="id">
+                                    </select-filter>
+                                    <app-control-messages [control]="f['assessmentObject']"></app-control-messages>
+                                </div>
+                            </div>
+                            <!--                  thaida          -->
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+                                    {{ 'assessmentPeriod.levelType' | translate }}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-3 nowrap">
+                                    <select-filter
+                                            [placeHolder]="'common.label.cboSelectAll'"
+                                            [property]="f['levelType']"
+                                            [options]="assessmentLevelTypeList"
+                                            [disabled]="isHasEmployeeMapping"
+                                            optionLabel="name"
+                                            optionValue="id">
+                                    </select-filter>
+                                    <app-control-messages [control]="f['assessmentObject']"></app-control-messages>
+                                </div>
+                            </div>
+                            <!--                  thaida     end     -->
+                        </div>
+                        <div *ngIf="isMobileScreen" class="panel-body padding-xl ui-g">
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+                                    {{'assessmentPeriod.name' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                                    <input [autoFocus]="true" type="text" class="form form-control"
+                                           name="assessmentPeriodName"
+                                           formControlName="assessmentPeriodName" [attr.disabled]="isView?true:null"
+                                           maxlength="500">
+                                    <app-control-messages [control]="f['assessmentPeriodName']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-3 control-label vt-align-right required">
+                                    {{'assessmentPeriod.type' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                                    <select-filter
+                                            [placeHolder]="'common.label.cboMustSelect'"
+                                            [property]="f['assessmentTypeId']"
+                                            [options]="assessmentTypeList"
+                                            [disabled]="isView"
+                                            optionLabel="name"
+                                            optionValue="categoryId"
+                                            (onChange)="handleChaneAssessmentType()">
+                                    </select-filter>
+                                    <app-control-messages [control]="f['assessmentTypeId']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+                                    {{'assessmentPeriod.formula' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                                    <select-filter
+                                            [placeHolder]="'common.label.cboMustSelect'"
+                                            [property]="f['formulaId']"
+                                            [options]="formulaList"
+                                            [disabled]="isView"
+                                            optionLabel="assessmentFormulaName"
+                                            optionValue="assessmentFormulaId"
+                                            (onChange)="onchangeFormula($event)"
+                                            [disabled]="isEdit">
+                                    </select-filter>
+                                    <app-control-messages [control]="f['formulaId']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-3 control-label vt-align-right required">
+                                    {{'employee.report.year' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                                    <select-filter
+                                            [property]="f['year']"
+                                            [options]="yearList"
+                                            optionLabel="year"
+                                            optionValue="year"
+                                            [placeHolder]="'common.label.cboMustSelect'"
+                                    >
+                                    </select-filter>
+                                    <app-control-messages [control]="f['year']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+                                    {{'common.label.startDate' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                                    <date-picker [property]="f['effectiveDate']" [disabled]="isView"></date-picker>
+                                    <app-control-messages [control]="f['effectiveDate']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-3 control-label vt-align-right">
+                                    {{'common.label.endDate' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                                    <date-picker [property]="f['expiredDate']" [disabled]="isView"></date-picker>
+                                    <app-control-messages [control]="f['expiredDate']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+                                    {{'label.resolutionsMonth.extractingTextContent' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                                    <input type="text" class="form form-control" name="extractingTextContent"
+                                           formControlName="extractingTextContent" [attr.disabled]="isView?true:null"
+                                           maxlength="250">
+                                    <app-control-messages [control]="f['extractingTextContent']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-3 control-label vt-align-right required">
+                                    {{'label.resolutionsMonth.professions' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                                    <select-filter
+                                            [property]="f['professions']"
+                                            [options]="listCbb"
+                                            optionLabel="parName"
+                                            optionValue="parValue"
+                                            [disabled]="isView"
+                                            [placeHolder]="'common.label.cboMustSelect'">
+                                    </select-filter>
+                                    <app-control-messages [control]="f['professions']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+                                    {{'label.resolutionsMonth.formalityText' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                                    <select-filter
+                                            [property]="f['formalityText']"
+                                            [options]="listTextF"
+                                            optionLabel="parName"
+                                            optionValue="parValue"
+                                            [disabled]="isView"
+                                            [placeHolder]="'common.label.cboMustSelect'"
+                                    >
+                                    </select-filter>
+                                    <app-control-messages [control]="f['formalityText']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-3 control-label vt-align-right required">
+                                    {{'label.resolutionsMonth.textSymbols' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                                    <input type="text" class="form form-control" name="textSymbols"
+                                           formControlName="textSymbols" [attr.disabled]="isView?true:null" maxlength="100">
+                                    <app-control-messages [control]="f['textSymbols']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+                                    {{'staff.assessment.criteria.icon' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                                    <select-filter-icon
+                                            [property]="f['settingIconId']"
+                                            [options]="settingIconList"
+                                            optionLabel="iconName"
+                                            optionValue="settingIconId"
+                                            [isMultiLanguage]="false"
+                                            [disabled]="isView"
+                                            [placeHolder]="'common.label.cboMustSelect'"
+                                    >
+                                    </select-filter-icon>
+                                    <app-control-messages [control]="f['settingIconId']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-3 control-label vt-align-right">
+                                    {{'label.assessmentPeriod.sendAssessmentResult' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                                    <div class="form-check">
+                                        <label class="i-checks">
+                                            <input type="checkbox" name="sendEmail" [value]="1"
+                                                   [attr.disabled]="isView?true:null" formControlName="sendEmail"/>
+                                            <i></i>
+                                            {{'assessmentPeriod.sendEmail' | translate}}
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="i-checks">
+                                            <input type="checkbox" name="sendSms" [value]="1"
+                                                   [attr.disabled]="isView?true:null"
+                                                   formControlName="sendSms"/>
+                                            <i></i>
+                                            {{'assessmentPeriod.sendSMS' | translate}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right">
+                                    {{'assessmentPeriod.description' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-9 ui-sm-9 ui-lg-9">
+                                <textarea type="text-area" rows="3" class="form-control" formControlName="description"
+                                          [attr.disabled]="isView?true:null" maxlength="1000"></textarea>
+                                    <app-control-messages [control]="f['description']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+                                    {{'assessmentPeriod.file.form.header' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                                    <file-chooser
+                                            [property]="f['fileHeader']"
+                                            [validMaxSize]="50"
+                                            htmlId="fileHeader"
+                                            validType="doc,docx">
+                                    </file-chooser>
+                                    <app-control-messages [control]="f['fileHeader']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-3 control-label vt-align-right">
+                                    {{'assessmentPeriod.file.form.footer' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                                    <file-chooser
+                                            [property]="f['fileFooter']"
+                                            [validMaxSize]="50"
+                                            [disabled]="isView"
+                                            htmlId="fileFooter"
+                                            validType="doc,docx">
+                                    </file-chooser>
+                                    <app-control-messages [control]="f['fileFooter']"></app-control-messages>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right">
+                                    {{ 'vofficeSign.label.isAutoPromulgate' | translate }}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-2">
+                                    <label class="i-switch bg-info m-t-xs m-r" id="isAutoPromulgate">
+                                        <input type="checkbox" name="isAutoPromulgate" [value]="1"
+                                               formControlName="isAutoPromulgate"/>
+                                        <i></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-4 control-label vt-align-right">
+                                    {{'protectsecurity.mainproject.label.assessmentPartyMemberTitle' | translate}}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3 nowrap">
+                                    <select-filter
+                                            [placeHolder]="'common.label.cboSelectAll'"
+                                            [property]="f['assessmentObject']"
+                                            [options]="assessmentObjectList"
+                                            optionLabel="name"
+                                            optionValue="id">
+                                    </select-filter>
+                                    <app-control-messages [control]="f['assessmentObject']"></app-control-messages>
+                                </div>
+                            </div>
+                            <!--                  thaida          -->
+                            <div class="ui-g-12 vt-row">
+                                <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+                                    {{ 'assessmentPeriod.levelType' | translate }}
+                                </label>
+                                <div class="ui-g-12 ui-md-3 ui-lg-3 nowrap">
+                                    <select-filter
+                                            [placeHolder]="'common.label.cboSelectAll'"
+                                            [property]="f['levelType']"
+                                            [options]="assessmentLevelTypeList"
+                                            optionLabel="name"
+                                            optionValue="id">
+                                    </select-filter>
+                                    <app-control-messages [control]="f['levelType']"></app-control-messages>
+                                </div>
+                            </div>
+                            <!--                  thaida     end     -->
+                        </div>
+                        <!-- form assessment period SQL -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <strong>
+                                    <span class="ml-2 title-info">{{'assessmentPeriod.sql.list' | translate}}</span>&nbsp;
+                                    <i
+                                            style="color: #66b3ff;"
+                                            [pTooltip]="'assessmentPeriod.sql.info' | translate"
+                                            tooltipPosition="top"
+                                            class="fas fa-info-circle"
+                                    ></i>
+                                </strong>
+                            </div>
+                            <form id="formAssessmentLevel" [formGroup]="formAssessmentSQL">
+                                <div class="panel-body panel-table" style="padding: 0 12px 12px 12px;">
+                                    <p-table
+                                            [value]="formAssessmentSQL.controls"
+                                            [scrollable]="true"
+                                            tableStyleClass="table controls-table table-wrapper b-t b-b"
+                                            [resizableColumns]="true"
+                                            styleClass="rewardGroupMinHeight"
+                                    >
+                                        <ng-template pTemplate="colgroup" let-columns>
+                                            <colgroup class="ng-star-inserted">
+                                                <col style="width: 50px;">
+                                                <col style="width: 200px;">
+                                                <col style="width: 100px;">
+                                            </colgroup>
+                                        </ng-template>
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th translate pResizableColumn>common.table.index</th>
+                                                <th pResizableColumn><span
+                                                        class="required">{{'assessmentPeriod.sql.name' | translate}}</span>
+                                                </th>
+                                                <th pResizableColumn>{{'assessmentPeriod.assessmentLevelList.action' | translate}}</th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                                            <tr [formGroup]="item" style="height: 20px !important;">
+                                                <td class="vt-align-center">{{index}}</td>
+                                                <td class="vt-align-center">
+                          <textarea
+                                  class="form form-control"
+                                  name="sqlCommand"
+                                  [attr.disabled]="isView?true:null"
+                                  formControlName="sqlCommand"
+                                  rows="4">
+                          </textarea>
+                                                    <app-control-messages
+                                                            [control]="item.controls.sqlCommand"></app-control-messages>
+                                                </td>
+                                                <td class="vt-align-center">
+                                                    <button type="button" [title]="'titleAdd' | translate"
+                                                            (click)="addAssessmentPeriodSql(item) "
+                                                            [attr.disabled]="isView?true:null"
+                                                            class="btn-icon plus"
+                                                            [innerHTML]="'common.icon.plus' | translate">
+                                                    </button>
+                                                    <button type="button" [title]="'titleDelete' | translate"
+                                                            (click)="removeAssessmentPeriodSql(item)"
+                                                            [attr.disabled]="isView?true:null"
+                                                            class="btn-icon minus"
+                                                            [innerHTML]="'common.icon.minus' | translate">
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </form>
+                        </div>
+                        <!--form assessment level list-->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <strong>
+                                    <span class="ml-2 title-info">{{'assessmentPeriod.assessmentLevelList' | translate}}</span>
+                                </strong>
+                            </div>
+                            <!--table content assessment level list-->
+                            <form id="formAssessmentLevel" [formGroup]="formAssessmentLevelGroup">
+                                <div class="panel-body panel-table" style="padding: 32px 12px 12px 12px;">
+                                    <p-table
+                                            [value]="formAssessmentLevelGroup.controls"
+                                            [paginator]="true"
+                                            [lazy]="true"
+                                            [scrollable]="true"
+                                            [lazyLoadOnInit]="false"
+                                            tableStyleClass="table controls-table table-wrapper b-t b-b"
+                                            [resizableColumns]="true"
+                                            styleClass="rewardGroupMinHeight"
+                                    >
+                                        <ng-template pTemplate="colgroup" let-columns>
+                                            <colgroup class="ng-star-inserted">
+                                                <col style="width: 50px;">
+                                                <col style="width: 100px;">
+                                                <col style="width: 100px;">
+                                                <col style="width: 100px;">
+                                                <col style="width: 100px;">
+                                                <col style="width: 100px;">
+                                                <col style="width: 100px;">
+                                                <col style="width: 100px;">
+                                                <col style="width: 100px;">
+                                                <col style="width: 200px;">
+                                                <col style="width: 100px;">
+                                                <col style="width: 200px;">
+                                                <col style="width: 100px;">
+                                            </colgroup>
+                                        </ng-template>
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th translate pResizableColumn>common.table.index</th>
+                                                <th translate pResizableColumn><span
+                                                        class="required">assessmentPeriod.assessmentLevelList.name</span>
+                                                </th>
+                                                <th translate pResizableColumn><span>assessmentPeriod.assessmentLevelList.levelRole</span>
+                                                </th>
+                                                <th translate pResizableColumn><span>assessmentPeriod.assessmentLevelList.haveClose</span>
+                                                </th>
+                                                <th translate pResizableColumn><span>assessmentPeriod.assessmentLevelList.hasSign</span></th>
+                                                <th translate pResizableColumn>
+                                                    <span>assessmentPeriod.assessmentLevelList.joinAssessment</span>
+                                                </th>
+                                                <th translate pResizableColumn>
+                                                    <span>assessmentPeriod.assessmentLevelList.displaySignImage</span>
+                                                </th>
+                                                <th translate pResizableColumn><span>assessmentPeriod.assessmentLevelList.signImage</span>
+                                                </th>
+                                                <th translate pResizableColumn><span class="required">assessmentPeriod.assessmentLevelList.assessmentCompleteDate</span>
+                                                </th>
+                                                <th translate pResizableColumn><span class="required">assessmentPeriod.assessmentLevelList.formConfig</span>
+                                                <th translate pResizableColumn><span class="required">assessmentPeriod.assessmentLevelList.orderAssessment</span>
+                                                </th>
+                                                <th translate pResizableColumn><span>assessmentPeriod.file.form.level</span></th>
+                                                <th translate pResizableColumn><span>assessmentPeriod.assessmentLevelList.action</span></th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                                            <tr [formGroup]="item" style="height: 20px !important;">
+                                                <td class="vt-align-center">{{index}}</td>
+                                                <td class="vt-align-center">
+                                                    <input
+                                                            type="text"
+                                                            class="form form-control"
+                                                            name="assessmentLevelName"
+                                                            formControlName="assessmentLevelName"
+                                                            maxlength="50"
+                                                            [attr.disabled]="index === 1 ? true : null"
+                                                            [attr.disabled]="isView?true:null"
+                                                    >
+                                                    <app-control-messages
+                                                            [control]="item.controls.assessmentLevelName"></app-control-messages>
+                                                </td>
+                                                <td class="vt-align-center">
+                                                    <select-filter
+                                                            [placeHolder]="'common.label.cboMustSelect'"
+                                                            [property]="item.controls.levelRole"
+                                                            [options]="levelRoleList"
+                                                            optionLabel="name"
+                                                            optionValue="id"
+                                                            appendTo="body"
+                                                            [disabled]="isView"
+                                                    >
+                                                    </select-filter>
+                                                    <app-control-messages
+                                                            [control]="item.controls.levelRole"></app-control-messages>
+                                                </td>
+                                                <td class="vt-align-center">
+                          <span [ngClass]="{'box-disable': isHasEmployeeMapping, 'box': !isHasEmployeeMapping}">
+                            <input class="single-input"
+                                   id="{{index + 'haveClose'}}"
+                                   type="checkbox"
+                                   name="haveClose"
+                                   formControlName="haveClose"
+                                   [attr.disabled]="isHasEmployeeMapping ? true : null" [attr.disabled]="isView?true:null"/>
+                            <label for="{{index + 'haveClose'}}"></label>
+                          </span>
+                                                </td>
+                                                <td class="vt-align-center">
+                          <span [ngClass]="{'box-disable': isHasEmployeeMapping, 'box': !isHasEmployeeMapping}">
+                            <input class="single-input"
+                                   id="{{index + 'hasSign'}}"
+                                   type="checkbox"
+                                   name="hasSign"
+                                   formControlName="hasSign"
+                                   (change)="onchangeHasSign(item)" [attr.disabled]="isView?true:null"
+                                   [attr.disabled]="isHasEmployeeMapping ? true : null"/>
+                            <label for="{{index + 'hasSign'}}"></label>
+                          </span>
+                                                </td>
+                                                <td class="vt-align-center">
+                          <span [ngClass]="{'box-disable': isHasEmployeeMapping, 'box': !isHasEmployeeMapping}">
+                            <input class="single-input"
+                                   id="{{index + 'joinAssessment'}}"
+                                   type="checkbox"
+                                   name="joinAssessment"
+                                   formControlName="joinAssessment" [attr.disabled]="isView?true:null"
+                                   [attr.disabled]="isHasEmployeeMapping ? true : null"/>
+                            <label for="{{index + 'joinAssessment'}}"></label>
+                          </span>
+                                                </td>
+                                                <td class="vt-align-center">
+                          <span [ngClass]="{'box-disable': item.value.isDisableDisplaySignImage || isHasEmployeeMapping, 'box': !item.value.isDisableDisplaySignImage && !isHasEmployeeMapping}">
+                            <input class="single-input"
+                                   id="{{index + 'displaySignImage'}}"
+                                   type="checkbox"
+                                   name="displaySignImage"
+                                   formControlName="displaySignImage" [attr.disabled]="isView?true:null"
+                                   (change)="onchangeDisplaySignImage(item)"
+                                   [attr.disabled]="item.value.isDisableDisplaySignImage || isHasEmployeeMapping ? true : null"/>
+                            <label for="{{index + 'displaySignImage'}}"></label>
+                          </span>
+                                                </td>
+                                                <td class="vt-align-center">
+                                                    <select-filter
+                                                            [placeHolder]="'common.label.cboMustSelect'"
+                                                            [property]="item.controls.signImage"
+                                                            [options]="signImageList"
+                                                            optionLabel="name"
+                                                            optionValue="id"
+                                                            appendTo="body"
+                                                            [disabled]="isView"
+                                                    >
+                                                    </select-filter>
+                                                    <app-control-messages
+                                                            [control]="item.controls.signImage"></app-control-messages>
+                                                </td>
+                                                <td class="vt-align-center">
+                                                    <date-picker [property]="item.controls.assessmentCompleteDate"
+                                                                 appendTo="body" [disabled]="isView"
+                                                                 [disabled]="isHasEmployeeMapping ? true : null">
+                                                    </date-picker>
+                                                    <app-control-messages
+                                                            [control]="item.controls.assessmentCompleteDate"></app-control-messages>
+                                                </td>
+                                                <td class="vt-align-center">
+                                                    <div formArrayName="formTypeList">
+                                                        <div *ngFor="let formType of getFormTypeList(item); let i = index"
+                                                             style="float:left; width:100%; margin-bottom: 3px;">
+                                                            <div [formGroupName]="i" style="float: left; width: 55%">
+                                                                <input type="text" class="form form-control"
+                                                                       formControlName="formTypeName"
+                                                                       [attr.disabled]="isView?true:null">
+                                                                <app-control-messages
+                                                                        [control]="formType.controls.formTypeName"></app-control-messages>
+                                                            </div>
+                                                            <div style="float: left; width: 15%">
+                                                                <button type="button" [title]="'titleConfig' | translate"
+                                                                        (click)="setUpCriteriaGroup(item.value, index - 1, (i + 1))"
+                                                                        class="btn-icon plus"
+                                                                        [innerHTML]="'common.icon.setup' | translate"
+                                                                        [attr.disabled]="!isHasFormula ? true : null"
+                                                                        [attr.disabled]="isView?true:null"></button>
+                                                            </div>
+                                                            <div style="float: left; width: 15%">
+                                                                <button type="button" [title]="'titleAdd' | translate"
+                                                                        (click)="addFormType(item, i)"
+                                                                        class="btn-icon plus"
+                                                                        [innerHTML]="'common.icon.plus' | translate"
+                                                                        [attr.disabled]="isView?true:null"
+                                                                ></button>
+                                                            </div>
+                                                            <div style="float: left; width: 15%"
+                                                                 *ngIf="getFormTypeList(item).length > 1">
+                                                                <button type="button" [title]="'titleDelete' | translate"
+                                                                        (click)="removeFormType(item, i)"
+                                                                        class="btn-icon minus"
+                                                                        [innerHTML]="'common.icon.minus' | translate"
+                                                                        [attr.disabled]="isView?true:null"
+                                                                ></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="vt-align-center">
+                                                    <input type="text" class="form form-control" name="assessmentOrder"
+                                                           style="text-align: center;"
+                                                           formControlName="assessmentOrder" maxlength="3"
+                                                           [attr.disabled]="isView?true:null"
+                                                           [attr.disabled]="index === 1 || isHasEmployeeMapping ? true : null">
+                                                    <app-control-messages
+                                                            [control]="item.controls.assessmentOrder"></app-control-messages>
+                                                </td>
+                                                <td>
+                                                    <div class="file-assessment-level">
+                                                        <multi-file-chooser
+                                                                [property]="item.controls.fileAssessmentLevelList"
+                                                                [validMaxSize]="50"
+                                                                validType="doc,docx"
+                                                                [fileName]="'fileAssessmentLevelList' + index"
+                                                                [disabled]="isView"
+                                                        ></multi-file-chooser>
+                                                        <app-control-messages
+                                                                [control]="item.controls.fileAssessmentLevelList"></app-control-messages>
+                                                    </div>
+                                                </td>
+                                                <td class="vt-align-center">
+                                                    <button type="button" [title]="'titleAdd' | translate"
+                                                            (click)="addAssessmentLevel(item)"
+                                                            class="btn-icon plus"
+                                                            [innerHTML]="'common.icon.plus' | translate"
+                                                            [attr.disabled]="isView ? true : null"
+                                                            [attr.disabled]="isHasEmployeeMapping ? true : null"></button>
+                                                    <button type="button" [title]="'titleDelete' | translate"
+                                                            (click)="removeAssessmentLevel(item)"
+                                                            class="btn-icon minus"
+                                                            [innerHTML]="'common.icon.minus' | translate "
+                                                            [attr.disabled]="isView ? true : null"
+                                                            [attr.disabled]="index === 1 || isHasEmployeeMapping ? true : null"></button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="panel panel-default" *ngIf="isHasEmployeeMapping">
+                            <form [formGroup]="formEmployee" (ngSubmit)="processSearchEmp()">
+                                <div class="panel-heading">
+                                    <strong class="text-u-c">
+                                        <i class="fa fa-th"></i>&nbsp;
+                                        <span>{{'assessmentPeriod.assessmentEmployeeList' | translate}}</span>
+                                    </strong>
+                                    <!-- more search with name and code employee -->
+                                    <div class="ui-g-3" style="float: right;">
+                                        <div class="ui-g-12 ui-md-8 ui-lg-11 vt-align-right"
+                                             style="padding: 0px !important;">
+                                            <input
+                                                    type="text"
+                                                    class="form form-control"
+                                                    name="employeeCode"
+                                                    formControlName="employeeCode"
+                                                    maxlength="100"
+                                                    autocomplete="off"
+                                                    [attr.disabled]="isView?true:null"
+                                                    placeholder="{{'assessmentPeriod.placeHolderSearch' | translate}}"
+                                            >
+                                            <app-control-messages [control]="fEmp['employeeCode']"></app-control-messages>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="panel-body panel-table">
+                                <p-table
+                                    #ptable
+                                    [scrollable]="true"
+                                    [value]="assessmentEmployeeList.data"
+                                    [paginator]="true"
+                                    (onLazyLoad)="processSearchEmp($event)"
+                                    [lazy]="true" [rows]="changeRow"
+                                    [totalRecords]="assessmentEmployeeList.recordsTotal"
+                                    [lazyLoadOnInit]="false"
+                                    tableStyleClass="table controls-table table-wrapper b-t b-b"
+                                    [resizableColumns]="true"
+                                    styleClass="rewardGroupMinHeight"
+                                >
+                                    <ng-template pTemplate="colgroup" let-columns>
+                                        <colgroup class="ng-star-inserted">
+                                            <col style="width: 50px;">
+                                            <col style="width: 100px;">
+                                            <col style="width: 100px;">
+                                            <col style="width: 200px;">
+                                            <col style="width: 200px;">
+                                            <col style="width: 200px;">
+                                        </colgroup>
+                                    </ng-template>
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th translate pResizableColumn>common.table.index</th>
+                                            <th pResizableColumn>
+                                                {{'assessmentPeriod.assessmentEmployeeList.imagePath' | translate}}
+                                            </th>
+                                            <th [pSortableColumn]="'employeeCode'" pResizableColumn>
+                                                {{'assessmentPeriod.assessmentEmployeeList.employeeCode' | translate}}
+                                                <p-sortIcon [field]="'employeeCode'"></p-sortIcon>
+                                            </th>
+                                            <th [pSortableColumn]="'employeeName'" pResizableColumn>
+                                                {{'assessmentPeriod.assessmentEmployeeList.employeeName' | translate}}
+                                                <p-sortIcon [field]="'employeeName'"></p-sortIcon>
+                                            </th>
+                                            <th [pSortableColumn]="'employeePositionName'" pResizableColumn>
+                                                {{'assessmentPeriod.assessmentEmployeeList.position' | translate}}
+                                                <p-sortIcon [field]="'employeePositionName'"></p-sortIcon>
+                                            </th>
+                                            <th pResizableColumn>{{'assessmentPeriod.assessmentEmployeeList.levelListMapping' | translate}}</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                                        <tr>
+                                            <td class="vt-align-center">{{index}}</td>
+                                            <td class="vt-align-center">
+                                                <img width="60px" height="60px" [title]="item.employeeName"
+                                                     [alt]="item.employeeName" [src]="AVATAR_API_URL + item.employeeCode"/>
+                                            </td>
+                                            <td class="vt-align-center">
+                                                {{item.employeeCode}}
+                                            </td>
+                                            <td class="vt-align-left">
+                                                {{item.employeeName}}
+                                            </td>
+                                            <td class="vt-align-left">
+                                                {{item.employeePositionName}}
+                                            </td>
+                                            <td class="vt-align-left">
+                                                <div *ngFor="let data of item.levelNameEmployeeList; index as idx">
+                                                    {{data.levelNameEmployeeMapping}}
+                                                </div>
+                                                <a *ngIf="!isView" style="color: rgb(0, 153, 255);"
+                                                   (click)="setupEmployeeAssessment(item.employeeId)">
+                                                    {{'assessmentPeriod.assessmentEmployeeList.addEmployee' | translate}}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr class="emptymessage">
+                                            <td [attr.colspan]="10" [innerHTML]="'app.noRecords' | translate">
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="paginatorleft">
+                                        <table-footer (changeRow)="onTablePageChange($event)"
+                                                      [resultList]="assessmentEmployeeList"></table-footer>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

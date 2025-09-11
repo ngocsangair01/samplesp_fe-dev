@@ -1,0 +1,45 @@
+<div class="panel panel-default card-info">
+    <div class="panel-heading vt-relative">
+      <strong translate>
+        organizationManager.name
+      </strong>
+      <div class="vt-absolute vt-shotcut-button-in-heading" *ngIf = "!showAll">
+        <label class="control-label" style="padding-top: 0">
+          {{'organization.viewUnitExpried' | translate}}
+        </label>
+        &nbsp;
+        <label class="i-switch bg-info m-t-xs m-r" id="showOrgExpried">
+          <input type="checkbox" name="status" [value]="1" [(ngModel)]="showOrgExpried"/>
+          <i></i>
+        </label>
+      </div>
+    </div>
+    <p-scrollPanel [style]="{width: '100%', height: height + 'px'}" styleClass="custombar2 clearfix">
+      <div *ngIf="!showOrgByLineOrg" id="orgTree">
+        <p-tree
+          [value]="nodes"
+          selectionMode="single"
+          [(selection)]="selectedNode"
+          (onNodeSelect)="nodeSelect($event)"
+          (onNodeExpand)="actionLazyRead($event)"
+          (onNodeContextMenuSelect)="nodeContextMenuSelect($event)"
+          [ngClass]="{'show-org-expried' : showOrgExpried}"
+        ></p-tree>
+        <p-contextMenu #cm [model]="items" appendTo="body" ></p-contextMenu>
+      </div>
+      <div *ngIf="showOrgByLineOrg">
+        <p-tree
+          [value]="nodes"
+          selectionMode="single"
+          [(selection)]="selectedNode"
+          (onNodeSelect)="nodeSelect($event)"
+          (onNodeExpand)="actionLazyReadByLineOrg($event)"
+          (onNodeContextMenuSelect)="nodeContextMenuSelect2($event)"
+          [contextMenu]="cm2"
+          [ngClass]="{'show-org-expried' : showOrgExpried}"
+        ></p-tree>
+        <p-contextMenu #cm2 [model]="items" appendTo="body"></p-contextMenu>
+      </div>
+    </p-scrollPanel>
+  </div>
+  

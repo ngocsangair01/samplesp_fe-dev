@@ -1,0 +1,52 @@
+<div *ngIf="!isMobileScreen" class="panel-body padding-xl ui-g" style="padding-bottom: 0;">
+    <div class="ui-g-10 ui-g-offset-1">
+        <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+            {{'massGroup.titleField.employee' | translate}}</label>
+        <div class="ui-g-12 ui-md-8">
+            <!-- <employee-auto-complete [property]="form.controls.employee"></employee-auto-complete> -->
+            <data-picker #data [property]="form.controls.employee" operationKey="action.view"
+                adResourceKey="resource.assessmentPeriod" objectBO="EmployeeBO" codeField="employeeCode"
+                nameField="fullName" emailField="email" mobileNumberField="mobileNumber" selectField="employeeId">
+            </data-picker>
+            <app-control-messages [control]="form.controls.employee"></app-control-messages>
+        </div>
+    </div>
+    <div class="ui-g-10 ui-g-offset-1">
+        <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+            {{'common.label.content' | translate}}</label>
+        <div class="ui-g-12 ui-md-8">
+            <textarea [formControl]="form.controls.content" class="form-control" rows="5"></textarea>
+            <app-control-messages [control]="form.controls.content"></app-control-messages>
+        </div>
+    </div>
+    <div class="panel-footer vt-area-button ui-g-12">
+        <button type="submit" class="btn btn-sm vt-btn btn-submit" (click)="sendSMS()"
+            [innerHTML]="'common.button.icon.save' | translate"></button>
+    </div>
+</div>
+<div *ngIf="isMobileScreen" class="panel-body padding-xl ui-g" style="padding-bottom: 0;">
+    <div class="ui-g-12 ui-g-offset-1">
+        <label class="ui-g-12 ui-md-4 ui-sm-3 control-label vt-align-left required">
+            {{'massGroup.titleField.employee' | translate}}</label>
+        <div class="ui-g-12 ui-md-8 ui-sm-9">
+            <!-- <employee-auto-complete [property]="form.controls.employee"></employee-auto-complete> -->
+            <data-picker #data [property]="form.controls.employee" operationKey="action.view"
+                adResourceKey="resource.assessmentPeriod" objectBO="EmployeeBO" codeField="employeeCode"
+                nameField="fullName" emailField="email" mobileNumberField="mobileNumber" selectField="employeeId">
+            </data-picker>
+            <app-control-messages [control]="form.controls.employee"></app-control-messages>
+        </div>
+    </div>
+    <div class="ui-g-12 ui-g-offset-1">
+        <label class="ui-g-12 ui-md-4 ui-sm-3 control-label vt-align-left required">
+            {{'common.label.content' | translate}}</label>
+        <div class="ui-g-12 ui-md-8 ui-sm-9">
+            <textarea [formControl]="form.controls.content" class="form-control" rows="5"></textarea>
+            <app-control-messages [control]="form.controls.content"></app-control-messages>
+        </div>
+    </div>
+    <div class="panel-footer vt-area-button ui-g-12">
+        <button type="submit" class="btn btn-sm vt-btn btn-submit" (click)="sendSMS()"
+            [innerHTML]="'common.button.icon.save' | translate"></button>
+    </div>
+</div>

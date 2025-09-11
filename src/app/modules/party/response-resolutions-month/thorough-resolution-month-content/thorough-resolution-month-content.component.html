@@ -1,0 +1,36 @@
+<div class="content vt-nopadding" style="display: grid">
+  <div>
+    <div class="panel-heading vt-relative">
+      <strong>
+        Nội dung quán triệt nghị quyết
+      </strong>
+      <div class="vt-absolute vt-shotcut-button-in-heading">
+        <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+                class="btn btn-span btn-sm btn-close"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+      </div>
+    </div>
+    <div class="ui-g-12 vt-row">
+      <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+        {{'app.requestResolutionMonth.summaryContent' | translate}}
+      </label>
+      <div class="ui-g-12 ui-md-3 ui-lg-9">
+        <textarea type="text-area" class="form form-control" name="summaryContent" [formControl]="formSave.controls.summaryContent"
+                  rows="4" placeholder="{{'app.requestResolutionMonth.inputSummaryContent' | translate}}" ></textarea>
+      </div>
+    </div>
+    <div class="ui-g-12 vt-row">
+      <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+        {{'app.requestResolutionMonth.fullContent' | translate}}
+      </label>
+      <div class="ui-g-12 ui-md-3 ui-lg-9">
+        <textarea type="text-area" class="form form-control" name="fullContent" [formControl]="formSave.controls.fullContent"
+                  rows="8" placeholder="{{'app.requestResolutionMonth.inputFullContent' | translate}}"></textarea>
+        <small *ngIf="isRequired" class="text-danger errorMessage">* Nhập ít nhất 1 trong 2 nội dung</small>
+      </div>
+    </div>
+    <div class="panel-footer vt-area-button">
+      <button type="button" (click)="goBack()" class="btn btn-sm btn-danger" [innerHTML]="'common.button.out' | translate"></button>
+      <button type="button" (click)="save()" class="btn btn-sm vt-btn btn-submit" [innerHTML]="'common.button.save' | translate"></button>
+    </div>
+  </div>
+</div>

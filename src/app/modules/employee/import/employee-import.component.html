@@ -1,0 +1,131 @@
+<div *ngIf="hasPermission('action.import')">
+    <div class="panel panel-default card-info">
+        <form id="formImportEmployee" [formGroup]="formImportEmployee" spellcheck="false">
+            <div class="panel-heading">
+                <strong>
+                    {{'employee.report.importTitle' | translate}}
+                </strong>
+            </div>
+            <div *ngIf="!isMobileScreen" class="panel-body padding-xl ui-g">
+                <div class="ui-g-12 vt-row">
+                    <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+                        {{'employee.report.quarter' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-3 ui-lg-3">
+                        <select-filter [property]="f['quarter']" [options]="quarterList" optionLabel="label"
+                                       optionValue="value"
+                                       [isMultiLanguage]="true" [placeHolder]="'common.label.cboMustSelect'"
+                                       autofocus="autofocus">
+                        </select-filter>
+                        <app-control-messages [control]="f['quarter']"></app-control-messages>
+                    </div>
+                    <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right required">
+                        {{'employee.report.year' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-3 ui-lg-3">
+                        <select-filter [property]="f['year']" [options]="yearList" optionLabel="year" optionValue="year"
+                                       [placeHolder]="'common.label.cboMustSelect'">
+                        </select-filter>
+                        <app-control-messages [control]="f['year']"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+                    <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+                        {{'common.label.unit' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-3 ui-lg-3">
+                        <org-selector [property]="f['organizationId']" operationKey="action.view"
+                                      adResourceKey="resource.employeeManager" [defaultValue]="true"
+                                      [isRequiredField]="true">
+                        </org-selector>
+                        <app-control-messages [control]="f['organizationId']"></app-control-messages>
+                    </div>
+                    <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right required">
+                        {{'controls.choseFile' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-3 ui-lg-3">
+                        <file-chooser [property]="f['fileImport']" validMaxSize="50" validType="xls">
+                        </file-chooser>
+                        <app-control-messages [control]="f['fileImport']"></app-control-messages>
+                        <br>
+                        <a class="text-link" (click)="processDownloadTemplate();">
+                            <span translate><i class="fa fa-download"></i> app.common.downloadTemplate</span>
+                        </a>
+                        <br>
+                        <a *ngIf="hasPermission('action.export', 'resource.reportDynamic') && hasPermission('action.view', 'resource.annualPlanReport')"
+                           class="text-link" (click)="processDownloadTemplateWithData();">
+                            <span translate><i class="fa fa-download"></i> app.common.downloadTemplateWithData</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="isMobileScreen" class="panel-body padding-xl ui-g">
+                <div class="ui-g-12 vt-row">
+                    <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+                        {{'employee.report.quarter' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                        <select-filter [property]="f['quarter']" [options]="quarterList" optionLabel="label"
+                                       optionValue="value"
+                                       [isMultiLanguage]="true" [placeHolder]="'common.label.cboMustSelect'"
+                                       autofocus="autofocus">
+                        </select-filter>
+                        <app-control-messages [control]="f['quarter']"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+                    <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-3 control-label vt-align-right required">
+                        {{'employee.report.year' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                        <select-filter [property]="f['year']" [options]="yearList" optionLabel="year" optionValue="year"
+                                       [placeHolder]="'common.label.cboMustSelect'">
+                        </select-filter>
+                        <app-control-messages [control]="f['year']"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+                    <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+                        {{'common.label.unit' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                        <org-selector [property]="f['organizationId']" operationKey="action.view"
+                                      adResourceKey="resource.employeeManager" [defaultValue]="true"
+                                      [isRequiredField]="true">
+                        </org-selector>
+                        <app-control-messages [control]="f['organizationId']"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+                    <label class="ui-g-12 ui-md-3 ui-sm-3 ui-lg-3 control-label vt-align-right required">
+                        {{'controls.choseFile' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-3 ui-sm-9 ui-lg-3">
+                        <file-chooser [property]="f['fileImport']" validMaxSize="50" validType="xls">
+                        </file-chooser>
+                        <app-control-messages [control]="f['fileImport']"></app-control-messages>
+                        <br>
+                        <a class="text-link" (click)="processDownloadTemplate();">
+                            <span translate><i class="fa fa-download"></i> app.common.downloadTemplate</span>
+                        </a>
+                        <br>
+                        <a *ngIf="hasPermission('action.export', 'resource.reportDynamic') && hasPermission('action.view', 'resource.annualPlanReport')"
+                           class="text-link" (click)="processDownloadTemplateWithData();">
+                            <span translate><i class="fa fa-download"></i> app.common.downloadTemplateWithData</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer vt-area-button">
+                <button type="submit" (click)="processImport()" class="btn btn-sm vt-btn btn-submit"
+                        [innerHTML]="'common.button.icon.save' | translate"></button>
+            </div>
+        </form>
+    </div>
+    <div *ngIf="dataError">
+        <import-error [data]="dataError"></import-error>
+    </div>
+</div>
+<div *ngIf="!hasPermission('action.import')">
+    {{'common.haveNoPermission' | translate}}
+</div>

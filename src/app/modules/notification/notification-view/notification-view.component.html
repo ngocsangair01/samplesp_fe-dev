@@ -1,0 +1,64 @@
+<div class="panel panel-default"   *ngIf="hasPermission('action.view')">
+  <form id = "formView" [formGroup]="formView">
+    <div class="panel-heading vt-relative">
+      <strong class="text-u-c">
+        <i class="fa fa-th"></i>
+        <span translate> label.notification.viewNotification </span>
+      </strong>
+    </div>
+    <div class="panel-body padding-xl ui-g">
+      <div class="ui-g-12 vt-row">
+        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+          {{'notification.branchName' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <select-filter
+            [property]="f['notifyBranch']"
+            [options]="notifyBranchList"
+            optionLabel="name"
+            optionValue="code"
+            [disabled] = "true"
+            [placeHolder]="'common.label.cboSelect'">
+          </select-filter>
+        </div>
+      </div>
+      <div class="ui-g-12 vt-row">
+        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+          {{ 'notification.displayStartDate' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <date-picker disabled
+            [property]="f['displayStartDate']">
+          </date-picker>
+        </div>
+        <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+            {{ 'notification.displayFinishDate' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3" >
+            <date-picker disabled
+            [property]="f['displayFinishDate']">
+          </date-picker>
+        </div>
+      </div>
+      <div class="ui-g-12 vt-row">
+        <label class= "ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+          {{'notification.link' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <input type="text" class="form form-control" disabled= "true" name="link" formControlName="link">
+        </div>
+      </div>
+      <div class="ui-g-12 vt-row">
+        <label class= "ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+          {{'notification.content' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-9 ui-lg-9">
+          <textarea formControlName="notifyContent" disabled= "true" id="notifyContent" cols="200" rows="6" class="form-control"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer vt-area-button">
+      <button type="button" (click)="goBack()"  class="btn btn-sm btn-danger" [innerHTML]="'common.button.out' | translate"></button>
+    </div>
+  </form>
+</div>

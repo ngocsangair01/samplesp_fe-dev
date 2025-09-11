@@ -1,0 +1,131 @@
+<div class="panel panel-default" >
+  <form id="formSave" [formGroup]="formSave">
+      <div class="panel-heading vt-relative">
+          <strong class="text-u-c">
+            <i class="fa fa-th"></i>&nbsp;
+            <span *ngIf="isEdit" translate>app.settings.privateStandard.privateStandarEdit</span>
+            <span *ngIf="isView" translate>app.settings.emailSmsDynamic.view</span>
+          </strong>
+        </div>
+    <div class="panel-body padding-xl ui-g">
+      <div class="ui-g-12">
+        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right ">
+          {{'propaganda.thoughtClassify' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <input type="text"
+                 class="form form-control"
+                 name="category"
+                 formControlName="category"
+                 autocomplete="off"
+                 [attr.disabled]="true">
+          <app-control-messages [control]="f['category']"></app-control-messages>
+        </div>
+        <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right ">
+          {{'app.settings.emailSmsDynamic.notificationForm' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <select-filter [property]="f['type']" [options]="typeList" optionLabel="label"
+                         optionValue="id" [placeHolder]="'common.label.cboSelectAll'"
+                         [disabled]="true">
+          </select-filter>
+          <app-control-messages [control]="f['type']"></app-control-messages>
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right ">
+          {{'EmployeeBO.employeeCode' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <input type="text"
+                 class="form form-control"
+                 name="employeeCode"
+                 formControlName="employeeCode"
+                 autocomplete="off"
+                 [attr.disabled]="true">
+          <app-control-messages [control]="f['employeeCode']"></app-control-messages>
+        </div>
+        <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right ">
+          {{'common.label.status' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <select-filter [property]="f['status']" [options]="statusList" optionLabel="label"
+                         optionValue="id" [placeHolder]="'common.label.cboSelectAll'"
+                         [disabled]="true">
+          </select-filter>
+          <app-control-messages [control]="f['status']"></app-control-messages>
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right ">
+<!--          {{'EmployeeBO.employeeId' | translate}}-->
+          {{'EmployeeBO.fullName' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <input type="text"
+                 class="form form-control"
+                 name="employeeName"
+                 formControlName="employeeName"
+                 autocomplete="off"
+                 [attr.disabled]="true">
+          <app-control-messages [control]="f['employeeName']"></app-control-messages>
+<!--          <input type="text"-->
+<!--                 class="form form-control"-->
+<!--                 name="employeeId"-->
+<!--                 formControlName="employeeId"-->
+<!--                 maxlength="50" autocomplete="off"-->
+<!--                 [attr.disabled]="true">-->
+<!--          <app-control-messages [control]="f['employeeId']"></app-control-messages>-->
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right ">
+          {{'questionAndAnswer.label.title' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-9">
+          <textarea type="text"
+                    class="form form-control"
+                    name="title"
+                    formControlName="title"
+                    autocomplete="off"
+                    rows="3"
+                    [attr.disabled]="true">
+          </textarea>
+          <app-control-messages [control]="f['title']"></app-control-messages>
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right ">
+          {{'common.label.content' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-9">
+          <div class="form form-control"
+               style="height:150px; overflow-y: scroll; background-color: #e9ecef"
+              [innerHTML]="formSave.get('content').value"
+              disabled="true">
+          </div>
+          <app-control-messages [control]="f['content']"></app-control-messages>
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+          {{"common.label.attachmentFile" | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <multi-file-chooser
+                  [property]="f['fileAttachment']"
+                  htmlId="attachFile"
+                  validType="png,jpg,gif,tiff,bmp,xls,xlsx,doc,docx,pdf,rar,zip,7z"
+                  [disabled]="true">
+          </multi-file-chooser>
+          <app-control-messages [control]="f['fileAttachment']"></app-control-messages>
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer vt-area-button">
+<!--      <button type="button" class="btn btn-sm btn-info" (click)="processSaveOrUpdate()"-->
+<!--              [innerHTML]="'common.button.icon.save' | translate"> </button>-->
+      <button type="button" (click)="goBack()" class="btn btn-sm btn-danger" [innerHTML]="'common.button.out' | translate"></button>
+    </div>
+  </form>
+</div>

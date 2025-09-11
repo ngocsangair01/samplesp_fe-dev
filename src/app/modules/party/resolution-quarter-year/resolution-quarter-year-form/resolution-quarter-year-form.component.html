@@ -1,0 +1,111 @@
+<div class="modal-body">
+  <form id="frmSaveResolutionQuarterYear" [formGroup]="formSave">
+      <div class="panel panel-default">
+        <div class="panel-heading vt-relative">
+          <strong>
+            <span *ngIf="!formSave.get('requestResolutionsId').value"> {{'resolutionQuarterYear.resolutionAdd' | translate}} </span>
+            <span *ngIf="formSave.get('requestResolutionsId').value"> {{'resolutionQuarterYear.resolutionEdit' | translate}} </span>
+          </strong>
+          <div class="vt-absolute vt-shotcut-button-in-heading">
+            <button style="display: inline-block;" hidden="true" type="button" (click)="activeModal.close()" title="{{'common.button.close' | translate}}" class="btn btn-span btn-sm btn-info btn-close">
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div *ngIf="!isMobileScreen" class="panel-body padding-xl ui-g">
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'common.label.unit' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <org-selector
+                [property]="f['organizationId']"
+                operationKey="action.view"
+                adResourceKey="resource.partyOrganization"
+                [autoFocus]="true"
+                [isRequiredField]="true"
+                [defaultValue]="true">
+              </org-selector>
+              <app-control-messages [control]="f['organizationId']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+              {{'resolutionQuarterYear.finishDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker
+                [property]="f['finishDate']">
+              </date-picker>
+              <app-control-messages [control]="f['finishDate']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'resolutionQuarterYear.resolutionNumber' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" id="resolutionsNumber2" class="form form-control" autofocus="true" name="resolutionsNumber" formControlName="resolutionsNumber" maxlength="100">
+              <app-control-messages [control]="f['resolutionsNumber']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+                {{'resolutionQuarterYear.resolutionName' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" class="form form-control" name="resolutionsName" formControlName="resolutionsName" maxlength="200">
+              <app-control-messages [control]="f['resolutionsName']"></app-control-messages>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="isMobileScreen" class="panel-body padding-xl ui-g">
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+              {{'common.label.unit' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+              <org-selector
+                [property]="f['organizationId']"
+                operationKey="action.view"
+                adResourceKey="resource.partyOrganization"
+                [autoFocus]="true"
+                [isRequiredField]="true"
+                [defaultValue]="true">
+              </org-selector>
+              <app-control-messages [control]="f['organizationId']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-3 control-label vt-align-right required">
+              {{'resolutionQuarterYear.finishDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+              <date-picker
+                [property]="f['finishDate']">
+              </date-picker>
+              <app-control-messages [control]="f['finishDate']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+              {{'resolutionQuarterYear.resolutionNumber' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+              <input type="text" id="resolutionsNumber2" class="form form-control" autofocus="true" name="resolutionsNumber" formControlName="resolutionsNumber" maxlength="100">
+              <app-control-messages [control]="f['resolutionsNumber']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-3 control-label vt-align-right required">
+                {{'resolutionQuarterYear.resolutionName' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+              <input type="text" class="form form-control" name="resolutionsName" formControlName="resolutionsName" maxlength="200">
+              <app-control-messages [control]="f['resolutionsName']"></app-control-messages>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer vt-area-button">
+          <button type="submit" (click)="processSaveOrUpdate()" class="btn btn-sm vt-btn btn-submit" [innerHTML]="'common.button.icon.save' | translate"></button>
+          <button type="button" (click)="activeModal.close()" class="btn btn-sm btn-danger btn-close-modal" [innerHTML]="'common.button.out' | translate"></button>
+        </div>
+      </div>
+  </form>
+</div>

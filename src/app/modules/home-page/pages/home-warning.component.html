@@ -1,0 +1,185 @@
+<div class="row">
+  <div class="col-sm-4 col-md-4 col-xs-2 warning-block" *ngFor="let item of listWarningData">
+    <ng-template [ngIf]="branch!==6">
+      <a (click)="redirectAndSearch(item.routerLink, item.warningType)" class="warning-item display-table w100 " 
+        title="{{'homeWarning.' + item.warningType | translate}}: {{item.warningCount}}" [ngClass]="item.warningType === 'partyMembershipRate' ? 'no-cursor' : null">
+        <span class="table-cell warning-icon">
+          <span class="font-icon {{item.warningClass}}">
+            <i class="{{item.warningIcon}}"></i>
+          </span>
+        </span>
+        <span class="table-cell warning-info">
+          <span class="count">{{item.warningCount}}</span><br />
+          <span class="text">
+            {{'homeWarning.' + item.warningType | translate}}
+            <br />
+            <span [hidden]="item.countMale || item.countFemale ? false : true" class="text" style="font-weight: bold;">
+              <i class="glyphicons glyphicons-old-man"></i> {{'app.curriculumVitae.male' | translate}}:
+              {{item.countMale}} &nbsp;&nbsp;&nbsp;
+              <i class="glyphicons glyphicons-woman"></i> {{'app.curriculumVitae.female' | translate}}:
+              {{item.countFemale}}
+            </span>
+          </span>
+        </span>
+      </a>
+    </ng-template>
+    <ng-template [ngIf]="branch === 6">
+      <ng-template [ngIf]="item.warningType === 'longLeave'">
+        <a (click)="redirectAndSearch(item.routerLink, item.warningType)" class="warning-item display-table w100 population-height"
+          title="{{'homeWarning.' + item.warningType | translate}}: {{item.warningPopulationBean.total}}">
+          <span class="table-cell warning-icon">
+            <span class="font-icon {{item.warningClass}}">
+              <i class="{{item.warningIcon}}"></i>
+            </span>
+          </span>
+          <span class="table-cell warning-info">
+            <span class="count">{{item.warningPopulationBean.total}}</span>
+            <br />
+            <span class="">
+              {{'homeWarning.' + item.warningType | translate}}
+              <br />
+              <span class="text" style="font-weight: bold;">
+                <i class="glyphicons glyphicons-old-man"></i> {{'homeWarning.retirement' | translate}}:
+                {{item.warningPopulationBean.retirement}} &nbsp;&nbsp;&nbsp;
+                <i class="glyphicons glyphicons-sauna"></i> {{'homeWarning.sickLeave' | translate}}:
+                {{item.warningPopulationBean.sickLeave}} &nbsp;&nbsp;&nbsp;
+                <!-- <br/> -->
+                <i class="glyphicons glyphicons-stethoscope"></i> {{'homeWarning.maternityLeave' | translate}}:
+                {{item.warningPopulationBean.maternityLeave}} &nbsp;&nbsp;&nbsp;
+                <i class="glyphicons glyphicons-remove"></i> {{'homeWarning.other' | translate}}:
+                {{item.warningPopulationBean.other}} &nbsp;&nbsp;&nbsp;
+              </span>
+            </span>
+          </span>
+        </a>
+      </ng-template>
+      <ng-template [ngIf]="item.warningType === 'retirementWarning' || item.warningType === 'longLeaveRetirement'">
+          <div (click)="redirectAndSearch(item.routerLink, item.warningType)" class="warning-item display-table w100 population-height"
+            title="{{'homeWarning.' + item.warningType | translate}}: {{item.warningCount}}">
+            <span class="table-cell warning-icon">
+              <span class="font-icon {{item.warningClass}}">
+                <i class="{{item.warningIcon}}"></i>
+              </span>
+            </span>
+            <span class="table-cell warning-info">
+              <span class="count">{{item.warningCount}}</span>
+              <br />
+              <span class="">
+                {{'homeWarning.' + item.warningType | translate}}
+                <br />
+                <span style="font-weight: bold;">
+                <i class="glyphicons glyphicons-user-vr"></i> {{'homeWarning.forceManagement' | translate}}:
+                {{item.countManagementForceType}} &nbsp;&nbsp;&nbsp;
+                <i class="glyphicons glyphicons-old-man"></i> {{'app.curriculumVitae.officerManagement' | translate}}:
+                {{item.countManagementOfficialType}} &nbsp;&nbsp;&nbsp;
+              </span>
+              </span>
+            </span>
+          </div>
+        </ng-template>
+      <ng-template [ngIf]="item.warningType === 'orgMeeting'">
+        <div (click)="redirectAndSearch(item.routerLink, item.warningType)" class="warning-item display-table w100 population-height"
+          title="{{'homeWarning.' + item.warningType | translate}}: {{item.warningCount}} " >
+          <span class="table-cell warning-icon">
+            <span class="font-icon {{item.warningClass}}">
+              <i class="{{item.warningIcon}}"></i>
+            </span>
+          </span>
+          <span class="table-cell warning-info">
+            <span class="count">{{item.warningCount}}</span>
+            <br />
+            <span class="">
+              {{'homeWarning.' + item.warningType | translate}}
+              <br />
+              <span class="" style="font-weight: bold;">
+                <i class="glyphicons glyphicons-ok"></i> {{item.warningType + '.' +'homeWarning.met' | translate}}:
+                {{item.warningPopulationBean.retirement}} 
+                <br/>
+                <i class="glyphicons glyphicons-remove"></i>
+                {{item.warningType + '.' +'homeWarning.notMeetingYet' | translate}}:
+                {{item.warningPopulationBean.sickLeave}}
+              </span>
+            </span>
+          </span>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="item.warningType === 'joinPerform'">
+        <div (click)="redirectAndSearch(item.routerLink, item.warningType)" class="warning-item display-table w100 population-height"
+          title="{{'homeWarning.' + item.warningType | translate}}: {{item.warningCount}}" >
+          <span class="table-cell warning-icon">
+            <span class="font-icon {{item.warningClass}}">
+              <i class="{{item.warningIcon}}"></i>
+            </span>
+          </span>
+          <span class="table-cell warning-info">
+            <span class="count">{{item.warningCount}}</span>
+            <br />
+            <span class="text">
+              {{'homeWarning.' + item.warningType | translate}}
+              <br />
+              <span class="text" style="font-weight: bold;">
+                <i class="glyphicons glyphicons-divide"></i>
+                {{item.warningType + '.' +'homeWarning.ratio' | translate}}: 
+                {{item.warningPopulationBean.persent}} % &nbsp;&nbsp;&nbsp;
+              </span>
+            </span>
+          </span>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="item.warningType === 'veterans'">
+        <a (click)="redirectAndSearch(item.routerLink, item.warningType)" class="warning-item display-table w100 population-height"
+          title="{{'homeWarning.' + item.warningType | translate}}: {{item.warningCount}}">
+          <span class="table-cell warning-icon">
+            <span class="font-icon {{item.warningClass}}">
+              <i class="{{item.warningIcon}}"></i>
+            </span>
+          </span>
+          <span class="table-cell warning-info">
+            <span class="count">{{item.warningCount}}</span>
+            <br />
+            <span class="">
+              {{'homeWarning.' + item.warningType | translate}}
+              <br />
+              <span class="" style="font-weight: bold;">
+
+                <i class="glyphicons glyphicons-person-wheelchair"></i>
+                {{item.warningType + '.' +'homeWarning.woundedAndSickSoldiers' | translate}}:
+                {{ item.warningCount }} &nbsp;&nbsp;&nbsp;
+                <i class="glyphicons glyphicons-child"></i>
+                {{item.warningType + '.' +'homeWarning.childrenOfMartyrs' | translate}}: 0 &nbsp;&nbsp;&nbsp;
+                <!-- <br/> -->
+                <i class="glyphicons glyphicons-child"></i>
+                {{item.warningType + '.' +'homeWarning.woundedChild' | translate}}: 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <i class="glyphicons glyphicons-hazard-sign"></i>
+                {{item.warningType + '.' +'homeWarning.Dioxin' | translate}}: 0 &nbsp;&nbsp;&nbsp;
+              </span>
+            </span>
+          </span>
+        </a>
+      </ng-template>
+      <ng-template [ngIf]="item.warningType === 'houseDossier'">
+        <div (click)="redirectAndSearch(item.routerLink, item.warningType)" class="warning-item display-table w100 population-height"
+          title="{{'homeWarning.' + item.warningType | translate}}: {{item.warningCount}}">
+          <span class="table-cell warning-icon">
+            <span class="font-icon {{item.warningClass}}">
+              <i class="{{item.warningIcon}}"></i>
+            </span>
+          </span>
+          <span class="table-cell warning-info">
+            <span class="count">{{item.warningCount}}</span>
+            <br />
+            <span class="">
+              {{'homeWarning.' + item.warningType | translate}}
+              <br />
+              <span class="" style="font-weight: bold;">
+                <i class="glyphicons glyphicons-bank"></i>
+                {{item.warningType + '.' +'homeWarning.totalAssistanceMoney' | translate}}:
+                {{ item.totalAssistanceMoney | formatCurrency }} VNĐ
+              </span>
+            </span>
+          </span>
+        </div>
+      </ng-template>
+    </ng-template>
+  </div>
+</div>

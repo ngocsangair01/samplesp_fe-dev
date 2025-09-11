@@ -1,0 +1,47 @@
+<div class="content vt-nopadding" *ngIf="hasPermission('action.view')">
+  <div class="no-padding-left">
+    <!--        Start form Search-->
+    <div class="panel panel-default" *ngIf="hasPermission('action.view')">
+      <form id="formSave" [formGroup]="formSave">
+        <div class="panel-heading">
+          <strong class="text-u-c">
+            &nbsp;<span>{{reportDynamicName}}</span>
+          </strong>
+          <div class="row">
+            <div class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+              <img class="info-icon" src="./../../../assets/images/home/Mask_Group_24187.png" *ngIf="!isSize" (click)="changeSizePopup(true)">
+              <img class="info-icon" src="./../../../assets/images/home/thunhopopup.svg" *ngIf="isSize" (click)="changeSizePopup(false)">
+            </div>
+            <div class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+              <img class="info-icon" src="./../../../assets/images/home/Mask_Group_19561.png" (click)="cancel()">
+            </div>
+          </div>
+        </div>
+        <div class="panel-body padding-xl ui-g">
+<!--          <strong class="text-u-c">-->
+<!--            <span>{{'app.reportDynamic.export_form_title' | translate}}</span>-->
+<!--          </strong>-->
+          <div class="ui-g-12">
+            <ng-template inp-generate></ng-template>
+          </div>
+          <div class="ui-g-12 vt-area-button">
+            <button *ngIf="hasPermission('action.export')" type="button" (click)="previewExport()"
+              class="btn btn-sm btn-submit" [innerHTML]="'common.button.previewReport' | translate"></button>
+            <button type="button" (click)="downloadFileExport()" class="btn btn-sm vt-btn"
+              [innerHTML]="'common.button.icon.loadfile' | translate"></button>
+          </div>
+        </div>
+        <div class="panel-footer vt-area-button" *ngIf="urlPreview">
+          <div class="panel panel-default" >
+            <iframe [src]="this.urlPreview" style="width:100%;height: 100vh;"></iframe>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!--        End form Search-->
+  </div>
+</div>
+
+<div *ngIf="!hasPermission('action.view')" translate>
+  common.haveNoPermission
+</div>

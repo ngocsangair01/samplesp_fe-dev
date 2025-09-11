@@ -1,0 +1,6 @@
+<div *ngIf="hasPermission('action.view')"> 
+  <setting-obj-remind-search></setting-obj-remind-search>
+</div>
+<div *ngIf="!hasPermission('action.view')">
+  {{'common.haveNoPermission' | translate}}
+</div> 

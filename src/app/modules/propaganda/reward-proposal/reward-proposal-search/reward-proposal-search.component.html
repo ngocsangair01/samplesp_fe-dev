@@ -1,0 +1,310 @@
+<div id="searchPage">
+  <div id="searchArea">
+    <div class="panel panel-default">
+      <form id="formSearch" [formGroup]="formSearch" (ngSubmit)="processSearch()">
+        <div class="panel-heading" translate>
+          <strong class="text-u-c">
+            <i class="fa fa-th"></i>
+            &nbsp;common.label.search.info
+          </strong>
+        </div>
+        <div class="panel-body padding-xl ui-g">
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'label.rewardProposal.organization' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <org-selector [property]="f['organizationId']" operationKey="action.view"
+                adResourceKey="resource.propaganda" [defaultValue]="true">
+              </org-selector>
+              <app-control-messages [control]="f['organizationId']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'label.propagandaRewardProposal.status'|translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [placeHolder]="'common.label.cboSelectAll'" [property]="f['status']"
+                [options]="rewardStatusList" optionLabel="label" optionValue="value">
+              </select-filter>
+              <app-control-messages [control]="f['status']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'rewardReportManagement.employeeRequest' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <data-picker [property]="f['employeeId']" systemCode="political" operationKey="action.view"
+                adResourceKey="resource.propaganda" objectBO="EmployeeBO" codeField="employeeCode" nameField="fullName"
+                emailField="email" selectField="employeeId" mobileNumberField="mobileNumber">
+              </data-picker>
+              <app-control-messages [control]="f['employeeId']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'label.rewardProposal.rewardProposalType'|translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [placeHolder]="'common.label.cboSelectAll'" [property]="f['rewardProposalType']"
+                [options]="rewardTypeList" optionLabel="label" optionValue="value" [isMultiLanguage]="true">
+              </select-filter>
+              <app-control-messages [control]="f['rewardProposalType']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'label.rewardProposal.rewardProposalCode' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" id="rewardProposalCode" class="form form-control" [autoFocus]="true"
+                name="rewardProposalCode" formControlName="rewardProposalCode" maxlength="100">
+              <app-control-messages [control]="f['rewardProposalCode']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'label.rewardProposal.documentNumber' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" id="documentNumber" class="form form-control" name="documentNumber"
+                formControlName="documentNumber" maxlength="100">
+              <app-control-messages [control]="f['documentNumber']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'label.rewardProposal.proposalFromDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker [property]="f['proposalFromDate']">
+              </date-picker>
+              <app-control-messages [control]="f['proposalFromDate']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'resolutionQuarterYear.finishEndDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker [property]="f['proposalToDate']">
+              </date-picker>
+              <app-control-messages [control]="f['proposalToDate']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'organizationcontroller.table.from.datePromulgate'|translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker [property]="formSearch.controls.startDate"></date-picker>
+              <app-control-messages [control]="f['startDate']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              {{'organizationcontroller.table.to.date'|translate}} 
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker [property]="formSearch.controls.endDate"></date-picker>
+              <app-control-messages [control]="f['endDate']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'label.commendations.number' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" formControlName="documentCode" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer vt-area-button">
+          <button *ngIf="hasPermission('action.view')" type="submit" class="btn btn-sm btn-info"
+            [innerHTML]="'common.button.icon.search' | translate"></button>
+          <button *ngIf="hasPermission('action.insert')" type="button" class="btn btn-sm btn-info"
+            [innerHTML]="'common.button.icon.addNew' | translate" (click)="prepareSaveOrUpdate()"></button>
+          <button *ngIf="hasPermission('action.export')" type="button" class="btn btn-sm btn-info"
+            [innerHTML]="'common.button.icon.exportFile' | translate" (click)="processExport()"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div id="listArea">
+    <div class="panel panel-default">
+      <div class="panel-heading vt-relative">
+        <strong class="text-u-c">
+          <i class="fa fa-th"></i>
+          &nbsp;{{ 'rewardReportManagement.listRewardReport' | translate }}
+        </strong>
+      </div>
+      <div class="panel-body panel-table">
+        <p-table #ptable [value]="resultList.data" [paginator]="true" (onLazyLoad)="processSearch($event)" [lazy]="true"
+          [rows]="changeRow" [totalRecords]="resultList.recordsTotal" [scrollable]="true" [lazyLoadOnInit]="false"
+          tableStyleClass="table table-wrapper table-hover table-striped b-t b-b" styleClass="controlOverflow">
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col class="size-1">
+              <col class="size-5">
+              <col class="size-4">
+              <col class="size-8">
+              <col class="size-4">
+              <col class="size-3">
+              <col class="size-3">
+              <col class="size-12">
+              <col class="size-6">
+              <col class="size-4">
+              <col class="size-4">
+              <col class="size-4">
+              <col class="size-4">
+              <col class="size-8">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th translate>common.table.index</th>
+              <th translate>common.label.action</th>
+              <th [pSortableColumn]="'documentNumber'">
+                {{'label.rewardProposal.documentNumber' | translate}}
+                <p-sortIcon [field]="'documentNumber'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'organizationName'">
+                {{'label.rewardProposal.organization' | translate}}
+                <p-sortIcon [field]="'organizationName'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'employeeName'">
+                {{'label.rewardProposal.employeeRequest' | translate}}
+                <p-sortIcon [field]="'employeeName'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'orgCode'">
+                {{'label.rewardProposal.orgCode' | translate}}
+                <p-sortIcon [field]="'orgCode'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'deptCode'">
+                {{'label.rewardProposal.deptCode' | translate}}
+                <p-sortIcon [field]="'deptCode'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'rewardProposalCode'">
+                {{'label.rewardProposal.rewardProposalCode' | translate}}
+                <p-sortIcon [field]="'rewardProposalCode'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'rewardProposalType'">
+                {{'label.rewardProposal.rewardProposalType' | translate}}
+                <p-sortIcon [field]="'rewardProposalType'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'proposalDate'">
+                {{'label.rewardProposal.proposalDate' | translate}}
+                <p-sortIcon [field]="'proposalDate'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'totalAmountReward'">
+                {{'label.rewardProposal.totalAmountReward' | translate}}
+                <p-sortIcon [field]="'totalAmountReward'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'status'">
+                {{'transferPartyMembers.status' | translate}}
+                <p-sortIcon [field]="'status'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'statusSyncStatement'">
+                {{'label.rewardProposal.statusSyncStatement' | translate}}
+                <p-sortIcon [field]="'statusSyncStatement'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'errorMessageSyncStatement'">
+                {{'label.rewardProposal.errorMessageSyncStatement' | translate}}
+                <p-sortIcon [field]="'errorMessageSyncStatement'"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+            <tr>
+              <td class="vt-align-center">{{index}}</td>
+              <td class="vt-align-center">
+                <div ngbDropdown class="d-inline-block">
+                  <button class="btn btn-sm btn-info" ngbDropdownToggle translate>common.label.action</button>
+                  <div ngbDropdownMenu>
+                    <!-- XEM to trinh -->
+                    <div *ngIf="hasPermission('action.view')">
+                      <button class="dropdown-item" (click)="preparView(item)"
+                        [innerHTML]="'common.button.table.viewdropdown' | translate">
+                      </button>
+                    </div>
+                    <!-- Sua to trinh -->
+                    <div
+                      *ngIf="((item.status == 0 || item.status == 2) || (item.isSignVoffice == 0 && item.isUsed == 0)) && hasPermission('action.update')">
+                      <button class="dropdown-item" (click)="prepareSaveOrUpdate(item)"
+                        [innerHTML]="'common.button.table.acteditdropdown' | translate">
+                      </button>
+                    </div>
+
+                    <!-- Xoa to trinh -->
+                    <div
+                      *ngIf="((item.status == 0 || item.status == 2) || (item.isSignVoffice == 0 && item.isUsed == 0)) && hasPermission('action.delete')">
+                      <button class="dropdown-item" (click)="processDelete(item)"
+                        [innerHTML]="'propagandaRewardProposal.removedropdown' | translate">
+                      </button>
+                    </div>
+                    <!-- trinh ky -->
+                    <div
+                      *ngIf="item.status !== 1 && item.status !== 3 && hasPermission('action.update') && item.signDocumentId > 0 && item.isSignVoffice == 1">
+                      <button class="dropdown-item" (click)="prepareSign(item)"
+                        [innerHTML]="'common.button.table.actSign' | translate">
+                      </button>
+                    </div>
+                    <!-- Hủy trinh ky -->
+                    <div
+                      *ngIf="item.status == 1 && hasPermission('action.update') && item.signDocumentId > 0 && item.isSignVoffice == 1">
+                      <button class="dropdown-item" (click)="cancelSignrewardproposal(item)"
+                        [innerHTML]="'common.button.icon.signProcess' | translate">
+                      </button>
+                    </div>
+                    <div *ngIf="item.attachSignDocumentId">
+                      <button class="dropdown-item" (click)="previewFileSigning(item.signDocumentId)"
+                        [innerHTML]="'common.button.table.previewFileSigning' | translate">
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td class="vt-align-center">{{item.documentNumber}}</td>
+              <td class="vt-align-left">{{item.organizationName}}</td>
+              <td class="vt-align-left">{{item.employeeName}}</td>
+              <td class="vt-align-left">{{item.orgCode}}</td>
+              <td class="vt-align-left">{{item.deptCode}}</td>
+              <td class="vt-align-left">{{item.rewardProposalCode}}</td>
+              <td class="vt-align-left">
+                <div *ngIf="item.rewardProposalType === 1" translate>propaganda.rewardGrouplevel</div>
+                <div *ngIf="item.rewardProposalType === 2" translate>propaganda.rewardCompanylevel</div>
+                <div *ngIf="item.rewardProposalType === 3" translate>propaganda.rewardDepartmentlevel</div>
+              </td>
+              <td class="vt-align-center">{{item.proposalDate | displayDate}}</td>
+              <td class="vt-align-right">
+                <div *ngIf="item.totalAmountReward!=null">{{item.totalAmountReward | formatCurrency:'VND' }} VNĐ</div>
+              </td>
+              <td class="vt-align-left">
+                <span [ngClass]="item.signDocumentId && item.status != 0? 'cs-point' : ''" (click)="actionShowHistorySigning(item)">
+                  <div class="label-status notYet" *ngIf="item.status==0" translate>{{'rewardProposal.status.' + item.status}}</div>
+                  <div class="label-status warning" *ngIf="item.status==1" translate>{{'rewardProposal.status.' + item.status}}</div>
+                  <div class="label-status danger" *ngIf="item.status==2" translate>{{'rewardProposal.status.' + item.status}}</div>
+                  <div class="label-status info" *ngIf="item.status==3" translate>{{'rewardProposal.status.' + item.status}}</div>
+                </span>
+              </td>
+              <td class="vt-align-left">
+                <div class="label-status info" *ngIf="item.statusSyncStatement == '00'" translate>
+                  label.rewardProposal.statusSyncStatement00</div>
+                <div class="label-status danger" *ngIf="item.statusSyncStatement == '01'" translate>
+                  label.rewardProposal.statusSyncStatement01</div>
+                <div class="label-status danger" *ngIf="item.statusSyncStatement == '02'" translate>
+                  label.rewardProposal.statusSyncStatement02</div>
+                <div class="label-status danger" *ngIf="item.statusSyncStatement == '03'" translate>
+                  label.rewardProposal.statusSyncStatement03</div>
+                <div class="label-status danger" *ngIf="item.statusSyncStatement == '99'" translate>
+                  label.rewardProposal.statusSyncStatement99</div>
+              </td>
+              <td class="vt-align-left">{{item.errorMessageSyncStatement}}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr class="emptymessage">
+              <td [attr.colspan]="14" [innerHTML]="'app.noRecords' | translate">
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft">
+            <table-footer (changeRow)="onTablePageChange($event)"  [resultList]="resultList"></table-footer>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</div>

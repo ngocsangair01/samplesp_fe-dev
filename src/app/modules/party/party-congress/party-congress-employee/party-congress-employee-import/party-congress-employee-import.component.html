@@ -1,0 +1,81 @@
+<div *ngIf="hasPermission('action.import')">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong class="text-u-c">
+        <i class="fa fa-th"></i>
+        {{'partyCongressEmployee.import.title' | translate}}
+      </strong>
+    </div>
+    <form id="formImport" [formGroup]="formImport">
+      <div class="panel-body padding-xl ui-g">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'organization.label.name' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <party-org-selector
+              [property]="f['partyOrganizationId']"
+              operationKey="action.import"
+              adResourceKey="resource.partyCongressEmployee"
+              [autoFocus]="true"
+              [isRequiredField]="true">
+            </party-org-selector>
+            <app-control-messages [control]="f['partyOrganizationId']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+            {{'controls.choseFile' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <file-chooser
+              [property]="f['fileImport']"
+              [validMaxSize]="50"
+              validType="xls">
+            </file-chooser>
+            <app-control-messages [control]="f['fileImport']"></app-control-messages>
+            <br>
+            <a class="text-link" (click)="processDownloadTemplate();">
+              <span><i class="fa fa-download"></i> {{'app.common.downloadTemplate' | translate}}</span>
+            </a>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+            {{'app.emp.tabMenu.partyMemberConcurrentProcess.tenure' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter
+              [property]="f['tenureId']"
+              [options]="tenureList"
+              optionLabel="name"
+              optionValue="categoryId"
+              [placeHolder]="'common.label.cboMustSelect'">
+            </select-filter>
+            <app-control-messages [control]="f['tenureId']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+            {{'partyCongressEmployee.profile' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <multi-file-chooser
+              [property]="f['profiles']"
+              fileName="fileAttachment"
+              [validMaxSize]="50"
+              validType="xls,xlsx,doc,docx,pdf">
+            </multi-file-chooser>
+            <app-control-messages [control]="f['profiles']"></app-control-messages>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="panel-footer vt-area-button">
+      <button type="submit" class="btn btn-sm btn-info" (click)="processImport()" [innerHTML]="'common.button.icon.save' | translate"></button>
+      <button type="button" class="btn btn-sm btn-danger" (click)="goBack()" [innerHTML]="'common.button.out' | translate"></button>
+    </div>
+  </div>
+  <div *ngIf="dataError">
+    <import-error [data]="dataError"></import-error>
+  </div>
+</div>
+<div *ngIf="!hasPermission('action.import')">
+  {{'common.haveNoPermission' | translate}}
+</div>

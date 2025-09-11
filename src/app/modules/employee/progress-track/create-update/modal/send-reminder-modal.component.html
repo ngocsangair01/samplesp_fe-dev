@@ -1,0 +1,85 @@
+<div class="content vt-nopadding">
+  <div class="no-padding-left">
+    <div class="panel-default">
+      <div class="panel-heading vt-relative">
+        <strong>
+          <span translate>label.progress-track.remind</span>
+        </strong>
+        <div class="vt-absolute vt-shotcut-button-in-heading">
+          <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+            class="btn btn-span btn-sm"><img class="info-icon"
+              src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+        </div>
+      </div>
+      <br />
+      <div class="panel-body min-height">
+        <!-- 1 -->
+        <div class="ui-g">
+          <div class="ui-md-12">
+            <label class="ui-g-12 control-label required">
+              {{'label.progress-track.send-remind' | translate}}
+            </label>
+            <div class="ui-g-12">
+              <div>
+                <div class="m-2">
+                  <p-checkbox inputId="typeThorough1" name="typeThorough1" [value]="1" [formControl]="f['typeThorough']"></p-checkbox>
+                  <label for="typeThorough1" class="ml-2"> {{'label.thorough-content.type-thorough-1' | translate}} </label>
+                </div>
+                <div class="m-2">
+                  <p-checkbox inputId="typeThorough2" name="typeThorough2" [value]="2" [formControl]="f['typeThorough']"></p-checkbox>
+                  <label for="typeThorough2" class="ml-2"> {{'label.thorough-content.type-thorough-2' | translate}} </label>
+                </div>
+                <div class="m-2">
+                  <p-checkbox inputId="typeThorough3" name="typeThorough3" [value]="3" [formControl]="f['typeThorough']"></p-checkbox>
+                  <label for="typeThorough3" class="ml-2"> {{'label.thorough-content.type-thorough-3' | translate}} </label>
+                </div>
+                <div class="m-2">
+                  <p-checkbox inputId="typeThorough4" name="typeThorough4" [value]="4" [formControl]="f['typeThorough']"></p-checkbox>
+                  <label for="typeThorough4" class="ml-2"> {{'label.thorough-content.type-thorough-4' | translate}} </label>
+                </div>
+                <div class="m-2">
+                  <p-checkbox inputId="typeThorough5" name="typeThorough5" [value]="5" [formControl]="f['typeThorough']"></p-checkbox>
+                  <label for="typeThorough5" class="ml-2"> {{'label.thorough-content.type-thorough-5' | translate}} </label>
+                </div>
+                <div class="m-2">
+                  <p-checkbox inputId="typeThorough6" name="typeThorough6" [value]="6" [formControl]="f['typeThorough']"></p-checkbox>
+                  <label for="typeThorough6" class="ml-2"> {{'label.thorough-content.type-thorough-6' | translate}} </label>
+                </div>
+                <div class="m-2">
+                  <p-checkbox inputId="typeThorough7" name="typeThorough7" [value]="7" [formControl]="f['typeThorough']"></p-checkbox>
+                  <label for="typeThorough7" class="ml-2"> {{'label.thorough-content.type-thorough-7' | translate}} </label>
+                </div>
+                  <div class="m-2">
+                      <p-checkbox inputId="typeThorough7" name="typeThorough7" [value]="7" [formControl]="f['typeThorough']"></p-checkbox>
+                      <label for="typeThorough8" class="ml-2"> {{'label.thorough-content.type-thorough-8' | translate}} </label>
+                  </div>
+              </div>
+              <app-control-messages [control]="f['typeThorough']"></app-control-messages>
+            </div>
+          </div>
+        </div>
+        <!-- 1 -->
+        <div class="ui-g">
+          <div class="ui-md-12">
+            <label class="ui-g-12 control-label required">
+              {{'label.progress-track.select-content' | translate}}
+            </label>
+            <div class="ui-g-12">
+              <p-dropdown [optionLabel]="'parName'" [formControl]="f['thoroughContentReminderId']"
+                [options]="thoroughContentReminderOptions" [placeholder]="'placeholder.choose' | translate" [showClear]="true"
+                [filter]="true" [emptyFilterMessage]="emptyFilterMessage" [resetFilterOnHide]="true">
+              </p-dropdown>
+              <app-control-messages [control]="f['thoroughContentReminderId']"></app-control-messages>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer vt-area-button">
+        <button type="button" (click)="goBack()" class="btn btn-sm vt-btn"
+          [innerHTML]="'common.button.out' | translate"></button>
+        <button type="button" (click)="sendReminder()" class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted"
+          [innerHTML]="'button.progress-track.send' | translate"></button>
+      </div>
+    </div>
+  </div>
+</div>

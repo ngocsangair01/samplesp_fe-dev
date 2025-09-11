@@ -1,0 +1,7 @@
+body .ui-tabview .ui-tabview-panels,
+.panel-body {
+    border-radius: 0px;
+    border-left: 1px solid #D7E2E3;
+    border-right: 1px solid #D7E2E3;
+    border-bottom: 1px solid #D7E2E3;
+}

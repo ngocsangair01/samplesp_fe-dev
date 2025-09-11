@@ -1,0 +1,20 @@
+<div class="row" id="homePropaganda">
+    <div class="col-sm-4 col-md-4 col-xs-2 warning-block" style="line-height: 25px; border: ridge;"  *ngFor="let element of listWarning">
+        <a class="display-table w100 " style="padding: 10px;" (click)="exportOrMoveUrl(element.warningType, element.fileAttachment, element.url)" [innerHTML]="element.tableCellWarningInfo">
+            <!-- <span>
+                <span class="text" style="font-weight: bold; border:1px; text-align: center">
+                    Tổng số báo cáo/phản ánh theo trạng thái:
+                    <span class="count">${total_eov_result }</span><br />
+                </span>
+                <span class="text">
+                    <u class="glyphicons glyphicons-old-man" style="color: red" ></u>
+                    Báo cáo/ phản ánh đã giải trình và xử lý:
+                    <span class="count">${total_eov_result }</span><br>
+                    <span><img
+                            src="https://upload.wikimedia.org/wikipedia/vi/1/1d/N%C6%A1i_n%C3%A0y_c%C3%B3_anh_-_Single_Cover.jpg"
+                            alt="ảnh" height="300" width="300"></span>
+                </span>
+            </span> -->
+        </a>
+    </div>
+</div>

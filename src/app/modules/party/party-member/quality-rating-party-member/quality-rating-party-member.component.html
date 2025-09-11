@@ -1,0 +1,91 @@
+<div class="card-emp">
+  <div id="listQualityRatingPartyMember" class="card card-info">
+    <div class="card-header">
+      <div>
+        <img class="header-icon" [ngClass]="{'transform-icon': hideListQualityRatingPartyMember === true}" src="./../../../../../../assets/images/home/Group_18932.png" (click)="hideListQualityRatingPartyMember = !hideListQualityRatingPartyMember">
+        {{'qualityAnalysis.listQualityRatingPartyMember' | translate}}
+      </div>
+    </div>
+    <div *ngIf="!hideListQualityRatingPartyMember" class="card-body">
+      <div class="panel-body panel-table">
+        <p-table
+          #ptable
+          [value]="data"
+          [paginator]="true"
+          (onLazyLoad)="processSearchListQualityPartyMember($event)"
+          [lazy]="true" [rows]="changeRow"
+          [totalRecords]="recordsTotal"
+          [scrollable]="true"
+          [lazyLoadOnInit]="false"
+          tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+          [resizableColumns]="true"
+        >
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col style="width: 50px;">
+              <col style="width: 200px;">
+              <col style="width: 200px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col style="width: 300px !important;">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th translate pResizableColumn>common.table.index</th>
+              <th translate pResizableColumn>employee.assessment.assessName</th>
+              <th translate pResizableColumn>label.empArmyProposed.year</th>
+              <th translate pResizableColumn>common.label.result</th>
+              <th translate pResizableColumn>employee.assessment.signStatus</th>
+              <th translate pResizableColumn>issue.resolutions.title.assesmentNXDG</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+            <tr>
+              <td class="vt-align-center">{{index}}</td>
+              <td class="vt-align-left">{{item.assessName}}
+                <span *ngIf="item.assessName != null" >{{item.assessName}}</span>
+                <span *ngIf="item.assessName == null" >Import chất lượng đảng viên</span>
+              </td>
+              <td class="vt-align-center">{{item.year}}</td>
+              <!--          <td class="vt-align-center">{{ item.completeDate | displayDate}}</td>-->
+              <td class="vt-align-left">{{item.qualityRatingName}}</td>
+
+              <!--          trang thái-->
+              <td class="vt-align-left">
+                <span *ngIf="item.assessName == null" >Đã hoàn thành</span>
+                <span *ngIf="item.assessName != null" >
+                        <span *ngIf="item.status == 2" >Đã hoàn thành</span>
+                        <span *ngIf="item.status != 2" >Chưa hoàn thành</span>
+                    </span>
+
+              </td>
+
+              <td class="vt-align-left">
+                <div *ngIf="!item.transCode && item.vtCriticalId">
+                  <a class="text-link" (click)="processDownloadFile(item)">
+                    <span>{{ item.vtCriticalId }}.pdf</span>
+                  </a>
+                </div>
+                <div *ngIf="item.transCode">
+                  <a class="text-link" *ngFor="let data of item.listFileSign; let i = index;" (click)="previewFile(data, item.transCode, i)">
+                    <p>{{i+1}}. {{data}}</p>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr class="emptymessage">
+              <td [attr.colspan]="10" [innerHTML]="'app.noRecords' | translate">
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft">
+            <table-footer (changeRow)="onTablePageChange($event)" [resultList]="resultList"></table-footer>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</div>

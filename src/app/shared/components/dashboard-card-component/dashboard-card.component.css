@@ -1,0 +1,102 @@
+.card-dashboard.card-dashboard-stat {
+    margin: 10px;
+    border: 1px solid #E6EAEE;
+    height: 180px;
+}
+.card-dashboard.card-dashboard-stat p {
+    margin:0 !important;
+    
+}
+.card-dashboard.card-dashboard-stat.blue {
+    background: #3b517c;
+    color: #fff;
+}
+
+.card-dashboard.card-dashboard-stat.brown {
+    background: #965454;
+    color: #fff;
+}
+.card-dashboard.card-dashboard-stat.brown .card-dashboard-footer {
+    background: #965454;
+}
+
+.card-dashboard.card-dashboard-stat.card-dashboard-stat.grey {
+    background: #6c757d;
+    color: #fff;
+}
+.card-dashboard.card-dashboard-stat.grey .card-dashboard-footer {
+    background: #6c757d;
+}
+.card-dashboard.card-dashboard-stat.skyblue {
+    background: #259fc5;
+    color: #fff;
+}
+.card-dashboard.card-dashboard-stat.skyblue .card-dashboard-footer {
+    background: #259fc5;
+}
+
+.card-dashboard.card-dashboard-stat.blue .card-dashboard-footer {
+    background: #3b517c;
+}
+
+.card-dashboard.card-dashboard-stat.red {
+    background: #db5340;
+    color: #fff;
+}
+
+.card-dashboard.card-dashboard-stat.red .card-dashboard-footer {
+    background: #db5340;
+}
+
+.card-dashboard.card-dashboard-stat.green {
+    background: #66b92e;
+    color: #fff;
+}
+
+.card-dashboard.card-dashboard-stat.green .card-dashboard-footer {
+    background: #66b92e;
+}
+
+.card-dashboard.card-dashboard-stat .card-dashboard-body {
+    min-height: 108px;
+  padding: 2em;
+}
+
+.card-dashboard.card-dashboard-stat .card-dashboard-title {
+    opacity: 0.7;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    display: block;
+    margin-bottom: 0;
+}
+
+.card-dashboard.card-dashboard-stat .stat-number {
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 48px;
+}
+
+.card-dashboard.card-dashboard-stat .card-dashboard-footer {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 17px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.card-dashboard.card-dashboard-stat.white .card-dashboard-title {
+    color: #7F8FA4;
+}
+
+.card-dashboard.card-dashboard-stat.white .stat-number {
+    color: #354052;
+}
+
+.card-dashboard.card-dashboard-stat.white .card-dashboard-footer {
+    color: #7F8FA4;
+    background: #f5f8fa;
+}
+

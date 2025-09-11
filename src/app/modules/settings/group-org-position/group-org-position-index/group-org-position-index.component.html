@@ -1,0 +1,6 @@
+<div *ngIf="hasPermission('action.view')">
+    <group-org-position-search></group-org-position-search>
+</div>
+<div *ngIf="!hasPermission('action.view')">
+  {{'common.haveNoPermission' | translate}}
+</div>

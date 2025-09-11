@@ -1,0 +1,7 @@
+<div *ngIf="hasPermission('action.view')" >
+    <expression-report-recorded-search></expression-report-recorded-search>
+  </div>
+  <div *ngIf="!hasPermission('action.view')">
+    {{'common.haveNoPermission' | translate}}
+  </div>
+  

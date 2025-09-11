@@ -1,0 +1,234 @@
+<!-- Theo tuần -->
+<div *ngIf="type=='TUAN'">
+    <div class="mb-3">
+        <tr>
+            <td class="vt-align-center mr-2 d-inline-block">Mỗi: </td>
+            <td class="vt-align-center mr-2 d-inline-block">
+                <input [disabled]="viewMode" class="form-control" type="number" min="1" max="99" onKeyPress="if(this.value.length == 2) return false; return event.charCode >= 48" [(ngModel)]="numberOfWeeks" (input)="onBlockZeros($event)" (change)="onChangeByWeek()">
+            </td>
+            <td class="vt-align-center"> tuần vào </td>
+        </tr>
+    </div>
+    <div>
+        <tr>
+            <td *ngFor="let data of weeklyOptions" class="mr-2 d-inline-flex align-items-center">
+                <p-checkbox [disabled]="viewMode" name="group1" [value]="data.value" [label]="data.label" [(ngModel)]="selectedDay" [inputId]="index" (onChange)="onChangeByWeek()"></p-checkbox>
+            </td>
+        </tr>
+    </div>        
+</div>
+
+    <!-- Theo Tháng -->
+<div *ngIf="type=='THANG'" class="ui-g schedule-selector" style="margin-bottom:10px">
+    <tr class="ui-g-9 d-flex align-items-center w-100">
+        <td class="vt-align-center">
+            <p-radioButton [disabled]="viewMode" (onClick)="onChangeDayOfMonth()" class="d-flex align-items-center mr-1 text-splicing" value="1" label="Vào ngày: " [(ngModel)]="repeatOption"></p-radioButton>
+        </td>
+        <td class="vt-align-center mr-2 d-inline-block">
+            <input [disabled]="viewMode" class="form-control" type="number" min="1" max="99" onKeyPress="if(this.value.length == 2) return false; return event.charCode >= 48" [(ngModel)]="dayOfMonth" (input)="onBlockZeros($event)" (change)="onChangeDayOfMonth()">
+        </td>
+        <td class="vt-align-center mr-2 d-inline-block">của mỗi</td>
+        <td class="vt-align-center mr-2 d-inline-block">
+            <input [disabled]="viewMode" class="form-control" type="number" min="1" max="99" onKeyPress="if(this.value.length == 2) return false; return event.charCode >= 48" [(ngModel)]="repeatCycleByDay" (input)="onBlockZeros($event)" (change)="onChangeDayOfMonth()">
+        </td>
+        <td class="vt-align-center"> tháng </td>
+    </tr>
+    <tr class="ui-g-9 mt-3 w-100 d-flex align-items-center">
+        <td class="vt-align-center">
+            <p-radioButton [disabled]="viewMode" (onClick)="onChangeByOrder()" class="d-flex align-items-center mr-1 text-splicing" value="2" label="Vào thứ: " [(ngModel)]="repeatOption"></p-radioButton>
+        </td>
+        <td class="vt-align-center mr-2 d-inline-block w-25">
+            <p-multiSelect 
+                [disabled]="viewMode"
+                class="d-flex flex"
+                (onChange)="onChangeByOrder()"
+                [options]="weeklyOptions" 
+                [style]="{minHeight: '28px'}"
+                [panelStyle]="{minWidth:'103px;'}"
+                optionLabel="label"
+                optionValue="value" 
+                [(ngModel)]="dayOfWeek" 
+                defaultLabel="Chọn"
+                maxSelectedLabels = "12"
+            ></p-multiSelect>
+        </td>
+        <td class="vt-align-center mr-2 d-inline-block w-25">
+            <p-dropdown
+                [disabled]="viewMode"
+                class="d-flex flex"
+                [panelStyle]="{ 'padding': '0.429em !important' }"
+                (onChange)="onChangeByOrder()"
+                [optionLabel]="'name'"
+                [showClear]="true"
+                [options]="repeatcycleorder" 
+                [(ngModel)]="cycleOrder"
+                [placeholder]="'placeholder.choose' | translate">
+            </p-dropdown>
+        </td>
+        <td class="vt-align-center mr-2 d-inline-block">  của mỗi </td>
+        <td class="vt-align-center mr-2 d-inline-block">
+            <input [disabled]="viewMode" class="form-control" type="number" min="1" max="99" onKeyPress="if(this.value.length == 2) return false; return event.charCode >= 48" [(ngModel)]="repeatCycleByOrder" (input)="onBlockZeros($event)" (change)="onChangeByOrder()">
+        </td>
+        <td class="vt-align-center mr-2 d-inline-block"> tháng </td>
+    </tr>
+</div>
+
+<!-- Theo quý -->
+<div *ngIf="type=='QUY'" class="ui-g schedule-selector" style="margin-bottom:10px">
+    <tr class="ui-g-12 d-flex align-items-center w-100">
+        <td class="vt-align-center">
+            <p-radioButton [disabled]="viewMode" (onClick)="onChangeTypeQuarterAndOptionDay()" class="d-flex align-items-center mr-1 text-splicing" name="group2" value="1" label="Vào ngày: " [(ngModel)]="repeatOption" inputId="preopt1"></p-radioButton>
+        </td>
+        <td class="vt-align-center w-25 mr-2 d-inline-block">
+            <p-dropdown
+                [disabled]="viewMode"
+                (onChange)="onChangeTypeQuarterAndOptionDay()"
+                [optionLabel]="'label'"
+                [showClear]="true"
+                [options]="monthlyOptions"
+                [placeholder]="'placeholder.choose' | translate"
+                [(ngModel)]="dayOfMonth">
+            </p-dropdown>
+        </td>
+        <td class="vt-align-center mr-2 d-inline-block"> tháng </td>
+        <td class="vt-align-center w-25 mr-2 d-inline-block">
+            <p-dropdown
+                [disabled]="viewMode"
+                (onChange)="onChangeTypeQuarterAndOptionDay()"
+                [optionLabel]="'label'"
+                [showClear]="true"
+                [options]="monthOfQuarterly"
+                [placeholder]="'placeholder.choose' | translate"
+                [(ngModel)]="monthOfquarterlyOfDay">
+            </p-dropdown>
+        </td>
+    </tr>
+    <tr>
+        <td *ngFor="let data of quarterlyOption" class="d-inline-flex vt-align-center p-2">
+            <p-checkbox [disabled]="viewMode" name="group1" [value]="data.value" [label]="data.label" [inputId]="index" [(ngModel)]="quarterNumberOfDay" (onChange)="onChangeTypeQuarterAndOptionDay()"></p-checkbox>
+        </td>
+    </tr>
+    <hr>
+    <tr class="ui-g-12 d-flex align-items-center mt-1 w-100">
+        <td class="vt-align-center">
+            <p-radioButton [disabled]="viewMode" (onClick)="onChangeTypeQuarterAndOptionOrder()" class="d-flex align-items-center mr-1 text-splicing" name="group2" value="2" label="Vào thứ: " [(ngModel)]="repeatOption" inputId="preopt2"></p-radioButton>
+        </td>
+        <td class="vt-align-center w-25 mr-3 d-inline-block">
+            <p-multiSelect
+                [disabled]="viewMode"
+                class="d-flex flex" 
+                (onChange)="onChangeTypeQuarterAndOptionOrder()"
+                [options]="weeklyOptions" 
+                [style]="{minHeight: '28px'}"
+                [panelStyle]="{minWidth:'103px;'}"
+                optionLabel="label"
+                optionValue="value" 
+                [(ngModel)]="dayOfWeek" 
+                defaultLabel="Chọn"
+                maxSelectedLabels = "12"
+            ></p-multiSelect>
+        </td>
+        <td class="vt-align-center w-25 mr-2 d-inline-block">
+            <p-dropdown
+                [disabled]="viewMode"
+                class="d-flex flex"
+                [panelStyle]="{ 'padding': '0.429em !important' }"
+                (onChange)="onChangeTypeQuarterAndOptionOrder()"
+                [optionLabel]="'name'"
+                [showClear]="true"
+                [options]="repeatcycleorder" [placeholder]="'placeholder.choose' | translate"
+                [(ngModel)]="cycleOrder">
+            </p-dropdown>
+        </td>
+        <td class="vt-align-center mr-2 d-inline-block"> tháng </td>
+        <td class="vt-align-center w-25 mr-2 d-inline-block">
+            <p-dropdown
+                [disabled]="viewMode"
+                class="d-flex flex"
+                (onChange)="onChangeTypeQuarterAndOptionOrder()"
+                [optionLabel]="'label'"
+                [showClear]="true"
+                [options]="monthOfQuarterly"
+                [placeholder]="'placeholder.choose' | translate"
+                [(ngModel)]="monthOfquarterlyOfOrder">
+            </p-dropdown>
+        </td>
+    </tr>
+    <tr>
+        <td *ngFor="let data of quarterlyOption" class="d-inline-flex vt-align-center p-2">
+            <p-checkbox [disabled]="viewMode" name="group1" [value]="data.value" [label]="data.label" [inputId]="index" [(ngModel)]="quarterNumberOfOrder" (onChange)="onChangeTypeQuarterAndOptionOrder()"></p-checkbox>
+        </td>
+    </tr>
+</div>
+
+<!-- Theo năm -->
+<div *ngIf="type=='NAM'" class="ui-g schedule-selector" style="margin-bottom:10px">
+    <tr class="ui-g-12 d-flex align-items-center w-100">
+        <td>
+            <p-radioButton [disabled]="viewMode" (onClick)="onChangeTypeYearAndOptionDay()" class="d-flex align-items-center mr-1 text-splicing" name="group2" value="1" label="Vào ngày: " [(ngModel)]="repeatOption" inputId="preopt1"></p-radioButton>
+        </td>
+        <td class="vt-align-center mr-2 d-inline-block">
+            <input [disabled]="viewMode" class="form-control" type="number" min="1" max="99" onKeyPress="if(this.value.length == 2) return false; return event.charCode >= 48" [(ngModel)]="dayOfMonth" (input)="onBlockZeros($event)" (change)="onChangeTypeYearAndOptionDay()">
+        </td>
+        <td class="vt-align-center mr-2 d-inline-block"> của tháng </td>
+        <td class="vt-align-center w-25 ">
+            <p-multiSelect 
+                [disabled]="viewMode"
+                (onChange)="onChangeTypeYearAndOptionDay()"
+                [options]="monthOfYear" 
+                [panelStyle]="{minWidth:'103px;'}"
+                optionLabel="name"
+                optionValue="id" 
+                [(ngModel)]="lstMonthOfYearByDay" 
+                defaultLabel="Chọn"
+                maxSelectedLabels = "12"
+            ></p-multiSelect>
+        </td>
+    </tr>
+    <tr class="ui-g-12 d-flex align-items-center mt-2 w-100">
+        <td>
+            <p-radioButton [disabled]="viewMode" (onClick)="onChangeTypeYearAndOptionOrder()" class="d-flex align-items-center mr-1 text-splicing" name="group2" value="2" label="Vào thứ: " [(ngModel)]="repeatOption" inputId="preopt2"></p-radioButton>
+        </td>
+        <td class="vt-align-center w-75 mr-3 d-inline-block">
+            <p-multiSelect 
+                [disabled]="viewMode"
+                class="d-flex flex"
+                (onChange)="onChangeTypeYearAndOptionOrder()"
+                [options]="weeklyOptions" 
+                [panelStyle]="{minWidth:'103px;'}"
+                optionLabel="label"
+                optionValue="value" 
+                [(ngModel)]="dayOfWeek" 
+                defaultLabel="Chọn"
+                maxSelectedLabels = "12"
+            ></p-multiSelect>
+        </td>
+        <td class="vt-align-center w-75 mr-2 d-inline-block">
+            <p-dropdown
+                [disabled]="viewMode"
+                (onChange)="onChangeTypeYearAndOptionOrder()"
+                class="d-flex flex"
+                [panelStyle]="{ 'padding': '0.429em !important' }"
+                [optionLabel]="'name'"
+                [showClear]="true"
+                [options]="repeatcycleorder" [placeholder]="'placeholder.choose' | translate"
+                [(ngModel)]="cycleOrder">
+            </p-dropdown>
+        </td>
+        <td class="vt-align-center mr-2 d-inline-block w-20"> của mỗi </td>
+        <td class="vt-align-center w-75 d-inline-block">
+            <p-multiSelect
+                [disabled]="viewMode"
+                class="d-flex flex" 
+                (onChange)="onChangeTypeYearAndOptionOrder()"
+                [options]="monthOfYear" 
+                [panelStyle]="{minWidth:'103px;'}"
+                optionLabel="name"
+                optionValue="id" 
+                [(ngModel)]="lstMonthOfYearByOrder" 
+                defaultLabel="Chọn"
+                maxSelectedLabels = "12"
+            ></p-multiSelect>
+        </td>
+    </tr>
+</div>

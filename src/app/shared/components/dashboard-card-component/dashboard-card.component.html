@@ -1,0 +1,13 @@
+<div class="card-dashboard card-dashboard-stat" #addColor [ngClass]="classColor">
+  <div class="card-dashboard-body">
+    <span class="card-dashboard-title">
+      <ng-content select=".card-dashboard-header"></ng-content>
+    </span>
+    <span class="stat-number">
+      <ng-content select=".card-dashboard-body"></ng-content>
+    </span>
+  </div>
+  <div class="card-dashboard-footer">
+    <ng-content select=".card-dashboard-footer"></ng-content>
+  </div>
+</div>

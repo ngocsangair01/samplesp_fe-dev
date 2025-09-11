@@ -1,0 +1,17 @@
+<svg id="Cán_bộ" data-name="Cán bộ" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="120" height="120" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.058" y1="0.044" x2="0.855" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#00c7be"/>
+      <stop offset="1" stop-color="#00645f"/>
+    </linearGradient>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_16092" data-name="Rectangle 16092" width="56" height="56" transform="translate(950 1487)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <rect id="Rectangle_13926" data-name="Rectangle 13926" width="120" height="120" rx="24" fill="url(#linear-gradient)"/>
+  <g id="Mask_Group_24460" data-name="Mask Group 24460" transform="translate(-918 -1455)" clip-path="url(#clip-path)">
+    <g id="user" transform="translate(953.492 1487)">
+      <path id="Path_84798" data-name="Path 84798" d="M24.444,27.936A13.968,13.968,0,1,0,10.476,13.968,13.967,13.967,0,0,0,24.444,27.936Zm9.778,3.492H32.4a19,19,0,0,1-15.911,0H14.666A14.67,14.67,0,0,0,0,46.095v4.54a5.239,5.239,0,0,0,5.238,5.238H43.65a5.239,5.239,0,0,0,5.238-5.238v-4.54A14.67,14.67,0,0,0,34.222,31.428Z" fill="#fff"/>
+    </g>
+  </g>
+</svg>

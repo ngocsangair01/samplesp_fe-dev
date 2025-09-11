@@ -1,0 +1,487 @@
+<div class="panel panel-default">
+  <form id="formSave" [formGroup]="formSave">
+    <div class="panel-heading vt-relative">
+      <strong class="text-u-c">
+        <i class="fa fa-th"></i>&nbsp;
+        <span *ngIf="!isUpdate" translate>vicinityPlan.vicinityPositionPlan.add</span>
+        <span *ngIf="isUpdate" translate>vicinityPlan.vicinityPositionPlan.update</span>
+      </strong>
+    </div>
+    <div class="panel-body padding-xl ui-g">
+      <div *ngIf="!isUpdate">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required" translate>
+            vicinityPlan.vicinityPositionPlan.unit
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <org-selector [property]="f['organizationId']" operationKey="action.view"
+              adResourceKey="resource.employeeManager" [defaultValue]="true" autoFocus="true"
+              [disabled]="isPutPlanning">
+            </org-selector>
+            <app-control-messages [control]="f['organizationId']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required" translate>
+            vicinityPlan.vicinityPositionPlan.planningTitle
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <data-picker [property]="f['positionId']" systemCode="political" operationKey="action.view"
+              adResourceKey="resource.employeeManager" objectBO="PositionBO" codeField="code" nameField="name"
+              selectField="positionId" [disabled]="isPutPlanning"
+              filterCondition="AND obj.position_code LIKE '%.%' AND LEFT(SUBSTR(obj.position_code,3),1) = 1">
+            </data-picker>
+            <app-control-messages [control]="f['positionId']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" translate>
+            vicinityPlan.vicinityPositionPlan.documents
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <data-picker [property]="f['documentId']" systemCode="political" operationKey="action.view"
+              adResourceKey="resource.employeeManager" objectBO="DocumentBO" nameField="documentName"
+              codeField="documentNumber" selectField="documentId" isNotSearchByOrgDomainData="true"
+              [disabled]="isPutPlanning" filterCondition="
+              AND document_type_id = 38
+              AND branch = 2
+              AND is_deleted = 0 ">
+            </data-picker>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required" translate>
+            vicinityPlan.vicinityPositionPlan.personnel
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <data-picker [property]="f['employeeId']" systemCode="political" operationKey="action.view"
+              adResourceKey="resource.employeeManager" objectBO="EmployeeBO" codeField="employeeCode"
+              nameField="fullName" emailField="email" selectField="employeeId" (onChange)="changeNote()"
+              [filterCondition]="filterConditionEmployee" isNotSearchByOrgDomainData="true"
+              mobileNumberField="mobileNumber">
+            </data-picker>
+            <app-control-messages [control]="f['employeeId']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required" translate>
+            vicinityPlan.vicinityPositionPlan.personnelClass
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3 nowrap">
+            <div class="form-check-inline">
+              <label class="i-checks" translate>
+                <input type="radio" class="form-check-input control-label" id="type_1" value="1" name="type"
+                  formControlName="type">
+                <i></i>
+                vicinityPlan.vicinityPositionPlan.currentNear
+              </label>
+            </div>
+            <div class="form-check-inline">
+              <label class="i-checks" translate>
+                <input type="radio" class="form-check-input control-label" id="type_2" value="2" name="type"
+                  formControlName="type">
+                <i></i>
+                vicinityPlan.vicinityPositionPlan.currentNextTo
+              </label>
+            </div>
+            <app-control-messages [control]="f['type']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required" translate>
+            vicinityPlan.vicinityPositionPlan.evaluateInfor
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-8">
+            <textarea formControlName="note" id="" cols="200" rows="6" class="form-control"></textarea>
+            <app-control-messages [control]="f['note']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required" translate>
+            vicinityPlan.vicinityPositionPlan.dayStart
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <date-picker [property]="f['startDate']">
+            </date-picker>
+            <app-control-messages [control]="f['startDate']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" translate>
+            vicinityPlan.vicinityPositionPlan.dayEnd
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <date-picker [property]="f['endDate']">
+            </date-picker>
+            <app-control-messages [control]="f['endDate']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required" translate>
+            vicinityPlan.vicinityPositionPlan.useObject
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3 nowrap">
+            <div class="form-check-inline" *ngFor="let item of objectOfUseList">
+              <label class="i-checks">
+                <input type="radio" class="form-check-input control-label" [id]="item.categoryId"
+                  [value]="item.categoryId" name="typeOfVicinity" formControlName="typeOfVicinity">
+                <i></i>
+                {{ item.name }}
+              </label>
+            </div>
+            <app-control-messages [control]="f['typeOfVicinity']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" translate>
+            vicinityPlan.vicinityPositionPlan.credibilityRatio
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-8">
+            <textarea type="text" rows="3" name="credibilityRatio" class="form-control"
+              formControlName="credibilityRatio" maxlength="500">
+            </textarea>
+            <app-control-messages [control]="f['credibilityRatio']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'common.label.note' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-8">
+            <textarea type="text" rows="3" name="description" class="form-control" formControlName="description"
+              maxlength="500">
+            </textarea>
+            <app-control-messages [control]="f['description']"></app-control-messages>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isUpdate">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" translate>
+            vicinityPlan.vicinityPositionPlan.unit
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="text" [attr.disabled]="true" formControlName="organizationName" name="organizationName"
+              class="form-control" maxlength="200">
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" translate>
+            vicinityPlan.vicinityPositionPlan.documents
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="text" [attr.disabled]="true" formControlName="documentName" name="documentName"
+              class="form-control" maxlength="200">
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" translate>
+            vicinityPlan.vicinityPositionPlan.planningTitle
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="text" [attr.disabled]="true" formControlName="positionName" name="positionName"
+              class="form-control" maxlength="200">
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" translate>
+            vicinityPlan.vicinityPositionPlan.documentNumber
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="text" [attr.disabled]="true" formControlName="documentNumber" name="documentNumber"
+              class="form-control" maxlength="200">
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" translate>
+            vicinityPlan.vicinityPositionPlan.personnel
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="text" [attr.disabled]="true" formControlName="fullName" name="fullName" class="form-control"
+              maxlength="200">
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required" translate>
+            vicinityPlan.vicinityPositionPlan.personnelClass
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3 nowrap">
+            <div class="form-check-inline">
+              <label class="i-checks" translate>
+                <input type="radio" [attr.disabled]="true" class="form-check-input control-label" id="type_0" value="0"
+                  name="type" formControlName="type">
+                <i></i>
+                vicinityPlan.vicinityPositionPlan.currentNow
+              </label>
+            </div>
+            <div class="form-check-inline">
+              <label class="i-checks" translate>
+                <input type="radio" [attr.disabled]="true" class="form-check-input control-label" id="type_1" value="1"
+                  name="type" formControlName="type">
+                <i></i>
+                vicinityPlan.vicinityPositionPlan.currentNear
+              </label>
+            </div>
+            <div class="form-check-inline">
+              <label class="i-checks" translate>
+                <input type="radio" [attr.disabled]="true" class="form-check-input control-label" id="type_2" value="2"
+                  name="type" formControlName="type">
+                <i></i>
+                vicinityPlan.vicinityPositionPlan.currentNextTo
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required" translate>
+            vicinityPlan.vicinityPositionPlan.evaluateInfor
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-8">
+            <textarea formControlName="note" id="" cols="200" rows="6" class="form-control"></textarea>
+            <app-control-messages [control]="f['note']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required" translate>
+            vicinityPlan.vicinityPositionPlan.dayStart
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <date-picker [property]="f['startDate']">
+            </date-picker>
+            <app-control-messages [control]="f['startDate']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" translate>
+            vicinityPlan.vicinityPositionPlan.dayEnd
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <date-picker [property]="f['endDate']">
+            </date-picker>
+            <app-control-messages [control]="f['endDate']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required" translate>
+            vicinityPlan.vicinityPositionPlan.useObject
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3 nowrap">
+            <div class="form-check-inline" *ngFor="let item of objectOfUseList">
+              <label class="i-checks">
+                <input type="radio" class="form-check-input control-label" [id]="item.categoryId"
+                  [value]="item.categoryId" name="typeOfVicinity" formControlName="typeOfVicinity">
+                <i></i>
+                {{ item.name }}
+              </label>
+            </div>
+            <app-control-messages [control]="f['typeOfVicinity']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" translate>
+            vicinityPlan.vicinityPositionPlan.credibilityRatio
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-8">
+            <textarea type="text" rows="3" name="credibilityRatio" class="form-control"
+              formControlName="credibilityRatio" maxlength="500">
+            </textarea>
+            <app-control-messages [control]="f['credibilityRatio']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'common.label.note' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-8">
+            <textarea type="text" rows="3" name="description" class="form-control" formControlName="description"
+              maxlength="500">
+          </textarea>
+            <app-control-messages [control]="f['description']"></app-control-messages>
+          </div>
+        </div>
+      </div>
+      <!-- Nhân sự kế cận -->
+      <div class="ui-g-12 vt-row">
+        <div class="border-tabpanel" style="margin-top: 20px; margin-bottom: 0px;">
+          <div id="headingOne" class="panel-heading" style="cursor: pointer;" data-toggle="collapse"
+            data-target="#educationPlanFormList" aria-expanded="false" aria-controls="educationPlanFormList">
+            <strong class="text-u-c" style="padding: 5px 20px 5px 15px;" translate>
+              <span class="glyphicon glyphicon-th" style="font-weight: normal; font-size: 11px !important;">
+                <i class="fa"></i>&nbsp;
+                vicinityPlan.vicinityPositionPlan.educationPlan
+              </span>
+            </strong>
+          </div>
+          <form id="educationPlanFormList" [formGroup]="educationPlanFormList" class="collapse"
+            aria-labelledby="headingOne" data-parent="#headingOne">
+            <div class="panel-body panel-table">
+              <p-table [scrollable]="false" [value]="educationPlanFormList.controls"
+                tableStyleClass="table controls-table table-wrapper b-t b-b">
+                <ng-template pTemplate="colgroup" let-columns>
+                  <colgroup>
+                    <col class="size-1">
+                    <col class="size-3">
+                    <col class="size-3">
+                    <col class="size-3">
+                    <col class="size-3">
+                    <col class="size-3">
+                    <col class="size-1">
+                  </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th translate>common.table.index</th>
+                    <th><span [ngClass]="'required'" translate>vicinityPlan.vicinityPositionPlan.fieldOfTraining</span>
+                    </th>
+                    <th><span [ngClass]="'required'" translate>vicinityPlan.vicinityPositionPlan.diplomaType</span></th>
+                    <th><span [ngClass]="'required'" translate>vicinityPlan.vicinityPositionPlan.yearStartPlan</span>
+                    </th>
+                    <th translate>employee360.educationProcess.edPlace</th>
+                    <th translate>vicinityPlan.vicinityPositionPlan.note</th>
+                    <th translate>common.label.action</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-index="rowIndex">
+                  <tr [formGroup]="item">
+                    <td class="vt-align-center">
+                      {{index+1}}
+                    </td>
+                    <td>
+                      <data-picker [property]="item.controls.categoryTypeId" systemCode="political"
+                        operationKey="action.view" adResourceKey="resource.employeeManager" objectBO="CategoryTypeBO"
+                        nameField="name" codeField="code" selectField="categoryTypeId" isNotSearchByOrgDomainData="true"
+                        (onChange)="getCategoryByType()" [filterCondition]="'AND obj.group_id = 1'">
+                      </data-picker>
+                      <app-control-messages [control]="item.controls.categoryTypeId"></app-control-messages>
+                    </td>
+                    <td>
+                      <select-filter [placeHolder]="'common.label.cboMustSelect'"
+                        [property]="item.controls.fieldOfTrainingId" [options]="categoryEducationList[index]"
+                        optionLabel="name" optionValue="categoryId">
+                      </select-filter>
+                      <app-control-messages [control]="item.controls.fieldOfTrainingId"></app-control-messages>
+                    </td>
+                    <td>
+                      <select-filter [placeHolder]="'common.label.cboMustSelect'"
+                        [property]="item.controls.yearStartPlan" [options]="yearLists" optionLabel="name"
+                        optionValue="id">
+                      </select-filter>
+                      <app-control-messages [control]="item.controls.yearStartPlan"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" formControlName="addressTraining" name="addressTraining" class="form-control"
+                        maxlength="200">
+                      <app-control-messages [control]="item.controls.addressTraining"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text-area" formControlName="description" name="description" class="form-control"
+                        maxlength="200">
+                      <app-control-messages [control]="item.controls.description"></app-control-messages>
+                    </td>
+                    <td class="vt-align-center">
+                      <button class="btn-icon plus" type="button" [title]="'titleAdd' | translate"
+                        (click)="addVicinityEmployeeRow(index)" [innerHTML]="'common.icon.plus' | translate">
+                      </button>
+                      <button class="btn-icon minus" type="button" [title]="'titleDelete' | translate"
+                        (click)="removeVicinityEmployeeRow(index)" [innerHTML]="'common.icon.minus' | translate">
+                      </button>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Nhân sự kế tiếp -->
+      <div class="ui-g-12 vt-row">
+        <div class="border-tabpanel" style="margin-top: 20px; margin-bottom: 0px;">
+          <div id="headingTwo" class="panel-heading" style="cursor: pointer;" data-toggle="collapse"
+            data-target="#transferEmployeePlanFormList" aria-expanded="false"
+            aria-controls="transferEmployeePlanFormList">
+            <strong class="text-u-c" style="padding: 5px 20px 5px 15px;" translate>
+              <span class="glyphicon glyphicon-th" style="font-weight: normal; font-size: 11px !important;">
+                <i class="fa fa-th"></i>&nbsp;
+                vicinityPlan.vicinityPositionPlan.transferEmployeePlan
+              </span>
+            </strong>
+          </div>
+          <form id="transferEmployeePlanFormList" [formGroup]="transferEmployeePlanFormList" class="collapse"
+            aria-labelledby="headingTwo" data-parent="#headingTwo">
+            <div class="panel-body panel-table">
+              <p-table [scrollable]="false" [value]="transferEmployeePlanFormList.controls"
+                tableStyleClass="table controls-table table-wrapper b-t b-b">
+                <ng-template pTemplate="colgroup" let-columns>
+                  <colgroup>
+                    <col class="size-1">
+                    <col class="size-3">
+                    <col class="size-3">
+                    <col class="size-3">
+                    <col class="size-3">
+                    <col class="size-3">
+                    <col class="size-1">
+                  </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th translate>common.table.index</th>
+                    <th><span [ngClass]="'required'" translate>common.label.title</span></th>
+                    <th><span [ngClass]="'required'" translate>vicinityPlan.vicinityPositionPlan.timeMove</span></th>
+                    <th><span [ngClass]="'required'" translate>vicinityPlan.vicinityPositionPlan.yearPlan</span></th>
+                    <th><span [ngClass]="'required'" translate>common.label.unit</span></th>
+                    <th translate>vicinityPlan.vicinityPositionPlan.noteWhere</th>
+                    <th translate>common.label.action</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-index="rowIndex">
+                  <tr [formGroup]="item">
+                    <td class="vt-align-center">
+                      {{index+1}}
+                    </td>
+                    <td>
+                      <data-picker [property]="item.controls.positionId" systemCode="political"
+                        operationKey="action.view" adResourceKey="resource.employeeManager" objectBO="PositionBO"
+                        codeField="code" nameField="name" selectField="positionId"
+                        filterCondition="AND obj.position_code LIKE '%.%' AND LEFT(SUBSTR(obj.position_code,3),1) = 1">
+                      </data-picker>
+                      <app-control-messages [control]="item.controls.positionId"></app-control-messages>
+                    </td>
+                    <td>
+                      <select-filter [placeHolder]="'common.label.cboMustSelect'"
+                        [property]="item.controls.transferTimeId" [options]="transferTimeList" optionLabel="name"
+                        optionValue="categoryId">
+                      </select-filter>
+                      <app-control-messages [control]="item.controls.transferTimeId"></app-control-messages>
+                    </td>
+                    <td>
+                      <select-filter [placeHolder]="'common.label.cboMustSelect'"
+                        [property]="item.controls.yearStartPlan" [options]="yearLists" optionLabel="name"
+                        optionValue="id">
+                      </select-filter>
+                      <app-control-messages [control]="item.controls.yearStartPlan"></app-control-messages>
+                    </td>
+                    <td>
+                      <org-selector [property]="item.controls.organizationId" operationKey="action.view"
+                        adResourceKey="resource.employeeManager" autoFocus="false">
+                      </org-selector>
+                      <app-control-messages [control]="item.controls.organizationId"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text-area" formControlName="description" name="description" class="form-control"
+                        maxlength="200">
+                      <app-control-messages [control]="item.controls.description"></app-control-messages>
+                    </td>
+                    <td class="vt-align-center">
+                      <button class="btn-icon plus" type="button" [title]="'titleAdd' | translate"
+                        (click)="addNextEmployeeRow(index, item)" [innerHTML]="'common.icon.plus' | translate">
+                      </button>
+                      <button class="btn-icon minus" type="button" [title]="'titleDelete' | translate"
+                        (click)="removeNextEmployeeRow(index, item)" [innerHTML]="'common.icon.minus' | translate">
+                      </button>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer vt-area-button">
+      <button type="submit" (click)="processSaveOrUpdate()" class="btn btn-sm btn-info"
+        [innerHTML]="'common.button.icon.save' | translate"></button>
+      <button type="button" (click)="goBack()" class="btn btn-sm btn-danger"
+        [innerHTML]="'common.button.out' | translate"></button>
+    </div>
+  </form>
+</div>
+<div *ngIf="!hasPermission('action.update') || !hasPermission('action.insert')">
+  {{'common.haveNoPermission' | translate}}
+</div>

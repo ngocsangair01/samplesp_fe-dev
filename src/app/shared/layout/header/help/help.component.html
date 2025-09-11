@@ -1,0 +1,58 @@
+<!-- <div id="header-search">
+  <div class="vt-relative">
+    <div class="display-table">
+      <div class="table-cell" ngbDropdown placement="bottom-right" >
+        <div>
+          <a class="btn-header btn-arrow-down" ngbDropdownToggle>
+            <span class="warning-icon-header">
+              <span class="font-icon bg-danger ng-star-inserted" style="position: relative;">
+                <i class="glyphicons glyphicons-question-sign" title="{{'app.help.title' | translate}}"></i>
+              </span>
+            </span>
+          </a>
+        </div>
+
+        <div ngbDropdownMenu class="panel panel-default dropdown-menu-codition help-css">
+          <div class=" panel-heading col-sm-12 col-md-12 col-xs-12 warning-block">
+            <strong class="text-u-c">
+              <span class="glyphicons glyphicons-question-sign glyphicon glyphicon-th">
+              </span>
+              <span translate>&nbsp;app.help.title</span>
+            </strong>
+          </div>
+
+          <div class="panel-body">
+            <iframe [src]="this.url" class="iframe-body"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div> -->
+
+<div>
+  <a data-toggle="modal" data-target="#helpModal" (click)="openModal()">
+    <img src="./../../../../assets/images/home/huong_dan.svg" alt="" style="height: 17px; width: 17px; margin-top: 6px;">
+  </a>
+</div>
+<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <span class="modal-title">Hướng dẫn</span>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">
+                <svg class="close-icon" viewBox="230 30 8 8">
+                  <path d="M 234.9389953613281 33.9994010925293 L 237.8029937744141 31.14179992675781 C 238.0639953613281 30.88059997558594 238.0639953613281 30.45709991455078 237.8029937744141 30.19589996337891 C 237.5420074462891 29.93470001220703 237.1179962158203 29.93470001220703 236.8569946289062 30.19589996337891 L 234 33.06019973754883 L 231.1430053710938 30.19589996337891 C 230.8820037841797 29.93470001220703 230.4579925537109 29.93470001220703 230.1970062255859 30.19589996337891 C 229.9360046386719 30.45709991455078 229.9360046386719 30.88059997558594 230.1970062255859 31.14179992675781 L 233.0610046386719 33.9994010925293 L 230.1970062255859 36.85710144042969 C 230.0709991455078 36.98220062255859 230 37.15240097045898 230 37.33000183105469 C 230 37.50759887695312 230.0709991455078 37.67789840698242 230.1970062255859 37.80300140380859 C 230.3220062255859 37.92910003662109 230.4920043945312 38 230.6699981689453 38 C 230.8470001220703 38 231.0180053710938 37.92910003662109 231.1430053710938 37.80300140380859 L 234 34.93870162963867 L 236.8569946289062 37.80300140380859 C 236.9819946289062 37.92910003662109 237.1529998779297 38 237.3300018310547 38 C 237.5079956054688 38 237.6779937744141 37.92910003662109 237.8029937744141 37.80300140380859 C 237.9290008544922 37.67789840698242 238 37.50759887695312 238 37.33000183105469 C 238 37.15240097045898 237.9290008544922 36.98220062255859 237.8029937744141 36.85710144042969 L 234.9389953613281 33.9994010925293 Z">
+                  </path>
+                </svg>
+              </span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <iframe [src]="this.url" class="iframe-body"></iframe>
+          </div>
+      </div>
+  </div>
+</div>

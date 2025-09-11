@@ -1,0 +1,294 @@
+<div id="searchPage">
+  <div id="searchArea">
+      <div class="panel panel-default">
+          <div class="panel-heading" translate>
+              <strong>
+                  common.label.search_form
+              </strong>
+          </div>
+          <form id="formSearch" [formGroup]="formSearch">
+              <div *ngIf="!isMobileScreen" class="panel-body padding-xl ui-g" style="border-left: 1px solid #D7E2E3; border-right: 1px solid #D7E2E3; border-radius: unset;">
+                <div class="ui-g-12 vt-row">
+                    <!--   Ky de xuat         -->
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                        {{'assessmentPeriod.name' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <select-filter
+                                [property]="f['assessmentPeriodId']"
+                                [options]="assessmentList"
+                                optionLabel="assessmentPeriodName"
+                                optionValue="assessmentPeriodId"
+                                [placeHolder]="'placeholder.choose'"
+                                (onChange)="onChangeAssessmentPeriod($event)"
+                        >
+                        </select-filter>
+                        <app-control-messages [control]="f['assessmentPeriodId']"></app-control-messages>
+                    </div>
+                    <!--  Cấp đánh giá  -->
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                        {{'assessment.evaluating.level' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <select-filter
+                                [property]="f['assessmentOrder']"
+                                [options]="assessmentLevelList"
+                                optionLabel="assessmentLevelName"
+                                optionValue="assessmentOrder"
+                                [placeHolder]="'placeholder.all'">
+                        </select-filter>
+                        <app-control-messages [control]="f['assessmentOrder']"></app-control-messages>
+                    </div>
+                </div>
+
+                  <div class="ui-g-12 vt-row">
+                        <!-- trạng thái -->
+                        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                            {{'assessment.monitor.status' | translate}}
+                        </label>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <select-filter
+                                [property]="f['status']"
+                                [options]="optionAssessmentStatus"
+                                optionLabel="label"
+                                [placeHolder]="'placeholder.all'"
+                                optionValue="value">
+                            </select-filter>
+                            <app-control-messages [control]="f['status']"></app-control-messages>
+                        </div>
+
+                      <!--   Đúng hạn/ quá hạn -->
+                        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                            {{'assessment.monitor.sign.status' | translate}}
+                        </label>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <select-filter
+                                [property]="f['completeStatus']"
+                                [options]="optionAssessmentSignStatus"
+                                optionLabel="label"
+                                optionValue="value"
+                                [placeHolder]="'placeholder.all'">
+                            </select-filter>
+                            <app-control-messages [control]="f['completeStatus']"></app-control-messages>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="isMobileScreen" class="panel-body padding-xl ui-g" style="border-left: 1px solid #D7E2E3; border-right: 1px solid #D7E2E3; border-radius: unset;">
+                    <div class="ui-g-12 vt-row">
+                        <!--   Ky de xuat         -->
+                        <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+                            {{'assessmentPeriod.name' | translate}}
+                        </label>
+                        <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+                            <select-filter
+                                    [property]="f['assessmentPeriodId']"
+                                    [options]="assessmentList"
+                                    optionLabel="assessmentPeriodName"
+                                    optionValue="assessmentPeriodId"
+                                    [placeHolder]="'placeholder.choose'"
+                                    (onChange)="onChangeAssessmentPeriod($event)"
+                            >
+                            </select-filter>
+                            <app-control-messages [control]="f['assessmentPeriodId']"></app-control-messages>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 vt-row">
+                        <!--  Cấp đánh giá  -->
+                        <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+                            {{'assessment.evaluating.level' | translate}}
+                        </label>
+                        <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+                            <select-filter
+                                    [property]="f['assessmentOrder']"
+                                    [options]="assessmentLevelList"
+                                    optionLabel="assessmentLevelName"
+                                    optionValue="assessmentOrder"
+                                    [placeHolder]="'placeholder.all'">
+                            </select-filter>
+                            <app-control-messages [control]="f['assessmentOrder']"></app-control-messages>
+                        </div>
+                    </div>
+    
+                    <div class="ui-g-12 vt-row">
+                        <!-- trạng thái -->
+                        <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+                            {{'assessment.monitor.status' | translate}}
+                        </label>
+                        <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+                            <select-filter
+                                [property]="f['status']"
+                                [options]="optionAssessmentStatus"
+                                optionLabel="label"
+                                [placeHolder]="'placeholder.all'"
+                                optionValue="value">
+                            </select-filter>
+                            <app-control-messages [control]="f['status']"></app-control-messages>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 vt-row">
+                        <!--   Đúng hạn/ quá hạn -->
+                        <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+                            {{'assessment.monitor.sign.status' | translate}}
+                        </label>
+                        <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-3">
+                            <select-filter
+                                [property]="f['completeStatus']"
+                                [options]="optionAssessmentSignStatus"
+                                optionLabel="label"
+                                optionValue="value"
+                                [placeHolder]="'placeholder.all'">
+                            </select-filter>
+                            <app-control-messages [control]="f['completeStatus']"></app-control-messages>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer vt-area-button">
+                    <button type="submit" class="btn btn-sm vt-btn btn-submit" (click)="processSearch()"
+                        [innerHTML]="'common.button.icon.search' | translate"></button>
+                  <!-- <button type="submit" class="btn btn-sm btn-info" (click)="processExport()"
+                          [innerHTML]="'assessmentMonitor.button.table.export' | translate" > </button> -->
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="listArea">
+        <div class="panel panel-default">
+        <!--grid-->
+        <div class="panel-heading vt-relative">
+            <strong>
+                {{'assessment.assessmentPeriodStaffList' | translate}}
+            </strong>
+            <div class="show-btn-right-header">
+                <button type="submit" class="btn btn-sm vt-btn" (click)="processExportSynthesis()"
+                        [innerHTML]="'common.button.icon.exportTotal' | translate" ></button>
+                <!-- Xuất bản ký tổng hợp cấp chi bộ đã hoàn thành -->
+                <button class="btn btn-sm vt-btn" (click)="exportSignSynthetic()"
+                        [innerHTML]="'common.button.icon.exportSignSynthetic' | translate">
+                </button>
+            </div>
+        </div>
+        <div class="panel-body panel-table">
+            <p-table
+                #ptable
+                [value]="resultList.data"
+                [paginator]="true"
+                (onLazyLoad)="processSearch($event)"
+                [lazy]="true" [rows]="50"
+                [totalRecords]="resultList.recordsTotal"
+                [lazyLoadOnInit]="false"
+                tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+                [resizableColumns]="true"
+                styleClass="controlOverflow"
+                scrollable="true">
+                <ng-template pTemplate="colgroup" let-columns>
+                    <colgroup class="ng-star-inserted">
+                        <col style="width: 50px;">
+                        <col style="width: 50px;">
+                        <col style="width: 200px;">
+                        <col style="width: 100px;">
+                        <col style="width: 100px;">
+                        <col style="width: 100px;">
+                        <col style="width: 100px;">
+                        <col style="width: 100px;">
+                        <col style="width: 100px;">
+                        <col style="width: 100px;">
+                        <col style="width: 100px;">
+                        <col style="width: 100px;">
+                    </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pResizableColumn></th>
+                        <th translate pResizableColumn>common.table.index</th>
+                        <th pResizableColumn>{{'organization.label.name' | translate}}</th>
+                        <th pResizableColumn>{{'assessmentMonitor.levelListMapping' | translate}}</th>
+                        <th pResizableColumn>{{'assessmentMonitor.evaluate' | translate}}</th>
+                        <th pResizableColumn>{{'assessmentMonitor.made' | translate}}</th>
+                        <th pResizableColumn>{{'assessmentMonitor.unfulfilled' | translate}}</th>
+                        <th pResizableColumn>{{'assessmentMonitor.ratio' | translate}}</th>
+                        <th pResizableColumn>{{'assessmentPartyOrganization.titleField.status' | translate}}</th>
+                        <th pResizableColumn>{{'assessmentPeriod.assessmentLevelList.assessmentDeadlineDate' | translate}}</th>
+                        <th pResizableColumn>{{'assessmentMonitor.assessmentLevelList.assessmentDeadlineDate' | translate}}</th>
+                        <th pResizableColumn>{{'assessment.monitor.sign.status' | translate}}</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                    <tr>
+                        <td class="vt-align-center" style="overflow: initial !important;">
+                            <div ngbDropdown class="d-inline-block">
+                                <div ngbDropdownToggle class="vt-action-hover">
+                                    <img class="menu-icon" src="./../../../assets/images/home/Icon.svg">
+                                </div>
+                                <div ngbDropdownMenu class="vt-border-radius">
+                                    <!-- Danh sách chưa hoàn thành -->
+                                    <div>
+                                        <button class="dropdown-item" (click)="actionSlacking(item)"
+                                                    [innerHTML]="'common.button.icon.NotList' | translate">
+                                    </button>
+                                    </div>
+                                    <!-- Gửi nhắc nhở -->
+                                    <div>
+                                        <button class="dropdown-item" (click)="openSendReminder()"
+                                            [innerHTML]="'common.button.icon.SendReminder' | translate">
+                                        </button>
+                                    </div>
+                                    <!-- Xuất báo cáo tổng hợp-->
+                                    <div>
+                                        <button class="dropdown-item" (click)="processExport(item)"
+                                            [innerHTML]="'common.button.icon.exportTotal2' | translate">
+                                        </button>
+                                    </div>
+                                    <!-- Xuất bản tổng hợp -->
+                                    <div>
+                                        <button class="dropdown-item" (click)="processExportSumUp(item)"
+                                          [innerHTML]="'common.button.icon.exportSumUp' | translate">
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="vt-align-center">{{index}}</td>
+                        <td class="vt-align-left">{{item.partyOrganizationName}}</td>
+                        <td class="vt-align-left">
+                            <span *ngIf="item.assessmentOrder == 1">Cấp cá nhân đánh giá</span>
+                            <span *ngIf="item.assessmentOrder == 2">Cấp quản lý trực tiếp</span>
+                            <span *ngIf="item.assessmentOrder == 3">Cấp chi bộ</span>
+                            <span *ngIf="item.assessmentOrder == 4">Cấp đảng bộ phận</span>
+                            <span *ngIf="item.assessmentOrder == 5">Cấp đảng bộ cơ sở</span>
+                            <span *ngIf="item.assessmentOrder == 6">Cấp đảng bộ trên cấp cơ sở</span>
+                        </td>
+                        <td class="vt-align-center">{{item.countTotal}}</td>
+                        <td class="vt-align-center">{{item.countDone}}</td>
+                        <td class="vt-align-center">{{item.unfinished}}</td>
+                        <td class="vt-align-center">{{item.completedPercent}}%</td>
+                        <td class="vt-align-left">
+                            <span *ngIf="item.completedPercent == 0">Chưa thực hiện</span>
+                            <span *ngIf="item.completedPercent > 0 && item.completedPercent < 100">Đang thực hiện</span>
+                            <span *ngIf="item.completedPercent == 100">Đã hoàn thành</span>
+                        </td>
+                        <td class="vt-align-center">{{item.assessmentCompleteDate | displayDate}}</td>
+                        <td class="vt-align-center">
+                            <span *ngIf="item.completedPercent == 100">{{item.maxCompleteDate | displayDate}}</span>
+                        </td>
+                        <td class="vt-align-left">
+                            <span *ngIf="item.assessmentCompleteDate >= item.maxCompleteDate && item.completedPercent == 100">Đúng hạn</span>
+                            <span *ngIf="(!item.maxCompleteDate && item.toDay > item.assessmentCompleteDate)
+                                || item.maxCompleteDate > item.assessmentCompleteDate
+                                || (item.completedPercent != 100 && item.toDay > item.assessmentCompleteDate)">Quá hạn</span>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr class="emptymessage">
+                        <td [attr.colspan]="50" [innerHTML]="'app.noRecords' | translate">
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="paginatorleft">
+                    <table-footer (changeRow)="onTablePageChange($event)" [resultList]="resultList"></table-footer>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+  </div>
+</div>

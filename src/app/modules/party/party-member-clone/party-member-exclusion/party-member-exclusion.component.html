@@ -1,0 +1,170 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong class="text-u-c">
+            <i class="fa fa-th"></i>
+            {{'partyExclusion.party' | translate}}
+        </strong>
+    </div>
+    <form id="formPartyMemberExclusion" [formGroup]="formPartyMemberExclusion">
+        <div class="panel-body padding-xl ui-g">
+            <div class="ui-g-12 vt-row">
+                <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                    {{'label.exe.req.employee' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <data-picker 
+                        [property]="f['employeeId']" 
+                        systemCode="political" 
+                        operationKey="action.view"
+                        adResourceKey="resource.partyMember" 
+                        objectBO="EmployeeBO" 
+                        codeField="employeeCode"
+                        nameField="fullName" 
+                        emailField="email"
+                        mobileNumberField="mobileNumber"
+                        selectField="employeeId"
+                        isNotSearchByOrgDomainData="true"
+                        (onChange)="onChangeInforEmployee()"
+                    >
+                    </data-picker>
+                    <app-control-messages [control]="f['employeeId']"></app-control-messages>
+                </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+                <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                    {{'PartyMemberBO.memberName' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <input type="text" class="form form-control" name="fullName" formControlName="fullName"
+                        maxlength="200" [attr.disabled]="true">
+                    <app-control-messages [control]="f['fullName']"></app-control-messages>
+                </div>
+                <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                    {{'partymember.startdate.label' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <input type="text" class="form form-control" name="partyOfficialAdmissionDate" formControlName="partyOfficialAdmissionDate"
+                        maxlength="200" [attr.disabled]="true">
+                    <app-control-messages [control]="f['partyOfficialAdmissionDate']"></app-control-messages>
+                </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+                <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                    {{'common.label.title' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <input type="text" class="form form-control" name="positionName" formControlName="positionName"
+                        maxlength="200" [attr.disabled]="true">
+                    <app-control-messages [control]="f['positionName']"></app-control-messages>
+                </div>
+                <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                    {{'label.document.face' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <input type="text" class="form form-control" name="empTypeName" formControlName="empTypeName"
+                        maxlength="200" [attr.disabled]="true">
+                    <app-control-messages [control]="f['empTypeName']"></app-control-messages>
+                </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+                <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                    {{'label.employee.dateOfBirth' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <input type="text" class="form form-control" name="dateOfBirth" formControlName="dateOfBirth"
+                        maxlength="200" [attr.disabled]="true">
+                    <app-control-messages [control]="f['dateOfBirth']"></app-control-messages>
+                </div>
+                <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                    {{'app.curriculumVitae.gender' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <input type="text" class="form form-control" name="genderName" formControlName="genderName"
+                        maxlength="200" [attr.disabled]="true">
+                    <app-control-messages [control]="f['genderName']"></app-control-messages>
+                </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+                <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                    {{'partyExclusion.personalIdNumber' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <input type="text" class="form form-control" name="personalIdNumber" formControlName="personalIdNumber" maxlength="200" [attr.disabled]="true">
+                    <app-control-messages [control]="f['personalIdNumber']"></app-control-messages>
+                </div>
+                <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                    {{'common.label.phoneNumber' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <input type="text" class="form form-control" name="phoneNumber" formControlName="phoneNumber"
+                        maxlength="200" [attr.disabled]="true">
+                    <app-control-messages [control]="f['phoneNumber']"></app-control-messages>
+                </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+                <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                    {{'partyExclusion.documentNumber.exclusion' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <!-- <data-picker 
+                        [property]="f['documentId']" 
+                        systemCode="political" 
+                        operationKey="action.view"
+                        adResourceKey="resource.document" 
+                        objectBO="DocumentBO" 
+                        nameField="documentName"
+                        codeField="documentNumber" 
+                        selectField="documentId"
+                        [disabled]="true"
+                    >
+                    </data-picker> -->
+                    <input type="text" 
+                    class="form form-control" 
+                    name="documentNumber" 
+                    formControlName="documentNumber" 
+                    maxlength="50" 
+                    [autoFocus]="true"
+                  >
+                    <app-control-messages [control]="f['documentNumber']"></app-control-messages>
+                </div>
+                <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                    {{'partyExclusion.exclusion.actionDate' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <date-picker 
+                        [property]="f['actionDate']" [dateValue] = "dateValue">
+                    </date-picker>
+                    <!-- <app-control-messages [control]="f['actionDate']"></app-control-messages> -->
+                </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+                <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                  {{'profile.table.filedk' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                  <file-chooser 
+                    [property]="f['files']" 
+                    validMaxSize="50"
+                    validType="png,jpg,gif,tiff,bmp,xls,xlsx,doc,docx,pdf,mp4"
+                    >
+                  </file-chooser>
+                </div>
+              </div>
+            <div class="ui-g-12 vt-row">
+                <label class= "ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                    {{'partyExclusion.exclusion.reason' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-6 ui-lg-9">
+                  <textarea formControlName="reason" id="reason" cols="200" rows="6" class="form-control"></textarea>
+                  <app-control-messages [control]="f['reason']"></app-control-messages>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer vt-area-button">
+            <button type="submit" class="btn btn-sm btn-info" (click)="exclusion()"
+                [innerHTML]="'common.button.icon.save' | translate"></button>
+            <button type="button" class="btn btn-sm btn-danger" (click)="goBack()"
+                [innerHTML]="'common.button.out' | translate"></button>
+        </div>
+    </form>
+</div>

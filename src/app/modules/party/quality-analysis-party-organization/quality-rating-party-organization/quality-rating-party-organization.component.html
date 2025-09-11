@@ -1,0 +1,66 @@
+<div id="listArea">
+    <div class="panel panel-default card-info">
+      <div class="panel-heading vt-relative">
+        <strong>
+          <span class="ml-2 title-info">{{'qualityAnalysis.listQualityRatingPartyOrg' | translate}}</span>
+        </strong>
+      </div>
+      <div class="panel-body panel-table" style="padding: 32px 12px 12px 12px;">
+        <p-table
+          #ptable
+          [value]="resultList.data"
+          [paginator]="true"
+          (onLazyLoad)="processSearch($event)"
+          [lazy]="true" [rows]="changeRow"
+          [totalRecords]="resultList.recordsTotal"
+          [scrollable]="true"
+          [lazyLoadOnInit]="false"
+          tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+          [resizableColumns]="true"
+        >
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col style="width: 50px;">
+              <col style="width: 100px;">
+              <col style="width: 200px;">
+              <col >
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th translate pResizableColumn>common.table.index</th>
+              <th [pSortableColumn]="'year'" pResizableColumn>
+                {{'lable.workprocess.year' | translate}}
+                <p-sortIcon [field]="'year'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'qualityRatingName'" pResizableColumn>
+                {{'qualityAnalysis.qualityRating' | translate}}
+                <p-sortIcon [field]="'qualityRatingName'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'otherOrgBonus'" pResizableColumn>
+                {{'qualityAnalysis.otherOrgBonus' | translate}}
+                <p-sortIcon [field]="'otherOrgBonus'"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+            <tr>
+              <td class="vt-align-center">{{index}}</td>
+              <td class="vt-align-center">{{item.year}}</td>
+              <td class="vt-align-left">{{item.qualityRatingName}}</td>
+              <td class="vt-align-left">{{item.otherOrgBonus}}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr class="emptymessage">
+              <td [attr.colspan]="10" [innerHTML]="'app.noRecords' | translate">
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft">
+            <table-footer (changeRow)="onTablePageChange($event)" [resultList]="resultList"></table-footer>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+<div *ngIf="hasPermission('action.view')">
+    <commit-to-comply-tet-search></commit-to-comply-tet-search>
+</div>
+<div *ngIf="!hasPermission('action.view')" translate>
+    common.haveNoPermission
+</div>

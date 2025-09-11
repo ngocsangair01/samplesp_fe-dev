@@ -1,0 +1,97 @@
+<form id="formSave" [formGroup]="formRewardGroup">
+  <div class="panel-body panel-table" style="padding: 0px 12px 12px 12px;">
+    <p-table [value]="formRewardGroup.controls" [paginator]="true" [resizableColumns]="true"  [scrollable]="true"
+    [first]="firstRowIndex" [rows]="pageSize" [totalRecords]="formRewardGroup.controls.length"
+      tableStyleClass="table controls-table table-wrapper b-t b-b">
+      <div class="tbl-panel">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col style="width: 50px;">
+            <col *ngIf="!isView && !isApprove && !isRefuse" style="width: 50px;">
+            <col style="width: 100px;">
+            <col style="width: 150px;">
+            <col style="width: 150px;">
+            <col style="width: 150px;">
+            <col style="width: 100px;">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn translate>common.table.index</th>
+            <th pResizableColumn translate *ngIf="!isView && !isApprove && !isRefuse"><span>common.label.action</span></th>
+            <!-- nhập phôi khen thưởng -->
+            <th pResizableColumn translate><span class="required">rewardCategory.rewardCategoryEmbryo</span></th>
+            <!-- Ngày bắt đầu -->
+            <th pResizableColumn translate><span class="required">common.label.effectiveDate</span></th>
+            <!-- Ngày kết thúc -->
+            <th pResizableColumn translate><span>common.label.expiredDate</span></th>
+            <!-- Ngày kết thúc -->
+            <th pResizableColumn translate><span>common.label.parameter</span></th>
+            <!-- Check maxlength --> 
+            <th pResizableColumn translate><span>common.label.maxlength</span></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-index="rowIndex">
+          <tr [formGroup]="item">
+            <td class="vt-align-center">
+              {{index+1}}
+            </td>
+            <td class="vt-align-center" *ngIf="!isView && !isApprove && !isRefuse">
+              <button class="btn-icon minus" type="button" (click)="remove(index, item)"
+                [innerHTML]="'common.icon.minus' | translate">
+              </button>
+            </td>
+            <!-- Import file -->
+            <td  class="vt-align-center" >
+              <file-chooser
+                [property]="item.controls.attachedFiles"
+                [htmlId]="'attachedFiles' + index"
+                validMaxSize="50"
+                validType="docx"
+                [disabled]="isView"
+              >
+              </file-chooser>
+              <app-control-messages [control]="item.controls.attachedFiles"></app-control-messages>
+            </td>
+            <!-- Ngày bắt đầu -->
+            <td  class="vt-align-center" >
+              <date-picker
+                [property]="item.controls.effectiveDate" [disabled]="isView" appendTo="body"
+                [minDate]="null"
+                [maxDate]="null"
+                (onChanged)="onSelect()"
+                >
+              </date-picker>
+              <app-control-messages [control]="item.controls.effectiveDate"></app-control-messages>
+            </td>
+            <!-- Ngày kết thúc -->
+            <td  class="vt-align-center" >
+              <date-picker
+                [property]="item.controls.expritedDate" [disabled]="isView" appendTo="body"
+                [minDate]="null"
+                [maxDate]="null"
+                (onChanged)="onSelect()"
+                >
+              </date-picker>   
+              <app-control-messages [control]="item.controls.expritedDate"></app-control-messages>
+            </td>
+            <!-- Danh sách tham số -->
+            <td  class="vt-align-center" >
+              <textarea type="text" rows="3" name="parameters" class="form-control" formControlName="parameters" maxlength="2000">
+              </textarea>
+              <app-control-messages [control]="item.controls.parameters"></app-control-messages>
+            </td>
+            <!-- Max maxlength-->
+            <td  class="vt-align-center">
+              <input type="text" name="maxLength" class="form-control" formControlName="maxLength" maxlength="255">
+              <app-control-messages [control]="item.controls.maxLength"></app-control-messages>
+            </td>
+          </tr>
+        </ng-template>
+      </div>
+    </p-table>
+  </div>
+</form>
+<button *ngIf="!isView && !isApprove && !isRefuse" class="btn-icon plus" type="button" [title]="'titleAdd' | translate"
+  (click)="add()" [innerHTML]="'common.icon.plus' | translate" style="margin-left: 1.2rem;">
+</button>

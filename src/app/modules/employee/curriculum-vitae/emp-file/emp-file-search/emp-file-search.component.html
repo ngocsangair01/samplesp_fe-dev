@@ -1,0 +1,151 @@
+<div class="card-emp">
+  <div id="fileHardCopyUploadLst" class="card card-info">
+    <div class="card-header">
+      <div>
+        <img class="header-icon" [ngClass]="{'transform-icon': hideFileHardCopyUploadLst === true}" src="./../../../../../../assets/images/home/Group_18932.png" (click)="hideFileHardCopyUploadLst = !hideFileHardCopyUploadLst">
+        {{'employeeProfile.uploadRequire' | translate}}
+      </div>
+    </div>
+    <div *ngIf="!hideFileHardCopyUploadLst" class="card-body">
+      <div *ngIf="!isMobileScreen" class="panel-body padding-xl ui-g">
+        <div class="ui-g-4" *ngFor="let item of listRequire">
+          <span><b>- {{item.name}}</b></span>
+        </div>
+      </div>
+      <div *ngIf="isMobileScreen" class="panel-body padding-xl ui-g">
+        <div class="ui-g-6" *ngFor="let item of listRequire">
+          <span><b>- {{item.name}}</b></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="resultList" class="card card-info">
+    <div class="card-header">
+      <div>
+        <img class="header-icon" [ngClass]="{'transform-icon': hideResultList === true}" src="./../../../../../../assets/images/home/Group_18932.png" (click)="hideResultList = !hideResultList">
+        <span translate>listEmployeeProfile.list</span>
+        <div class="vt-shotcut-button-in-heading">
+          <button type="button" *ngIf="hasPermission('action.import')" (click)="importProfile()" class="btn btn-sm vt-btn"
+            [innerHTML]="'common.button.icon.importProfile' | translate" style="margin-right: 10px;"></button>
+          <button type="button" *ngIf="hasPermission('action.export')" (click)="processExportProfile()" class="btn btn-sm vt-btn"
+            [innerHTML]="'common.button.icon.exportProfile' | translate" style="margin-right: 10px;"></button>
+          <button type="button" *ngIf="hasPermission('action.insert')" (click)="prepareSaveOrUpdate()" class="btn btn-sm vt-btn btn-submit"
+            [innerHTML]="'common.button.icon.addNew' | translate" style="margin-right: 10px;"></button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!hideResultList" class="card-body">
+      <div class="panel-body panel-table">
+        <p-table 
+          #pTable 
+          [value]="resultList.data" 
+          (onLazyLoad)="processSearch($event)" 
+          [lazy]="true" 
+          [rows]="resultList.recordsTotal" 
+          [totalRecords]="resultList.recordsTotal"
+          [scrollable]="true" 
+          [lazyLoadOnInit]="false"
+          tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+          [resizableColumns]="true"
+        >
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col style="width: 50px;">
+              <col style="width: 50px;">
+              <col style="width: 200px;">
+              <col style="width: 200px;">
+              <col style="width: 200px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col style="width: 200px;">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th translate pResizableColumn></th>
+              <th translate pResizableColumn>common.table.index</th>
+              <th pSortableColumn="fileId" translate pResizableColumn>
+                profile.table.lhs
+                <p-sortIcon field="fileId"></p-sortIcon>
+              </th>
+              <th pSortableColumn="organizationId" translate pResizableColumn>profile.table.dvqlhs
+                <p-sortIcon field="organizationId"></p-sortIcon>
+              </th>
+              <th translate pResizableColumn>
+                profile.table.filedk
+              </th>
+              <th pSortableColumn="fixedEmpFile" translate pResizableColumn>profile.table.hsbc
+                <p-sortIcon field="fixedEmpFile"></p-sortIcon>
+              </th>
+              <th pSortableColumn="status" translate pResizableColumn>profile.table.tt
+                <p-sortIcon field="status"></p-sortIcon>
+              </th>
+              <th pSortableColumn="isFromVHR" translate pResizableColumn>profile.table.isFromVHR
+                <p-sortIcon field="isFromVHR"></p-sortIcon>
+              </th>
+              <th pSortableColumn="description" translate pResizableColumn>profile.table.note
+                <p-sortIcon field="description"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+            <tr>
+              <td class="vt-align-center" style="overflow: initial !important;">
+                <div ngbDropdown class="d-inline-block">
+                    <div ngbDropdownToggle class="vt-action-hover">
+                        <img class="menu-icon" src="./../../../assets/images/home/Icon.svg">
+                    </div>
+                    <div ngbDropdownMenu class="vt-border-radius">
+                      <!-- Sửa -->
+                      <button *ngIf="hasPermission('action.update') && item.isFromVHR !== 1 && item.isFromPartyCongress !== 1" class="dropdown-item"
+                              (click)="prepareSaveOrUpdate(item)"
+                              [innerHTML]="'common.button.table.acteditdropdown' | translate">
+                      </button>
+                      <!-- Xóa -->
+                      <button *ngIf="hasPermission('action.delete') && item.isFromVHR !== 1 && item.isFromPartyCongress !== 1" class="dropdown-item"
+                              (click)="processDeletes(item)"
+                              [innerHTML]="'common.button.icon.delete' | translate">
+                      </button>
+                    </div>
+                </div>
+              </td>
+              <td class="vt-align-center">{{index}}</td>
+              <td class="vt-align-left">{{item.fileTypeName}}</td>
+              <td class="vt-align-left">{{item.organizationIdName}}</td>
+              <td class="vt-align-left">
+                <a *ngFor="let data of item.fileAttachment.file"
+                  style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 200px; display: block; overflow: hidden"
+                  (click)="downloadFile(data, item)">
+                    {{data.fileName}}
+                </a>
+              </td>
+              <td class="vt-align-left"  translate>
+                <div *ngIf="item.fixedEmpFile === 1">app.empFile.saved </div>
+                <div *ngIf="item.fixedEmpFile === 2">app.empFile.notSaved </div>
+              </td>
+              <td class="vt-align-left" translate>
+                <div *ngIf="item.status === 4">app.empFile.acceptHardCopy </div>
+                <div *ngIf="item.status === 5">app.empFile.hasBeenStored</div>
+                <div *ngIf="item.status === 6">app.empFile.individualHandover </div>
+              </td>
+              <td class="vt-align-center">
+                <i class="fa fa-check color-info" *ngIf="item.isFromVHR === 1"></i>
+              </td>
+              <td class="vt-align-left">{{item.description}}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr class="emptymessage">
+              <td [attr.colspan]="9" [innerHTML]="'app.noRecords' | translate">
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft">
+            <table-footer (changeRow)="onTablePageChange($event)"  [resultList]="resultList"></table-footer>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</div>

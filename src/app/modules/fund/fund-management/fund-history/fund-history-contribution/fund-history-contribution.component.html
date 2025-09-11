@@ -1,0 +1,66 @@
+<div id="listArea">
+  <p-table #ptable [value]="resultList.data" [paginator]="true" (onLazyLoad)="onSearch($event)" [lazy]="true"
+    [rows]="changeRow" [totalRecords]="resultList.recordsTotal" [scrollable]="true" [lazyLoadOnInit]="false"
+    tableStyleClass="table table-wrapper table-hover table-striped b-t b-b" styleClass="controlOverflow" [resizableColumns]="true">
+    <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+        <col style="width: 50px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+      </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th translate pResizableColumn>common.table.index</th>
+        <th pResizableColumn>
+          {{'fundContribution.lable.NameMember' | translate}}
+        </th>
+        <th pResizableColumn>
+          {{'fundContribution.lable.name' | translate}}
+        </th>
+        <th pResizableColumn>
+          {{'fundContribution.lable.Day' | translate}}
+        </th>
+        <th pResizableColumn>
+          {{'fundManagement.label.totalMoney' | translate}}
+        </th>
+        <th pResizableColumn>
+          {{'fundContribution.lable.content' | translate}}
+        </th>
+        <th pResizableColumn>
+          {{'fundContribution.lable.file' | translate}}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+      <tr>
+        <td class="vt-align-center">{{index}}</td>
+        <td class="vt-align-left">{{item.fullNameMenber}}</td>
+        <td class="vt-align-left">{{item.organizationName}}</td>
+        <td class="vt-align-center">{{item.contributedDate | displayDate}}</td>
+        <td class="vt-align-right">{{item.contributedMoney | number}}</td>
+        <td class="vt-align-left">{{item.content}}</td>
+        <td class="vt-align-left">
+          <a *ngFor="let data of item.fileAttachment.files"
+            style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 200px; display: block; overflow: hidden"
+            (click)="downloadFile(data)">
+            - {{data.fileName}}
+          </a>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr class="emptymessage">
+        <td [attr.colspan]="12" [innerHTML]="'app.noRecords' | translate">
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <table-footer (changeRow)="onTablePageChange($event)" [resultList]="resultList"></table-footer>
+    </ng-template>
+  </p-table>
+</div>

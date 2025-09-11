@@ -1,0 +1,190 @@
+<!-- <div id="header-search">
+  <div class="vt-relative">
+    <form [formGroup]="formSearch">
+      <div class="display-table">
+        <div class="table-cell">
+          <button type="submit" class="icon-search input-search" (click)="autocomplete.handleDropdownClick()">
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="table-cell">
+          <p-autoComplete
+            formControlName="keyword"
+            inputStyleClass="form-control input-search no-between-border"
+            placeholder="{{'home.search.placeHolder' | translate}}"
+            [suggestions]="results"
+            (completeMethod)="search($event)"
+            scrollHeight="500px"
+            (onSelect)="onSelect($event)"
+            #autocomplete
+          >
+          <ng-template let-result pTemplate="item">
+            <div class="display-table result-item w100">
+              <div class="table-cell result-image">
+                <img [src]="API_URL + result.avatar"/>
+              </div>
+              <div class="table-cell result-info">
+                <div class="fullName">{{result.employeeCode}} - {{result.fullName}}</div>
+                <div class="mobile">{{result.mobileNumber}} - {{result.email}}</div>
+                <div class="departmentName">{{result.departmentName}}</div>
+              </div>
+            </div>
+          </ng-template>
+          </p-autoComplete>
+        </div>
+        <div class="table-cell" ngbDropdown placement="bottom-right" autoClose="outside">
+          <button type="button" class="icon-caret input-search fs10" ngbDropdownToggle>
+          </button>
+          <div ngbDropdownMenu class="dropdown-menu-codition">
+              <ul class="sys-ul">
+                <li class="dropdown-item condition-header">
+                  {{'home.search.title' | translate}}
+                </li>
+                <li class="dropdown-item no-padding-left">
+                  <label class="display-table condition-item" for="condition-employee-code">
+                    <div class="table-cell condition-check">
+                      <label class="i-switch bg-info m-t-xs m-r">
+                        <input id="condition-employee-code" type="checkbox" formControlName="employeeCode" [value]="1" (change)="changeCodition()" />
+                        <i></i>
+                      </label>
+                    </div>
+                    <div class="table-cell">
+                      {{'home.search.empCode' | translate}}
+                    </div>
+                  </label>
+                </li>
+                <li class="dropdown-item no-padding-left">
+                  <label class="display-table condition-item" for="condition-employee-name">
+                    <div class="table-cell condition-check">
+                      <label class="i-switch bg-info m-t-xs m-r">
+                        <input id="condition-employee-name" type="checkbox" formControlName="fullName" [value]="1" (change)="changeCodition()" />
+                        <i></i>
+                      </label>
+                    </div>
+                    <div class="table-cell">
+                      {{'home.search.empName' | translate}}
+                    </div>
+                  </label>
+                </li>
+                <li class="dropdown-item no-padding-left">
+                  <label class="display-table condition-item" for="condition-employee-email">
+                    <div class="table-cell condition-check">
+                      <label class="i-switch bg-info m-t-xs m-r">
+                        <input id="condition-employee-email" type="checkbox" formControlName="email" [value]="1" (change)="changeCodition()"/>
+                        <i></i>
+                      </label>
+                    </div>
+                    <div class="table-cell">
+                      {{'home.search.empEmail' | translate}}
+                    </div>
+                  </label>
+                </li>
+                <li class="dropdown-item no-padding-left">
+                  <label class="display-table condition-item" for="condition-employee-mobile-number">
+                    <div class="table-cell condition-check">
+                      <label class="i-switch bg-info m-t-xs m-r">
+                        <input id="condition-employee-mobile-number" type="checkbox" formControlName="mobileNumber" [value]="1" (change)="changeCodition()"/>
+                        <i></i>
+                      </label>
+                    </div>
+                    <div class="table-cell">
+                      {{'home.search.empPhoneNum' | translate}}
+                    </div>
+                  </label>
+                </li>
+                <li class="dropdown-item no-padding-left">
+                  <label class="display-table condition-item" for="condition-employee-cmt">
+                    <div class="table-cell condition-check">
+                      <label class="i-switch bg-info m-t-xs m-r">
+                        <input id="condition-employee-cmt" type="checkbox" formControlName="cmt" [value]="1" (change)="changeCodition()"/>
+                        <i></i>
+                      </label>
+                    </div>
+                    <div class="table-cell">
+                      {{'home.search.empPIDNum' | translate}}
+                    </div>
+                  </label>
+                </li>
+                <li class="dropdown-item no-padding-left">
+                  <label class="display-table condition-item" for="condition-employee-tax">
+                    <div class="table-cell condition-check">
+                      <label class="i-switch bg-info m-t-xs m-r">
+                        <input id="condition-employee-tax" type="checkbox" formControlName="tax" [value]="1" (change)="changeCodition()"/>
+                        <i></i>
+                      </label>
+                    </div>
+                    <div class="table-cell">
+                      {{'home.search.empTaxNum' | translate}}
+                    </div>
+                  </label>
+                </li> -->
+                <!-- <li class="dropdown-item no-padding-left">
+                  <label class="display-table condition-item" for="condition-employee-bh">
+                    <div class="table-cell condition-check">
+                      <label class="i-switch bg-info m-t-xs m-r">
+                        <input id="condition-employee-bh" type="checkbox" formControlName="bh" [value]="1" (change)="changeCodition()"/>
+                        <i></i>
+                      </label>
+                    </div>
+                    <div class="table-cell">
+                      Số sổ BHXH
+                    </div>
+                  </label>
+                </li> -->
+              <!-- </ul>
+            </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div> -->
+
+<div>
+  <a data-toggle="modal" data-target="#searchModal" (click)="openModal()">
+    <span class="warning-icon-header">
+      <span class="font-icon ng-star-inserted" style="position: relative; height: 21px">
+        <img src="assets/images/home/icon-search.svg" style="width:20px; height:20px">
+      </span>
+    </span>
+  </a>
+</div>
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <button id="closeModal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">
+        </span>
+      </button>
+      <div class="modal-body">
+        <div class="search">
+          <div class="search-box">
+              <form [formGroup]="formSearch" class="position-relative show" data-bs-toggle="search" data-bs-display="static" aria-expanded="true">
+                <input class="form-control search-input fuzzy-search" formControlName="keyword" (input)="onChange($event)" type="search" placeholder="Tìm kiếm" aria-label="Search">
+                <svg id="search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" (click)="search()">
+                  <g id="search-2" data-name="search">
+                    <g id="search-3" data-name="search">
+                      <rect id="Rectangle_136" data-name="Rectangle 136" width="24" height="24" fill="#000" opacity="0"/>
+                      <path id="Path_3254" data-name="Path 3254" d="M20.71,19.29l-3.4-3.39A7.92,7.92,0,0,0,19,11a8,8,0,1,0-8,8,7.92,7.92,0,0,0,4.9-1.69l3.39,3.4a1,1,0,1,0,1.42-1.42ZM5,11a6,6,0,1,1,6,6,6,6,0,0,1-6-6Z" fill="#000"/>
+                    </g>
+                  </g>
+                </svg>
+              </form>
+          </div>
+          <div *ngIf="results && results.length" class="result-card">
+              <div *ngFor="let item of results; index as i" class="row result-item" (click)="onSelect(item)">
+                  <div class="col-2 col-xxl-2 col-xl-2 col-lg-2 col-md-2">
+                      <img class="image-avatar" [src]="API_URL + item.avatar" alt="">
+                  </div>
+                  <div class="col-10 col-xxl-10 col-xl-10 col-lg-10 col-md-10">
+                      <div class="user-name"><span>{{item.employeeCode}}</span> - <span>{{item.fullName}}</span></div>
+                      <div class="user-type"><span>{{item.mobileNumber}}</span> - <span>{{item.email}}</span></div>
+                      <div class="user-type"><span>{{item.departmentName}}</span></div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

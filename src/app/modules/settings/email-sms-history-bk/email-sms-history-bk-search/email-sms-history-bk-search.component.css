@@ -1,0 +1,19 @@
+.title-truncate{
+    display: -webkit-box;
+    -webkit-line-clamp: 10;
+    overflow: hidden !important;
+    -webkit-box-orient: vertical;
+}
+
+/**
+ chỉnh kích thước scroll
+ */
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb:hover {
+    background: #fff;
+}
+

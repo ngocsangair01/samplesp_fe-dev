@@ -1,0 +1,72 @@
+    <strong class="text-u-c">
+        <i class="fa fa-th"></i>&nbsp;
+        DANH SÁCH CÁ NHÂN NHẬN VĂN BẢN
+    </strong>
+    <div class="padding-xl ui-g">
+      <p-table [scrollable]="false" [value]="lstFormConfig.controls"  styleClass="controlOverflow" tableStyleClass="table controls-table table-wrapper b-t b-b">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col class="size-1">
+            <col class="size-6">
+            <col class="size-6">
+            <col class="size-6">
+            <col class="size-3">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th translate>common.table.index</th>
+            <th [ngClass]="{'required': true}"> Người nhận</th>
+            <th >Phương thức gửi</th>
+            <th >Đơn vị</th>
+            <th >Thao tác</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-index="rowIndex">
+          <tr [formGroup]="item">
+            <td class="vt-align-center">
+              {{index+1}}
+            </td>
+            <td>
+              <data-picker
+                #empTags
+                [property]="item.controls.employeeId" 
+                systemCode="political" 
+                operationKey="action.view"
+                adResourceKey="resource.requestResolutionMonth" 
+                objectBO="EmployeeBO" 
+                codeField="employeeCode" 
+                nameField="fullName"
+                emailField="email"
+                mobileNumberField="mobileNumber"
+                selectField="employeeId" 
+                isRequiredField = "true"
+                (onChange) = "onSelect($event, item, index)"
+                >
+              </data-picker>
+              <app-control-messages [control]="item.controls.employeeId"></app-control-messages>
+            </td>
+            <td class="vt-align-left">
+                <select-filter
+                    [placeHolder]="'common.label.cboSelectAll'"
+                    [property]="item.controls.sendMethod" 
+                    [options]="SEND_METHOD" 
+                    optionLabel="name"
+                    optionValue="id"
+                    [isDisplayClear]="false"
+                >
+              </select-filter>
+            </td>
+            <td class="vt-align-left">
+                {{item.controls.orgName.value}}
+            </td>
+            <td class="vt-align-center">
+              <button type="button" class="btn-icon plus" [title]="'titleAdd' | translate" (click)="addRow(index, item)" [innerHTML]="'common.icon.plus' | translate">
+              </button>
+              <button type="button" class="btn-icon minus" [title]="'titleDelete' | translate" (click)="removeRow(index, item)" [innerHTML]="'common.icon.minus' | translate">
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>

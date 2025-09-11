@@ -1,0 +1,34 @@
+<div class="modal-body">
+  <div id="searchArea" ></div>
+  <div class="panel panel-default">
+    <form id="formSave" [formGroup]="formSave">
+      <div class="panel-heading">
+        <strong class="text-u-c">
+          <i class="fa fa-th"></i>&nbsp;
+          <span translate>rewardPropose.noteDecline</span>
+        </strong>
+        <div class="vt-absolute vt-shotcut-button-in-heading">
+          <button style="display: inline-block;" (click)="activeModal.close()"
+            title="{{'common.button.close' | translate}}" class="btn btn-sm btn-info btn-span btn-close"><i
+              class="fa fa-times"></i></button>
+        </div>
+      </div>
+      <div class="panel-body padding-xl ui-g" style="justify-content: center;">
+        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+          {{'rewardPropose.noteDecline'|translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-8">
+          <textarea type="text" class="form form-control" name="note" formControlName="note" maxlength="1000">
+          </textarea>
+          <app-control-messages [control]="f['note']"></app-control-messages>
+        </div>
+      </div>
+      <div class="panel-footer vt-area-button">
+        <button type="submit" class="btn btn-sm btn-info" [autoFocus]="true"
+          [innerHTML]="'common.button.icon.save' | translate" (click) = "processConfirm()"></button>
+        <button type="button" class="btn btn-sm btn-danger" [innerHTML]="'common.button.out' | translate"
+          (click)="activeModal.close()"></button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+<div id="header-search">
+  <div class="vt-relative">
+      <div class="display-table">
+        <div class="table-cell" ngbDropdown placement="bottom-right" autoClose="outside">
+          <div>
+            <a class="btn-header btn-arrow-down" ngbDropdownToggle>
+              <span class="warning-icon-header">
+                <span class="font-icon bg-danger ng-star-inserted" style="position: relative;">
+                  <i class="glyphicons glyphicons-bell" title="Thông báo"></i>
+                  <span style="color: #e2ff02; top: 0px; right: -2px; font-size: 12px; font-weight: bold; margin-top: -5px; position: absolute; display: inline-block;">{{totolNotification}}</span>
+                </span>
+              </span>
+            </a>
+          </div>
+          <div ngbDropdownMenu class="panel panel-default dropdown-menu-codition ">
+            <div class=" panel-heading col-sm-12 col-md-12 col-xs-12 warning-block">
+              <strong class="text-u-c">
+                <span class="glyphicons glyphicons-bell glyphicon glyphicon-th">
+                </span>
+                <span translate>&nbsp;app.home.notification</span>
+              </strong>
+            </div>
+            <div class="panel-body" style="padding: 0px; height: 453px;width: 395px;">
+              <p-scrollPanel [style]="{width: '100%', height: '453px'}"  styleClass="custombar2 default clearfix" class="scrolling_data">
+                <div class="notifition" style="height: 410px;">
+                  <div class="warning-content">
+                    <div class="col-sm-12 col-md-12 col-xs-12 warning-block" *ngFor="let item of resultList" style="margin-bottom: 15px;">
+                      <a class="warning-item display-table w100" *ngIf="item.link" target="_blank" href="{{item.link}}">
+                        <span class="table-cell warning-icon">
+                          <span *ngIf="item.notifyBranch == 1" class="font-icon bg-danger">
+                            <i class="glyphicons glyphicons-bell"
+                              title="{{ 'organization.label.organization' | translate}}"></i>
+                          </span>
+                          <span *ngIf="item.notifyBranch == 2" class="font-icon bg-danger">
+                            <i class="glyphicons glyphicons-bell" title="{{ 'evaluatestaffprocess' | translate}}"></i>
+                          </span>
+                          <span *ngIf="item.notifyBranch == 3" class="font-icon bg-danger">
+                            <i class="glyphicons glyphicons-bell" title="{{ 'app.home.warning.propaganda' | translate}}"></i>
+                          </span>
+                          <span *ngIf="item.notifyBranch == 4" class="font-icon bg-danger">
+                            <i class="glyphicons glyphicons-bell" title="{{ 'app.home.warning.mass' | translate}}"></i>
+                          </span>
+                          <span *ngIf="item.notifyBranch == 5" class="font-icon bg-danger">
+                            <i class="glyphicons glyphicons-bell" title="{{ 'app.home.warning.checkMonitoring' | translate}}"></i>
+                          </span>
+                          <span *ngIf="item.notifyBranch == 6" class="font-icon bg-danger">
+                            <i class="glyphicons glyphicons-bell" title="{{ 'app.home.warning.population' | translate}}"></i>
+                          </span>
+                          <span *ngIf="item.notifyBranch == 7" class="font-icon bg-danger">
+                            <i class="glyphicons glyphicons-bell" title="{{ 'app.home.warning.securityProtection' | translate}}"></i>
+                          </span>
+                        </span>
+                        <span class="table-cell warning-info">
+                          <p class="justify-format">
+                            <span *ngIf="onChangeTime(item.displayStartDate) == true">
+                              <i class="flicker">(New) </i>
+                            </span>
+                            <span style="color: rgba(38,1,0,1)">{{item.notifyContent}}
+                            </span>
+                          </p>
+                          <span><strong>Ngày hiển thị: {{item.displayStartDate | displayDateNotification}}</strong></span>
+                        </span>
+                      </a>
+                      <div *ngIf="!item.link" class="warning-item display-table w100" >
+                        <span class="table-cell warning-icon">
+                          <span *ngIf="item.notifyBranch == 1" class="font-icon bg-danger">
+                            <i class="glyphicons glyphicons-bell"
+                              title="{{ 'organization.label.organization' | translate}}"></i>
+                          </span>
+                          <span *ngIf="item.notifyBranch == 2" class="font-icon bg-danger">
+                            <i class="glyphicons glyphicons-bell" title="{{ 'evaluatestaffprocess' | translate}}"></i>
+                          </span>
+                          <span *ngIf="item.notifyBranch == 3" class="font-icon bg-danger">
+                            <i class="glyphicons glyphicons-bell" title="{{ 'app.home.warning.propaganda' | translate}}"></i>
+                          </span>
+                          <span *ngIf="item.notifyBranch == 4" class="font-icon bg-danger">
+                            <i class="glyphicons glyphicons-bell" title="{{ 'app.home.warning.mass' | translate}}"></i>
+                          </span>
+                          <span *ngIf="item.notifyBranch == 5" class="font-icon bg-danger">
+                            <i class="glyphicons glyphicons-bell" title="{{ 'app.home.warning.checkMonitoring' | translate}}"></i>
+                          </span>
+                          <span *ngIf="item.notifyBranch == 6" class="font-icon bg-danger">
+                            <i class="glyphicons glyphicons-bell" title="{{ 'app.home.warning.population' | translate}}"></i>
+                          </span>
+                          <span *ngIf="item.notifyBranch == 7" class="font-icon bg-danger">
+                            <i class="glyphicons glyphicons-bell" title="{{ 'app.home.warning.securityProtection' | translate}}"></i>
+                          </span>
+                        </span>
+                        <span class="table-cell warning-info">
+                          <p class="justify-format">
+                            <span *ngIf="onChangeTime(item.displayStartDate) == true">
+                              <i class="flicker">(New) </i>
+                            </span>
+                            <span style="color: rgba(38,1,0,1)">{{item.notifyContent}}
+                            </span>
+                          </p>
+                          <span style="color: #007ad9"><strong>Ngày hiển thị:
+                              {{item.displayStartDate | displayDateNotification}}</strong></span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </p-scrollPanel>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

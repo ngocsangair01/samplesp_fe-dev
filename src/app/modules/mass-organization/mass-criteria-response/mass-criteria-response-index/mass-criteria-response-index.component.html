@@ -1,0 +1,6 @@
+<div *ngIf="hasPermission('action.view')">
+  <mass-criteria-response-search></mass-criteria-response-search>
+</div>
+<div *ngIf="!hasPermission('action.view')">
+  {{'common.haveNoPermission' | translate}}
+</div>

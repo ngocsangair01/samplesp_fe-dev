@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="news-political">
+      <p-scrollPanel styleClass="custombar2 default clearfix" >
+        <ul class="home-political clearfix">
+          <li *ngFor="let item of resultList" class="home-political-li">
+            <a href="{{ item.url }}" target="_blank">
+              <img src="{{ item.imagePath }}">
+              <strong>{{ item.title }}</strong>
+            </a>
+          </li>
+        </ul>
+      </p-scrollPanel>
+  </div>
+</div>

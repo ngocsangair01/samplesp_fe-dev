@@ -1,0 +1,20 @@
+<div class="panel-body padding-xl ui-g" style="padding-bottom: 0;">
+    <form id="formGroup" [formGroup]="form">
+        <div class="ui-g-12 vt-row">
+            <div class="ui-g-6 d-flex align-center justify-content-center">
+                <label class="vt-align-left mr-2" for="check1">
+                    {{'transferactivity.label.cfm' | translate}}</label>
+                    <input type="checkbox" name="checkbox"  formControlName="checkbox1" id="check1">
+            </div>
+            <div class="ui-g-6 d-flex align-center justify-content-center">
+                <label class="vt-algn-left mr-2" for="check2">
+                    {{'transferactivity.label.cfd' | translate}}</label>
+                    <input type="checkbox" name="checkbox" formControlName="checkbox2" id="check2">
+            </div>
+        </div>
+        <div class="panel-footer vt-area-button ui-g-12">
+            <button type="submit" class="btn btn-sm btn-success" (click)="navigateToClonePage()"
+            [innerHTML]="'common.button.icon.clone' | translate"></button>
+        </div>
+    </form>
+</div>

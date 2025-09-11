@@ -1,0 +1,568 @@
+<div *ngIf="index === 0" class="card-form">
+  <div class="clearfix">
+    <div class="left-nav-bar pull-left row-header">
+      <div>
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="goBack();">
+        <span *ngIf="create" class="title">Thêm mới đề nghị chính sách trong đơn vị</span>
+        <span *ngIf="update" class="title">Cập nhật đề nghị chính sách trong đơn vị</span>
+        <span *ngIf="view" class="title">Chi tiết đề nghị chính sách trong đơn vị</span>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+        <ul class="header-right sys-ul space-line">
+          <li>
+              <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="goBack();" [innerHTML]="'common.button.out' | translate">
+              </button>
+          </li>
+          <li *ngIf="!view">
+              <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="processSaveOrUpdate()" [innerHTML]="'common.button.icon.save' | translate">
+              </button>
+          </li>
+          <li *ngIf="view && welfarePolicyRequest.data.documentState === 2
+                      && (welfarePolicyRequest.data.status === 2 || welfarePolicyRequest.data.status === 4)
+                      && welfarePolicyRequest.data.createdBy === userLogin">
+            <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="openPopup(2)"> Bổ sung giấy tờ
+            </button>
+          </li>
+          <li *ngIf="welfarePolicyRequest && welfarePolicyRequest.data.status === 2">
+            <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="openPopup(1)"> Thăm hỏi
+            </button>
+          </li>
+          <li *ngIf="view && welfarePolicyRequest.data.status === 0">
+            <button class="btn btn-sm vt-btn btn-submit mt-btn btn-header-right ng-star-inserted" type="button" (click)="navigate()" [innerHTML]="'common.button.icon.edit' | translate">
+            </button>
+          </li>
+          <li *ngIf="view && welfarePolicyRequest.data.status === 1">
+            <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button"
+                    (click)="openPopup(3)" [innerHTML]="'common.button.table.accept' | translate"></button>
+          </li>
+          <li *ngIf="view && welfarePolicyRequest.data.status === 1">
+            <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button"
+                    (click)="openPopup(4)" [innerHTML]="'common.status.refused' | translate"></button>
+          </li>
+        </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <div class="panel panel-default card-info">
+      <form id="formSave" [formGroup]="formSave">
+          <div class="panel-heading vt-relative">
+              <strong>
+                  <span *ngIf="index === 0" class="ml-2 title-info">Thông tin đề nghị chính sách trong đơn vị</span>
+              </strong>
+              <strong>
+                <span *ngIf="index === 1"> Thông tin thăm hỏi</span>
+                <span *ngIf="index === 2"> Thông tin bổ sung giấy tờ</span>
+                <span *ngIf="index === 3"> Thông tin tiếp nhận</span>
+                <span *ngIf="index === 4"> Thông tin từ chối</span>
+                <span *ngIf="index === 5"> Danh sách sinh nhật của đơn vị</span>
+              </strong>
+              <div *ngIf="index !== 0" class="vt-absolute vt-shotcut-button-in-heading">
+                <button (click)="activeModal.close(); index = 0" title="{{'common.button.close' | translate}}"
+                  class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+              </div>
+          </div>
+          <div class="panel-body padding-xl ui-g">
+            <div class="ui-g-12 vt-row">
+              <label *ngIf="index !== 5" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="index !== 0? '' : 'required'">
+                {{'label.welfare.policy.request.welfarePolicyCategory' | translate}}</label>
+              <label *ngIf="index === 5" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="index !== 0? '' : 'required'">
+                {{'label.welfare.policy.request.requestContent' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-filter [property]="f['welfarePolicyCategoryId']"
+                              [options]="welfarePolicyCategoryList"
+                              optionLabel="name"
+                              optionValue="value"
+                              [placeHolder]="'common.label.cboMustSelect'"
+                              (onChange)="changeWelfarePolicyCategory($event)"
+                              [disabled]="index !== 0 || view">
+                </select-filter>
+                <app-control-messages [control]="f['welfarePolicyCategoryId']"></app-control-messages>
+              </div>
+              <label *ngIf="index === 0 || index === 1 || index === 5" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'massMember.organization' | translate}}</label>
+              <div *ngIf="index === 0 || index === 1 || index === 5" class="ui-g-12 ui-md-6 ui-lg-3">
+                <mass-org-selector
+                  [property]="f['approveOrgId']"
+                  operationKey="action.view"
+                  adResourceKey="resource.welfarePolicyRequest"
+                  [defaultValue]="true"
+                  [branch] = "3"
+                  [rootId]="massOrgIdByEmp"
+                  [disabled]="view ? true : false">
+                </mass-org-selector>
+                <app-control-messages [control]="f['approveOrgId']"></app-control-messages>
+              </div>
+              <label *ngIf="index === 2 || index === 3 || index === 4" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.welfare.policy.request.organization' | translate}}</label>
+              <div *ngIf="index === 2 || index === 3 || index === 4" class="ui-g-12 ui-md-6 ui-lg-3">
+                <mass-org-selector
+                  [property]="f['approveOrgId']"
+                  operationKey="action.view"
+                  adResourceKey="resource.welfarePolicyRequest"
+                  [defaultValue]="true"
+                  [branch] = "3"
+                  [rootId]="massOrgIdByEmp"
+                  [disabled]="true">
+                </mass-org-selector>
+                <app-control-messages [control]="f['approveOrgId']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label *ngIf="index !== 5" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="index !== 0? '' : 'required'">
+                {{'label.welfare.policy.request.employee' | translate}}</label>
+              <div *ngIf="index !== 5" class="ui-g-12 ui-md-6 ui-lg-3">
+                <data-picker
+                          [property]="f['employeeId']"
+                          systemCode="political"
+                          operationKey="action.view"
+                          adResourceKey="resource.welfarePolicyRequest"
+                          objectBO="EmployeeBO"
+                          codeField="employeeCode"
+                          nameField="fullName"
+                          emailField="email"
+                          mobileNumberField="mobileNumber"
+                          selectField="employeeId"
+                          [filterCondition]="employeeFilterCondition"
+                          type="employee"
+                          (onChange)="onChangeEmployee($event)"
+                          [disabled]="index !== 0 || view"
+                >
+                </data-picker>
+                <app-control-messages [control]="f['employeeId']"></app-control-messages>
+              </div>
+              <label *ngIf="index === 0 || index === 2" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.welfare.policy.category.objectType' | translate}}</label>
+              <div *ngIf="index === 0 || index === 2" class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-filter [property]="f['objectType']"
+                              [options]="objectTypeOptions"
+                              optionLabel="name"
+                              optionValue="value"
+                              [placeHolder]="'common.label.cboMustSelect'"
+                              [disabled]="true">
+                </select-filter>
+                <app-control-messages [control]="f['objectType']"></app-control-messages>
+              </div>
+              <label *ngIf="index === 1 || index === 3 || index === 4" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'label.welfare.policy.category.relationship' | translate}}</label>
+              <div *ngIf="index === 1 || index === 3 || index === 4" class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-filter
+                          [property]="f['relationshipId']"
+                          [options]="relationshipOptions"
+                          optionLabel="name"
+                          optionValue="sysCatId"
+                          [placeHolder]="'common.label.cboSelect'"
+                          [disabled]="true">
+                </select-filter>
+                <app-control-messages [control]="f['relationshipId']"></app-control-messages>
+              </div>
+              <label *ngIf="index === 1" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'label.welfare.policy.request.objectName' | translate}}</label>
+              <div *ngIf="index === 1" class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-filter
+                          [property]="f['objectId']"
+                          [options]="objectNameOptions"
+                          optionLabel="name"
+                          optionValue="value"
+                          [placeHolder]="'common.label.cboSelect'"
+                          [disabled]="true">
+                </select-filter>
+                <!-- <input type="text" [attr.disabled]="true" [formControl]="formSave.controls.objectName" class="form-control"> -->
+                <app-control-messages [control]="f['objectId']"></app-control-messages>
+              </div>
+            </div>
+            <div *ngIf="index === 0" class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.welfare.policy.category.relationship' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-filter
+                          [property]="f['relationshipId']"
+                          [options]="relationshipOptions"
+                          optionLabel="name"
+                          optionValue="sysCatId"
+                          [placeHolder]="'common.label.cboSelect'"
+                          (onChange)="changeRelationship($event)"
+                          [disabled]="disableRelationship">
+                </select-filter>
+                <small *ngIf="isInvalidRelationship" class="text-danger errorMessage">* Trường bắt buộc</small>
+                <app-control-messages [control]="f['relationshipId']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.welfare.policy.category.fromDate' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <date-picker [disabled]="view" [property]="f['startDate']" [maxDate]="maxDate" (onChanged)="changeStartDate($event)"></date-picker>
+                <app-control-messages [control]="f['startDate']"></app-control-messages>
+              </div>
+            </div>
+            <div *ngIf="index === 2" class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.welfare.policy.category.relationship' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-filter
+                          [property]="f['relationshipId']"
+                          [options]="relationshipOptions"
+                          optionLabel="name"
+                          optionValue="sysCatId"
+                          [placeHolder]="'common.label.cboSelect'"
+                          [disabled]="true">
+                </select-filter>
+                <app-control-messages [control]="f['relationshipId']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.welfare.policy.category.fromDate' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <date-picker [disabled]="true" [property]="f['startDate']" [maxDate]="maxDate"></date-picker>
+                <app-control-messages [control]="f['startDate']"></app-control-messages>
+              </div>
+            </div>
+            <div *ngIf="index === 0" class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'label.welfare.policy.request.objectName' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-filter
+                          [property]="f['objectId']"
+                          [options]="objectNameOptions"
+                          optionLabel="name"
+                          optionValue="value"
+                          [placeHolder]="'common.label.cboSelect'"
+                          (onChange)="changeObjectId($event)"
+                          [disabled]="view?true:null">
+                </select-filter>
+                <small *ngIf="isInvalidObjectId" class="text-danger errorMessage">* Trường bắt buộc</small>
+                <!-- <input type="text" [attr.disabled]="view?true:null" [formControl]="formSave.controls.objectName" class="form-control"> -->
+                <app-control-messages [control]="f['objectId']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'label.welfare.policy.category.toDate' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <date-picker [disabled]="view" [property]="f['endDate']" [maxDate]="maxDate" (onChanged)="changeEndDate($event)"></date-picker>
+                <app-control-messages [control]="f['endDate']"></app-control-messages>
+                <small *ngIf="isInvalidEndDate" class="text-danger errorMessage">Đến ngày phải lớn hơn hoặc bằng từ ngày</small>
+              </div>
+            </div>
+            <div *ngIf="index === 2" class="ui-g-12 vt-row">
+              <label *ngIf="index === 2" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'label.welfare.policy.request.objectName' | translate}}</label>
+              <div *ngIf="index === 2" class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-filter
+                        [property]="f['objectId']"
+                        [options]="objectNameOptions"
+                        optionLabel="name"
+                        optionValue="value"
+                        [placeHolder]="'common.label.cboSelect'"
+                        [disabled]="true">
+                </select-filter>
+                <app-control-messages *ngIf="index === 2" [control]="f['objectType']"></app-control-messages>
+              </div>
+              <label *ngIf="index !== 2" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.welfare.policy.category.objectType' | translate}}</label>
+              <div *ngIf="index !== 2" class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-filter [property]="f['objectType']"
+                               [options]="objectTypeOptions"
+                               optionLabel="name"
+                               optionValue="value"
+                               [placeHolder]="'common.label.cboMustSelect'"
+                               [disabled]="true">
+                </select-filter>
+                <app-control-messages *ngIf="index !== 2" [control]="f['objectType']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'label.welfare.policy.category.toDate' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <date-picker [disabled]="true" [property]="f['endDate']"></date-picker>
+                <app-control-messages [control]="f['endDate']"></app-control-messages>
+              </div>
+            </div>
+            <div *ngIf="index === 0" class="ui-g-12 vt-row">
+              <label  class="ui-g-12 ui-md-12 ui-lg-2 control-label vt-align-right required">
+                {{'label.welfare.policy.request.reason' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-8">
+                <textarea [formControl]="formSave.controls.reason" id="reason" type="text-area" maxlength="50"
+                class="form form-control" [attr.disabled]="view? true: null"></textarea>
+                <app-control-messages [control]="f['reason']"></app-control-messages>
+              </div>
+            </div>
+            <div *ngIf="index === 2" class="ui-g-12 vt-row">
+              <label  class="ui-g-12 ui-md-12 ui-lg-2 control-label vt-align-right">
+                {{'label.welfare.policy.request.reason' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-8">
+                <textarea [formControl]="formSave.controls.reason" id="reason" type="text-area" maxlength="50"
+                class="form form-control" [attr.disabled]="true"></textarea>
+                <app-control-messages [control]="f['reason']"></app-control-messages>
+              </div>
+            </div>
+            <div *ngIf="index === 0 || index === 2" class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.welfare.policy.request.documentState' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-filter [property]="formSave.controls.documentState"
+                        [options]="documentStateList"
+                        optionLabel="name"
+                        optionValue="value"
+                        [placeHolder]="'common.label.cboMustSelect'"
+                        (onChange)="changeDocumentState($event)"
+                        [disabled]="view && index !== 2">
+                </select-filter>
+                <app-control-messages [control]="f['documentState']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'label.welfare.policy.request.documentNote' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <textarea [formControl]="formSave.controls.documentReason" id="documentReason" type="text-area"
+                class="form form-control" (blur)="changeDocumentNote($event)" [attr.disabled]="(view && index !== 2)? true: null "
+                maxlength="50" ></textarea>
+<!--                <app-control-messages [control]="f['note']"></app-control-messages>-->
+                <small *ngIf="isInvalidDocumentNote" class="text-danger errorMessage">* Trường bắt buộc</small>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label *ngIf="index === 0 || index === 1 || index === 3" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.welfare.policy.request.chairmanType' | translate}}</label>
+              <div *ngIf="index === 0 || index === 1 || index === 3" class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-filter class="chairman-type" [property]="f['chairmanType']" [options]="chairmanTypeList" optionLabel="name"
+                                    optionValue="value" [placeHolder]="'common.label.cboMustSelect'" appendTo="body" (onChange)="changeChairmanType($event)"
+                                    [disabled]="view && index !==3 ? true : false">
+                    </select-filter>
+                    <app-control-messages [control]="f['chairmanType']"></app-control-messages>
+              </div>
+              <label *ngIf="index === 0 || index === 1" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.welfare.policy.request.status' | translate}}</label>
+              <div *ngIf="index === 0 || index === 1" class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-filter [property]="f['status']"
+                              [options]="statusList"
+                              optionLabel="name"
+                              optionValue="value"
+                              [placeHolder]="'common.label.cboMustSelect'"
+                              (onChange)="changeStatus($event)"
+                              [disabled]="view || update ? true : false">
+                </select-filter>
+                <!-- <app-control-messages [control]="f['status']"></app-control-messages> -->
+                <small *ngIf="isInvalidStatus" class="text-danger errorMessage">* Trường bắt buộc</small>
+              </div>
+              <label *ngIf="index === 3 || index === 4" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'label.welfare.policy.request.objectName' | translate}}</label>
+              <div *ngIf="index === 3 || index === 4" class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-filter
+                          [property]="f['objectId']"
+                          [options]="objectNameOptions"
+                          optionLabel="name"
+                          optionValue="value"
+                          [placeHolder]="'common.label.cboSelect'"
+                          [disabled]="true">
+                </select-filter>
+                <!-- <input type="text" [attr.disabled]="true" [formControl]="formSave.controls.objectName" class="form-control"> -->
+                <app-control-messages [control]="f['objectId']"></app-control-messages>
+              </div>
+              <!-- <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.welfare.policy.request.organization' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <mass-org-selector
+                  [property]="f['approveOrgId']"
+                  operationKey="action.insert" 
+                  adResourceKey="resource.massOrganization"
+                  [defaultValue]="true"
+                  [branch] = "3"
+                  [disabled]="view ? true : false">
+                </mass-org-selector>
+                <app-control-messages [control]="f['approveOrgId']"></app-control-messages>
+              </div> -->
+            </div>
+            <div *ngIf="index === 2" class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.welfare.policy.request.chairmanType' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-icon-filter [property]="formSave.controls.chairmanType" [options]="chairmanTypeList" optionLabel="name"
+                                    optionValue="value" [placeHolder]="'common.label.cboMustSelect'" appendTo="body"
+                                    [disabled]="true">
+                    </select-icon-filter>
+                    <app-control-messages [control]="f['chairmanType']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.welfare.policy.request.status' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-filter [property]="f['status']"
+                              [options]="statusList"
+                              optionLabel="name"
+                              optionValue="value"
+                              [placeHolder]="'common.label.cboMustSelect'"
+                              [disabled]="true">
+                </select-filter>
+                <!-- <app-control-messages [control]="f['status']"></app-control-messages> -->
+                <small *ngIf="isInvalidStatus" class="text-danger errorMessage">* Trường bắt buộc</small>
+              </div>
+            </div>
+            <div *ngIf="index === 5" class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.welfare.policy.category.fromDate' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <date-picker [disabled]="view" [property]="f['startDate']" [maxDate]="maxDate" (onChanged)="changeStartDate($event)"></date-picker>
+                <app-control-messages [control]="f['startDate']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'label.welfare.policy.category.toDate' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <date-picker [disabled]="view" [property]="f['endDate']" (onChanged)="changeEndDate($event)"></date-picker>
+                <app-control-messages [control]="f['endDate']"></app-control-messages>
+                <small *ngIf="isInvalidEndDate" class="text-danger errorMessage">Đến ngày phải lớn hơn hoặc bằng từ ngày</small>
+              </div>
+            </div>
+            <div *ngIf="index === 5" class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                {{'label.welfare.policy.request.chairmanType' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-icon-filter class="chairman-type" [property]="formSave.controls.chairmanType" [options]="chairmanTypeList" optionLabel="name"
+                                    optionValue="value" [placeHolder]="'common.label.cboMustSelect'" appendTo="body" (onChange)="changeChairmanType($event)"
+                                    [disabled]="view ? true : false">
+                    </select-icon-filter>
+                    <app-control-messages [control]="f['chairmanType']"></app-control-messages>
+              </div>
+            </div>
+            <div *ngIf="index === 3" class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'label.welfare.policy.request.documentState' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-filter [property]="formSave.controls.documentState"
+                        [options]="documentStateList"
+                        optionLabel="name"
+                        optionValue="value"
+                        [placeHolder]="'common.label.cboMustSelect'"
+                        [disabled]="true">
+                </select-filter>
+                <app-control-messages [control]="f['documentState']"></app-control-messages>
+              </div>
+<!--              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">-->
+<!--                {{'label.welfare.policy.request.note' | translate}}</label>-->
+<!--              <div class="ui-g-12 ui-md-6 ui-lg-3">-->
+<!--                <textarea [formControl]="formSave.controls.note" id="note" type="text-area"-->
+<!--                class="form form-control" [attr.disabled]="view? true: null"></textarea>-->
+<!--                <app-control-messages [control]="f['note']"></app-control-messages>-->
+<!--              </div>-->
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'label.welfare.policy.request.documentNote' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <textarea [formControl]="formSave.controls.documentReason" id="documentReason" type="text-area"
+                          class="form form-control" [attr.disabled]="null" maxlength="50"></textarea>
+              </div>
+            </div>
+            <div *ngIf="index === 4" class="ui-g-12 vt-row">
+              <label  class="ui-g-12 ui-md-12 ui-lg-2 control-label vt-align-right required">
+                {{'label.welfare.policy.request.rejectReason' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-8">
+                <textarea [formControl]="formSave.controls.rejectReason" id="rejectReason" type="text-area" maxlength="50"
+                class="form form-control" (blur)="changeReasonCancel($event)"></textarea>
+                <small *ngIf="isInvalidResonCancel" class="text-danger errorMessage">* Trường bắt buộc</small>
+              </div>
+            </div>
+            <div *ngIf="index === 0 || index === 2" class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'label.welfare.policy.request.totalAmount' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <input type="number" [attr.disabled]="true" [formControl]="formSave.controls.amountTotal" class="form-control">
+                <app-control-messages [control]="f['amountTotal']"></app-control-messages>
+              </div>
+            </div>
+            <div *ngIf="(index === 0 || index === 1 || index === 3 || index === 5) && this.showAmount" class="ui-g-12 vt-row">
+                <form [formGroup]="formPolicyRequestAmountBOList" style="width: 100%">
+                    <div *ngFor="let item of formPolicyRequestAmountBOList.controls; let i = index">
+                        <div [formGroup]="item" class="ui-g-12 vt-row" style="display: flex;">
+                          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                            {{'label.welfare.policy.category.fundingCategory' | translate}}</label>
+                          <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <select-icon-filter [property]="item.controls.fundingCategoryId" [options]="fundingCategoryOptions" optionLabel="funding"
+                                            optionValue="fundingCategoryId" [placeHolder]="'common.label.cboMustSelect'" appendTo="body"
+                                            [disabled]="true">
+                            </select-icon-filter>
+                            <app-control-messages [control]="item.controls.fundingCategoryId"></app-control-messages>
+                          </div>
+                          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                            {{'label.welfare.policy.category.amount' | translate}}</label>
+                          <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <input type="number" [attr.disabled]="item.get('isFixed').value === 1 ? true: null || view" [formControl]="item.controls.amount" class="form-control">
+                            <app-control-messages [control]="item.controls.amount"></app-control-messages>
+                          </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div *ngIf="index === 2 && this.showAmount" class="ui-g-12 vt-row">
+              <form [formGroup]="formPolicyRequestAmountBOList" style="width: 100%">
+                  <div *ngFor="let item of formPolicyRequestAmountBOList.controls; let i = index">
+                      <div [formGroup]="item" class="ui-g-12 vt-row" style="display: flex;">
+                        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                          {{'label.welfare.policy.category.fundingCategory' | translate}}</label>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                          <select-icon-filter [property]="item.controls.fundingCategoryId" [options]="fundingCategoryOptions" optionLabel="funding"
+                                          optionValue="fundingCategoryId" [placeHolder]="'common.label.cboMustSelect'" appendTo="body"
+                                          [disabled]="true">
+                          </select-icon-filter>
+                          <app-control-messages [control]="item.controls.fundingCategoryId"></app-control-messages>
+                        </div>
+                        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                          {{'label.welfare.policy.category.amount' | translate}}</label>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                          <input type="number" [attr.disabled]="true" [formControl]="item.controls.amount" class="form-control">
+                          <app-control-messages [control]="item.controls.amount"></app-control-messages>
+                        </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+            <div *ngIf="(index === 0 || index === 2) && this.showFile" class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{'label.welfare.policy.request.attachmentFile' | translate}}</label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <span style="font-style: italic; color: red;">{{attachmentFileLabel}}</span>
+              </div>
+            </div>
+            <div *ngIf="(index === 0 || index === 2) && this.showFile" class="ui-g-12 vt-row">
+              <form [formGroup]="formPolicyDocumentRequestBeanList" style="width: 100%">
+                  <div *ngFor="let item of formPolicyDocumentRequestBeanList.controls; let i = index">
+                      <div [formGroup]="item" class="ui-g-12 vt-row" style="display: flex;" *ngIf="item.controls.isDeleted.value !== 0">
+                        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                          {{'label.welfare.policy.request.fileType' | translate}}</label>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                          <select-icon-filter [property]="item.controls.policyDocumentId" [options]="requestDocumentTypeOptions" optionLabel="name"
+                                              optionValue="policyDocumentId" [placeHolder]="'common.label.cboMustSelect'" appendTo="body"
+                                              [disabled]="true">
+                          </select-icon-filter>
+                          <app-control-messages [control]="item.controls.policyDocumentId"></app-control-messages>
+                        </div>
+                        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="(item.get('isRequired').value === 1 && documentState === 1) ? 'required' : ''">
+                          {{'label.welfare.policy.request.chooseFile' | translate}}</label>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                          <file-chooser 
+                            [property]="item.controls.file"
+                            fileName="fileAttachment"
+                            [htmlId]="'filesControl' + i"
+                            validMaxSize="50"
+                            validType="png,jpg,gif,tiff,bmp,xls,xlsx,doc,docx,pdf,rar,zip,7z"
+                            (onFileChange)="onFileChange($event)"
+                            [disabled]="view && index === 0"
+                            >
+                          </file-chooser>
+                          <small *ngIf="isInvalidFileAttachment && item.value.isRequired === 1 && documentState === 1 && (!item.value.file || (item.value.file && !item.value.file.type)) && item.value.isDeleted == 1" class="text-danger errorMessage">* Trường bắt buộc</small>
+                          <app-control-messages *ngIf="item.get('isRequired').value === 1" [control]="item.controls.file"></app-control-messages>
+                        </div>
+                        <div>
+                          <button type="button" class="btn-icon plus" style="margin: 0px 5px" *ngIf="!(view && index === 0)" [title]="'titleAdd' | translate" (click)="addRow(i, item)" [innerHTML]="'common.icon.plus' | translate">
+                          </button>
+                          <button type="button" class="btn-icon minus" *ngIf="!(view && index === 0)" [title]="'titleDelete' | translate" (click)="removeRow(i, item)" [innerHTML]="'common.icon.minus' | translate">
+                          </button>
+                        </div>
+                      </div>
+                  </div>
+              </form>
+            </div>
+          </div>
+          <div *ngIf="index !== 0" class="vt-area-button">
+            <button *ngIf="index === 5" type="submit" (click)="processRunList()" class="btn btn-sm vt-btn btn-submit"
+              [innerHTML]="'common.button.icon.runList' | translate"></button>
+            <button *ngIf="index !== 5" type="submit" (click)="processSaveOrUpdate()" class="btn btn-sm vt-btn btn-submit"
+              [innerHTML]="'common.button.icon.save' | translate"></button>
+            <button type="button" (click)="activeModal.close(); index = 0" class="btn btn-sm vt-btn"
+              [innerHTML]="'common.button.out' | translate"></button>
+          </div>
+      </form>
+  </div>
+</div>

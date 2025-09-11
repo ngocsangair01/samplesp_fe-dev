@@ -1,0 +1,140 @@
+<div id="searchPage">
+  <div id="searchArea">
+    <div class="panel panel-default">
+      <div class="panel-heading" translate>
+        <strong class="text-u-c">
+          <i class="fa fa-th"></i>
+          <span *ngIf="isInsert" translate> label.requestPolicyProgram.insert</span>
+          <span *ngIf="isEdit" translate> label.requestPolicyProgram.update</span>
+          <span *ngIf="isView" translate> label.requestPolicyProgram.view</span>
+        </strong>
+      </div>
+      <form id="formSave" [formGroup]="formSave">
+        <div class="panel-body padding-xl ui-g">
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="isView?'':'required'">
+              {{'label.requestPolicyProgram.code' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" [attr.disabled]="isView?true:null" class="form form-control" name="code" formControlName="code" [autoFocus]="true"
+                maxlength="50">
+              <app-control-messages [control]="f['code']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" [ngClass]="isView?'':'required'">
+              {{'label.requestPolicyProgram.name' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text" [attr.disabled]="isView?true:null" class="form form-control" name="name" formControlName="name" maxlength="200">
+              <app-control-messages [control]="f['name']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="isView?'':'required'">
+              {{'label.requestPolicyProgram.requestedDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker [property]="f['requestDate']"
+              [disabled]="isView"
+              >
+              </date-picker>
+              <app-control-messages [control]="f['requestDate']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" [ngClass]="isView?'':'required'">
+              {{'label.requestPolicyProgram.finishDate' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <date-picker [property]="f['finishDate']"
+              [disabled]="isView"
+              >
+              </date-picker>
+              <app-control-messages [control]="f['finishDate']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="isView?'':'required'">
+              {{'requestPolicyProgram.policyProgramType' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter 
+                [property]="f['policyProgramType']" 
+                [options]="policyProgramTypeList" 
+                optionLabel="name"
+                optionValue="categoryId" 
+                [placeHolder]="'common.label.cboMustSelect'"
+                [disabled]="isView"
+                >
+              </select-filter>
+              <app-control-messages [control]="f['policyProgramType']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right ">
+              {{'app.responseResolutionMonth.instructionFile' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <file-chooser 
+                [property]="f['attachFile']" 
+                htmlId="attachFile" 
+                validType="xls,xlsx,doc,docx,pdf"
+                [validMaxSize]="50"
+                [disabled]="isView"
+                >
+              </file-chooser>
+              <app-control-messages [control]="f['attachFile']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="isView?'':'required'">
+              {{'label.requestPolicyProgram.organizationRequest' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <org-selector 
+              [property]="f['organizationId']" 
+              operationKey="action.view" 
+              adResourceKey="resource.requestDemocraticMeeting"
+              [defaultValue]="false"
+              [isRequiredField]="true"
+              (onChange) = "onChangeUnit($event,orgSelectorNotLeafOrg)"
+              #orgSelectorNotLeafOrg
+              [disabled]="isView"
+              >
+              </org-selector>
+              <app-control-messages [control]="f['organizationId']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right ">
+              {{'label.requestPolicyProgram.note' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <textarea maxlength="1000" [attr.disabled]="isView?true:null" formControlName="description" id="description" cols="200" rows="3"
+                class="form-control"></textarea>
+              <app-control-messages [control]="f['description']"></app-control-messages>
+            </div>
+          </div>
+          <div  class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="isView?'':'required'">
+              {{'label.requestPolicyProgram.organizationResponse' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <policy-org-tree-selector
+                operationKey="action.view"
+                adResourceKey="resource.requestDemocraticMeeting"
+                height="735"
+                #orgTree
+                isGetAll = "true"
+                [requestId] = "requestPolicyProgramId"
+                [rootId] = "f['organizationId'].value"
+                [disabled]="isView"
+              >
+              </policy-org-tree-selector>
+              <app-control-messages [control]="f['lstNodeCheck']"></app-control-messages>
+            </div>
+          </div>
+        </div>
+        <div class="vt-area-button">
+          <button *ngIf="!isView" type="submit" (click)="processSaveOrUpdate()" class="btn btn-sm btn-info"
+            [innerHTML]="'common.button.icon.save' | translate"></button>
+          <button type="button" (click)="goBack()" class="btn btn-sm btn-danger"
+            [innerHTML]="'common.button.out' | translate"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

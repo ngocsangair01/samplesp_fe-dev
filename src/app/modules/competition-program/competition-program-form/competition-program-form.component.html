@@ -1,0 +1,484 @@
+<div class="card-form">
+  <div class="clearfix">
+    <div class="left-nav-bar pull-left row-header">
+      <div>
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="goBack();">
+        <span *ngIf="!formSave.get('competitionId').value && !view && !update" class="title">Thêm mới chương trình thi đua</span>
+        <span *ngIf="update" class="title">Cập nhật chương trình thi đua</span>
+        <span *ngIf="view" class="title">Xem thông tin chương trình thi đua</span>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+        <ul class="header-right sys-ul space-line">
+            <li>
+              <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="goBack();" [innerHTML]="'common.button.out' | translate">
+              </button>
+            </li>
+            <li *ngIf="!view">
+              <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="processSaveOrUpdate()" [innerHTML]="'common.button.icon.save' | translate">
+              </button>
+            </li>
+        </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <div class="panel panel-default">
+    <form id="formSave" [formGroup]="formSave">
+      <div class="panel-heading vt-relative">
+        <strong>
+          <!-- <span *ngIf="!formSave.get('competitionId').value && !view && !update">Thêm mới chương trình thi đua</span>
+          <span *ngIf="update">Cập nhật chương trình thi đua</span>
+          <span *ngIf="view">Xem thông tin chương trình thi đua</span> -->
+          <span class="ml-2 title-info">Thông tin chương trình thi đua</span>
+        </strong>
+      </div>
+      <div class="panel-body padding-xl ui-g">
+        <!-- row 1 -->
+        <div class="panel-body padding-xl ui-g">
+          <!-- row 1 -->
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              Mã CTTĐ
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text"
+                     class="form form-control"
+                     name="competitionCode"
+                     formControlName="competitionCode"
+                     maxlength="50" autocomplete="off"
+                     [attr.disabled]="true">
+              <app-control-messages [control]="f['competitionCode']"></app-control-messages>
+            </div>
+            <label [class]="lastTitle">
+              Lĩnh vực thi đua
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['rewardType']"
+                             [options]="rewardTypeListByUser"
+                             optionLabel="name"
+                             optionValue="id"
+                             [placeHolder]="'common.label.cboMustSelect'"
+                             [disabled]="view"
+                             [autoFocus]="false"
+                             (onChange)="onChangeSubjectType()">
+              </select-filter>
+              <app-control-messages [control]="f['rewardType']"></app-control-messages>
+            </div>
+          </div>
+          <!-- row 2 -->
+          <div class="ui-g-12 vt-row">
+            <label [class]="firstTitle">
+              Tên chương trình
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text"
+                     class="form form-control"
+                     name="competitionName"
+                     formControlName="competitionName"
+                     maxlength="250" autocomplete="off"
+                     [attr.disabled]="view?true:null">
+              <app-control-messages [control]="f['competitionName']"></app-control-messages>
+            </div>
+            <label [class]="lastTitle">
+              Loại chương trình
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['competitionType']"
+                             [options]="competitionProgramType"
+                             optionLabel="parName"
+                             optionValue="parCode"
+                             [placeHolder]="'common.label.cboMustSelect'"
+                             [disabled]="view"
+                             [autoFocus]="false"
+                             (onChange)="onChangeRewardType()">
+              </select-filter>
+              <app-control-messages [control]="f['competitionType']"></app-control-messages>
+            </div>
+          </div>
+          <!-- row 3 -->
+          <div class="ui-g-12 vt-row">
+            <label [class]="firstTitle">
+              Chủ đề thi đua
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <input type="text"
+                     class="form form-control"
+                     name="messageCompetition"
+                     formControlName="messageCompetition"
+                     maxlength="250" autocomplete="off"
+                     [attr.disabled]="view?true:null">
+              <app-control-messages [control]="f['messageCompetition']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required" *ngIf="applicableTypeAnnual">
+              Danh hiệu thi đua
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="applicableTypeAnnual">
+              <multi-select-filter
+                      [property]="f['competitionTitleCode']"
+                      [options]="listApplicableUnit"
+                      optionLabel="titleName"
+                      optionValue="titleId"
+                      [disabled]="view"
+                      [filterPlaceHolder]="'common.label.cboSelect'"
+                      (click)="requiredRewardAndSubject()"
+                      (onChange)="handleBr5()">
+              </multi-select-filter>
+              <app-control-messages [control]="f['competitionTitleCode']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required"
+                   *ngIf="!applicableTypeAnnual">
+              Hình thức khen thưởng
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="!applicableTypeAnnual">
+              <multi-select-filter
+                      [property]="f['competitionMethodCode']"
+                      [options]="competitionProgramCriteria"
+                      optionLabel="rewardName"
+                      optionValue="rewardId"
+                      [disabled]="view"
+                      [filterPlaceHolder]="'common.label.cboSelect'"
+                      (click)="requiredRewardAndSubject()"
+                      (onChange)="handleBr5()">
+              </multi-select-filter>
+              <app-control-messages [control]="f['competitionMethodCode']"></app-control-messages>
+            </div>
+          </div>
+          <!-- row 4 -->
+          <div class="ui-g-12 vt-row">
+            <label [class]="firstTitle">
+              Thời gian áp dụng
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <div style="display: flex;justify-content: space-between;">
+                <div>
+                  <date-picker [property]="f['startTime']" [disabled]="view" (onChanged)="handleChangeTime()">
+                  </date-picker>
+                  <app-control-messages [control]="f['startTime']"></app-control-messages>
+                </div>
+                <label class="ui-g-12 ui-md-2  control-label vt-align-center">
+                  đến </label>
+                <div>
+                  <date-picker [property]="f['endTime']" [disabled]="view" (onChanged)="handleChangeTime()">
+                  </date-picker>
+                  <app-control-messages [control]="f['endTime']"></app-control-messages>
+                </div>
+              </div>
+            </div>
+            <label [class]="lastTitle">
+              Đơn vị phát động
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <org-selector
+                      [property]="f['publisherUnitCode']"
+                      operationKey="action.view"
+                      adResourceKey="CTCT_COMPETITION_PROGRAM"
+                      [defaultValue]="false"
+                      isRequiredField = true
+                      [disabled]="view"
+              >
+              </org-selector>
+              <app-control-messages [control]="f['publisherUnitCode']"></app-control-messages>
+            </div>
+          </div>
+          <!-- row 5 -->
+          <div class="ui-g-12 vt-row">
+            <label [class]="firstTitle">
+              Loại đối tượng
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter [property]="f['subjectType']"
+                             [options]="competitionProgramSubject"
+                             optionLabel="parName"
+                             optionValue="parCode"
+                             [placeHolder]="'common.label.cboMustSelect'"
+                             [disabled]="view"
+                             [autoFocus]="false"
+                             (onChange)="onChangeSubjectType()">
+              </select-filter>
+              <app-control-messages [control]="f['subjectType']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+              File đính kèm
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <multi-file-chooser
+                      class="attachment-file"
+                      [property]="f['fileAttachment']"
+                      htmlId="attachFile"
+                      validType="png,jpg,gif,tiff,bmp,xls,xlsx,doc,docx,pdf,rar,zip,7z"
+                      [validMaxSize]="50"
+                      [disabled]="view">
+              </multi-file-chooser>
+              <app-control-messages [control]="f['fileAttachment']"></app-control-messages>
+            </div>
+          </div>
+          <!-- row 6 -->
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+              {{'lable.workprocess.year' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-3 ui-lg-3">
+              <select-filter
+                      [property]="f['year']"
+                      [options]="listYear"
+                      optionLabel="year"
+                      optionValue="year"
+                      [disabled]="view"
+                      [placeHolder]="'common.label.cboSelect'">
+              </select-filter>
+              <app-control-messages [control]="f['year']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+              {{'label.reportConfig.Template' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <file-chooser [property]="f['fileTemplate']" validMaxSize="50" validType="doc,docx" [disabled]="view">
+              </file-chooser>
+              <app-control-messages [control]="f['fileTemplate']"></app-control-messages>
+            </div>
+          </div>
+  <!--        row 7 -->
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-9 ui-lg-2 control-label vt-align-right"
+                   [class.required] = "applicableOrgCss"
+                   *ngIf="applicableOrgCss">
+              Đơn vị áp dụng
+            </label>
+            <div class="ui-g-12 ui-md-9" *ngIf="applicableOrgCss">
+              <multi-org-selector [property]="f['applicableOrg']" operationKey="action.view"
+                                  adResourceKey="CTCT_COMPETITION_PROGRAM" [disabled]="view"
+                                  (onChange)="handleBr8()">
+              </multi-org-selector>
+              <app-control-messages [control]="f['applicableOrg']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right"
+                   [class.required] = "applicableSubjectCss"
+                   [class.ui-lg-3] = "applicableOrgCss"
+                   [class.ui-lg-2] = "applicableSubjectCss"
+                   *ngIf="applicableSubjectCss">
+              Cá nhân áp dụng
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3" *ngIf="applicableSubjectCss">
+              <employee-selector
+                      [property]="f['applicableSubject']" operationKey="action.view" (onChange)="setValueFromImport($event)"
+                      adResourceKey="CTCT_COMPETITION_PROGRAM" [disabled]="view">
+              </employee-selector>
+              <app-control-messages [control]="f['applicableSubject']"></app-control-messages>
+            </div>
+          </div>
+          <!--        class căn tab ra bằng kích thước 2 bên trường-->
+          <!--        <div class="competition-container">-->
+          <div class="scollTable panel panel-default" style="width: 100%">
+            <div class="panel-heading vt-relative">
+              <strong>
+                <span class="ml-2 title-info">Chương trình thi đua chi tiết</span>
+              </strong>
+            </div>
+            <!-- tabView -->
+            <div class="panel-body padding-xl" style="padding: 16px;">
+              <p-tabView class="tab-view">
+                <p-tabPanel header="Nội dung">
+                  <textarea formControlName="content" id="content" type="text-area" rows="8"
+                            class="form form-control"
+                            [attr.disabled]="view? true : null"></textarea>
+                  <app-control-messages [control]="f['content']"></app-control-messages>
+                </p-tabPanel>
+                <p-tabPanel header="Mục tiêu">
+                  <textarea formControlName="target" id="target" type="text-area" rows="8" class="form-control"
+                            [attr.disabled]="view? true : null"></textarea>
+                  <app-control-messages [control]="f['target']"></app-control-messages>
+                </p-tabPanel>
+                <p-tabPanel header="Chỉ tiêu thi đua">
+                  <textarea formControlName="emulationQuota" id="emulationQuota" type="text-area" rows="8"
+                            class="form-control"
+                            [attr.disabled]="view? true : null"></textarea>
+                  <app-control-messages [control]="f['emulationQuota']"></app-control-messages>
+                </p-tabPanel>
+                <p-tabPanel header="Tổ chức thực hiện">
+                  <textarea formControlName="implementationOrganization" id="implementationOrganization"
+                            type="text-area" rows="8" class="form-control"
+                            [attr.disabled]="view? true : null"></textarea>
+                  <app-control-messages [control]="f['implementationOrganization']"></app-control-messages>
+                </p-tabPanel>
+                <p-tabPanel header="Nhiệm vụ tổ chức">
+                  <textarea formControlName="missionOfOrganization" id="missionOfOrganization" type="text-area"
+                            rows="8" class="form-control"
+                            [attr.disabled]="view? true : null"></textarea>
+                  <app-control-messages [control]="f['missionOfOrganization']"></app-control-messages>
+                </p-tabPanel>
+                <p-tabPanel header="Đối tượng cần đăng ký thi đua" >
+                    <div class="searchTab">
+                      <div class="listAcceptedPage">
+                        <form id="formSearch" [formGroup]="formSearch">
+                          <div class="searchAcceptedPage" style="padding-top: 2%;display: flow-root;" *ngIf="view">
+                            <div>
+                              <label [class]="searchTitle">
+                                {{'common.label.unit' | translate}}
+                              </label>
+                              <div class="ui-g-12 ui-md-6 ui-lg-2 searchField" style="padding-left: 5px;">
+                                <multi-org-selector
+                                        [property]="f_emp['organizationId']"
+                                        operationKey="action.view"
+                                        adResourceKey="CTCT_COMPETITION_PROGRAM">
+                                </multi-org-selector>
+                                <app-control-messages
+                                        [control]="f_emp['organizationId']"></app-control-messages>
+                              </div>
+                            </div>
+                            <div *ngIf="!checkTypeCP">
+                              <label class="ui-g-12 ui-lg-1 control-label vt-align-right label-status">
+                                {{'common.label.employee' | translate}}
+                              </label>
+                              <div class="ui-g-12 ui-md-6 ui-lg-2 searchField">
+                                <data-picker
+                                        [property]="f_emp['employeeId']"
+                                        systemCode="political"
+                                        operationKey="action.view"
+                                        adResourceKey="CTCT_COMPETITION_PROGRAM"
+                                        objectBO="EmployeeBO"
+                                        codeField="employeeCode"
+                                        nameField="fullName"
+                                        emailField="email"
+                                        mobileNumberField="mobileNumber"
+                                        selectField="employeeId"
+                                        isPartyMember="'true'"
+                                >
+                                </data-picker>
+                                <app-control-messages
+                                        [control]="f_emp['employeeId']"></app-control-messages>
+                              </div>
+                            </div>
+                            <div>
+                              <label [class]="searchTitle">
+                                Trạng thái
+                              </label>
+                              <div class="ui-g-12 ui-md-6 ui-lg-2 searchField">
+                                <select-filter [property]="f_emp['statusEmp']"
+                                               [options]="competitionProgramStatusEmp"
+                                               optionLabel="itemName"
+                                               optionValue="itemValue"
+                                               [placeHolder]="'common.label.cboMustSelect'"
+                                               [autoFocus]="false">
+                                </select-filter>
+                                <app-control-messages
+                                        [control]="f_emp['statusEmp']"></app-control-messages>
+                              </div>
+                            </div>
+                            <div class="emp-button vt-area-button">
+                              <button type="submit" class="btn btn-sm btn-info"
+                                      (click)="searchEmployeeAccepted()"
+                                      [innerHTML]="'common.button.icon.search' | translate"></button>
+                            </div>
+                          </div>
+    
+                          <div class="panel panel-default" style="border: unset">
+                            <div class="panel-body panel-table">
+                              <p-table
+                                      #ptable
+                                      [value]="resultList.data"
+                                      [paginator]="true"
+                                      (onLazyLoad)="searchEmployeeAccepted($event)"
+                                      [lazy]="true" [rows]="changeRow"
+                                      [totalRecords]="resultList.recordsTotal"
+                                      [scrollable]="true"
+                                      [resizableColumns]="true"
+                                      [lazyLoadOnInit]="false"
+                                      tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+                                      styleClass="controlOverflow"
+                              >
+                                <ng-template pTemplate="colgroup" let-columns>
+                                  <colgroup>
+                                    <col style="width: 50px;">
+                                    <col style="width: 100px;">
+                                    <col style="width: 100px;">
+                                    <col style="width: 150px;">
+                                    <col style="width: 200px;">
+                                    <col style="width: 100px;">
+                                    <col style="width: 100px;">
+                                    <col style="width: 50px;">
+                                  </colgroup>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                  <tr>
+                                    <th pResizableColumn translate>common.table.index</th>
+                                    <th pResizableColumn [pSortableColumn]="'competitionRegistrationCode'">
+                                      Mã ĐK
+                                      <p-sortIcon
+                                              [field]="'competitionRegistrationCode'"></p-sortIcon>
+                                    </th>
+                                    <th pResizableColumn [pSortableColumn]="'type'">
+                                      Đối tượng
+                                      <p-sortIcon [field]="'type'"></p-sortIcon>
+                                    </th>
+                                    <th pResizableColumn [pSortableColumn]="'organizationName'">
+                                      Đơn vị
+                                      <p-sortIcon [field]="'organizationName'"></p-sortIcon>
+                                    </th>
+                                    <th pResizableColumn [pSortableColumn]="'nameEmployee'">
+                                      Nhân viên
+                                      <p-sortIcon [field]="'nameEmployee'"></p-sortIcon>
+                                    </th>
+                                    <th pResizableColumn [pSortableColumn]="'statusEmployeeAccepted'">
+                                      Trạng thái
+                                      <p-sortIcon
+                                              [field]="'statusEmployeeAccepted'"></p-sortIcon>
+                                    </th>
+                                    <th pResizableColumn [pSortableColumn]="'dateEmployeeAccepted'">
+                                      Ngày đăng ký
+                                      <p-sortIcon
+                                              [field]="'dateEmployeeAccepted'"></p-sortIcon>
+                                    </th>
+                                    <th pResizableColumn>
+                                      Bản đăng ký
+                                    </th>
+                                  </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                                  <tr>
+                                    <td class="vt-align-center">{{index}}</td>
+                                    <td class="vt-align-center">
+                                      <a style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 200px; display: block; overflow: hidden"
+                                         (click)="viewDetailUnitRegistration(item)">{{item.competitionRegistrationCode}} </a>
+                                    </td>
+                                    <td class="vt-align-center" [title]="item.type">{{item.type}}</td>
+                                    <td class="vt-align-left" [title]="item.organizationName"><span class="title-truncate" style="-webkit-box-orient: vertical;">{{item.organizationName}}</span></td>
+                                    <td class="vt-align-left" [title]="item.employeeFormat">
+                                      <span [innerHTML]="item.employeeFormat">
+                                      </span>
+                                    </td>
+    
+                                    <td class="vt-align-center" [title]="item.statusEmployeeAccepted">{{item.statusEmployeeAccepted}}</td>
+                                    <td class="vt-align-center" [title]="item.dateEmployeeAccepted">{{item.dateEmployeeAccepted}}</td>
+                                    <td class="vt-align-center" [title]="'Xem file đăng ký'">
+                                      <button class="dropdown-item" *ngIf="item.signDocumentId" (click)="previewFileIcon(item)"
+                                              [innerHTML]="'common.button.table.previewFileIcon' | translate">
+                                      </button>
+                                    </td>
+                                  </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                  <tr class="emptymessage">
+                                    <td [attr.colspan]="12"
+                                        [innerHTML]="'app.noRecords' | translate">
+                                    </td>
+                                  </tr>
+                                </ng-template>
+                                <ng-template pTemplate="paginatorleft">
+                                  <table-footer (changeRow)="onTablePageChange($event)" [resultList]="resultList"></table-footer>
+                                </ng-template>
+                              </p-table>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                </p-tabPanel>
+              </p-tabView>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="panel-body panel-table">
+  <p-table
+    #pTable
+    [value]="resultList.data"
+    [paginator]="true"
+    (onLazyLoad)="processSearch($event)"
+    [lazy]="true" [rows]="changeRow"
+    [totalRecords]="resultList.recordsTotal"
+    [scrollable]="true"
+    [lazyLoadOnInit]="false"
+    tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+    [resizableColumns]="true"
+    styleClass="controlOverflow"
+  >
+    <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+        <col style="width: 50px;">
+        <col style="width: 100px;">
+        <col style="width: 200px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 200px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+        <col style="width: 100px;">
+      </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th translate pResizableColumn>common.table.index</th>
+        <th translate pResizableColumn>employee360.educationProcess.degreeDecissionNumber</th>
+        <th translate pResizableColumn>employee360.educationProcess.degreeName</th>
+        <th translate pResizableColumn>employee360.educationProcess.levelEducation</th>
+        <th translate pResizableColumn>employee360.educationProcess.edStarDate</th>
+        <th translate pResizableColumn>employee360.educationProcess.edEndDate</th>
+        <th translate pResizableColumn>employee360.educationProcess.edProfessional</th>
+        <th translate pResizableColumn>employee360.educationProcess.edType</th>
+        <th translate pResizableColumn>employee360.educationProcess.rank </th>
+        <th translate pResizableColumn>employee360.educationProcess.edPlace</th>
+        <th translate pResizableColumn>employee360.educationProcess.isInternational</th>
+        <th translate pResizableColumn>employee360.educationProcess.status</th>
+        <th translate pResizableColumn>employee360.educationProcess.rejectComment</th>
+        <th translate pResizableColumn>employee360.educationProcess.isMainEduForm</th>
+        <th translate pResizableColumn>employee360.educationProcess.isSpecializedSchool</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+      <tr>
+        <td class="vt-align-center">{{index}}</td>
+        <td class="vt-align-left">{{item.degreeDecissionNumber}}</td>
+        <td class="vt-align-left">{{item.degreeName}}</td>
+        <td class="vt-align-left">{{item.levelEducation}}</td>
+        <td class="vt-align-center">{{item.edStarDate | displayDate}}</td>
+        <td class="vt-align-center">{{item.edEndDate | displayDate}}</td>
+        <td class="vt-align-left">{{item.edProfessional}}</td>
+        <td class="vt-align-left">{{item.edType}}</td>
+        <td class="vt-align-center">{{item.rank}}</td>
+        <td class="vt-align-left">{{item.edPlace}}</td>
+        <td class="vt-align-left">
+          <span *ngIf="item.isInternational === 1">{{'employee360.educationProcess.isInternational.cityLevel' | translate}}</span>
+          <span *ngIf="item.isInternational === 2">{{'employee360.educationProcess.isInternational.national' | translate}}</span>
+          <span *ngIf="item.isInternational === 3">{{'employee360.educationProcess.isInternational.international' | translate}}</span>
+          <span *ngIf="item.isInternational === 4">{{'employee360.educationProcess.isInternational.government' | translate}}</span>
+        </td>
+        <td class="vt-align-left">
+          <div class="label-status notYet" *ngIf="item.status===1">
+            <span>{{'employee360.educationProcess.status.waiting' | translate}}</span>
+          </div>
+          <div class="label-status info" *ngIf="item.status===2">
+            <span>{{'employee360.educationProcess.status.approved' | translate}}</span>
+          </div>
+          <div class="label-status danger" *ngIf="item.status===3">
+            <span>{{'employee360.educationProcess.status.rejected' | translate}}</span>
+          </div>
+        </td>
+        <td class="vt-align-left">{{item.rejectComment}}</td>
+        <td class="vt-align-center">
+          <span *ngIf="item.isMainEduForm === 1"><i class="fa fa-check color-info"></i></span>
+        </td>
+        <td class="vt-align-center">
+          <span *ngIf="item.isSpecializedSchool === 1"><i class="fa fa-check color-info"></i></span>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr class="emptymessage">
+        <td [attr.colspan]="15" [innerHTML]="'app.noRecords' | translate">
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <table-footer (changeRow)="onTablePageChange($event)"  [resultList]="resultList"></table-footer>
+    </ng-template>
+  </p-table>
+</div>

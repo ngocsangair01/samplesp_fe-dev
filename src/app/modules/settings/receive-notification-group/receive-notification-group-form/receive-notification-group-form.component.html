@@ -1,0 +1,153 @@
+<div class="card-form">
+  <div class="clearfix">
+    <div class="left-nav-bar pull-left row-header">
+      <div>
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="goBack();">
+        <span *ngIf="!formGroup.get('receiveNotificationGroupId').value" class="title">{{'recieveNotificationGroup.addGroup' | translate}}</span>
+        <span *ngIf="formGroup.get('receiveNotificationGroupId').value" class="title">{{'recieveNotificationGroup.editGroup' | translate}}</span>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+        <ul class="header-right sys-ul space-line">
+          <li>
+            <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="goBack();" [innerHTML]="'common.button.out' | translate">
+            </button>
+          </li>
+          <li>
+            <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="processSaveOrUpdate()" [innerHTML]="'common.button.icon.save' | translate">
+            </button>
+          </li>
+        </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <form [formGroup]="formGroup">
+      <div class="page">
+        <div class="detail-area">
+          <div class="panel panel-default card-info">
+            <div class="panel-heading">
+              <!-- <strong *ngIf="!formGroup.get('receiveNotificationGroupId').value" class="text-u-c"><i class="fa fa-th"></i>&nbsp;{{'recieveNotificationGroup.addGroup' | translate}}</strong>
+              <strong *ngIf="formGroup.get('receiveNotificationGroupId').value" class="text-u-c"><i class="fa fa-th"></i>&nbsp;{{'recieveNotificationGroup.editGroup' | translate}}</strong> -->
+              <strong>
+                <span class="ml-2 title-info">Thông tin nhóm nhận thông báo</span>
+              </strong>
+            </div>
+            <!--pannel-body div-->
+            <div class="panel-body padding-xl ui-g">
+              <div class="ui-g-12 vt-row">
+                <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right required">
+                  {{'recieveNotificationGroup.name' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-3 ui-lg-3">
+                  <input type="text" [autoFocus]="true" formControlName="name" name="name" class="form-control" maxlength="200">
+                  <app-control-messages [control]="f['name']"></app-control-messages>
+                </div>
+                <label class="ui-g-12 ui-md-3 ui-lg-3 control-label vt-align-right">
+                  {{'recieveNotificationGroup.isBlackList' | translate}}
+                </label>
+                <div class="ui-g-12 ui-md-3 ui-lg-3">
+                  <input type="checkbox" style="width: 18px;height: 1.5rem;" name="isBlackList" [value]="1" formControlName="isBlackList" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-default card-info">
+            <div class="panel-heading">
+              <strong>{{'recieveNotificationGroup.empListInGroup' | translate}}</strong>
+            </div>
+            <div id="header-search" style="margin-right: 0.75rem; display: flex; justify-content: flex-end;padding-top: 12px;">
+              <div class="vt-relative">
+                <form [formGroup]="formSearchEmployee">
+                  <div class="display-table" style="border: 1px solid rgba(246,183,109,0.6); border-radius: 8px; overflow: hidden;">
+                    <div class="table-cell">
+                      <button type="submit" class="icon-search input-search" (click)="filterFormSubsidizedSuggest()">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                    <div class="table-cell">
+                      <input type="text" class="form-control input-search no-between-border" name="keyword"
+                             formControlName="keyword" placeholder="{{'home.search.placeHolder' | translate}}" appendTo="body">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="panel-body panel-table" style="padding: 0 12px 12px 12px;">
+              <p-table [value]="formEmployees.controls"
+                       [resizableColumns]="true"
+                       [scrollable]="true"
+                tableStyleClass="table controls-table table-wrapper b-t b-b">
+                <ng-template pTemplate="colgroup" let-columns>
+                  <colgroup>
+                    <col style="width: 50px;">
+                    <col style="width: 150px;">
+                    <col style="width: 150px;">
+                    <col style="width: 150px;">
+                    <col style="width: 100px;">
+                  </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th pResizableColumn translate>common.table.index</th>
+                    <th pResizableColumn translate><span class="required">recieveNotificationGroup.employee</span></th>
+                    <th pResizableColumn translate>recieveNotificationGroup.mobileNumber</th>
+                    <th pResizableColumn translate>recieveNotificationGroup.email</th>
+                    <th pResizableColumn translate>common.label.action</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-index="rowIndex">
+                  <tr [formGroup]="item" [ngClass]="{'d-none': item.controls.isHidden.value}">
+                    <td class="vt-align-center">
+                      {{index+1}}
+                    </td>
+                    <td>
+                      <data-picker 
+                        [property]="item.controls.employeeId" 
+                        systemCode="political" 
+                        operationKey="action.view"
+                        adResourceKey="resource.receiveNotificationGroup" 
+                        objectBO="EmployeeBO" 
+                        codeField="employeeCode"
+                        nameField="fullName"
+                        emailField="email"
+                        mobileNumberField="mobileNumber"
+                        selectField="employeeId" 
+                        (onChange)="loadUserInfo($event, item)"
+                        [filterCondition]="' AND obj.status = 1'"
+                        [isRequiredField]="true"
+                        >
+                      </data-picker>
+                      <app-control-messages [control]="item.controls.employeeId"></app-control-messages>
+                    </td>
+                    <td>
+                      <input type="text" [attr.disabled]="true" formControlName="mobileNumber" name="mobileNumber"
+                      class="form-control" maxlength="250">
+                      <app-control-messages [control]="item.controls.mobileNumber"></app-control-messages>
+                    </td>
+                    <td class="vt-align-center">
+                        <input type="text" [attr.disabled]="true" formControlName="email" name="email"
+                        class="form-control" maxlength="250">
+                      <app-control-messages [control]="item.controls.email"></app-control-messages>
+                    </td>
+                    <td class="vt-align-center" *ngIf="false">
+                      <input type="text" [attr.disabled]="true" formControlName="employeeName" name="employeeName"
+                             class="form-control">
+                    </td>
+                    <td class="vt-align-center">
+                      <button class="btn-icon plus" type="button" [title]="'titleAdd' | translate"
+                        (click)="addEmp(index, item)" [innerHTML]="'common.icon.plus' | translate">
+                      </button>
+                      <button class="btn-icon minus" type="button" [title]="'titleDelete' | translate"
+                        (click)="removeEmp(index, item)" [innerHTML]="'common.icon.minus' | translate">
+                      </button>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+</div>

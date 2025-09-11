@@ -1,0 +1,60 @@
+.card-info {
+    margin-bottom: 6px;
+    border-radius: 8px !important;
+}
+
+.card-emp {
+    height: 76vh !important;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    margin-left: 10px;
+   }
+   ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+   }
+   ::-webkit-scrollbar-thumb {
+    background: #888;
+   }
+   ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+   }
+
+.card-header {
+    white-space: nowrap;
+    text-align: left;
+    font-family: "PFBeauSansPro";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    color: rgba(198,31,27,1);
+    letter-spacing: 0.12px;
+    background-color: #fff;
+}
+
+.header-icon {
+    overflow: visible;
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.transform-icon {
+    transform: rotate(180deg);
+}
+
+/* mobile*/
+@media (min-width: 374px) and (max-width: 576px){
+    .card-header {
+        font-size: 14px !important;
+    }
+
+    .header-icon {
+        width: 14px !important;
+        height: 14px !important;
+        margin-right: 3px !important;
+    }
+}

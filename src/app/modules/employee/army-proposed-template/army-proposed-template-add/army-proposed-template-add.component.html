@@ -1,0 +1,269 @@
+<!-- <div *ngIf="(hasPermission('action.update') && isUpdate) || (hasPermission('action.insert') && isInsert)"> -->
+  <div class="content vt-nopadding">
+    <div class="no-padding-left">
+    <div class="panel panel-default">
+      <form id="formSave" [formGroup]="formSave">
+        <div class="panel-heading vt-relative">
+          <strong>
+            <span *ngIf="!formSave.get('armyProposedTemplateId').value" translate> label.armyProposedTemplate.add</span>
+            <span *ngIf="formSave.get('armyProposedTemplateId').value" translate> label.armyProposedTemplate.edit </span>
+          </strong>
+          <div class="vt-absolute vt-shotcut-button-in-heading">
+            <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+              class="btn btn-span btn-sm"><img class="info-icon" src="./../../../../../../assets/images/home/Mask_Group_19561.png"></button>
+          </div>
+        </div>
+        <div *ngIf="!isMobileScreen" class="panel-body padding-xl ui-g">
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'label.armyProposedTemplate.templateName' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+              <input type="text" class="form form-control" name="name" formControlName="name" [maxLength]="255">
+              <app-control-messages [control]="f['name']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'label.armyProposedTemplate.templateFile' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+              <file-chooser [property]="f['fileAttach']" [validMaxSize]="50" validType="xls,xlsx,doc,docx,pdf,rptdesign">
+              </file-chooser>
+              <div *ngIf="this.formSave.get('fileName').value">
+                <br>
+                <a class="text-link" (click)="downloadTemplate(formSave.get('armyProposedTemplateId').value);">
+                  <span translate><i class="fa fa-download"></i> app.common.downloadTemplate</span>
+                </a>
+              </div>
+              <app-control-messages [control]="f['fileAttach']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'label.armyProposedTemplate.templateFormat' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+              <select-filter [property]="f['printLayout']" [options]="listPrintLayout" optionLabel="label"
+                optionValue="value" [isMultiLanguage]="true" [placeHolder]="'common.label.cboMustSelect'">
+              </select-filter>
+              <app-control-messages [control]="f['printLayout']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'label.armyProposedTemplate.templateType' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+              <select-filter [property]="f['type']" [options]="listType" optionLabel="parName" optionValue="parValue"
+                [placeHolder]="'common.label.cboMustSelect'">
+              </select-filter>
+              <app-control-messages [control]="f['type']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- từ ngày  -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'employeeInfo.workProcess.effectiveDate'|translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+              <date-picker [property]="f['effectiveDate']">
+              </date-picker>
+              <app-control-messages [control]="f['effectiveDate']"></app-control-messages>
+            </div>
+            <!-- đến ngày -->
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+              {{'employeeInfo.workProcess.expiredDate'|translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+              <date-picker [property]="f['expiredDate']">
+              </date-picker>
+              <app-control-messages [control]="f['expiredDate']"></app-control-messages>
+            </div>
+          </div>
+          <div class="panel-heading m-t-sm">
+            <strong class="child-header" translate>
+              label.armyProposedTemplate.listDetail
+            </strong>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <form id="formAssessmentLevel" [formGroup]="formSubTemplate">
+              <div class="panel-body panel-table">
+                <p-table [value]="formSubTemplate.controls" [scrollable]="true" tableStyleClass="table controls-table table-wrapper b-t b-b" [resizableColumns]="true"
+                  styleClass="rewardGroupMinHeight">
+                  <ng-template pTemplate="colgroup" let-columns>
+                    <colgroup class="ng-star-inserted">
+                      <col style="width: 50px;">
+                      <col style="width: 100px;">
+                      <col style="width: 200px;">
+                      <col style="width: 50px;">
+                    </colgroup>
+                  </ng-template>
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th translate pResizableColumn>common.table.index</th>
+                      <th pResizableColumn><span>{{'label.armyProposedTemplate.groupName' | translate}}</span></th>
+                      <th pResizableColumn><span>{{'label.armyProposedTemplate.condition' | translate}}</span></th>
+                      <th pResizableColumn>{{'assessmentPeriod.assessmentLevelList.action' | translate}}</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                    <tr [formGroup]="item" style="height: 20px !important;">
+                      <td class="vt-align-center">{{index}}</td>
+                      <td class="vt-align-center">
+                        <input type="text" class="form form-control" name="name" formControlName="name" [maxLength]="255">
+                        <app-control-messages [control]="item.controls.name"></app-control-messages>
+                      </td>
+                      <td class="vt-align-center">
+                        <textarea type="text" rows="2" name="conditionSql" class="form-control"
+                          formControlName="conditionSql" maxlength="30000"></textarea>
+                        <app-control-messages [control]="item.controls.conditionSql"></app-control-messages>
+                      </td>
+                      <td class="vt-align-center">
+                        <button type="button" [title]="'titleAdd' | translate" (click)="addSubTemplate(item)"
+                          class="btn-icon plus" [innerHTML]="'common.icon.plus' | translate">
+                        </button>
+                        <button type="button" [title]="'titleDelete' | translate" (click)="removeSubTemplate(item)"
+                          class="btn-icon minus" [innerHTML]="'common.icon.minus' | translate">
+                        </button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div *ngIf="isMobileScreen" class="panel-body padding-xl ui-g">
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+              {{'label.armyProposedTemplate.templateName' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-4">
+              <input type="text" class="form form-control" name="name" formControlName="name" [maxLength]="255">
+              <app-control-messages [control]="f['name']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+              {{'label.armyProposedTemplate.templateFile' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-4">
+              <file-chooser [property]="f['fileAttach']" [validMaxSize]="50" validType="xls,xlsx,doc,docx,pdf,rptdesign">
+              </file-chooser>
+              <div *ngIf="this.formSave.get('fileName').value">
+                <br>
+                <a class="text-link" (click)="downloadTemplate(formSave.get('armyProposedTemplateId').value);">
+                  <span translate><i class="fa fa-download"></i> app.common.downloadTemplate</span>
+                </a>
+              </div>
+              <app-control-messages [control]="f['fileAttach']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+              {{'label.armyProposedTemplate.templateFormat' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-4">
+              <select-filter [property]="f['printLayout']" [options]="listPrintLayout" optionLabel="label"
+                optionValue="value" [isMultiLanguage]="true" [placeHolder]="'common.label.cboMustSelect'">
+              </select-filter>
+              <app-control-messages [control]="f['printLayout']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+              {{'label.armyProposedTemplate.templateType' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-4">
+              <select-filter [property]="f['type']" [options]="listType" optionLabel="parName" optionValue="parValue"
+                [placeHolder]="'common.label.cboMustSelect'">
+              </select-filter>
+              <app-control-messages [control]="f['type']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- từ ngày  -->
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right required">
+              {{'employeeInfo.workProcess.effectiveDate'|translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-4">
+              <date-picker [property]="f['effectiveDate']">
+              </date-picker>
+              <app-control-messages [control]="f['effectiveDate']"></app-control-messages>
+            </div>
+          </div>
+          <div class="ui-g-12 vt-row">
+            <!-- đến ngày -->
+            <label class="ui-g-12 ui-md-6 ui-sm-3 ui-lg-2 control-label vt-align-right">
+              {{'employeeInfo.workProcess.expiredDate'|translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-sm-9 ui-lg-4">
+              <date-picker [property]="f['expiredDate']">
+              </date-picker>
+              <app-control-messages [control]="f['expiredDate']"></app-control-messages>
+            </div>
+          </div>
+          <div class="panel-heading m-t-sm">
+            <strong class="child-header" translate>
+              label.armyProposedTemplate.listDetail
+            </strong>
+          </div>
+          <div class="ui-g-12">
+            <form id="formAssessmentLevel" [formGroup]="formSubTemplate">
+              <div class="panel-body panel-table">
+                <p-table [value]="formSubTemplate.controls" [scrollable]="true" tableStyleClass="table controls-table table-wrapper b-t b-b" [resizableColumns]="true"
+                  styleClass="rewardGroupMinHeight" >
+                  <ng-template pTemplate="colgroup" let-columns>
+                    <colgroup class="ng-star-inserted">
+                      <col style="width: 50px;">
+                      <col style="width: 100px;">
+                      <col style="width: 200px;">
+                      <col style="width: 100px;">
+                    </colgroup>
+                  </ng-template>
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th translate pResizableColumn>common.table.index</th>
+                      <th pResizableColumn><span>{{'label.armyProposedTemplate.groupName' | translate}}</span></th>
+                      <th pResizableColumn><span>{{'label.armyProposedTemplate.condition' | translate}}</span></th>
+                      <th pResizableColumn>{{'assessmentPeriod.assessmentLevelList.action' | translate}}</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                    <tr [formGroup]="item" style="height: 20px !important;">
+                      <td class="vt-align-center">{{index}}</td>
+                      <td class="vt-align-center">
+                        <input type="text" class="form form-control" name="name" formControlName="name" [maxLength]="255">
+                        <app-control-messages [control]="item.controls.name"></app-control-messages>
+                      </td>
+                      <td class="vt-align-center">
+                        <textarea type="text" rows="2" name="conditionSql" class="form-control"
+                          formControlName="conditionSql" maxlength="30000"></textarea>
+                        <app-control-messages [control]="item.controls.conditionSql"></app-control-messages>
+                      </td>
+                      <td class="vt-align-center">
+                        <button type="button" [title]="'titleAdd' | translate" (click)="addSubTemplate(item)"
+                          class="btn-icon plus" [innerHTML]="'common.icon.plus' | translate">
+                        </button>
+                        <button type="button" [title]="'titleDelete' | translate" (click)="removeSubTemplate(item)"
+                          class="btn-icon minus" [innerHTML]="'common.icon.minus' | translate">
+                        </button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="panel-footer vt-area-button">
+          <button type="submit" (click)="processSaveOrUpdate()" class="btn btn-sm vt-btn btn-submit"
+            [innerHTML]="'common.button.icon.save' | translate"></button>
+          <button type="button" (click)="goBack()" class="btn btn-sm vt-btn"
+            [innerHTML]="'common.button.out' | translate"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- </div>
+<div *ngIf="!(hasPermission('action.update') && isUpdate) && !(hasPermission('action.insert') && isInsert)">
+  {{'common.haveNoPermission' | translate}}
+</div> -->

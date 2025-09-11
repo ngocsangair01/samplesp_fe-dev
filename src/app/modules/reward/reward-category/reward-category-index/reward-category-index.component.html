@@ -1,0 +1,6 @@
+<div *ngIf="hasPermission('action.view')">
+  <reward-category-search></reward-category-search>
+</div>
+<div *ngIf="!hasPermission('action.view')">
+  {{'common.haveNoPermission' | translate}}
+</div>

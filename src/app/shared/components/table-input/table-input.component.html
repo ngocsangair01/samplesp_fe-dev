@@ -1,0 +1,29 @@
+<p-table [columns]="columnsConfig" [value]="formArray.controls" [scrollable]="true" [style]="{width:'100%'}"
+tableStyleClass="table table-wrapper table-hover table-striped b-t b-b">
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col *ngFor="let col of columns" [style.width]="col.width">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th class="vt-align-center " *ngFor="let col of columns" pSortableColumn={{col.sortable}} pResizableColumn>
+                <span [ngClass]="{'required': col.isRequired}">{{col.header | translate}}</span>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+        <tr [pSelectableRow]="rowData">
+            <td class="vt-align-center vt-nopadding">
+                {{rowIndex+1}}
+            </td>
+            <td>
+                <div class="vt-align-center" style="margin:  0px;">
+                    <button [disabled]="disabledAction" type="button" class="btn btn-sm fa fa-plus" (click)="addRow()"></button>
+                    <button [disabled]="disabledAction" type="button" class="btn btn-sm fa fa-trash" (click)="deleteRow(rowIndex)"></button>
+                </div>
+            </td>
+            <ng-container *ngTemplateOutlet="optionTemplate; context:{ $implicit: rowData}"></ng-container>
+        </tr>
+    </ng-template>
+</p-table>

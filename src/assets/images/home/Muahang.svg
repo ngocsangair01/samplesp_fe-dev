@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#f75a51"/>
+      <stop offset="1" stop-color="#fd5a2c"/>
+    </linearGradient>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_10993" data-name="Rectangle 10993" width="52" height="52" transform="translate(598 945)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Group_19665" data-name="Group 19665" transform="translate(-297 -393)">
+    <rect id="Rectangle_10595" data-name="Rectangle 10595" width="100" height="100" rx="24" transform="translate(297 393)" fill="url(#linear-gradient)"/>
+    <g id="Mask_Group_19461" data-name="Mask Group 19461" transform="translate(-277 -528)" clip-path="url(#clip-path)">
+      <g id="add_shopping_cart-1" data-name="add shopping cart-1" transform="translate(598.001 945.829)">
+        <g id="Layer_2" data-name="Layer 2">
+          <g id="Layer_1" data-name="Layer 1">
+            <g id="add_shopping_cart-1-2" data-name="add shopping cart-1">
+              <path id="Path_63741" data-name="Path 63741" d="M37.513,36.1H20.526a9.264,9.264,0,0,1-9.079-7.467L8.11,11.36A4.834,4.834,0,0,0,4.332,7.538L1.761,7.045A2.2,2.2,0,1,1,2.642,2.73l2.58.537a9.229,9.229,0,0,1,7.212,7.3l3.337,17.277A4.843,4.843,0,0,0,20.526,31.7H37.513a4.87,4.87,0,0,0,4.526-3.108L47.7,13.825A2.2,2.2,0,1,1,51.8,15.4L46.151,30.2A9.308,9.308,0,0,1,37.513,36.1Z" fill="#fff"/>
+              <circle id="Ellipse_272" data-name="Ellipse 272" cx="4.403" cy="4.403" r="4.403" transform="translate(32.863 41.537)" fill="#fff"/>
+              <circle id="Ellipse_273" data-name="Ellipse 273" cx="4.403" cy="4.403" r="4.403" transform="translate(15.569 41.537)" fill="#fff"/>
+              <path id="Path_63742" data-name="Path 63742" d="M29.57,22.42a2.2,2.2,0,0,1-1.559-.652L19.294,13.05a2.2,2.2,0,1,1,3.117-3.109L29.57,17.1l7.159-7.159a2.2,2.2,0,1,1,3.118,3.109l-8.718,8.718a2.2,2.2,0,0,1-1.559.652Z" fill="#fff"/>
+              <path id="Path_63743" data-name="Path 63743" d="M29.57,22.42a2.2,2.2,0,0,1-2.2-2.2V2.2a2.2,2.2,0,0,1,4.4,0V20.253A2.2,2.2,0,0,1,29.57,22.42Z" fill="#fff"/>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

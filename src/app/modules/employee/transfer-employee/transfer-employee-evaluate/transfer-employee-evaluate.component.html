@@ -1,0 +1,453 @@
+<div *ngIf="(hasPermission('action.update')||hasPermission('action.view')) && (isEvaluateEdit || isEvaluate || isView)">
+  <div class="panel panel-default">
+    <form id="formSave" [formGroup]="formSave">
+      <div class="panel-heading vt-relative">
+        <strong class="text-u-c">
+          <i class="fa fa-th"></i>&nbsp;
+          <span *ngIf="isEvaluate" translate>transferEmployee.isEvaluate</span>
+          <span *ngIf="isEvaluateEdit" translate>transferEmployee.isEvaluateEdit</span>
+          <span *ngIf="isView" translate>transferEmployee.isEvaluateView</span>
+        </strong>
+      </div>
+      <div class="panel-body padding-xl ui-g">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'transferEmployee.organization'|translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <org-selector
+            [property]="f['organizationId']"
+            operationKey="action.view"
+            adResourceKey="resource.document"
+            [defaultValue]="true"
+            [isRequiredField]="true"
+            [disabled]="true"
+            >
+          </org-selector>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" >
+            {{'vicinityPlan.vicinityPositionPlan.document' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <data-picker
+              [property]="f['documentId']"
+              systemCode="political"
+              operationKey="action.view"
+              adResourceKey="resource.transferEmployee"
+              objectBO="DocumentBO"
+              nameField="documentNumber"
+              codeField="documentName"
+              selectField="documentId"
+              [isDisplayCode]="true"
+              isRequiredField="true"
+              filterCondition=" and curdate()
+                BETWEEN obj.effective_date and
+                IFNULL(obj.exprited_date, curdate())
+                and branch = 2
+                and is_deleted = 0 
+                AND EXISTS (
+                  SELECT 1 FROM document_type dt
+                  WHERE dt.branch = 2
+                  AND dt.name = 'Điều động cán bộ'
+                  AND dt.document_type_id = obj.document_type_id
+                )"
+              [disabled]="true"
+            >
+            </data-picker>
+            <app-control-messages [control]="f['documentId']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'transferEmployee.transferDate'|translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <date-picker [property]="f['transferDate']" [disabled]="true">
+            </date-picker>
+            <app-control-messages [control]="f['transferDate']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+            {{'transferEmployee.code' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="text" [attr.disabled]="true" class="form form-control" formControlName="code" maxlength="200">
+            <app-control-messages [control]="f['code']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'transferEmployee.employeeTransfer' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <data-picker 
+            [property]="f['employeeId']" 
+            systemCode="political" 
+            operationKey="action.view"
+            adResourceKey="resource.partyMember" 
+            objectBO="EmployeeBO" 
+            codeField="employeeCode" 
+            nameField="fullName"
+            emailField="email"
+            mobileNumberField="mobileNumber"
+            selectField="employeeId"
+            [isRequiredField]="true"
+            (onChange)="changeEmployee($event)"
+            [disabled]="true"
+            >
+          </data-picker>
+          <app-control-messages [control]="f['employeeId']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">{{'transferEmployee.oldPosition' | translate}} </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <data-picker
+              [property]="f['oldPositionId']"
+              systemCode="political"
+              operationKey="action.view"
+              adResourceKey="resource.employeeManager"
+              objectBO="PositionBO"
+              codeField="code"
+              nameField="name"
+              selectField="positionId"
+              [disabled] = "true"
+            >
+            </data-picker>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'transferEmployee.transferType' | translate}} 
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter
+              [property]="f['transferType']"
+              [options]="transferTypeList"
+              optionLabel="label"
+              optionValue="value"
+              [placeHolder]="'common.label.cboSelectAll'"
+              [disabled]="true"
+              >
+            </select-filter>
+            <app-control-messages [control]="f['transferType']"></app-control-messages>
+          </div>
+          <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+            {{'transferEmployee.newPosition' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <select-filter 
+              [placeHolder]="'common.label.cboMustSelect'"
+              [property]="f['positionId']" 
+              [options]="lstPosition" 
+              optionLabel="positionName" 
+              optionValue="positionId"
+              [disabled]="true"
+            >
+            </select-filter>
+            <app-control-messages [control]="f['positionId']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'transferEmployee.name' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <input type="text" [attr.disabled]="true" class="form form-control" formControlName="name" maxlength="200">
+            <app-control-messages [control]="f['name']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class= "ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+          {{'transferEmployee.description' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-9 ui-lg-9">
+            <textarea formControlName="description" cols="200" rows="6" [attr.disabled]="true" class="form-control" maxlength="1000"></textarea>
+            <app-control-messages [control]="f['description']"></app-control-messages>
+          </div>
+        </div>
+      </div>
+      <div class="pannel-footer">
+        <p-tabView>
+          <!-- Tieu chuan chung -->
+          <p-tabPanel #generalStandardTab header="{{'transferEmployee.generalStandardEvaluete' | translate}}" [selected]="true">
+            <form id="formSave" [formGroup]="formGeneralStandard">
+              <p-table [scrollable]="true" [value]="formGeneralStandard.controls"
+                tableStyleClass="table controls-table table-wrapper b-t b-b">
+                <ng-template pTemplate="colgroup" let-columns>
+                  <colgroup>
+                    <col class="size-1">
+                    <col class="size-12">
+                    <col class="size-12">
+                    <col class="size-8">
+                    <col class="size-8">
+                    <col class="size-4">
+                    <col class="size-12">
+                  </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th rowspan="2" translate>common.table.index</th>
+                    <th rowspan="2" translate><span>app.settings.category.generalname</span></th>
+                    <th rowspan="2" translate><span>partyOrganizationTerminate.description</span></th>
+                    <th colspan="2" translate><span>transferEmployee.evaluate.real</span></th>
+                    <th rowspan="2" translate><span>transferEmployee.evaluate.evaluate</span></th>
+                    <th rowspan="2" translate><span>transferEmployee.comment</span></th>
+                  </tr>
+                  <tr>
+                    <th translate>transferEmployee.evaluate.systemDoc</th>
+                    <th translate>transferEmployee.evaluate.realDoc</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-index="rowIndex">
+                  <tr [formGroup]="item">
+                    <td class="vt-align-center">
+                      {{index+1}}
+                    </td>
+                    <td>
+                      <strong >{{item.controls.nameCate.value}}</strong>: <span>{{item.controls.nameGspg.value}}</span>
+                        <!-- <input type="text" [attr.disabled]="true" formControlName="name"class="form-control" maxlength="200">
+                        <app-control-messages [control]="item.controls.name"></app-control-messages> -->
+                    </td>
+                    <td>
+                      <textarea type="text-area" rows="2" [attr.disabled]="true" class="form-control" formControlName="description" maxlength="500"></textarea>
+                      <app-control-messages [control]="item.controls.description"></app-control-messages>
+                    </td>
+                    <td>
+                      <textarea type="text-area" [attr.disabled]="true" rows="2" class="form-control" formControlName="dataSystem" maxlength="500"></textarea>
+                      <app-control-messages [control]="item.controls.dataSystem"></app-control-messages>
+                    </td>
+                    <td>
+                      <textarea type="text-area" rows="2" [attr.disabled]="isView?true:null" class="form-control" formControlName="dataAdjustment" maxlength="500"></textarea>
+                      <app-control-messages [control]="item.controls.dataAdjustment"></app-control-messages>
+                    </td>
+                    <td>
+                      <select-filter 
+                        [placeHolder]="'common.label.cboSelect'"
+                        [property]="item.controls.evaluateType" 
+                        [options]="evaluateList" 
+                        optionLabel="label"
+                        optionValue="value"
+                        [disabled]="isView"
+                        appendTo="body"
+                      >
+                      </select-filter>
+                      <app-control-messages [control]="item.controls.evaluateType"></app-control-messages>
+                    </td>
+                    <td>
+                      <textarea type="text-area" rows="2" [attr.disabled]="isView?true:null" class="form-control" formControlName="comment" maxlength="500"></textarea>
+                      <app-control-messages [control]="item.controls.comment"></app-control-messages>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </form>
+          </p-tabPanel>
+          <p-tabPanel #privateStandardTab header="{{'transferEmployee.privateStandardEvaluete' | translate}}">
+            <!-- tieu chuan rieng -->
+            <form id="formSave" [formGroup]="formPrivateStandard">
+              <p-table [scrollable]="true" [value]="formPrivateStandard.controls"
+                tableStyleClass="table controls-table table-wrapper b-t b-b">
+                <ng-template pTemplate="colgroup" let-columns>
+                  <colgroup>
+                    <col class="size-1">
+                    <col class="size-12">
+                    <col class="size-12">
+                    <col class="size-8">
+                    <col class="size-8">
+                    <col class="size-4">
+                    <col class="size-12">
+                  </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th rowspan="2" translate>common.table.index</th>
+                    <th rowspan="2" translate><span>app.settings.privateStandard.privateStandarname</span></th>
+                    <th rowspan="2" translate><span>partyOrganizationTerminate.description</span></th>
+                    <th colspan="2" translate><span>transferEmployee.evaluate.real</span></th>
+                    <th rowspan="2" translate><span>transferEmployee.evaluate.evaluate</span></th>
+                    <th rowspan="2" translate><span>transferEmployee.comment</span></th>
+                  </tr>
+                  <tr>
+                    <th translate>transferEmployee.evaluate.systemDoc</th>
+                    <th translate>transferEmployee.evaluate.realDoc</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-index="rowIndex">
+                  <tr [formGroup]="item">
+                    <td class="vt-align-center">
+                      {{index+1}}
+                    </td>
+                    <td>
+                      <!-- <input type="text" [attr.disabled]="true" formControlName="name"class="form-control" maxlength="200">
+                      <app-control-messages [control]="item.controls.name"></app-control-messages> -->
+                      <strong >{{item.controls.nameCate.value}}</strong>: <span>{{item.controls.namePspg.value}}</span>
+                    </td>
+                    <td>
+                      <textarea type="text-area" rows="2" [attr.disabled]="true" class="form-control" formControlName="description" maxlength="500"></textarea>
+                      <app-control-messages [control]="item.controls.description"></app-control-messages>
+                    </td>
+                    <td>
+                      <textarea type="text-area" [attr.disabled]="true" rows="2" class="form-control" formControlName="dataSystem" maxlength="500"></textarea>
+                      <app-control-messages [control]="item.controls.dataSystem"></app-control-messages>
+                    </td>
+                    <td>
+                      <textarea type="text-area" rows="2" [attr.disabled]="isView?true:null" class="form-control" formControlName="dataAdjustment" maxlength="500"></textarea>
+                      <app-control-messages [control]="item.controls.dataAdjustment"></app-control-messages>
+                    </td>
+                    <td>
+                      <select-filter 
+                        [placeHolder]="'common.label.cboSelect'"
+                        [property]="item.controls.evaluateType" 
+                        [options]="evaluateList" 
+                        optionLabel="label"
+                        optionValue="value"
+                        [disabled]="isView"
+                        appendTo="body"
+                      >
+                      </select-filter>
+                      <app-control-messages [control]="item.controls.evaluateType"></app-control-messages>
+                    </td>
+                    <td>
+                      <textarea type="text-area" rows="2" [attr.disabled]="isView?true:null" class="form-control" formControlName="comment" maxlength="500"></textarea>
+                      <app-control-messages [control]="item.controls.comment"></app-control-messages>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </form>
+          </p-tabPanel>
+          <p-tabPanel #vincinityPlanTab header="{{'transferEmployee.planning' | translate}}">
+            <form [formGroup]="formVincinityPlan">
+              <div class="ui-g" style="padding: 0 0 0px 0;">
+                <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" style="width: 310px" translate>transferEmployee.evaluate.vicinityPlan.isVicinity</label>
+                <div class="ui-g-12 ui-md-6 ui-lg-4">
+                  <div class="form-check-inline ">
+                    <label class="i-checks" translate>
+                      <input type="radio" class="form-check-input control-label" id="isVicinity_1" [value]="1" name="isVicinity" formControlName="isVicinity" [attr.disabled]="true">
+                      <i></i>
+                      common.button.yes
+                    </label>
+                  </div>
+                  <div class="form-check-inline">
+                    <label class="i-checks" translate>
+                      <input type="radio" class="form-check-input control-label" id="isVicinity_0" [value]="0" name="isVicinity" formControlName="isVicinity" [attr.disabled]="true">
+                      <i></i>
+                      common.button.no
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <p-table  [scrollable]="false" [value]="vincinityPlanList"
+                tableStyleClass="table controls-table table-wrapper b-t b-b">
+                <ng-template pTemplate="colgroup" let-columns>
+                  <colgroup>
+                    <col class="size-1">
+                    <col class="size-6">
+                    <col class="size-6">
+                    <col class="size-6">
+                  </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th translate>common.table.index</th>
+                    <th translate><span>common.label.title</span></th>
+                    <th translate><span>vicinityPlan.vicinityPositionPlan.vicinityEmployee</span></th>
+                    <th translate><span>vicinityPlan.vicinityPositionPlan.nextEmployee</span></th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-index="rowIndex">
+                  <tr>
+                    <td class="vt-align-center">
+                      {{index+1}}
+                    </td>
+                    <td class="vt-align-left">
+                      {{item.positionName}}
+                    </td>
+                    <td class="vt-align-left">
+                      {{item.vicinityEmployeeNames}}
+                    </td>
+                    <td class="vt-align-left">
+                      {{item.nextEmployeeNames}}
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </form>
+          </p-tabPanel>
+          <p-tabPanel #workProcessTab header="{{'staffManager.Label.profileInformation_1' | translate}}">
+             <work-process-search #workProcess></work-process-search>
+          </p-tabPanel>
+          <p-tabPanel #rewardDisciplineTab header="{{'reward_discipline' | translate}}">
+            <reward-displine-government #rewardDisplineGovernment></reward-displine-government>
+          </p-tabPanel>
+          <p-tabPanel #rewardPartyMemberTab header="{{'transferEmployee.reward_PartyMember' | translate}}">
+            <reward-party-member #rewardPartyMember></reward-party-member>
+          </p-tabPanel>
+          <p-tabPanel #commentTab header="{{'transferEmployee.evaluate' | translate}}">
+            <assessment-search #assessment></assessment-search>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+      <div id="searchPage">
+        <div id="searchArea">
+          <div class="panel panel-default">
+            <div class="panel-heading" translate>
+              <strong class="text-u-c">
+                <i class="fa fa-th"></i>
+                transferEmployee.workProcess.conclude
+              </strong>
+            </div>
+              <div class="panel-body padding-xl ui-g">
+                <div class="ui-g-12 vt-row">
+                  <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                    {{'transferEmployee.workProcess.conclude' | translate}}
+                  </label>
+                  <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <div class="form-check-inline">
+                      <label class="i-checks">
+                        <input type="radio" [attr.disabled]="isView?true : null" class="form-check-input control-label" id="conclude_1" [value]="1" name="conclude" formControlName="conclude">
+                        <i></i>
+                        {{'transferEmployee.workProcess.agree' | translate}}
+                      </label>
+                    </div>
+                    <div class="form-check-inline">
+                      <label class="i-checks">
+                        <input type="radio" [attr.disabled]="isView?true : null" class="form-check-input control-label" id="conclude_2" [value]="2" name="conclude" formControlName="conclude">
+                        <i></i>
+                        {{'transferEmployee.workProcess.unAgree' | translate}}
+                      </label>
+                    </div>
+                    <app-control-messages [control]="f['conclude']"></app-control-messages>
+                  </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+                  <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                    {{'profile.table.note' | translate}}
+                  </label>
+                  <div class="ui-g-12 ui-md-6 ui-lg-9">
+                    <textarea type="text" 
+                      rows="6" 
+                      name="comment" 
+                      class="form-control" 
+                      formControlName="comment"
+                      maxlength="1000"
+                      [attr.disabled]="isView?true:null" 
+                      >
+                    </textarea>
+                    <app-control-messages [control]="f['comment']"></app-control-messages>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer vt-area-button">
+        <button type="submit" *ngIf="!isView" (click)="processSaveOrUpdate()" class="btn btn-sm btn-info" [innerHTML]="'common.button.icon.save' | translate"></button>
+        <button type="submit" *ngIf="!isView && isApproved" (click)="processRequest()" class="btn btn-sm btn-info" [innerHTML]="'common.button.icon.request' | translate"></button>
+        <button type="submit" *ngIf="!isView && !isApproved" (click)="processComplete()" class="btn btn-sm btn-info" [innerHTML]="'common.button.icon.complete' | translate"></button>
+        <button type="button" (click)="goBack()" class="btn btn-sm btn-danger" [innerHTML]="'common.button.out' | translate"></button>
+      </div>
+    </form>
+  </div>
+</div>
+<div *ngIf="!hasPermission('action.update') && !isEvaluate && ! isView &&!isEvaluateEdit">
+  {{'common.haveNoPermission' | translate}}
+</div>

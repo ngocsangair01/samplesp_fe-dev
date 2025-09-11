@@ -1,0 +1,6 @@
+<div *ngIf="hasPermission('action.view')">
+  <subsidized-info-search></subsidized-info-search>
+</div>
+<div *ngIf="!hasPermission('action.view')">
+  {{'common.haveNoPermission' | translate}}
+</div>

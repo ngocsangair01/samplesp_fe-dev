@@ -1,0 +1,84 @@
+.li-report {
+  border-left: 5px solid var(--background-color-nav);
+  color: var(--background-color-nav);
+  display: flex;
+  align-items: center;
+  min-height: 28px;
+}
+
+.group-report {
+  text-transform: uppercase;
+}
+
+.icon-up-down-list {
+  margin: 0 10px 0 10px;
+  width: 12px;
+  height: 12px
+}
+
+.data-body-table {
+  cursor: pointer;
+  height: 52px;
+  font-size: 14px;
+}
+
+.report-heading-text {
+ font-size: 16px;
+ font-weight: 700
+}
+
+.heading-table-text {
+  font-size: 14px;
+  font-weight: 600;
+}
+:host ::ng-deep .vt-max-width {
+  width: 100%;
+}
+
+:host ::ng-deep .vt-max-width .ui-scrollpanel .ui-scrollpanel-wrapper .ui-scrollpanel-content {
+  width: 100% !important;
+  overflow: hidden !important;
+  padding: unset;
+}
+
+:host ::ng-deep .vt-max-width .ui-scrollpanel .ui-scrollpanel-wrapper {
+  border-radius: 8px;
+  border: 1px solid #D7E2E3;
+  width: 100%;
+  background-color: #FFFFFF !important;
+  margin-bottom: 16px;
+}
+
+.data-body-table:hover{
+  background-color: #EFF3F6 !important;
+  color: var(--background-color-header) !important;
+}
+
+.btn-up-down-report {
+  margin: unset;
+  padding: unset;
+  width: 35px;
+  height: 35px;
+  border: 1px solid #D7E2E3;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.btn-import-file{
+  border-color: rgb(170, 11, 5, 1) !important;
+  /* font-weight: 700; */
+  font-family: 'PFBeauSansPro';
+  color: rgb(170, 11, 5, 1) !important;
+  background-color: '#F00000000' !important;
+  border-radius: 8px;
+}
+
+/* mobile*/
+@media (min-width: 374px) and (max-width: 576px){
+  .report-heading-text {
+    font-size: 14px !important;
+  }
+  .data-body-table {
+    font-size: 12px !important;
+  }
+}

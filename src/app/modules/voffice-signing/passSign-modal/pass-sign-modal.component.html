@@ -1,0 +1,64 @@
+<div class="modal-body">
+    <form id="formSearch" [formGroup]="formSearch">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong class="text-u-c"><i class="fa fa-th"></i>&nbsp;
+                    <span translate>vofficeSigning.title.preview</span>
+                </strong>
+                <div class="vt-absolute vt-shotcut-button-in-heading">
+                <span (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+                      class="btn btn-span btn-sm btn-info btn-close"><i class="fa fa-times"></i></span>
+                </div>
+            </div>
+            <div class="panel-body padding-xl ui-g">
+                <div class="ui-g-12 vt-row">
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                        {{'label.exe.req.sign.employee' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <data-picker
+                                [property]="f['employeeId']"
+                                systemCode="political"
+                                operationKey="action.view"
+                                adResourceKey="resource.rewardPropose"
+                                objectBO="AllEmployeeBO"
+                                codeField="employeeCode"
+                                nameField="fullName"
+                                emailField="email"
+                                mobileNumberField="mobileNumber"
+                                selectField="employeeId"
+                                filterCondition=""
+                                [disabled]="false">
+                        </data-picker>
+                        <app-control-messages [control]="f['employeeId']"></app-control-messages>
+                    </div>
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                        {{'label.mass.categoryRequest.VofficeDecisionNumber' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <input type="text" class="form form-control" name="decisionNumber"
+                               formControlName="decisionNumber"
+                               maxlength="200">
+                        <app-control-messages [control]="f['decisionNumber']"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                        {{'label.document.ware.house.date.publish' | translate}}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <date-picker [property]="f['promulgateDate']">
+                        </date-picker>
+                        <app-control-messages [control]="f['promulgateDate']"></app-control-messages>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer vt-area-button">
+                            <button type="submit" class="btn btn-sm btn-info" (click)="save()"
+                                    [innerHTML]="'common.button.icon.save' | translate"></button>
+            <!--                <button type="button" class="btn btn-sm btn-danger" (click)="goBack()"-->
+            <!--                        [innerHTML]="'common.button.out' | translate"></button>-->
+        </div>
+    </form>
+</div>

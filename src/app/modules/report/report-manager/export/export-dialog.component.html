@@ -1,0 +1,44 @@
+<div class="panel-body padding-xl ui-g" style="padding-bottom: 0;">
+    <div class="ui-g-10 ui-g-offset-1">
+        <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+            {{'label.report.orgSubmmit' | translate}}</label>
+        <div class="ui-g-12 ui-md-8">
+            <org-selector [operationKey]="'action.view'" [adResourceKey]="'resource.requestReporting'"
+                [property]="formExport.controls.orgSubmit"></org-selector>
+            <app-control-messages [control]="formExport.controls.orgSubmit"></app-control-messages>
+        </div>
+    </div>
+
+    <div class="ui-g-10 ui-g-offset-1">
+        <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+            {{'label.report.request' | translate}}</label>
+        <div class="ui-g-12 ui-md-8">
+            <p-autoComplete [formControl]="formExport.controls.requestReporting"
+                [suggestions]="requestReportingSuggestions" field="title" (completeMethod)="getReportTitle($event)"
+                [minLength]="1" [maxlength]="100" (onClear)="onClearReport()" placeholder="Nhập tên yêu cầu báo cáo"
+                style="width: 100%;" [inputStyle]="{ minHeight: '28px', width: '100%', borderRadius: '0px' }"
+                [style]="{padding:0, width: '100%'}"></p-autoComplete>
+            <app-control-messages [control]="formExport.controls.requestReporting"></app-control-messages>
+        </div>
+    </div>
+
+    <div class="ui-g-10 ui-g-offset-1">
+        <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+            {{'lable.report.period' | translate}}</label>
+        <div class="ui-g-12 ui-md-8">
+            <p-autoComplete [formControl]="formExport.controls.reportingPeriod"
+                [suggestions]="reportingPeriodSuggestions" field="reportingPeriod"
+                (completeMethod)="getReportingPeriod($event)" [minLength]="1" [maxlength]="100"
+                (onClear)="onClearReportingPeriod()" placeholder="Nhập kỳ báo cáo" style="width: 100%;"
+                [inputStyle]="{ minHeight: '28px', width: '100%', borderRadius: '0px' }"
+                [style]="{padding:0, width: '100%'}" [disabled]="!formExport.value.requestReporting"></p-autoComplete>
+            <app-control-messages [control]="formExport.controls.reportingPeriod"></app-control-messages>
+        </div>
+    </div>
+
+    <div class="panel-footer vt-area-button ui-g-12">
+
+        <button type="submit" class="btn btn-sm btn-success" (click)="exportReport()"
+            [innerHTML]="'common.button.icon.export' | translate"></button>
+    </div>
+</div>

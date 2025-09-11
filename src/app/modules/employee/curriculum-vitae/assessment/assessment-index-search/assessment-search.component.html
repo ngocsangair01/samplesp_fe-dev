@@ -1,0 +1,105 @@
+<div class="card-emp">
+  <div id="assessment" class="card card-info">
+    <div class="card-header">
+      <div>
+        <img class="header-icon" [ngClass]="{'transform-icon': hideAssessment === true}" src="./../../../../../../assets/images/home/Group_18932.png" (click)="hideAssessment = !hideAssessment">
+        <span translate> employee.assessment.title</span>
+      </div>
+    </div>
+    <div *ngIf="!hideAssessment" class="card-body">
+      <div class="panel-body panel-table">
+        <p-table
+          [value]="resultList.data"
+          (onLazyLoad)="processSearch($event)"
+          [lazy]="true"
+          [rows]="resultList.recordsTotal"
+          [totalRecords]="resultList.recordsTotal"
+          [scrollable]="true"
+          [lazyLoadOnInit]="false"
+          tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+          [resizableColumns]="true">
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col style="width: 50px;">
+              <col style="width: 200px;">
+              <col style="width: 100px;">
+              <col style="width: 200px;">
+              <col style="width: 200px;">
+              <col style="width: 300px !important;">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th translate pResizableColumn>common.table.index</th>
+              <th translate pResizableColumn>employee.assessment.assessName</th>
+              <th translate pResizableColumn>label.empArmyProposed.year</th>
+              <th translate pResizableColumn>common.label.result</th>
+    
+    <!--          thanh tích-->
+              <th translate pResizableColumn>employee.assessment.achievement</th>
+    
+    <!--          trang thái-->
+              <th translate pResizableColumn>employee.assessment.signStatus</th>
+    
+    <!--&lt;!&ndash;          xem chi tiet&ndash;&gt;-->
+    <!--          <th translate>employee.assessment.criticalLevelView</th>-->
+    
+    <!--          <th translate>common.label.finishDate</th>-->
+    
+              <th translate pResizableColumn>issue.resolutions.title.assesmentNXDG</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+            <tr>
+              <td class="vt-align-center">{{ index }}</td>
+              <td class="vt-align-left">{{ item.assessName }}</td>
+              <td class="vt-align-center">{{ item.year }}</td>
+              <td class="vt-align-left">{{ item.criticalLevel }}</td>
+    
+              <!--          thanh tích-->
+              <td class="vt-align-left">
+                <span *ngIf="item.achievements != null">
+                  <span class="title-truncate" style="-webkit-box-orient: vertical;">{{item.achievements}}</span>
+                  <a class="text-link" (click)="viewMore(item.achievements)" > Xem thêm </a>
+                </span>
+              </td>
+    
+              <!--          trang thái-->
+              <td class="vt-align-left">
+                <span *ngIf="item.status == 2" >Đã hoàn thành</span>
+                <span *ngIf="item.status != 2" >Chưa hoàn thành</span>
+              </td>
+    
+    <!--          xem chi tiet-->
+    <!--          <td>-->
+    <!--            <span *ngIf="item.employeeCode != null"><a target="_blank" href="http://congtacdang-congtacchinhtri.sangnn.vn/assessment/detail/{{item.assessmentPeriodId}}/{{item.employeeCode}}" translate="">employee.assessment.criticalLevelView</a>-->
+    <!--            </span>-->
+    <!--          </td>-->
+    
+    <!--          <td class="vt-align-center">{{ item.completeDate | displayDate }}</td>-->
+    
+              <td class="vt-align-left">
+                <div *ngIf="!item.transCode && item.vtCriticalId">
+                  <a class="text-link" (click)="processDownloadFile(item)">
+                      <span>{{ item.vtCriticalId }}.pdf</span>
+                  </a>
+                </div>
+                <div *ngIf="item.transCode">
+                  <a class="text-link" *ngFor="let data of item.listFileSign, let i = index" (click)="previewFile(data, item.transCode)">
+                    <p>{{i + 1}}. {{data}}</p>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr class="emptymessage">
+              <td [attr.colspan]="5" [innerHTML]="'app.noRecords' | translate">
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</div>

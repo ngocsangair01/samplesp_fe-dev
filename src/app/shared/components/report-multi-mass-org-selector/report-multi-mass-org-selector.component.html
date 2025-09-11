@@ -1,0 +1,15 @@
+<div class="input-group picker orgSelector">
+  <div class="editor-tag">
+    <span class="tag-item" *ngFor="let data of list">
+      {{data.name}}
+      <span class="remove-tag" (click)="removeTag(data.massOrganizationId)" *ngIf="!disabled">x</span>
+    </span>
+    <input type="text" class="input-tag" disabled style="background-color: white;"> 
+  </div>
+  <div class="input-group-append" *ngIf="!disabled">
+    <button [autoFocus]="autoFocus" class="btn btn-info chosen" type="button" #buttonChose (click)="onChose()"
+      [title]="'app.common.title.select' | translate" [innerHTML]="'common.icon.checkData' | translate"></button>
+    <button *ngIf="!isRequiredField" (click)="delete($event)" class="btn btn-danger" type="button"
+      [title]="'app.common.title.remove' | translate" [innerHTML]="'common.icon.removeData' | translate"></button>
+  </div>
+</div>

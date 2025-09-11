@@ -1,0 +1,42 @@
+<div class="modal-body">
+  <div class="panel-default">
+    <div class="panel-heading vt-relative">
+      <strong class="text-u-c">
+        <i class="fa fa-th"></i>
+        {{'assessmentPeriod.title.importPartyMember' | translate}}
+      </strong>
+      <div class="vt-absolute vt-shotcut-button-in-heading">
+        <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+          class="btn btn-span btn-sm btn-info btn-close"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <form id="formImport" [formGroup]="formImport">
+      <div class="panel-body padding-xl ui-g">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-4 control-label vt-align-right required">
+            {{'assessmentPeriod.partyOrganization.import' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <party-org-selector
+              [property]="f['partyOrganizationId']"
+              operationKey="action.view"
+              adResourceKey="resource.assessmentPeriod"
+              [defaultValue]="true"
+              [isRequiredField]="true"
+              >
+            </party-org-selector>
+            <app-control-messages [control]="f['partyOrganizationId']"></app-control-messages>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer vt-area-button">
+        <button type="submit" (click)="processImport()" class="btn btn-sm btn-info" [innerHTML]="'assessmentPeriod.button.makeList' | translate"></button>
+        <button type="button" (click)="cancel()" class="btn btn-sm btn-danger" [innerHTML]="'common.button.out' | translate"></button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="bodyToast">
+  <p-toast position="bottom-center"
+  ></p-toast>
+</div>

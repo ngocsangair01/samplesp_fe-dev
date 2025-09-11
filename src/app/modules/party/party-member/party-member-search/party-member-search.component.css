@@ -1,0 +1,84 @@
+:host ::ng-deep .ui-paginator-bottom {
+    position: absolute;
+    width: 100%;
+    top: -33px;
+    /*border-top: 1px solid #dee5e7;*/
+}
+
+/*:host ::ng-deep .custom-table .ui-paginator .ui-paginator-left-content {*/
+/*    float: left;*/
+/*    width: calc(100% - 257px);*/
+/*}*/
+
+/*:host ::ng-deep .ui-calendar.ui-calendar-w-btn .ui-datepicker-trigger.ui-button {*/
+/*    width: 28px;*/
+/*    border-radius: 0 8px 8px 0;*/
+/*    height: 40px;*/
+/*}*/
+
+/*.box-container {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*}*/
+
+/*:host ::ng-deep .ui-chkbox .ui-chkbox-box {*/
+/*    height: 20px;*/
+/*    width: 20px;*/
+/*}*/
+
+/*:host ::ng-deep .ui-chkbox {*/
+/*    margin: 0 10px;*/
+/*}*/
+
+/*.rows {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.btn-submit {*/
+/*    color: #FFFFFF;*/
+/*    background-image: linear-gradient(#00A3F3, #0279FF);*/
+/*}*/
+
+.dropdown-toggle::after {
+    display: none;
+}
+/**
+ chỉnh kích thước scroll
+ */
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb:hover {
+    background: #fff;
+}
+
+.icon-show-hide-search {
+    margin-bottom: 4px;
+}
+.set-width-div{
+    width: 390px;
+}
+/* mobile*/
+@media (min-width: 374px) and (max-width: 576px){
+
+}
+@media (min-width: 577px) and (max-width: 767px){
+
+}
+@media (min-width: 768px) and (max-width: 1024px){
+    
+}
+@media (min-width: 992px) {
+
+}
+@media (min-width: 1200px) {
+
+}
+@media (max-width: 1440px) {
+    .set-width-div{
+        width: 289px;
+    }
+}

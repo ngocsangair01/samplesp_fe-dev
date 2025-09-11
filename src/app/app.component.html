@@ -1,7 +1,12 @@
-<nav style="background:#eee; padding:10px;">
-  <a routerLink="/home" style="margin-right: 10px;">Home</a>
-  <a routerLink="/contact" style="margin-right: 10px;">Contact</a>
-  <a routerLink="/plan-management">Plan Management</a>
-</nav>
-
 <router-outlet></router-outlet>
+<!-- thay đổi phương thức để hiển thị tên button accept và reject với các giá trị khác nhau -->
+<p-confirmDialog #cd [style]="{width: '360px'}" [acceptButtonStyleClass]="'btn-info'" [rejectButtonStyleClass]="'btn-danger'" [acceptLabel]="acceptLabel"
+[rejectLabel]="rejectLabel">
+</p-confirmDialog>
+<p-toast position="bottom-right"></p-toast>
+<div id="progressSpinnerCheck">
+  <div id="progressSpinner">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+  <div style="z-index: 88888888" class="modal-backdrop fade show" id="progressSpinnerBackdrop"></div>
+</div>

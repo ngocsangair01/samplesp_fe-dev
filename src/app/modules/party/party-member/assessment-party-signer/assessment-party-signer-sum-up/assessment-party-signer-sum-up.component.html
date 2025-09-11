@@ -1,0 +1,194 @@
+<div id="searchPage">
+  <div id="searchArea">
+    <div class="panel panel-default">
+      <div class="panel-heading" translate>
+        <strong class="text-u-c">
+          <i class="fa fa-th"></i>
+          assessmentSumUp.search.title
+        </strong>
+      </div>
+      <form id="formSearch" [formGroup]="formSearch">
+        <div class="panel-body padding-xl ui-g">
+          <!-- row 1 -->
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'assessmentPartyOrganization.titleField.partyOrg' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <party-org-selector
+                [property]="f['partyOrganizationId']"
+                operationKey="action.view"
+                adResourceKey="resource.assessmentPartyOrganization"
+                [defaultValue]="true"
+                [isRequiredField]="true"
+              ></party-org-selector>
+              <app-control-messages [control]="f['partyOrganizationId']"></app-control-messages>
+            </div>
+            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+              {{'assessmentPartyOrganization.titleField.periodName' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter
+                [placeHolder]="'common.label.cboMustSelect'"
+                [property]="f['assessmentPeriodId']"
+                [options]="assessmentPeriodList"
+                optionLabel="assessmentPeriodName"
+                optionValue="assessmentPeriodId"
+                (onChange)="handleGetValueForLevelOrder(false)"
+              >
+              </select-filter>
+              <app-control-messages [control]="f['assessmentPeriodId']"></app-control-messages>
+            </div>
+          </div>
+          <!-- row 2 --> 
+          <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+              {{'assessmentPartyOrganization.titleField.levelOrder.result' | translate}}
+            </label>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+              <select-filter
+                [placeHolder]="'common.label.cboSelectAll'"
+                [property]="f['assessmentOrder']"
+                [options]="assessmentLevelOrderList"
+                optionLabel="assessmentLevelName"
+                optionValue="assessmentOrder"
+                (onChange)="handleGetCriteriaKey()"
+                [disabled]="!f['assessmentPeriodId'].value">
+              </select-filter>
+              <app-control-messages [control]="f['assessmentOrder']"></app-control-messages>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer vt-area-button">
+          <button type="submit" class="btn btn-sm btn-info" (click)="processSearchSumUp()"
+            [innerHTML]="'common.button.icon.viewData' | translate" ></button>
+          <button *ngIf="hasPermission('action.view')" type="button" class="btn btn-sm btn-info" (click)="processUpdateAndCloseResult()"
+            [innerHTML]="'common.button.icon.sumup' | translate" ></button>
+        </div>
+      </form>
+        <!-- grid detail -->
+        <div id="listArea">
+          <div class="panel panel-default">
+            <div class="panel-heading vt-relative">
+              <strong class="text-u-c">
+                <i class="fa fa-th"></i>
+                {{'assessmentSumUp.gridMember.title' | translate}}
+              </strong>
+            </div>
+            <div class="panel-body panel-table">
+              <p-table
+                #ptable
+                [value]="dataSumUp.data"
+                [paginator]="true"
+                (onLazyLoad)="processSearchSumUp($event)"
+                [lazy]="false" [rows]="20"
+                [totalRecords]="dataSumUp.recordsTotal"
+                [scrollable]="true"
+                [lazyLoadOnInit]="false"
+                tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+                styleClass="controlOverflow"
+              >
+                <ng-template pTemplate="colgroup" let-columns>
+                  <colgroup>
+                    <col class="size-1">
+                    <col class="size-2">
+                    <col class="size-4">
+                    <col class="size-8">
+                    <col class="size-8">
+                    <col class="size-8">
+                    <col class="size-12">
+                    <col class="size-4">
+                    <col class="size-4">
+                    <col *ngFor="let col of criteriaKeys" class="size-12">
+                  </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th translate>common.table.index</th>
+                    <th translate>
+                      common.button.chose
+                    </th>
+                    <th translate [pSortableColumn]="'employeeCode'">
+                      assessmentSumUp.gridMember.empCode
+                      <p-sortIcon [field]="'employeeCode'"></p-sortIcon>
+                    </th>
+                    <th translate [pSortableColumn]="'employeeName'">
+                      assessmentSumUp.gridMember.empName
+                      <p-sortIcon [field]="'employeeName'"></p-sortIcon>
+                    </th>
+                    <th translate [pSortableColumn]="'positionName'">
+                      assessmentSumUp.gridMember.position
+                      <p-sortIcon [field]="'positionName'"></p-sortIcon>
+                    </th>
+                    <th translate [pSortableColumn]="'partyPositionName'">
+                      assessmentSumUp.gridMember.partyPosition
+                      <p-sortIcon [field]="'partyPositionName'"></p-sortIcon>
+                    </th>
+                    <th translate [pSortableColumn]="'massPositionName'">
+                      assessmentSumUp.gridMember.massPosition
+                      <p-sortIcon [field]="'massPositionName'"></p-sortIcon>
+                    </th>
+                    <th translate [pSortableColumn]="'individualSignStatus'">
+                      assessmentSumUp.gridMember.individualSignStatus
+                      <p-sortIcon [field]="'individualSignStatus'"></p-sortIcon>
+                    </th>
+                    <th translate>
+                      assessmentSumUp.gridMember.levelAssessment
+                    </th>
+                    <th *ngFor="let criteria of criteriaKeys">{{criteria.assessmentCriteriaName}}</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                  <tr>
+                    <td class="vt-align-center">{{index}}</td>
+                    <td class="vt-align-center">
+                      <input type="checkbox" class="ui-chkbox ui-chkbox-box" style="height: 1.5rem;" 
+                      name="isChoose" [(ngModel)]="item.isChoose" />
+                    </td>
+                    <td class="vt-align-center">{{item.employeeCode}}</td>
+                    <td class="vt-align-left">{{item.employeeName}}</td>
+                    <td class="vt-align-left">{{item.positionName}}</td>
+                    <td class="vt-align-left">{{item.partyPositionName}}</td>
+                    <td class="vt-align-left">{{item.massPositionName}}</td>
+                    <td class="vt-align-left">
+                      <div *ngIf="item.individualSignStatus == null">{{'assessmentResult.individualStatus.notYet' | translate}}</div>
+                      <div *ngIf="item.individualSignStatus == 1">{{'assessmentResult.individualStatus.draft' | translate}}</div>
+                      <div *ngIf="item.individualSignStatus == 2">{{'assessmentResult.individualStatus.approved' | translate}}</div>
+                      <div *ngIf="item.individualSignStatus == 3">{{'assessmentResult.individualStatus.decline' | translate}}</div>
+                    </td>
+                    <td class="vt-align-left">
+                      <div *ngIf="item.evaluatingLevelPrevios == null">{{'assessmentResult.evaluatingLevel.notYet' | translate}}</div>
+                      <div *ngIf="item.evaluatingLevelPrevios == 1">{{'assessmentResult.evaluatingLevel.1' | translate}}</div>
+                      <div *ngIf="item.evaluatingLevelPrevios == 2">{{'assessmentResult.evaluatingLevel.2' | translate}}</div>
+                      <div *ngIf="item.evaluatingLevelPrevios == 3">{{'assessmentResult.evaluatingLevel.3' | translate}}</div>
+                      <div *ngIf="item.evaluatingLevelPrevios == 4">{{'assessmentResult.evaluatingLevel.4' | translate}}</div>
+                      <div *ngIf="item.evaluatingLevelPrevios == 5">{{'assessmentResult.evaluatingLevel.5' | translate}}</div>
+                      <div *ngIf="item.evaluatingLevelPrevios == 6">{{'assessmentResult.evaluatingLevel.6' | translate}}</div>
+                    </td>
+                    <td *ngFor="let criteria of criteriaKeys" class="vt-align-left">{{processShowCriteria(criteria, item.assessmentCriteria)}}</td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr class="emptymessage">
+                    <td [attr.colspan]="10" [innerHTML]="'app.noRecords' | translate"></td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="paginatorleft">
+                  <table-footer (changeRow)="onTablePageChange($event)" [resultList]="dataSumUp"></table-footer>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer vt-area-button">
+          <!-- <button
+            type="button"
+            (click)="processExport()"
+            class="btn btn-sm btn-info"
+            [innerHTML]="'assessmentSumUp.export.buttonTitle' | translate">
+          </button> -->
+          <button type="button" (click)="cancel()" class="btn btn-sm btn-danger" [innerHTML]="'common.button.previous.icon' | translate"></button>
+        </div>
+    </div>
+  </div>
+</div>

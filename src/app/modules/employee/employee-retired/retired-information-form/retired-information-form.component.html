@@ -1,0 +1,331 @@
+<div class="card-form">
+  <div class="clearfix">
+    <div class="left-nav-bar pull-left row-header">
+      <div>
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="goBack();">
+        <span *ngIf="!isView" class="title" translate>generalInformation.label.title</span>
+        <span *ngIf="isView" class="title" translate>generalInformation.label.title.view</span>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+        <ul class="header-right sys-ul space-line">
+          <li *ngIf="hasPermission('action.export', 'resource.partyMember')">
+            <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="goBack();" [innerHTML]="'common.button.out' | translate">
+            </button>
+          </li>
+          <li *ngIf="!isView && hasPermission('action.update', 'resource.partyMember')">
+            <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="doSaveOrUpdate()" [innerHTML]="'common.button.icon.save' | translate">
+            </button>
+          </li>
+          <li *ngIf="isView">
+            <button class="btn btn-sm vt-btn btn-submit mt-btn btn-header-right ng-star-inserted" type="button" (click)="navigate()" [innerHTML]="'common.button.icon.edit' | translate">
+            </button>
+          </li>
+        </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <div class="panel panel-default card-info"
+    *ngIf="(hasPermission('action.view') && isView) || (hasPermission('action.update') && isUpdate)">
+    <div class="panel-heading vt-relative">
+      <strong>
+        <!-- <span *ngIf="!isView" translate>generalInformation.label.title</span>
+        <span *ngIf="isView" translate>generalInformation.label.title.view</span> -->
+        <span class="ml-2 title-info">Thông tin chung cán bộ</span>
+      </strong>
+    </div>
+    <form id="formView" [formGroup]="formView">
+      <div class="panel-body ui-g" style="padding-bottom: 0px;">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'common.label.fullName' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <input type="text" class="form form-control" name="employeeName" formControlName="employeeName"
+              [attr.disabled]="isAlwaysDisable">
+          </div>
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'generalInformation.label.officerNumber' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <input type="text" name="formatedSoldierNumber" formControlName="formatedSoldierNumber" class="form-control"
+              [attr.disabled]="isAlwaysDisable">
+          </div>
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'common.label.gender' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <div class="form-check-inline">
+              <label class="i-checks">
+                <input type="radio" class="form-check-input control-label" id="single" [value]="1" name="gender"
+                  formControlName="gender" [attr.disabled]="isAlwaysDisable">
+                <i></i>
+                {{'common.label.male' | translate}}
+              </label>
+            </div>
+            <div class="form-check-inline">
+              <label class="i-checks">
+                <input type="radio" class="form-check-input control-label" id="single" [value]="2" name="gender"
+                  formControlName="gender" [attr.disabled]="isAlwaysDisable">
+                <i></i>
+                {{'common.label.female' | translate}}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'transferactivity.label.cv' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <input type="text" class="form form-control" name="currentPosition" formControlName="currentPosition"
+              [attr.disabled]="isAlwaysDisable">
+          </div>
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'staffManager.Label.dateOfBirth' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <date-picker [property]="f['dateOfBirth']" [disabled]="true"></date-picker>
+          </div>
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'generalInformation.label.nationality' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <select-filter [placeHolder]="'common.label.cboSelect'" [property]="f['nationId']" [options]="nationList"
+              optionLabel="name" optionValue="nationId" [disabled]="true"></select-filter>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'profile.label.ddt' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <select-filter [placeHolder]="'common.label.cboSelect'" [property]="f['empTypeId']" [options]="empTypeList"
+              optionLabel="name" optionValue="empTypeId" [disabled]="true"></select-filter>
+          </div>
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'common.label.unit' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-lg-2">
+            <input type="text" class="form form-control" name="orgFullName" formControlName="orgFullName"
+              [attr.disabled]="isAlwaysDisable">
+          </div>
+        </div>
+      </div>
+      <div class="panel-body ui-g" style="padding-bottom: 0px; padding-top: 0px;">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'generalInformation.label.idCard' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <input type="text" class="form form-control" name="personalIdNumber" formControlName="personalIdNumber"
+              [attr.disabled]="isAlwaysDisable">
+          </div>
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'generalInformation.label.dateIdCard' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <date-picker [property]="f['personalIdIssuedDate']" [disabled]="true"></date-picker>
+          </div>
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'generalInformation.label.placeIdCard' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <input type="text" class="form form-control" name="personalIdIssuedPlace"
+              formControlName="personalIdIssuedPlace" [attr.disabled]="isAlwaysDisable">
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'generalInformation.label.passportNumber' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <input type="text" class="form form-control" name="passportNumber" formControlName="passportNumber"
+              [attr.disabled]="isAlwaysDisable">
+          </div>
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'generalInformation.label.datePassportNumber' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <date-picker [property]="f['passportIssueDate']" [disabled]="true"></date-picker>
+          </div>
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'generalInformation.label.ethnicity' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <select-filter [placeHolder]="'common.label.cboSelect'" [property]="f['ethnicId']" [options]="ethnicList"
+              optionLabel="name" optionValue="sysCatId" [disabled]="true"></select-filter>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body ui-g" style="padding-top: 0px;">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'generalInformation.label.placeOfBirth' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-6">
+            <input type="text" class="form form-control" name="placeOfBirth" formControlName="placeOfBirth"
+              [attr.disabled]="isAlwaysDisable">
+          </div>
+          <div class="ui-g-12 ui-md-3 ui-lg-4">
+            <select-filter [placeHolder]="'common.label.cboSelect'" [property]="f['provinceOfBirthId']"
+              [options]="provinceList" optionLabel="name" optionValue="provinceId" [disabled]="true"></select-filter>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'generalInformation.label.originalOfBirth' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-6">
+            <input type="text" class="form form-control" name="origin" formControlName="origin" [attr.disabled]="true">
+          </div>
+          <div class="ui-g-12 ui-md-3 ui-lg-4">
+            <select-filter [placeHolder]="'common.label.cboSelect'" [property]="f['provinceOfOriginId']"
+              [options]="provinceList" optionLabel="name" optionValue="provinceId" [disabled]="true"></select-filter>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'generalInformation.label.isRetired' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <p-inputSwitch formControlName="isRetired" [disabled]="true"></p-inputSwitch>
+          </div>
+          <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+            {{'staffManager.Label.dateOfRetired' | translate}}
+          </label>
+          <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <date-picker [property]="f['dateOfRetired']" [disabled]="true"></date-picker>
+          </div>
+        </div>
+      </div>
+    </form>
+  
+    <div class="pannel-footer">
+      <p-tabView class="tab-view">
+        <p-tabPanel *ngIf="hasPermission('action.view', 'resource.partyMember')"
+          header="{{'generalInformation.label.employeeRetired' | translate}}" [selected]="true">
+          <form id="formSavePartyMember" [formGroup]="formSavePartyMember">
+            <div class="ui-grid-row">
+              <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+                {{'generalInformation.label.permanentResidence' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-3">
+                <select-filter [placeHolder]="'common.label.cboSelectProvince'"
+                  [property]="fPartyMember['permanentProvinceId']" [options]="permanentProvinceList" optionLabel="name"
+                  optionValue="provinceId" (onChange)="onLoadDistrict($event)" [disabled]="isView?true : null">
+                </select-filter>
+              </div>
+              <div class="ui-g-12 ui-md-3 ui-lg-3">
+                <select-filter [placeHolder]="'common.label.cboSelectDistrict'"
+                  [property]="fPartyMember['permanentDistrictId']" [options]="permanentDistrictList" optionLabel="name"
+                  optionValue="districtWardId" (onChange)="onLoadVillage($event)" [disabled]="isView ? true : null">
+                </select-filter>
+              </div>
+              <div class="ui-g-12 ui-md-3 ui-lg-4">
+                <select-filter [placeHolder]="'common.label.cboSelectWard'" [property]="fPartyMember['permanentWardId']"
+                  [options]="permanentWardList" optionLabel="name" optionValue="districtWardId" [disabled]="isView ? true : null">
+                </select-filter>
+              </div>
+            </div>
+            <div class = 'ui-grid-row'>
+              <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+                {{'profile.table.specificAddress' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-10">
+                <textarea type="text" rows="3" name="permanentAddress" class="form-control" formControlName="permanentAddress" maxlength="500"
+                  [attr.disabled]="isView?true:null">
+              </textarea>
+              </div>
+            </div>
+            <div class="ui-grid-row">
+              <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+                {{'generalInformation.label.currentAddress' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-3">
+                <select-filter [placeHolder]="'common.label.cboSelectProvince'"
+                  [property]="fPartyMember['currentProvinceId']" [options]="currentProvinceList" optionLabel="name"
+                  optionValue="provinceId" (onChange)="onLoadCurrentDistrict($event)" [disabled]="isView ? true : null">
+                </select-filter>
+              </div>
+              <div class="ui-g-12 ui-md-3 ui-lg-3">
+                <select-filter [placeHolder]="'common.label.cboSelectDistrict'"
+                  [property]="fPartyMember['currentDistrictId']" [options]="currentDistrictList" optionLabel="name"
+                  optionValue="districtWardId" (onChange)="onLoadCurrentVillage($event)"
+                  [disabled]="isView ? true : null"></select-filter>
+              </div>
+              <div class="ui-g-12 ui-md-3 ui-lg-4">
+                <select-filter [placeHolder]="'common.label.cboSelectWard'" [property]="fPartyMember['currentWardId']"
+                  [options]="currentWardList" optionLabel="name" optionValue="districtWardId" [disabled]="isView ? true : null">
+                </select-filter>
+              </div>
+            </div>
+            <div class = 'ui-grid-row'>
+              <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+                {{'profile.table.specificAddress' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-10">
+                <textarea type="text" rows="3" name="currentAddress" class="form-control" formControlName="currentAddress" maxlength="500"
+                  [attr.disabled]="isView?true:null">
+              </textarea>
+              </div>
+            </div>
+            <div class="ui-grid-row">
+              <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+                {{'generalInformation.label.mobile' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-2">
+                <input type="text" class="form form-control" name="mobileNumber" formControlName="mobileNumber" maxlength="50"
+                  [attr.disabled]="isView?true:null">
+              </div>
+              <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+                {{'generalInformation.label.phoneNumber' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-2">
+                <input type="text" class="form form-control" name="phoneNumber" formControlName="phoneNumber" maxlength="50"
+                  [attr.disabled]="isView?true:null">
+              </div>
+              <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+                {{'generalInformation.label.fax' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-2">
+                <input type="text" class="form form-control" name="fax" formControlName="fax" maxlength="50"
+                  [attr.disabled]="isView?true:null">
+              </div>
+            </div>
+            <div class="ui-grid-row">
+              <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+                {{'generalInformation.label.isDeath' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-2">
+                <p-inputSwitch formControlName="isDeath" (onChange)="onChangeIsDeath($event)"
+                  [disabled]="isView?true:null"></p-inputSwitch>
+              </div>
+              <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right" [ngClass]="{'required': !isDeath}">
+                {{'staffManager.Label.dateOfDeath' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-2">
+                <date-picker [property]="fPartyMember['dateOfDeath']" [disabled]="isDeath || isView?true:null"></date-picker>
+                <app-control-messages [control]="fPartyMember['dateOfDeath']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-grid-row">
+              <label class="ui-g-12 ui-md-3 ui-lg-2 control-label vt-align-right">
+                {{'profile.table.note' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-3 ui-lg-10">
+                <textarea type="text" rows="3" name="note" class="form-control" formControlName="note" maxlength="4000"
+                  [attr.disabled]="isView?true:null">
+              </textarea>
+              </div>
+            </div>
+          </form>
+        </p-tabPanel>
+      </p-tabView>
+    </div>
+  </div>
+  <div *ngIf="(!hasPermission('action.view') && isView) || (!hasPermission('action.update') && isUpdate)">
+    {{'common.haveNoPermission' | translate}}
+  </div>
+</div>

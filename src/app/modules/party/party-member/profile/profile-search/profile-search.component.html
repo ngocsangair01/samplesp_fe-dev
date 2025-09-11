@@ -1,0 +1,123 @@
+<div class="card-emp">
+  <div id="fileHardCopyUploadLst" class="card card-info">
+    <div class="card-header">
+      <div>
+        <img class="header-icon" [ngClass]="{'transform-icon': hideFileHardCopyUploadLst === true}" src="./../../../../../../assets/images/home/Group_18932.png" (click)="hideFileHardCopyUploadLst = !hideFileHardCopyUploadLst">
+        {{'partyMemberProfile.fileUpload' | translate}} {{fileHardCopyUploadLst.length > 0 ? "(" + fileHardCopyUploadLst.length + ")" : ""}}
+      </div>
+    </div>
+    <div *ngIf="!hideFileHardCopyUploadLst" class="card-body">
+      <div *ngIf="fileHardCopyUploadLst.length > 0" class="panel-body padding-xl ui-g">
+        <div class="ui-g-6" *ngFor="let item of fileHardCopyUploadLst">
+          <a style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 400px; display: block; overflow: hidden"
+            (click)="prepareSaveOrUpdate(item)"><b>- {{item.name}}</b></a>
+        </div>
+      </div>
+      <div *ngIf="fileHardCopyUploadLst.length == 0" class="panel-body padding-xl ui-g">
+        <div class="ui-g-6">
+          <span class="ng-star-inserted" style="font-weight: bold;">{{ 'partyMemberProfile.hardCopyEmpty' | translate}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="resultList" class="card card-info">
+    <div class="card-header">
+      <div>
+        <img class="header-icon" [ngClass]="{'transform-icon': hideResultList === true}" src="./../../../../../../assets/images/home/Group_18932.png" (click)="hideResultList = !hideResultList">
+        <span> {{'partyMemberProfile.fileList' | translate}} {{resultList.recordsTotal > 0 ? " (" + resultList.recordsTotal + ")" : ""}}</span>
+      </div>
+    </div>
+    <div *ngIf="!hideResultList" class="card-body">
+      <div class="panel-body panel-table">
+        <p-table
+          #ptable
+          [value]="resultList.data"
+          [paginator]="true"
+          (onLazyLoad)="processSearch($event)"
+          [lazy]="true" [rows]="changeRow"
+          [totalRecords]="resultList.recordsTotal"
+          [scrollable]="true"
+          [lazyLoadOnInit]="false"
+          tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+          [resizableColumns]="true"
+          styleClass="controlOverflow"
+        >
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col style="width: 50px;">
+              <col style="width: 50px;">
+              <col style="width: 100px;">
+              <col style="width: 200px;">
+              <col style="width: 200px;">
+              <col style="width: 100px;">
+              <col style="width: 200px;">
+              <col style="width: 200px;">
+              <col style="width: 100px;">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th translate pResizableColumn></th>
+              <th translate pResizableColumn>common.table.index</th>
+              <th *ngIf="hasPermission('action.update')" translate pResizableColumn>common.label.edit</th>
+              <th *ngIf="hasPermission('action.delete')" translate pResizableColumn>titleDelete</th>
+              <th [pSortableColumn]="'textSymbols'" translate pResizableColumn>partyMemberProfile.textSymbols</th>
+              <th [pSortableColumn]="'extractingTextContent'" translate pResizableColumn>partyMemberProfile.extractingTextContent</th>
+              <th [pSortableColumn]="'partyMemberProfileTypeName'" translate pResizableColumn>partyMemberProfile.profileName</th>
+              <th [pSortableColumn]="'groupName'" translate pResizableColumn>partyMemberProfile.groupProfile</th>
+              <th [pSortableColumn]="'partyOrganizationName'" translate pResizableColumn>partyMemberProfile.partyOrganization</th>
+              <th translate pResizableColumn>partyMemberProfile.file</th>
+              <th [pSortableColumn]="'createdDate'" translate pResizableColumn>partyMemberProfile.createdDate</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+            <tr>
+              <td class="vt-align-center" style="overflow: initial !important;">
+                <div ngbDropdown class="d-inline-block">
+                    <div ngbDropdownToggle class="vt-action-hover">
+                        <img class="menu-icon" src="./../../../assets/images/home/Icon.svg">
+                    </div>
+                    <div ngbDropdownMenu class="vt-border-radius">
+                      <!-- Sửa -->
+                      <button *ngIf="hasPermission('action.update') && item.isFromVO != 1" class="dropdown-item"
+                              (click)="prepareSaveOrUpdate(null, item.partyMemberProfileId)"
+                              [innerHTML]="'common.button.table.acteditdropdown' | translate">
+                      </button>
+                      <!-- Xóa -->
+                      <button *ngIf="hasPermission('action.delete') && item.isFromVO != 1" class="dropdown-item"
+                              (click)="processDeletes(item)"
+                              [innerHTML]="'common.button.icon.delete' | translate">
+                      </button>
+                    </div>
+                </div>
+              </td>
+              <td class="vt-align-center">{{index}}</td>
+              <td class="vt-align-left">{{item.textSymbols}}</td>
+              <td class="vt-align-left">{{item.extractingTextContent}}</td>
+              <td class="vt-align-left">{{item.partyMemberProfileTypeName}}</td>
+              <td class="vt-align-left">{{item.groupName}}</td>
+              <td class="vt-align-left">{{item.partyOrganizationName}}</td>
+              <td class="vt-align-center">
+                <a *ngFor="let data of item.files"
+                  style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 200px; display: block; overflow: hidden"
+                  (click)="downloadFile(data, item)">
+                    {{data.fileName}}
+                </a>
+              </td>
+              <td class="vt-align-center" style="font-weight: bold;">{{item.createdDate | displayDate}}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr class="emptymessage">
+              <td [attr.colspan]="13" [innerHTML]="'app.noRecords' | translate">
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft">
+            <table-footer (changeRow)="onTablePageChange($event)" [resultList]="resultList"></table-footer>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</div>

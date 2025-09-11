@@ -1,0 +1,73 @@
+ <div *ngIf="(hasPermission('action.update'))">
+
+<div class="panel-body padding-xl ui-g" style="padding-bottom: 0;">
+
+    <div *ngIf="!isMobileScreen" class="ui-g-10 ui-g-offset-1">
+        <div class="ui-g-12 ui-md-8" *ngIf="false">
+            <textarea type="text-area" class="form form-control" name="idRecord" [formControl]="form.controls.idRecord" maxlength="1000"></textarea>
+            <app-control-messages [control]="form.controls.idRecord"></app-control-messages>
+        </div>
+        <label class="ui-g-12 ui-md-4  control-label vt-align-left">
+            {{'document.label.oldOrganization' | translate}}</label>
+        <div class="ui-g-12 ui-md-8">
+            <textarea type="text-area" class="form form-control" name="organizationName" [formControl]="form.controls.organizationName" [attr.disabled]="true"></textarea>
+            <app-control-messages [control]="form.controls.organizationName"></app-control-messages>
+        </div>
+        <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+            {{'document.label.newOrganization' | translate}}</label>
+        <div class="ui-g-12 ui-md-8">
+            <org-selector [property]="form.controls.organizationId" operationKey="action.view"
+                          adResourceKey="resource.empArmyProposed" autoFocus="true"
+                          (onChange)="onSelectorChangeOrganization($event.organizationId)">
+            </org-selector>
+            <app-control-messages [control]="form.controls.organizationId"></app-control-messages>
+
+            <div *ngIf="isDuplicateOrganization" class="errorMessageDiv show" ng-reflect-klass="errorMessageDiv"
+                 ng-reflect-ng-class="[object Object]"><small class="text-danger errorMessage ng-star-inserted"> * Đơn vị mới phải khác đơn vị cũ
+            </small></div>
+        </div>
+    </div>
+    <div *ngIf="isMobileScreen">
+        <div class="ui-g-12 vt-row">
+            <div class="ui-g-12 ui-md-8 ui-sm-12" *ngIf="false">
+                <textarea type="text-area" class="form form-control" name="idRecord" [formControl]="form.controls.idRecord" maxlength="1000"></textarea>
+                <app-control-messages [control]="form.controls.idRecord"></app-control-messages>
+            </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left">
+                {{'document.label.oldOrganization' | translate}}</label>
+            <div class="ui-g-12 ui-md-8 ui-sm-9">
+                <textarea type="text-area" class="form form-control" name="organizationName" [formControl]="form.controls.organizationName" [attr.disabled]="true"></textarea>
+                <app-control-messages [control]="form.controls.organizationName"></app-control-messages>
+            </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+            <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left required">
+                {{'document.label.newOrganization' | translate}}</label>
+            <div class="ui-g-12 ui-md-8 ui-sm-9">
+                <org-selector [property]="form.controls.organizationId" operationKey="action.view"
+                              adResourceKey="resource.empArmyProposed" autoFocus="true"
+                              (onChange)="onSelectorChangeOrganization($event.organizationId)">
+                </org-selector>
+                <app-control-messages [control]="form.controls.organizationId"></app-control-messages>
+    
+                <div *ngIf="isDuplicateOrganization" class="errorMessageDiv show" ng-reflect-klass="errorMessageDiv"
+                     ng-reflect-ng-class="[object Object]"><small class="text-danger errorMessage ng-star-inserted"> * Đơn vị mới phải khác đơn vị cũ
+                </small></div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer vt-area-button ui-g-12">
+
+        <button type="submit" class="btn btn-sm btn-success" (click)="updateStatus(form.controls)"
+        [innerHTML]="'common.button.icon.save' | translate"></button>
+        <button type="button" (click)="goBack()"  class="btn btn-sm btn-danger" [innerHTML]="'common.button.out' | translate"></button>
+
+    </div>
+</div>
+</div>
+ <div *ngIf="!(hasPermission('action.update'))">
+   {{'common.haveNoPermission' | translate}}
+ </div>
+

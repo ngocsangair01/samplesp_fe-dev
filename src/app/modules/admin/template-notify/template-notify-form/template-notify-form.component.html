@@ -1,0 +1,132 @@
+<div>
+  <div class="panel panel-default">
+    <form id="formSave" [formGroup]="formSave">
+      <div class="panel-heading vt-relative">
+        <strong class="text-u-c">
+          <i class="fa fa-th"></i>&nbsp;
+          <span *ngIf="!formSave.get('templateNotifyId').value" translate>templateNotify.addTemplateNotify</span>
+          <span *ngIf="formSave.get('templateNotifyId').value && isView === false"
+            translate>templateNotify.editTemplateNotify</span>
+          <span *ngIf="formSave.get('templateNotifyId').value && isView === true"
+            translate>templateNotify.viewTemplateNotify</span>
+        </strong>
+      </div>
+      <div class="panel-body padding-xl ui-g">
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="isView?'':'required'">
+            {{'templateNotify.label.code'|translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-8">
+            <input type="text" class="form form-control" [attr.disabled]="isView?true:null" [autoFocus]="true"
+              name="code" formControlName="code" maxlength="50">
+            <app-control-messages [control]="f['code']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="isView?'':'required'">
+            {{'templateNotify.label.name'|translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-8">
+            <input type="text" class="form form-control" name="name" formControlName="name"
+              [attr.disabled]="isView?true:null" maxlength="255">
+            <app-control-messages [control]="f['name']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right" [ngClass]="isView?'':'required'">
+            {{'templateNotify.label.organizationName'|translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-8">
+            <org-selector [property]="f['organizationId']" operationKey="action.view" adResourceKey="resource.document"
+              [defaultValue]="true" [disabled]="isView" [isRequiredField]="true">
+            </org-selector>
+            <app-control-messages [control]="f['organizationId']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'templateNotify.label.smsNotifyContent'|translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-8">
+            <textarea type="text" class="form form-control" name="smsContent" formControlName="smsContent"
+              [attr.disabled]="isView?true:null" maxlength="1000">
+            </textarea>
+            <app-control-messages [control]="f['smsContent']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'templateNotify.label.emailSubject'|translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-8">
+            <input type="text" class="form form-control" name="emailSubject" formControlName="emailSubject"
+              [attr.disabled]="isView?true:null" maxlength="500">
+            <app-control-messages [control]="f['emailSubject']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'templateNotify.label.emailContent'|translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-8">
+            <file-chooser 
+              [property]="f['emailContentFile']" 
+              [disabled]="isView"
+              validMaxSize="50"
+              validType="docx"
+              >
+            </file-chooser>
+            <div *ngIf="this.formSave.get('fileName').value">
+              <br>
+              <a class="text-link" [hidden]="isView" (click)="downloadFile(this.formSave.get('templateNotifyId').value);" >
+                  <span translate><i class="fa fa-download"></i> app.common.downloadTemplate</span>
+              </a>
+              <br>
+              <i style="color: red;">{{'templateNotify.attachFile' | translate}}</i>
+            </div>
+            <app-control-messages [control]="f['emailContentFile']"></app-control-messages>
+          </div>
+        </div>
+        <div class="ui-g-12 vt-row">
+          <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+            {{'templateNotify.label.codeSQL'|translate}}
+          </label>
+          <div class="ui-g-12 ui-md-6 ui-lg-8">
+            <p-table [scrollable]="false" [value]="lstFormSqlConfig.controls" styleClass="controlOverflow"
+              tableStyleClass="table controls-table table-wrapper b-t b-b">
+              <ng-template pTemplate="body" let-item let-index="rowIndex">
+                <tr [formGroup]="item">
+                  <td class="vt-align-center" style="width: 92%;">
+                    <textarea type="text" class="form form-control" formControlName="sqlQuery"
+                      [attr.disabled]="isView?true:null" maxlength="1000">
+                    </textarea>
+                  </td>
+                  <td class="vt-align-center" *ngIf="!isView" style="min-width: 80px;">
+                    <button type="button" class="btn-icon plus" [title]="'titleAdd' | translate"
+                      (click)="addRow(index, item)" [innerHTML]="'common.icon.plus' | translate">
+                    </button>
+                    <button type="button" class="btn-icon minus" [title]="'titleDelete' | translate"
+                      (click)="removeRow(index, item)" [innerHTML]="'common.icon.minus' | translate">
+                    </button>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+            <input type="text" class="form form-control ng-hide" name="arrTemplateNotifySqlIds"
+              formControlName="arrTemplateNotifySqlIds" [hidden]="true">
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer vt-area-button">
+        <button *ngIf="isView==false" type="submit" (click)="processSaveOrUpdate()" class="btn btn-sm btn-info"
+          [innerHTML]="'common.button.icon.save' | translate"></button>
+        <button type="button" (click)="goBack()" class="btn btn-sm btn-danger"
+          [innerHTML]="'common.button.out' | translate"></button>
+      </div>
+    </form>
+  </div>
+</div>
+<div
+  *ngIf="(!hasPermission('action.view') && isView) || (!hasPermission('action.update') && isUpdate) || (!hasPermission('action.insert') && isInsert)">
+  {{'common.haveNoPermission' | translate}}
+</div>

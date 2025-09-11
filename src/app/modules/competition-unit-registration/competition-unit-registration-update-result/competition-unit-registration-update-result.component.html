@@ -1,0 +1,156 @@
+
+<div class="modal-body">
+    <form id="frmSaveCompetionResult" style="border: 0px" [formGroup]="formSave">
+        <div class="panel panel-default " >
+            <div class="panel-heading1" style="background-color: #f6f6f6;">
+                <strong class="text-u-c"  style="color: rgba(38,1,0,1);font-size:16px; font-weight: bold;"><i class="fa fa-th" ></i>
+                    <span style="padding-left: 6px">Cập nhật kết quả thi đua</span>
+                </strong>
+                <div class="vt-absolute vt-shotcut-button-in-heading">
+                    <button (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+                            class="btn btn-span btn-sm btn-info btn-close" style="background-color: #f6f6f6 !important;"><i class="fa fa-times" style="color: rgba(38,1,0,1)"></i></button>
+                </div>
+            </div>
+
+            <!-- nội dụng cập nhật kết quả thi đua !-->
+            <div style="background-color: white">
+                <div class="panel-body padding-xl ui-g" style="background-color: white !important;">
+                    <label style="font-weight: bold;color: #000000;font-size: 14px;text-transform: uppercase;">
+                        Cập nhật tiến độ
+                    </label>
+<!--                    <b style="text-transform: uppercase; color: rgba(38,1,0,1)">Cập nhật tiến độ</b>-->
+                    <div class="ui-g-12 vt-row">
+                        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                            Tên chương trình
+                        </label>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <input type="text" class="form-control" formControlName="competitionName"
+                                   [attr.disabled]="true">
+                            <app-control-messages [control]="f['competitionName']"></app-control-messages>
+                        </div>
+
+                        <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right  ">
+                            {{'propaganda.thoughtReport.dayUpdate' | translate}}
+                        </label>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <date-picker [property]="f['updatedTime']" disabled="true"></date-picker>
+                            <app-control-messages [control]="f['updatedTime']"></app-control-messages>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 vt-row">
+                        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                            Tỉ lệ hoàn thành
+                        </label>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <label for="percent" class="form-control fakeInput">
+                                <input id="percent" (input)="modelChanged($event)"  [style.width]="inputWidth + 'ch' "   class="hiddenInput" maxlength="100"
+                                   formControlName="completionRate" />
+                                <label *ngIf="checkedPercent">%</label>
+                            </label>
+                            <div class="errorMessageDiv">
+                                <small class="text-danger errorMessage">
+                                    {{ validateCompletionRate }}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 vt-row" style="display: none">
+                        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                            Tên chương trình
+                        </label>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3  "  >
+                            <input type="text" class="form-control" formControlName="competitionProgramCode"
+                                   [attr.disabled]="true">
+                            <app-control-messages [control]="f['competitionProgramCode']"></app-control-messages>
+
+                        </div>
+                    </div>
+                    <div class="ui-g-12 vt-row" >
+                        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                            {{'generalInformation.label.detailDescription' | translate}}
+                        </label>
+                        <div class="ui-g-12 ui-md-9 ui-lg-9">
+                        <textarea (input)="handleValid($event)" type="text-area" rows="8" class="form-control" formControlName="detailDescription"
+                                  maxlength="1000"></textarea>
+                            <div class="errorMessageDiv">
+                                <small class="text-danger errorMessage">
+                                    {{ validateDetailDescription }}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="ui-g-12 vt-row">
+                        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                            Kết quả cuối cùng
+                        </label>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <input style="margin-top: 8px;" type="checkbox" (change)="changeLeadSendMessage($event)" [checked]="checked ? true : false"/>
+                        </div>
+                    </div>
+
+
+                    <div class="ui-g-12 vt-row">
+                        <div *ngIf="checked == true">
+                            <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                                Đánh giá chung
+                            </label>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <select-filter
+                                        [property]="f['generalAssessment']"
+                                        [options]="generalAssessmentList"
+                                        optionLabel="name"
+                                        optionValue="id">
+                                </select-filter>
+                                <div class="errorMessageDiv">
+                                    <small class="text-danger errorMessage">
+                                        {{ validateGeneralAssessment }}
+                                    </small>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div *ngIf="checked == true && formSave.get('generalAssessment').value == 'ORTHER'">
+                            <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right required">
+                                Đánh giá khác
+                            </label>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <input type="text" class="form-control" formControlName="otherEvaluation"  maxlength="500" (input)="handleOtherEvaluation($event)">
+                                <div class="errorMessageDiv">
+                                    <small class="text-danger errorMessage">
+                                        {{ validateOtherEvaluation }}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<!--                    <div class="ui-g-12" *ngIf="checked == true">-->
+<!--                        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">-->
+<!--                            Trạng thái trình ký-->
+<!--                        </label>-->
+<!--                        <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align">-->
+<!--                            Mới-->
+<!--                        </label>-->
+<!--                    </div>-->
+                </div>
+
+                <span style="line-height: 1px;"></span>
+                <!-- Button lưu và hủy bỏ !-->
+                <div class="panel-footer vt-area-button" style="background-color: white !important;">
+                    <button type="button" (click)="activeModal.close()" class="btn btn-sm btn-danger"
+                            [innerHTML]="'common.button.out' | translate"></button>
+                    <button type="submit" (click)="processSaveOrUpdate()" class="btn btn-sm btn-info"
+                            [innerHTML]="'common.button.icon.save' | translate"></button>
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+

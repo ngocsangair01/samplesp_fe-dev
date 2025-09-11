@@ -1,0 +1,94 @@
+<div class="modal-body">
+    <form id="formDecline" [formGroup]="formDecline">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong class="text-u-c"><i class="fa fa-th"></i>
+                    <span translate>letterDenunciation.title.decline</span>
+                </strong>
+                <div class="vt-absolute vt-shotcut-button-in-heading">
+                    <span (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+                        class="btn btn-span btn-sm btn-info btn-close"><i class="fa fa-times"></i></span>
+                </div>
+            </div>
+            <div class="panel-body padding-xl ui-g">
+                <div class="ui-g-12 vt-row">
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                        {{ 'letterDenunciation.label.code' | translate }}:
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3 control-label">
+                        {{ f['code'].value }}
+                    </div>
+                    <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                        {{ 'letterDenunciation.label.type' | translate }}:
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3 control-label">
+                        {{ 'letterDenunciation.type.' + f['type'].value | translate }}
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                        {{ 'letterDenunciation.label.name' | translate }}:
+
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3 control-label">
+                        {{ f['name'].value }}
+                    </div>
+                    <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                        {{ 'letterDenunciation.label.dateOfReception' | translate }}:
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3 control-label">
+                        {{ f['dateOfReception'].value | displayDate }}
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+                    <label class="ui-g-12 ui-md-2 control-label vt-align-right">
+                        {{ 'common.label.attachmentFile' | translate }}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-3">
+                        <multi-file-chooser [property]="f['files']" fileName="fileAttachment" validMaxSize="50"
+                            validType="png,jpg,gif,tiff,bmp,xls,xlsx,doc,docx,pdf,rar,zip,7z" disabled="true"
+                            downLoadFile="true">
+                        </multi-file-chooser>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+                    <label class="ui-g-12 ui-md-2 control-label vt-align-right">
+                        {{ 'letterDenunciation.label.type' + f['type'].value | translate }}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-9">
+                        <multi-data-picker
+                            *ngIf="f['type'].value === types[0].value || f['type'].value === types[2].value"
+                            [property]="f['employeeIds']" systemCode="political" operationKey="action.view"
+                            adResourceKey="resource.receiveLetterDenunciation" objectBO="EmployeeBO"
+                            codeField="employeeCode" nameField="fullName" emailField="email" selectField="employeeId"
+                            isSearchByPartyDomainData="true" filterCondition="AND obj.status = 1" disabled="true">
+                        </multi-data-picker>
+
+                        <multi-party-org-selector
+                            *ngIf="f['type'].value === types[1].value || f['type'].value === types[3].value"
+                            [property]="f['partyOrganizationIds']" operationKey="action.view"
+                            adResourceKey="resource.receiveLetterDenunciation" disabled="true">
+                        </multi-party-org-selector>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+                    <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right required">
+                        {{ 'letterDenunciation.label.decliningReason' | translate }}
+                    </label>
+                    <div class="ui-g-12 ui-md-6 ui-lg-9">
+                        <textarea type="text" rows="3" name="note" class="form-control"
+                            formControlName="lastProposalResult" maxlength="500">
+                        </textarea>
+                        <app-control-messages [control]="f['lastProposalResult']"></app-control-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer vt-area-button">
+                <button type="submit" (click)="actionSave()" class="btn btn-sm btn-info"
+                    [innerHTML]="'common.button.icon.decline' | translate"></button>
+                <button type="button" (click)="activeModal.close()" class="btn btn-sm btn-danger"
+                    [innerHTML]="'common.button.out' | translate"></button>
+            </div>
+        </div>
+    </form>
+</div>

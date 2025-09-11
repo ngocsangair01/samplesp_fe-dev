@@ -1,0 +1,10 @@
+
+<div class="input-group picker dataPicker">
+  <input type="text" [disabled]="disabled ? true : false" (focus)="onFocus()" class="form-control" #displayName />
+  <div class="input-group-append"   *ngIf="!disabled">
+    <button style="margin: 0" *ngIf="!isRequiredField" (click)="delete($event)" class="btn btn-danger" type="button"  [title]="'app.common.title.remove' | translate" [innerHTML]="'common.icon.removeData' | translate"></button>
+    <button style="margin: 0" *ngIf="type === ''" [autoFocus]="autoFocus" class="btn btn-info chosen" type="button" #buttonChose (click)="onChose()" [title]="'app.common.title.select' | translate" [innerHTML]="'common.icon.checkData' | translate"></button>
+    <button style="margin: 0" *ngIf="type === 'position'" [autoFocus]="autoFocus" class="btn btn-info chosen" type="button" #buttonChose (click)="onChose()" [title]="'app.common.title.select' | translate" [innerHTML]="'common.icon.checkDataTitle' | translate"></button>
+    <button style="margin: 0" *ngIf="type === 'employee'" [autoFocus]="autoFocus" class="btn btn-info chosen" type="button" #buttonChose (click)="onChose()" [title]="'app.common.title.select' | translate" [innerHTML]="'common.icon.checkDataUser' | translate"></button>
+  </div>
+</div>

@@ -1,0 +1,319 @@
+<div *ngIf="hasPermission('action.view')">
+  <div id="searchPage">
+    <div id="searchArea">
+      <div class="panel panel-default">
+        <div class="panel-heading" translate>
+          <strong class="text-u-c">
+            <i class="fa fa-th"></i>
+            common.label.search.info
+          </strong>
+        </div>
+        <form id="formSearch" [formGroup]="formSearch">
+          <div class="panel-body padding-xl ui-g">
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{ 'transferEmployee.organization' | translate }}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <org-selector 
+                  [property]="f['organizationId']" 
+                  operationKey="action.view" 
+                  adResourceKey="resource.transferEmployee"
+                  [defaultValue]="true"
+                  [autoFocus]="true"
+                  >
+                </org-selector>
+                <app-control-messages [control]="f['organizationId']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                {{ 'transferEmployee.code' | translate }}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <input type="text" class="form form-control" name="code" formControlName="code" maxlength="100">
+                <app-control-messages [control]="f['code']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{ 'transferEmployee.transferDate' | translate }}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <date-picker [property]="f['transferDate']"></date-picker>
+                <app-control-messages [control]="f['transferDate']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right" >
+                {{'vicinityPlan.vicinityPositionPlan.document' | translate}}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <input type="text" class="form form-control" name="documentName" formControlName="documentName" maxlength="200">
+                <app-control-messages [control]="f['documentName']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{ 'transferEmployee.employeeTransfer' | translate }}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <data-picker
+                  [property]="f['employeeId']"
+                  systemCode="political"
+                  operationKey="action.view"
+                  adResourceKey="resource.transferEmployee"
+                  objectBO="EmployeeBO"
+                  codeField="employeeCode"
+                  nameField="fullName"
+                  emailField="email"
+                  mobileNumberField="mobileNumber"
+                  selectField="employeeId"
+                  [filterCondition]="' AND obj.status = 1'">
+                </data-picker>
+                <app-control-messages [control]="f['employeeId']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                {{ 'transferEmployee.oldPosition' | translate }}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <data-picker
+                  [property]="f['currentPositionId']"
+                  systemCode="political"
+                  operationKey="action.view"
+                  adResourceKey="resource.transferEmployee"
+                  objectBO="PositionBO"
+                  codeField="code"
+                  nameField="name"
+                  selectField="positionId"
+                >
+                </data-picker>
+                <app-control-messages [control]="f['currentPositionId']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{ 'transferEmployee.transferType' | translate }}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <select-filter
+                  [placeHolder]="'common.label.cboSelectAll'"
+                  [property]="f['transferType']" 
+                  [options]="transferTypeList" 
+                  optionLabel="label"
+                  optionValue="value"
+                >
+                </select-filter>
+                <app-control-messages [control]="f['transferType']"></app-control-messages>
+              </div>
+              <label class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                {{ 'transferEmployee.newPosition' | translate }}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <data-picker
+                  [property]="f['positionId']"
+                  systemCode="political"
+                  operationKey="action.view"
+                  adResourceKey="resource.transferEmployee"
+                  objectBO="PositionBO"
+                  codeField="code"
+                  nameField="name"
+                  selectField="positionId"
+                >
+                </data-picker>
+                <app-control-messages [control]="f['positionId']"></app-control-messages>
+              </div>
+            </div>
+            <div class="ui-g-12 vt-row">
+              <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                {{ 'transferEmployee.name' | translate }}
+              </label>
+              <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <input type="text" class="form form-control" name="name" formControlName="name" maxlength="200">
+                <app-control-messages [control]="f['name']"></app-control-messages>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer vt-area-button">
+              <button type="submit" class="btn btn-sm btn-info" (click)="processSearch()"
+                [innerHTML]="'common.button.icon.search' | translate"></button>
+              <button *ngIf="hasPermission('action.insert')" type="button" class="btn btn-sm btn-info" (click)="prepareSaveOrUpdate()"
+                [innerHTML]="'common.button.icon.addNew' | translate"> </button>
+              <button *ngIf="hasPermission('action.export')" type="submit" class="btn btn-sm btn-info" (click)="processExport()"
+                [innerHTML]="'common.button.icon.exportFile' | translate"> </button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div id="listArea">
+    <div class="panel panel-default">
+      <div class="panel-heading vt-relative">
+        <strong class="text-u-c">
+          <i class="fa fa-th"></i>
+          {{ 'transferEmployee.title' | translate }}
+        </strong>
+      </div>
+      <div class="panel-body panel-table">
+        <p-table 
+          #ptable 
+          [value]="resultList.data" 
+          [paginator]="true" 
+          (onLazyLoad)="processSearch($event)" 
+          [lazy]="true"
+          [rows]="changeRow" [totalRecords]="resultList.recordsTotal"
+          [scrollable]="true" 
+          [lazyLoadOnInit]="false"
+          tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+          styleClass="controlOverflow"
+        >
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col class="size-1">
+              <col class="size-5">
+              <col class="size-8">
+              <col class="size-12">
+              <col class="size-12">
+              <col class="size-10">
+              <col class="size-10">
+              <col class="size-10">
+              <col class="size-8">
+              <col class="size-6">
+              <col class="size-6">
+              <col class="size-6">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th translate>common.table.index</th>
+              <th translate>common.label.action</th>
+              <th [pSortableColumn]="'code'">
+                {{ 'transferEmployee.code' | translate }}
+                <p-sortIcon [field]="'code'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'name'">
+                {{ 'transferEmployee.name' | translate }}
+                <p-sortIcon [field]="'name'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'organizationName'">
+                {{ 'transferEmployee.organization' | translate }}
+                <p-sortIcon [field]="'organizationName'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'fullName'">
+                {{ 'transferEmployee.employeeTransfer' | translate }}
+                <p-sortIcon [field]="'fullName'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'currentPositionName'">
+                {{ 'transferEmployee.oldPosition' | translate }}
+                <p-sortIcon [field]="'currentPositionName'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'newPositionName'">
+                {{ 'transferEmployee.newPosition' | translate }}
+                <p-sortIcon [field]="'newPositionName'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'transferType'">
+                {{ 'transferEmployee.transferType' | translate }}
+                <p-sortIcon [field]="'transferType'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'documentName'">
+                {{ 'vicinityPlan.vicinityPositionPlan.document' | translate }}
+                <p-sortIcon [field]="'documentName'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'transferDate'">
+                {{ 'transferEmployee.transferDate' | translate }}
+                <p-sortIcon [field]="'transferDate'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'status'">
+                {{ 'transferEmployee.transferStatus' | translate }}
+                <p-sortIcon [field]="'status'"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+            <tr>
+              <td class="vt-align-center">{{index}}</td>
+              <td class="vt-align-center">
+                <div ngbDropdown class="d-inline-block">
+                  <button class="btn btn-sm btn-info" ngbDropdownToggle translate>common.label.action</button>
+                  <div ngbDropdownMenu>
+                    <!-- Xem chi tiết -->
+                    <div *ngIf="hasPermission('action.view')">
+                      <button class="dropdown-item" (click)="prepareView(item)"
+                        [innerHTML]="'common.button.table.viewdropdown' | translate">
+                      </button>
+                    </div>
+                    <!-- Sửa -->
+                    <div *ngIf="hasPermission('action.update') && item.status == 0">
+                      <button class="dropdown-item" (click)="prepareSaveOrUpdate(item)"
+                        [innerHTML]="'common.button.table.acteditdropdown' | translate">
+                      </button>
+                    </div>
+                    <!-- Đánh giá -->
+                    <div *ngIf="hasPermission('action.update') && item.status == 0">
+                    <button class="dropdown-item" (click)="evaluate(item)"
+                      [innerHTML]="'common.button.table.evaluate' | translate">
+                    </button>
+                    </div>
+                     <!--Sửa Đánh giá -->
+                     <div *ngIf="hasPermission('action.update') && (item.status == 1 || item.status == 3)">
+                      <button class="dropdown-item" (click)="evaluate(item)"
+                        [innerHTML]="'common.button.table.evaluateEdit' | translate">
+                      </button>
+                    </div>
+                      <!-- Phe duyet -->
+                    <div *ngIf="hasPermission('action.approval') && item.status == 2">
+                      <button class="dropdown-item" (click)="actionApproved(item)"
+                        [innerHTML]="'common.button.table.actApprove' | translate">
+                      </button>
+                    </div>
+                      <!-- tu choi -->
+                    <div *ngIf="hasPermission('action.approval') && item.status == 2">
+                      <button class="dropdown-item" (click)="actionUnApproved(item)"
+                        [innerHTML]="'common.button.table.actUnapproved' | translate">
+                      </button>
+                    </div>
+                        <!-- Xóa -->
+                    <div *ngIf="hasPermission('action.delete') && (item.status == 0 || item.status == 3)">
+                      <button class="dropdown-item" (click)="processDelete(item)"
+                        [innerHTML]="'common.button.removedropdown' | translate">
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td class="vt-align-left">{{item.code}}</td>
+              <td class="vt-align-left">{{item.name}}</td>
+              <td class="vt-align-left">{{item.organizationName}}</td>
+              <td class="vt-align-left">{{item.fullName}}</td>
+              <td class="vt-align-left">{{item.currentPositionName}}</td>
+              <td class="vt-align-left">{{item.newPositionName}}</td>
+              <td class="vt-align-left">
+                <span *ngIf="item.transferType == 1" >{{ 'transferEmployee.transferType.BN' | translate }}</span>
+                <span *ngIf="item.transferType == 2" >{{ 'transferEmployee.transferType.BNL' | translate }}</span>
+                <span *ngIf="item.transferType == 3" >{{ 'transferEmployee.transferType.DD' | translate }}</span>
+                <span *ngIf="item.transferType == 4" >{{ 'transferEmployee.transferType.DD,BN' | translate }}</span>
+                <span *ngIf="item.transferType == 5" >{{ 'transferEmployee.transferType.LC' | translate }}</span>
+                <span *ngIf="item.transferType == 6" >{{ 'transferEmployee.transferType.GQ' | translate }}</span>
+              </td>
+              <td class="vt-align-left">{{item.documentName}}</td>
+              <td class="vt-align-center">{{item.transferDate | displayDate}}</td>
+              <td class="vt-align-left">
+                <div class="success label-status" *ngIf="item.status == 0" ></div>
+                <div class="warning label-status" *ngIf="item.status == 1" ></div>
+                <div class="info label-status" *ngIf="item.status == 2" ></div>
+                <div class="danger label-status" *ngIf="item.status == 3" ></div>
+                <div class="info label-status" *ngIf="item.status == 4" ></div>
+                {{item.statusName}}
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr class="emptymessage">
+              <td [attr.colspan]="14" [innerHTML]="'app.noRecords' | translate">
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft">
+            <table-footer (changeRow)="onTablePageChange($event)" [resultList]="resultList"></table-footer>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,721 @@
+<div class="card-form">
+    <div class="clearfix">
+      <div class="left-nav-bar pull-left row-header">
+        <div>
+          <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png" (click)="previous()">
+          <span class="title">{{header}}</span>
+        </div>
+      </div>
+      <div class="right-nav-bar pull-right left-option">
+          <ul class="header-right sys-ul space-line">
+              <li>
+                <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="previous()" [innerHTML]="'common.button.close' | translate">
+                </button>
+              </li>
+              <li *ngIf="!viewMode && !isClone">
+                <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="save()" [innerHTML]="'common.button.icon.save' | translate">
+                </button>
+              </li>
+              <li *ngIf="isClone">
+                <button class="btn btn-sm vt-btn btn-submit mt-btn ng-star-inserted" type="button" (click)="clone()" [innerHTML]="'common.button.icon.clone' | translate">
+                </button>
+              </li>
+              <li *ngIf="viewMode && createdBy && createdBy == userLogin">
+                <button class="btn btn-sm vt-btn btn-submit mt-btn btn-header-right ng-star-inserted" type="button" (click)="navigate()" [innerHTML]="'common.button.icon.edit' | translate">
+                </button>
+              </li>
+          </ul>
+      </div>
+    </div>
+</div>
+<div class="info">
+    <div class="panel panel-default card-info">
+        <div class="panel-heading">
+            <strong>
+                <span class="ml-2 title-info">Thông tin yêu cầu báo cáo</span>
+            </strong>
+        </div>
+        <div *ngIf="!isMobileScreen" class="panel-body padding-xl ui-g">
+            <form id="formGroup" [formGroup]="formGroup">
+                <div class="ui-g-8 ui-g-offset-2 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+                        {{'label.report.business' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8">
+                        <p-dropdown [disabled]="viewMode || disable" [optionLabel]="'parName'"
+                                    [formControl]="formGroup.controls.businessType" [options]="businessTypeOptions"
+                                    [placeholder]="'placeholder.choose' | translate"
+                                    (onChange)="handleChangeBusinessType()"></p-dropdown>
+                        <app-control-messages [control]="formGroup.controls.businessType"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-8 ui-g-offset-2 vt-row">
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left required" *ngIf="isLabel">
+                        {{'label.organization.requestReport' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8">
+                        <!-- đơn vi chính quyền -->
+                        <org-selector *ngIf="isOrg" [operationKey]="'action.view'"
+                                      [adResourceKey]="'resource.requestReporting'"
+                                      [disabled]="viewMode" #orgSelector
+                                      [property]="formGroup.controls.organizationId"></org-selector>
+                        <app-control-messages *ngIf="isOrg"
+                                              [control]="formGroup.controls.organizationId"></app-control-messages>
+                        <!-- đơn vi phụ nữ, công đoàn, thành niên -->
+                        <mass-org-selector *ngIf="isMasO" [operationKey]="'action.view'"
+                                           [adResourceKey]="'resource.requestReporting'"
+                                           [disabled]="viewMode" #massOrgSelector
+                                           [property]="formGroup.controls.organizationId"
+                                           [branch]="branch"></mass-org-selector>
+                        <app-control-messages *ngIf="isMasO"
+                                              [control]="formGroup.controls.organizationId"></app-control-messages>
+                        <!-- đơn vi đảng -->
+                        <party-org-selector *ngIf="isPartyO" [operationKey]="'action.view'"
+                                            [adResourceKey]="'resource.requestReporting'"
+                                            [disabled]="viewMode" #partyOrgSelector
+                                            [property]="formGroup.controls.organizationId"></party-org-selector>
+                        <app-control-messages *ngIf="isPartyO"
+                                              [control]="formGroup.controls.organizationId"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-8 ui-g-offset-2 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+                        {{'label.resolutionsMonth.name' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8">
+                        <input [readOnly]="viewMode" [formControl]="formGroup.controls.title" class="form-control">
+                        <app-control-messages [control]="formGroup.controls.title"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-8 ui-g-offset-2 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left">
+                        {{'lable.belongsToTheProgram' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 file-control v-from file-process">
+                        <p-dropdown [disabled]="viewMode" [optionLabel]="'name'"
+                                    [formControl]="formGroup.controls.belongsToTheProgram" [showClear]="true"
+                                    [options]="belongsToTheProgramOptions" [placeholder]="'placeholder.choose' | translate">
+                        </p-dropdown>
+                        <div *ngIf="!viewMode" class="file-action" style="left: 99%; top: 4px">
+                            <button type="button" [title]="'titleAdd' | translate" class="btn-icon plus"
+                                    [innerHTML]="'common.icon.plus' | translate"
+                                    (click)="openDialogAddBusinessType()"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-8 ui-g-offset-2 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left">
+                        {{'assessmentPeriod.file.form.level' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8">
+                        <multi-file-chooser
+                                [disabled]="viewMode"
+                                [property]="formGroup.controls.templateFile"
+                                [validMaxSize]="50"
+                                [moveFile]="checkShowMoveFile"
+                                fileName="templateFile">
+                        </multi-file-chooser>
+                    </div>
+                </div>
+                <div class="ui-g-8 ui-g-offset-2 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left">
+                        {{'common.label.attachmentFile' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8">
+                        <multi-file-chooser
+                                [disabled]="viewMode"
+                                [property]="formGroup.controls.attachFile"
+                                [validMaxSize]="50"
+                                [moveFile]="checkShowMoveFile"
+                                fileName="attachFile">
+                        </multi-file-chooser>
+                    </div>
+                </div>
+                <div class="ui-g-8 ui-g-offset-2 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+    
+                        {{'reportPunishment.reportType' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8">
+                        <p-dropdown [disabled]="viewMode || disable" [formControl]="formGroup.controls.typeOfReport"
+                                    [options]="typeOfReportOptions" [optionLabel]="'parName'"
+                                    [placeholder]="'placeholder.choose' | translate"
+                                    (onChange)="handleChangeTypeOfReport()"></p-dropdown>
+                        <app-control-messages [control]="formGroup.controls.typeOfReport"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-8 ui-g-offset-2 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+                        {{'lable.request.deadline' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8">
+                        <schedule-selector #scheduleSelector *ngIf="formGroup.value.typeOfReport.parValue != 'DOT_XUAT'"
+                                           [viewMode]="viewMode"
+                                           [property]="formGroup.controls.reportingDeadline"
+                                           [type]="formGroup.value.typeOfReport.parValue">
+                        </schedule-selector>
+    
+                        <date-picker [disabled]="viewMode" *ngIf="formGroup.value.typeOfReport.parValue == 'DOT_XUAT'"
+                                     [property]="formGroup.controls.reportingDeadline"></date-picker>
+                        <app-control-messages [control]="formGroup.controls.reportingDeadline"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-8 ui-g-offset-2 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+                        {{'lable.implementation.timeStart' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8">
+                        <date-picker [disabled]="viewMode" [property]="formGroup.controls.startDate"></date-picker>
+                        <app-control-messages [control]="formGroup.controls.startDate"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-8 ui-g-offset-2 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left ">
+                        {{'lable.implementation.timeEnd' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8">
+                        <date-picker [disabled]="viewMode" [property]="formGroup.controls.endDate"></date-picker>
+                    </div>
+                </div>
+                <div class="ui-g-8 ui-g-offset-2 vt-row">
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left required" *ngIf="isLabel">
+                        {{'label.organization.isRequestedReportOrg' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8">
+                        <report-multi-org-selector *ngIf="isOrg" [operationKey]="'action.view'"
+                                                   [adResourceKey]="'resource.requestReporting'"
+                                                   [disabled]="viewMode" #requestReportOrg
+                                                   [property]="formGroup.controls.requestReportOrg">
+                        </report-multi-org-selector>
+                        <app-control-messages *ngIf="isOrg"
+                                              [control]="formGroup.controls.requestReportOrg"></app-control-messages>
+                        <report-multi-party-org-selector *ngIf="isPartyO" [operationKey]="'action.view'"
+                                                         [adResourceKey]="'resource.requestReporting'"
+                                                         [disabled]="viewMode" #requestReportPartyOrg
+                                                         [property]="formGroup.controls.requestReportOrg">
+                        </report-multi-party-org-selector>
+                        <app-control-messages *ngIf="isPartyO"
+                                              [control]="formGroup.controls.requestReportOrg"></app-control-messages>
+                        <report-multi-mass-org-selector *ngIf="isMasO" [operationKey]="'action.view'" [branch]="branch"
+                                                        [adResourceKey]="'resource.requestReporting'"
+                                                        [disabled]="viewMode" #requestReportMassOrg
+                                                        [property]="formGroup.controls.requestReportOrg"
+                                                        [getAllMass]="false">
+                        </report-multi-mass-org-selector>
+                        <app-control-messages *ngIf="isMasO"
+                                              [control]="formGroup.controls.requestReportOrg"></app-control-messages>
+                    </div>
+                </div>
+    
+                <div class="ui-g-8 ui-g-offset-2 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left">
+                        {{'managementVertical.note' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8">
+                        <textarea class="form-control" [readonly]="viewMode"
+                                  [formControl]="formGroup.controls.description"></textarea>
+                    </div>
+                </div>
+                <div class="ui-g-8 ui-g-offset-2 vt-row" *ngIf="viewMode">
+    
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left">
+                        {{'label.VOffice.isSigned' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 nowrap">
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" [attr.disabled]="viewMode" class="form-check-input control-label"
+                                       id="isSignRequired_1" [value]="1" name="isSignRequired"
+                                       formControlName="isSignRequired">
+                                <i></i> {{'common.label.yes' | translate}}
+                            </label>
+                        </div>
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" [attr.disabled]="viewMode" class="form-check-input control-label"
+                                       id="isSignRequired_0" [value]="0" name="isSignRequired"
+                                       formControlName="isSignRequired">
+                                <i></i> {{'common.label.no' | translate}}
+                            </label>
+                        </div>
+                        <app-control-messages [control]="formGroup.controls.isSignRequired"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-8 ui-g-offset-2 vt-row" *ngIf="formGroup.value.isSignRequired && viewMode">
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left">
+                        {{'label.approval.beforSigned' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 nowrap">
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" [attr.disabled]="viewMode" class="form-check-input control-label"
+                                       id="isApproveRequired_1" [value]="1" name="isApproveRequired"
+                                       formControlName="isApproveRequired">
+                                <i></i> {{'common.label.yes' | translate}}
+                            </label>
+                        </div>
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" [attr.disabled]="viewMode" class="form-check-input control-label"
+                                       id="isApproveRequired_0" [value]="0" name="isApproveRequired"
+                                       formControlName="isApproveRequired">
+                                <i></i> {{'common.label.no' | translate}}
+                            </label>
+                        </div>
+                        <app-control-messages [control]="formGroup.controls.isApproveRequired"></app-control-messages>
+                    </div>
+    
+                </div>
+                <div class="ui-g-8 ui-g-offset-2 vt-row" *ngIf="!viewMode">
+    
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left">
+                        {{'label.VOffice.isSigned' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 nowrap">
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" class="form-check-input control-label" id="isSignRequired_1" [value]="1"
+                                       name="isSignRequired" formControlName="isSignRequired">
+                                <i></i> {{'common.label.yes' | translate}}
+                            </label>
+                        </div>
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" class="form-check-input control-label" id="isSignRequired_0" [value]="0"
+                                       name="isSignRequired" formControlName="isSignRequired">
+                                <i></i> {{'common.label.no' | translate}}
+                            </label>
+                        </div>
+                        <app-control-messages [control]="formGroup.controls.isSignRequired"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-8 ui-g-offset-2 vt-row" *ngIf="formGroup.value.isSignRequired && !viewMode">
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left">
+                        {{'label.approval.beforSigned' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 nowrap">
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" class="form-check-input control-label" id="isApproveRequired_1"
+                                       [value]="1" name="isApproveRequired" formControlName="isApproveRequired">
+                                <i></i> {{'common.label.yes' | translate}}
+                            </label>
+                        </div>
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" class="form-check-input control-label" id="isApproveRequired_0"
+                                       [value]="0" name="isApproveRequired" formControlName="isApproveRequired">
+                                <i></i> {{'common.label.no' | translate}}
+                            </label>
+                        </div>
+                        <app-control-messages [control]="formGroup.controls.isApproveRequired"></app-control-messages>
+                    </div>
+                </div>
+                <!--            Yêu cầu import dữ liệu báo cáo  -->
+                <div class="ui-g-8 ui-g-offset-2 vt-row">
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+                        {{'label.import.isImportRequired' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 nowrap">
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" class="form-check-input control-label" id="isSignRequired_1" [value]="1"
+                                       name="isImportRequired"
+                                       [attr.disabled]="viewMode?true: null"
+                                       (change)="changeRequireImport($event)" formControlName="isImportRequired">
+                                <i></i> {{'common.label.yes' | translate}}
+                            </label>
+                        </div>
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" class="form-check-input control-label" id="isSignRequired_0" [value]="0"
+                                       name="isImportRequired"
+                                       [attr.disabled]="viewMode?true: null"
+                                       (change)="changeRequireImport($event)" formControlName="isImportRequired">
+                                <i></i> {{'common.label.no' | translate}}
+                            </label>
+                        </div>
+                        <app-control-messages [control]="formGroup.controls.isImportRequired"></app-control-messages>
+                    </div>
+                </div>
+                <!--            Loại báo cáo cần import     -->
+                <div class="ui-g-8 ui-g-offset-2 vt-row" *ngIf="formGroup.value.isImportRequired ">
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+                        {{'label.import.typeReport' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8">
+                        <p-dropdown [disabled]="viewMode" [formControl]="formGroup.controls.adReportTemplateId"
+                                    [options]="adReportTemplateIdOptions" [optionLabel]="'name'"
+                                    (ngModelChange)="selectedChange()"
+                                    [placeholder]="'placeholder.choose' | translate"></p-dropdown>
+                        <app-control-messages [control]="formGroup.controls.adReportTemplateId"></app-control-messages>
+                    </div>
+                </div>
+                <!--            Biểu mẫu import dữ liệu     -->
+                <div class="ui-g-8 ui-g-offset-2 vt-row" *ngIf="formGroup.value.adReportTemplateId ">
+                    <label class="ui-g-12 ui-md-4  control-label vt-align-left required">
+                        {{'label.import.template' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8">
+                        <a style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; display: block; overflow: hidden"
+                           (click)="downloadFile()">
+                            <i class="fas fa-download" style="padding-right: 10px;"></i>
+                            {{fileTemplateName}}
+                        </a>
+                    </div>
+                </div>
+<!--                <div class="ui-g-8 ui-g-offset-2 vt-row">-->
+<!--                    <table-input #tableInput [formConfig]="tableFormConfig" [columnsConfig]="tabeInputConfig"-->
+<!--                                 [optionTemplate]="optionTemplate" [disabledAction]="viewMode">-->
+<!--                        <ng-template #optionTemplate let-formGroupTable>-->
+<!--                            <td>-->
+<!--                                <p-dropdown [disabled]="viewMode" appendTo="body"-->
+<!--                                            [placeholder]="'placeholder.choose' | translate" [options]="dataTypeOptions"-->
+<!--                                            [optionLabel]="'parName'"-->
+<!--                                            [formControl]="formGroupTable.controls.dataType"></p-dropdown>-->
+<!--                            </td>-->
+<!--                            <td>-->
+<!--                                <input [readOnly]="viewMode" [formControl]="formGroupTable.controls.criterialName"-->
+<!--                                       class="form-control"/>-->
+<!--                            </td>-->
+<!--                        </ng-template>-->
+<!--    -->
+<!--                    </table-input>-->
+<!--                </div>-->
+            </form>
+        </div>
+        <div *ngIf="isMobileScreen" class="panel-body padding-xl ui-g">
+            <form id="formGroup" [formGroup]="formGroup">
+                <div class="ui-g-12 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left required">
+                        {{'label.report.business' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9">
+                        <p-dropdown [disabled]="viewMode || disable" [optionLabel]="'parName'"
+                                    [formControl]="formGroup.controls.businessType" [options]="businessTypeOptions"
+                                    [placeholder]="'placeholder.choose' | translate"
+                                    (onChange)="handleChangeBusinessType()"></p-dropdown>
+                        <app-control-messages [control]="formGroup.controls.businessType"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left required" *ngIf="isLabel">
+                        {{'label.organization.requestReport' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9">
+                        <!-- đơn vi chính quyền -->
+                        <org-selector *ngIf="isOrg" [operationKey]="'action.view'"
+                                      [adResourceKey]="'resource.requestReporting'"
+                                      [disabled]="viewMode" #orgSelector
+                                      [property]="formGroup.controls.organizationId"></org-selector>
+                        <app-control-messages *ngIf="isOrg"
+                                              [control]="formGroup.controls.organizationId"></app-control-messages>
+                        <!-- đơn vi phụ nữ, công đoàn, thành niên -->
+                        <mass-org-selector *ngIf="isMasO" [operationKey]="'action.view'"
+                                           [adResourceKey]="'resource.requestReporting'"
+                                           [disabled]="viewMode" #massOrgSelector
+                                           [property]="formGroup.controls.organizationId"
+                                           [branch]="branch"></mass-org-selector>
+                        <app-control-messages *ngIf="isMasO"
+                                              [control]="formGroup.controls.organizationId"></app-control-messages>
+                        <!-- đơn vi đảng -->
+                        <party-org-selector *ngIf="isPartyO" [operationKey]="'action.view'"
+                                            [adResourceKey]="'resource.requestReporting'"
+                                            [disabled]="viewMode" #partyOrgSelector
+                                            [property]="formGroup.controls.organizationId"></party-org-selector>
+                        <app-control-messages *ngIf="isPartyO"
+                                              [control]="formGroup.controls.organizationId"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left required">
+                        {{'label.resolutionsMonth.name' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9">
+                        <input [readOnly]="viewMode" [formControl]="formGroup.controls.title" class="form-control">
+                        <app-control-messages [control]="formGroup.controls.title"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left">
+                        {{'lable.belongsToTheProgram' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9 file-control v-from file-process">
+                        <p-dropdown [disabled]="viewMode" [optionLabel]="'name'"
+                                    [formControl]="formGroup.controls.belongsToTheProgram" [showClear]="true"
+                                    [options]="belongsToTheProgramOptions" [placeholder]="'placeholder.choose' | translate">
+                        </p-dropdown>
+                        <div *ngIf="!viewMode" class="file-action" style="position: initial; margin-top: 3px;">
+                            <button type="button" [title]="'titleAdd' | translate" class="btn-icon plus"
+                                    [innerHTML]="'common.icon.plus' | translate"
+                                    (click)="openDialogAddBusinessType()"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left">
+                        {{'assessmentPeriod.file.form.level' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9">
+                        <multi-file-chooser
+                                class="attachment-file"
+                                [disabled]="viewMode"
+                                [property]="formGroup.controls.templateFile"
+                                [validMaxSize]="50"
+                                [moveFile]="checkShowMoveFile"
+                                fileName="templateFile">
+                        </multi-file-chooser>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left">
+                        {{'common.label.attachmentFile' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9">
+                        <multi-file-chooser
+                                class="attachment-file"
+                                [disabled]="viewMode"
+                                [property]="formGroup.controls.attachFile"
+                                [validMaxSize]="50"
+                                [moveFile]="checkShowMoveFile"
+                                fileName="attachFile">
+                        </multi-file-chooser>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left required">
+    
+                        {{'reportPunishment.reportType' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9">
+                        <p-dropdown [disabled]="viewMode || disable" [formControl]="formGroup.controls.typeOfReport"
+                                    [options]="typeOfReportOptions" [optionLabel]="'parName'"
+                                    [placeholder]="'placeholder.choose' | translate"
+                                    (onChange)="handleChangeTypeOfReport()"></p-dropdown>
+                        <app-control-messages [control]="formGroup.controls.typeOfReport"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left required">
+                        {{'lable.request.deadline' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9">
+                        <schedule-selector #scheduleSelector *ngIf="formGroup.value.typeOfReport.parValue != 'DOT_XUAT'"
+                                           [viewMode]="viewMode"
+                                           [property]="formGroup.controls.reportingDeadline"
+                                           [type]="formGroup.value.typeOfReport.parValue">
+                        </schedule-selector>
+    
+                        <date-picker [disabled]="viewMode" *ngIf="formGroup.value.typeOfReport.parValue == 'DOT_XUAT'"
+                                     [property]="formGroup.controls.reportingDeadline"></date-picker>
+                        <app-control-messages [control]="formGroup.controls.reportingDeadline"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left required">
+                        {{'lable.implementation.timeStart' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9">
+                        <date-picker [disabled]="viewMode" [property]="formGroup.controls.startDate"></date-picker>
+                        <app-control-messages [control]="formGroup.controls.startDate"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left ">
+                        {{'lable.implementation.timeEnd' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9">
+                        <date-picker [disabled]="viewMode" [property]="formGroup.controls.endDate"></date-picker>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row">
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left required" *ngIf="isLabel">
+                        {{'label.organization.isRequestedReportOrg' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9">
+                        <report-multi-org-selector *ngIf="isOrg" [operationKey]="'action.view'"
+                                                   [adResourceKey]="'resource.requestReporting'"
+                                                   [disabled]="viewMode" #requestReportOrg
+                                                   [property]="formGroup.controls.requestReportOrg">
+                        </report-multi-org-selector>
+                        <app-control-messages *ngIf="isOrg"
+                                              [control]="formGroup.controls.requestReportOrg"></app-control-messages>
+                        <report-multi-party-org-selector *ngIf="isPartyO" [operationKey]="'action.view'"
+                                                         [adResourceKey]="'resource.requestReporting'"
+                                                         [disabled]="viewMode" #requestReportPartyOrg
+                                                         [property]="formGroup.controls.requestReportOrg">
+                        </report-multi-party-org-selector>
+                        <app-control-messages *ngIf="isPartyO"
+                                              [control]="formGroup.controls.requestReportOrg"></app-control-messages>
+                        <report-multi-mass-org-selector *ngIf="isMasO" [operationKey]="'action.view'" [branch]="branch"
+                                                        [adResourceKey]="'resource.requestReporting'"
+                                                        [disabled]="viewMode" #requestReportMassOrg
+                                                        [property]="formGroup.controls.requestReportOrg"
+                                                        [getAllMass]="false">
+                        </report-multi-mass-org-selector>
+                        <app-control-messages *ngIf="isMasO"
+                                              [control]="formGroup.controls.requestReportOrg"></app-control-messages>
+                    </div>
+                </div>
+    
+                <div class="ui-g-12 vt-row">
+    
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left">
+                        {{'managementVertical.note' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9">
+                        <textarea class="form-control" [readonly]="viewMode"
+                                  [formControl]="formGroup.controls.description"></textarea>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row" *ngIf="viewMode">
+    
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left">
+                        {{'label.VOffice.isSigned' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9 nowrap">
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" [attr.disabled]="viewMode" class="form-check-input control-label"
+                                       id="isSignRequired_1" [value]="1" name="isSignRequired"
+                                       formControlName="isSignRequired">
+                                <i></i> {{'common.label.yes' | translate}}
+                            </label>
+                        </div>
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" [attr.disabled]="viewMode" class="form-check-input control-label"
+                                       id="isSignRequired_0" [value]="0" name="isSignRequired"
+                                       formControlName="isSignRequired">
+                                <i></i> {{'common.label.no' | translate}}
+                            </label>
+                        </div>
+                        <app-control-messages [control]="formGroup.controls.isSignRequired"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row" *ngIf="formGroup.value.isSignRequired && viewMode">
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left">
+                        {{'label.approval.beforSigned' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9 nowrap">
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" [attr.disabled]="viewMode" class="form-check-input control-label"
+                                       id="isApproveRequired_1" [value]="1" name="isApproveRequired"
+                                       formControlName="isApproveRequired">
+                                <i></i> {{'common.label.yes' | translate}}
+                            </label>
+                        </div>
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" [attr.disabled]="viewMode" class="form-check-input control-label"
+                                       id="isApproveRequired_0" [value]="0" name="isApproveRequired"
+                                       formControlName="isApproveRequired">
+                                <i></i> {{'common.label.no' | translate}}
+                            </label>
+                        </div>
+                        <app-control-messages [control]="formGroup.controls.isApproveRequired"></app-control-messages>
+                    </div>
+    
+                </div>
+                <div class="ui-g-12 vt-row" *ngIf="!viewMode">
+    
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left">
+                        {{'label.VOffice.isSigned' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9 nowrap">
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" class="form-check-input control-label" id="isSignRequired_1" [value]="1"
+                                       name="isSignRequired" formControlName="isSignRequired">
+                                <i></i> {{'common.label.yes' | translate}}
+                            </label>
+                        </div>
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" class="form-check-input control-label" id="isSignRequired_0" [value]="0"
+                                       name="isSignRequired" formControlName="isSignRequired">
+                                <i></i> {{'common.label.no' | translate}}
+                            </label>
+                        </div>
+                        <app-control-messages [control]="formGroup.controls.isSignRequired"></app-control-messages>
+                    </div>
+                </div>
+                <div class="ui-g-12 vt-row" *ngIf="formGroup.value.isSignRequired && !viewMode">
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left">
+                        {{'label.approval.beforSigned' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9 nowrap">
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" class="form-check-input control-label" id="isApproveRequired_1"
+                                       [value]="1" name="isApproveRequired" formControlName="isApproveRequired">
+                                <i></i> {{'common.label.yes' | translate}}
+                            </label>
+                        </div>
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" class="form-check-input control-label" id="isApproveRequired_0"
+                                       [value]="0" name="isApproveRequired" formControlName="isApproveRequired">
+                                <i></i> {{'common.label.no' | translate}}
+                            </label>
+                        </div>
+                        <app-control-messages [control]="formGroup.controls.isApproveRequired"></app-control-messages>
+                    </div>
+                </div>
+                <!--            Yêu cầu import dữ liệu báo cáo  -->
+                <div class="ui-g-12 vt-row">
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left required">
+                        {{'label.import.isImportRequired' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9 nowrap">
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" class="form-check-input control-label" id="isSignRequired_1" [value]="1"
+                                       name="isImportRequired"
+                                       [attr.disabled]="viewMode?true: null"
+                                       (change)="changeRequireImport($event)" formControlName="isImportRequired">
+                                <i></i> {{'common.label.yes' | translate}}
+                            </label>
+                        </div>
+                        <div class="form-check-inline ">
+                            <label class="i-checks">
+                                <input type="radio" class="form-check-input control-label" id="isSignRequired_0" [value]="0"
+                                       name="isImportRequired"
+                                       [attr.disabled]="viewMode?true: null"
+                                       (change)="changeRequireImport($event)" formControlName="isImportRequired">
+                                <i></i> {{'common.label.no' | translate}}
+                            </label>
+                        </div>
+                        <app-control-messages [control]="formGroup.controls.isImportRequired"></app-control-messages>
+                    </div>
+                </div>
+                <!--            Loại báo cáo cần import     -->
+                <div class="ui-g-12 vt-row" *ngIf="formGroup.value.isImportRequired ">
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left required">
+                        {{'label.import.typeReport' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9">
+                        <p-dropdown [disabled]="viewMode" [formControl]="formGroup.controls.adReportTemplateId"
+                                    [options]="adReportTemplateIdOptions" [optionLabel]="'name'"
+                                    (ngModelChange)="selectedChange()"
+                                    [placeholder]="'placeholder.choose' | translate"></p-dropdown>
+                        <app-control-messages [control]="formGroup.controls.adReportTemplateId"></app-control-messages>
+                    </div>
+                </div>
+                <!--            Biểu mẫu import dữ liệu     -->
+                <div class="ui-g-12 vt-row" *ngIf="formGroup.value.adReportTemplateId ">
+                    <label class="ui-g-12 ui-md-4 ui-sm-3  control-label vt-align-left required">
+                        {{'label.import.template' | translate}}</label>
+                    <div class="ui-g-12 ui-md-8 ui-sm-9">
+                        <a style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; display: block; overflow: hidden"
+                           (click)="downloadFile()">
+                            <i class="fas fa-download" style="padding-right: 10px;"></i>
+                            {{fileTemplateName}}
+                        </a>
+                    </div>
+                </div>
+<!--                <div class="ui-g-12 vt-row">-->
+<!--                    <table-input #tableInput [formConfig]="tableFormConfig" [columnsConfig]="tabeInputConfig"-->
+<!--                                 [optionTemplate]="optionTemplate" [disabledAction]="viewMode">-->
+<!--                        <ng-template #optionTemplate let-formGroupTable>-->
+<!--                            <td>-->
+<!--                                <p-dropdown [disabled]="viewMode" appendTo="body"-->
+<!--                                            [placeholder]="'placeholder.choose' | translate" [options]="dataTypeOptions"-->
+<!--                                            [optionLabel]="'parName'"-->
+<!--                                            [formControl]="formGroupTable.controls.dataType"></p-dropdown>-->
+<!--                            </td>-->
+<!--                            <td>-->
+<!--                                <input [readOnly]="viewMode" [formControl]="formGroupTable.controls.criterialName"-->
+<!--                                       class="form-control"/>-->
+<!--                            </td>-->
+<!--                        </ng-template>-->
+<!--    -->
+<!--                    </table-input>-->
+<!--                </div>-->
+            </form>
+        </div>
+    </div>
+</div>

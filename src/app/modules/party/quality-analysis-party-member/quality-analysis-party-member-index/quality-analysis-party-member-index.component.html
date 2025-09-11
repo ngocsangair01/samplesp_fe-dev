@@ -1,0 +1,6 @@
+<div *ngIf="hasPermission('action.view')"> 
+  <quality-analysis-party-member-search></quality-analysis-party-member-search>
+</div>
+<div *ngIf="!hasPermission('action.view')">
+  {{'common.haveNoPermission' | translate}}
+</div> 

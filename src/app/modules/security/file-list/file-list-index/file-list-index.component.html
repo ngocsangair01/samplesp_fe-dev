@@ -1,0 +1,6 @@
+<div *ngIf="hasPermission('action.view')" >
+  <file-list-search></file-list-search>
+</div>
+<div *ngIf="!hasPermission('action.view')">
+  {{'common.haveNoPermission' | translate}}
+</div>

@@ -1,0 +1,90 @@
+<form id="formColumn" [formGroup]="formColumn">
+  <div class="panel panel-default">
+    <div class="panel-heading vt-relative" style="border: none;">
+      <strong>
+        <span translate> app.reportDynamic.columnForm </span>
+      </strong>
+      <div class="vt-absolute vt-shotcut-button-in-heading">
+        <button type="button" (click)="syncAlias()" class="btn btn-sm vt-btn"
+          [innerHTML]="'common.button.icon.refresh' | translate"></button>
+      </div>
+    </div>
+    <div class="panel-body panel-table" style="margin-top: unset; padding: 12px;">
+      <p-table [value]="formColumn.controls" tableStyleClass="table controls-table table-wrapper b-t b-b"
+        (sortFunction)="customSort($event)" [customSort]="true" [resizableColumns]="true"
+               [scrollable]="true">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col style="width: 50px;">
+            <col style="width: 350px;">
+            <col style="width: 150px;">
+            <col style="width: 150px;">
+            <col style="width: 100px;">
+            <col style="width: 100px;">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn translate><span>common.table.index</span></th>
+            <th pResizableColumn translate><span
+                [ngClass]="{'required': formColumn.controls[0] && formColumn.controls[0].controls.name.isRequire}">app.reportDynamic.column.name</span>
+            </th>
+            <th pResizableColumn translate><span
+                [ngClass]="{'required': formColumn.controls[0] && formColumn.controls[0].controls.dataType.isRequire}">app.reportDynamic.column.dataType</span>
+            </th>
+            <th pResizableColumn translate><span
+                [ngClass]="{'required': formColumn.controls[0] && formColumn.controls[0].controls.aliasName.isRequire}">app.reportDynamic.aliasName</span>
+            </th>
+            <th pResizableColumn translate><span
+                [ngClass]="{'required': formColumn.controls[0] && formColumn.controls[0].controls.width.isRequire}">app.reportDynamic.width</span>
+            </th>
+            <th pResizableColumn translate><span>app.reportDynamic.add_delete</span></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-index="rowIndex">
+          <tr [formGroup]="item">
+            <td class="vt-align-center">
+              {{index+1}}
+            </td>
+            <td>
+              <dynamic-input [property]="item.controls.name" [maxLength]='200'>
+              </dynamic-input>
+              <app-control-messages [control]="item.controls.name"></app-control-messages>
+            </td>
+            <td>
+              <select-filter [property]="item.controls.dataType" [options]="listDataType" optionLabel="parValue"
+                optionValue="parCode"
+                [placeHolder]="item.controls.dataType.isRequire ? 'common.label.cboMustSelect' : 'common.label.cboSelect'">
+              </select-filter>
+              <app-control-messages [control]="item.controls.dataType"></app-control-messages>
+            </td>
+            <td>
+              <dynamic-input [property]="item.controls.aliasName" [maxLength]='200'>
+              </dynamic-input>
+              <app-control-messages [control]="item.controls.aliasName"></app-control-messages>
+            </td>
+            <td>
+              <dynamic-input [property]="item.controls.width">
+              </dynamic-input>
+              <app-control-messages [control]="item.controls.width"></app-control-messages>
+            </td>
+            <td class="vt-align-center">
+              <button class="btn-icon plus" type="button" (click)="addGroup(index, item)"
+                [innerHTML]="'common.icon.plus' | translate">
+              </button>
+              <button class="btn-icon minus" type="button" (click)="removeGroup(index, item)"
+                [innerHTML]="'common.icon.minus' | translate">
+              </button>
+              <button class="btn-icon plus" *ngIf="item.controls.sortOrder.value > 1" type="button" (click)="goUp(item)"
+                [innerHTML]="'common.icon.up' | translate">
+              </button>
+              <button class="btn-icon plus" *ngIf="item.controls.sortOrder.value < numIndex" type="button"
+                (click)="goDown(item)" [innerHTML]="'common.icon.down' | translate">
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</form>

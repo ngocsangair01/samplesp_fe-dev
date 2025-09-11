@@ -1,0 +1,187 @@
+<div class="content" *ngIf="hasPermission('action.view')">
+  <div class="row">
+    <div class="col-md-12">
+      <div id="searchArea">
+        <div class="panel panel-default">
+          <form id="formSearch" [formGroup]="formSearch" spellcheck="false">
+            <div class="panel-heading" translate>
+              <strong class="text-u-c">
+                <i class="fa fa-th"></i>
+                <span translate> common.label.search_form</span>
+              </strong>
+            </div>
+            <div class="panel-body padding-xl ui-g">
+              <div class="ui-g-12 vt-row">
+                <dynamic-input [property]="f['code']" [labelValue]="'app.warning.code'"
+                  [labelClass]="'ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right'"
+                  [inputClass]="'ui-g-12 ui-md-6 ui-lg-3'" [maxLength]="50" [autofocus]="'autofocus'">
+                </dynamic-input>
+
+                <dynamic-input [property]="f['name']" [labelValue]="'app.warning.name'"
+                  [labelClass]="'ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right'"
+                  [inputClass]="'ui-g-12 ui-md-6 ui-lg-3'" [maxLength]="200">
+                </dynamic-input>
+
+              </div>
+              <div class="ui-g-12 vt-row">
+                <label class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right"
+                  translate>app.warning.branchCode</label>
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                  <select-filter [property]="f['branchCode']" [options]="branchList" optionLabel="parName"
+                    [placeHolder]="'common.label.cboSelectAll'" optionValue="parCode">
+                  </select-filter>
+                </div>
+                <label [hidden]="f['warningType'].isHide" [ngClass]="{'required': f['warningType'].isRequire}"
+                  class="ui-g-12 ui-md-6 ui-lg-3 control-label vt-align-right">
+                  {{'app.warning.type' | translate}}
+                </label>
+                <div [hidden]="f['warningType'].isHide" class="ui-g-12 ui-md-6 ui-lg-4">
+                  <div class="form-check-inline">
+                    <label class="i-checks">
+                      <input type="radio" formControlName="warningType" [value]="1"
+                        class="form-check-input control-label" name="warningType" />
+                      <i></i> {{'app.warning.type.export' | translate}}
+                    </label>
+                  </div>
+                  <div class="form-check-inline">
+                    <label class="i-checks">
+                      <input type="radio" formControlName="warningType" [value]="2"
+                        class="form-check-input control-label" name="warningType" />
+                      <i></i> {{'app.warning.type.nextPage' | translate}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="ui-g-12 vt-row">
+                <label [hidden]="f['status'].isHide" class="ui-g-12 ui-md-6 ui-lg-2 control-label vt-align-right">
+                  {{'app.warning.status' | translate}}
+                </label>
+                <div [hidden]="f['status'].isHide" class="ui-g-12 ui-md-6 ui-lg-10">
+                  <div class="form-check-inline">
+                    <label class="i-checks">
+                      <input type="radio" formControlName="status" [value]="1" class="form-check-input control-label"
+                        name="status" />
+                      <i></i> {{'app.warning.status.show' | translate}}
+                    </label>
+                  </div>
+                  <div class="form-check-inline">
+                    <label class="i-checks">
+                      <input type="radio" formControlName="status" [value]="2" class="form-check-input control-label"
+                        name="status" />
+                      <i></i> {{'app.warning.status.hide' | translate}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-footer vt-area-button">
+              <button type="submit" (click)="processSearch();" class="btn btn-sm btn-info">
+                <span [innerHTML]="'common.button.search' | translate"></span>
+              </button>
+              <button type="button" class="btn btn-sm btn-info" *ngIf="hasPermission('action.insert')"
+                (click)="prepareSaveOrUpdate()" [innerHTML]="'common.button.icon.addNew' | translate"></button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div id="listArea">
+        <div class="panel panel-default">
+          <div class="panel-heading vt-relative">
+            <strong class="text-u-c">
+              <i class="fa fa-th"></i>
+              <span translate> app.warning.list</span>
+            </strong>
+          </div>
+          <div class="panel-body panel-table">
+            <p-table #pTable [value]="resultList.data" [paginator]="true" (onLazyLoad)="processSearch($event)"
+              [scrollable]="true" [lazy]="true" [rows]="changeRow" [totalRecords]="resultList.recordsTotal"
+              [lazyLoadOnInit]="false" tableStyleClass="table table-wrapper table-hover table-striped b-t b-b">
+              <ng-template pTemplate="colgroup">
+                <colgroup>
+                  <col class="size-1">
+                  <col *ngIf="hasPermission('action.insert')" class="size-1">
+                  <col *ngIf="hasPermission('action.update')" class="size-1">
+                  <col *ngIf="hasPermission('action.delete')" class="size-1">
+                  <col class="size-8">
+                  <col class="size-10">
+                  <col class="size-4">
+                  <col class="size-4">
+                  <col class="size-4">
+                  <col class="size-12">
+                  <col class="size-8">
+                  <col class="size-4">
+                </colgroup>
+              </ng-template>
+              <ng-template let-columns pTemplate="header">
+                <tr>
+                  <th translate>common.table.index</th>
+                  <th *ngIf="hasPermission('action.insert')">{{'common.label.view' | translate}}</th>
+                  <th *ngIf="hasPermission('action.update')">{{'common.label.edit' | translate}}</th>
+                  <th *ngIf="hasPermission('action.delete')">{{'common.label.delete' | translate}}</th>
+                  <th [pSortableColumn]="'code'">{{'app.warning.code' | translate}}<p-sortIcon [field]="'code'">
+                    </p-sortIcon>
+                  </th>
+                  <th [pSortableColumn]="'name'">{{'app.warning.name' | translate}}<p-sortIcon [field]="'name'">
+                    </p-sortIcon>
+                  </th>
+                  <th [pSortableColumn]="'parName'">{{'app.warning.branchCode' | translate}}<p-sortIcon
+                      [field]="'parName'">
+                    </p-sortIcon>
+                  </th>
+                  <th [pSortableColumn]="'warningType'">{{'app.warning.type' | translate}}<p-sortIcon
+                      [field]="'warningType'"></p-sortIcon>
+                  </th>
+                  <th>{{'app.warning.status' | translate}}</th>
+                  <th>{{'app.warning.resource' | translate}}</th>
+                  <th>{{'app.warning.configCss' | translate}}</th>
+                  <th>{{'app.warning.urlChange' | translate}}</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                <tr>
+                  <td class="vt-align-center">{{index}}</td>
+                  <td class="vt-align-center" *ngIf="hasPermission('action.view')">
+                    <a (click)="detail(item)" class="btn-table edit" title="{{'common.label.view' | translate}}"><i
+                        class="fas fa-eye"></i></a>
+                  </td>
+                  <td *ngIf="hasPermission('action.update')" class="vt-align-center">
+                    <a class="btn-table edit" id="detailDocument" (click)="prepareSaveOrUpdate(item)"
+                      title="{{'common.button.table.hEdit' | translate}}"><i class="fa fa-edit"></i></a>
+                  </td>
+                  <td *ngIf="hasPermission('action.delete')" class="vt-align-center">
+                    <a class="btn-table delete" id="editDocument" (click)="processDelete(item)"
+                      title="{{'common.button.table.hDelete' | translate}}"><i class="fa fa-trash-alt"></i></a>
+                  </td>
+                  <td>{{item.code}}</td>
+                  <td>{{item.name}}</td>
+                  <td>{{item.parName}}</td>
+                  <td>
+                    {{item.warningTypeStr}}
+                  </td>
+                  <td>
+                    {{item.statusStr}}
+                  </td>
+                  <td>{{item.resourceCode}}</td>
+                  <td>{{item.tableCellWarningInfo}}</td>
+                  <td>{{item.url}}</td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr class="emptymessage">
+                  <td [attr.colspan]="12" [innerHTML]="'app.noRecords' | translate">
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="paginatorleft">
+                <table-footer (changeRow)="onTablePageChange($event)"  [resultList]="resultList"></table-footer>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!hasPermission('action.view')" translate>
+  common.haveNoPermission
+</div>

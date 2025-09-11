@@ -1,0 +1,6 @@
+<div *ngIf="hasPermission('action.view')">
+  <party-member-decision-search></party-member-decision-search>
+</div>
+<div *ngIf="!hasPermission('action.view')">
+  {{'common.haveNoPermission' | translate}}
+</div>

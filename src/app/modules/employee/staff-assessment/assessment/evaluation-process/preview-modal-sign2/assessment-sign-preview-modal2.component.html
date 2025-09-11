@@ -1,0 +1,63 @@
+<div class="modal-body orgSelectorModal">
+    <div class="panel panel-default">
+        <div class="panel-heading" style="height: 59px !important;">
+            <strong class="panel-title"><i (click)="activeModal.close()" class="fa fa-chevron-left p-3"></i>&nbsp;
+                <span translate>assessment.title.preview</span>
+            </strong>
+            <div class="vt-absolute vt-shotcut-button-in-heading">
+                <span (click)="activeModal.close()" title="{{'common.button.close' | translate}}"
+                    class="btn btn-span btn-sm btn-info btn-close" style="background-color: #fff !important;"><i class="fa fa-times"></i></span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row clearfix">
+                <div class="list-file-signing">
+                    <div class="panel panel-default">
+                        <div class="panel-heading vt-relative" style="height: 39px !important; border: none !important;">
+                            <strong class="strong-title title">
+                                <span translate>common.title.listFile</span>
+                            </strong>
+                        </div>
+                        <div class="list-file panel-body">
+                            <div *ngFor="let data of listFileSign, let i = index">
+                                <div class="m-2">
+                                    <a style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 340px; display: block; overflow: hidden"
+                                        (click)="preview(data , i)">
+                                        {{data.fileName}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="no-padding-left content-file-signing">
+                    <div class="panel panel-default">
+                        <div class="panel-heading vt-relative" style="height: 50px !important">
+                            <strong class="title">
+                                <i class="fa fa-th"></i>&nbsp;
+                                <span translate>common.title.fileContent</span>
+                            </strong>
+                            <button type="button" (click)="downloadFile()" class="btn btn-sm btn-success btn-dowload">
+                                <span class="fa fa-download"></span>
+                                &nbsp;<span [innerHTML]="'common.button.icon.downloadfile' | translate"></span>
+                            </button>
+                        </div>
+                        <div class="panel-body" >
+                            <div *ngIf="formType == 2" #spreadsheet style="width: 100%; height: 80vh"></div>
+                            <pdf-viewer *ngIf="formType == 1" [src]="url"></pdf-viewer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="showAction" class="panel-footer vt-area-button float-right mt-1">
+            <button type="button" (click)="activeModal.close();" class="btn btn-sm btn-default"
+              [innerHTML]="'common.button.cancelLabel' | translate"></button>
+            <button type="submit" (click)="choseSignImage();" class="btn btn-sm btn-primary">
+              <span class="glyphicons glyphicons-direction"></span>
+              &nbsp;<span [innerHTML]="'common.button.submitFileAssessment' | translate"></span>
+            </button>
+          </div>
+    </div>
+</div>

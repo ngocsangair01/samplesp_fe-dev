@@ -1,0 +1,55 @@
+<div class="panel panel-default">
+  <form id="formMassMember" [formGroup]="formMassMember" spellcheck="false">
+    <div class="panel-heading">
+      <strong class="text-u-c" *ngIf="branch == 1">
+          <i class="fa fa-th"></i>&nbsp;Import Nhân viên tổ chức phụ nữ
+      </strong>
+      <strong class="text-u-c" *ngIf="branch == 2">
+        <i class="fa fa-th"></i>&nbsp;Import Nhân viên tổ chức thanh niên
+      </strong>
+      <strong class="text-u-c" *ngIf="branch == 3">
+        <i class="fa fa-th"></i>&nbsp;Import Nhân viên tổ chức công đoàn
+      </strong>
+    </div>
+    <div class="panel-body padding-xl ui-g">
+      <div class="ui-g-12 vt-row" *ngIf="branch == 2">
+        <label class="ui-g-12 ui-md-6 ui-lg-5 control-label vt-align-right" >
+          {{'massMember.age' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3 nowrap">
+          <select-filter [property]="f['ageType']" [options]="ageTypeList" optionLabel="label"
+            optionValue="value" [placeHolder]="'common.label.cboSelectAll'">
+          </select-filter>
+          <app-control-messages [control]="f['ageType']"></app-control-messages>
+        </div>
+      </div>
+      <div class="ui-g-12 vt-row">
+        <label class="ui-g-12 ui-md-6 ui-lg-5 control-label vt-align-right required">
+          {{'controls.choseFile' | translate}}
+        </label>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <file-chooser
+            [property]="f['fileImport']"
+            validMaxSize="50"
+            validType="xls"
+          >
+          </file-chooser>
+          <app-control-messages [control]="f['fileImport']"></app-control-messages>
+          <br>
+          <a class="text-link" (click)="processDownloadTemplate();">
+            <span><i class="fa fa-download"></i> Tải về file biểu mẫu</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer vt-area-button">
+      <button type="submit" (click)="processImport()" class="btn btn-sm btn-info"
+        [innerHTML]="'common.button.icon.save' | translate"></button>
+      <button type="button" (click)="goBack()" class="btn btn-sm btn-danger"
+        [innerHTML]="'common.button.out' | translate"></button>
+    </div>
+  </form>
+</div>
+<div *ngIf="dataError">
+  <import-error [data]="dataError"></import-error>
+</div>

@@ -1,0 +1,16 @@
+<p-autoComplete
+  [(ngModel)]="selectedValue"
+  [suggestions]="filteredList"
+  (completeMethod)="search($event)"
+  [field]="optionLabel"
+  [placeholder]="placeholder"
+  [minLength]="1"
+  [maxlength]="maxLength"
+  [forceSelection]="false"
+  (onSelect)="onSelect()"
+  [style]="{minHeight: '28px'}"
+  (onUnselect)="onUnselect()"
+  (onClear)="onClear()"
+  (onBlur)="onBlurMethod($event);"
+  [appendTo]="appendTo">
+</p-autoComplete>

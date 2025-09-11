@@ -1,0 +1,24 @@
+<div *ngIf="hasPermission('action.view')">
+  <div class="row">
+    <div class="col-md-3">
+      <!-- nav menu -->
+      <org-tree
+        operationKey="action.view"
+        adResourceKey="resource.partyOrganization"
+        (treeSelectNode)="treeSelectNode($event)"
+        height="735"
+        #orgTree
+      >
+      </org-tree>
+    </div>
+    <div class="col-md-9 no-padding-left">
+      <organization-chart
+       (activate)="onActivate($event)"
+       #orgChart>
+      </organization-chart>
+    </div>
+  </div>
+</div>
+<div *ngIf="!hasPermission('action.view')" translate>
+  common.haveNoPermission
+</div>

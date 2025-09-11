@@ -1,0 +1,40 @@
+<div class="card-form">
+  <div class="clearfix">
+    <div class="left-nav-bar pull-left row-header">
+      <div>
+        <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png"
+          (click)="previous()">
+        <span class="title">{{header}}</span>
+      </div>
+    </div>
+    <div class="right-nav-bar pull-right left-option">
+      <ul class="header-right sys-ul space-line">
+        <li>
+          <button class="btn btn-sm vt-btn mt-btn ng-star-inserted" type="button" (click)="previous()"
+            [innerHTML]="'common.button.close' | translate">
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div id="listArea">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong>
+        <span> {{'label.progress-track.not-confirmed-employee' | translate}}</span>
+      </strong>
+    </div>
+    <table-view (lazyLoad)="search($event)" [columnsConfig]="tableColumnsConfig" [optionTemplate]="optionTemplate"
+      [resultList]="resultList">
+      <ng-template #optionTemplate let-rowData let-rowIndex="rowIndex">
+        <td class="vt-align-center">{{rowIndex + 1}}</td>
+        <td class="vt-align-left">{{rowData.employeeCode}}</td>
+        <td class="vt-align-left">{{rowData.fullName}}</td>
+        <td class="vt-align-left">{{rowData.partyOrganizationName}}</td>
+      </ng-template>
+    </table-view>
+
+  </div>
+</div>
