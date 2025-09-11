@@ -130,13 +130,9 @@ export class PlanWorkFormComponent extends BaseComponent implements OnInit {
     }
   }
   public goBack() {
-    // Neu di tu menu quan ly ky luat thi load lai man tim kiem quan ly ki luat
-    if (this.personalPunishmentService.isEmployee) {
-      this.personalPunishmentService.isEmployee = false;
-      this.router.navigate(['/employee/curriculum-vitae/', this.empId, 'punishment']);
-    } else {
-      this.router.navigate(['/monitoring-inspection/personal-punishment-managerment']);
-    }
+
+      this.router.navigate(['/plan-management/plan-work-management']);
+
   }
 
   public goView(punishmentId: any) {
