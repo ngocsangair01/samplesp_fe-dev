@@ -15,7 +15,7 @@ export const environment: any = {
   version: env.npm_package_version + '-dev',
   serverUrl: {
     // political   : UrlConfig.serverApi + '/political-service',
-    political   : 'http://localhost:8081',
+    political   : 'http://10.30.132.79:8081',
     oauth       : 'http://10.30.132.21:8902',
     file        : 'http://10.30.132.79:8389',
     // report      : UrlConfig.serverApi + "/political-report",
