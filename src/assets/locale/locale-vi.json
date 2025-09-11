@@ -7300,5 +7300,17 @@
   "admissionSympathyManagement.value.status.passed": "Đạt",
   "admissionSympathyManagement.value.status.notPassed": "Không Đạt",
   "admissionSympathyManagement.import": "Import danh sách cán bộ nhân viên đã học Cảm tình Đảng",
-  "SUCCESS.import.partyCandidate": "Import danh sách cảm tình Đảng thành công"
+  "SUCCESS.import.partyCandidate": "Import danh sách cảm tình Đảng thành công",
+
+  "plan.work.save.titleAdd": "",
+  "plan.work.save.titleEdit": "",
+  "plan.work.save.plan.info": "",
+  "plan.work.save.plan.name": "",
+  "plan.work.save.plan.employer": "",
+  "plan.work.save.plan.startDate": "",
+  "plan.work.save.plan.creator": "",
+  "plan.work.save.plan.type": "",
+  "plan.work.save.plan.unit": "",
+  "plan.work.save.plan.endDate": "",
+  "plan.work.save.plan.file": ""
 }
