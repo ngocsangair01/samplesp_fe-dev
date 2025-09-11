@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-plan',
@@ -8,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreatePlan implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
-
+  createSign(planId: number): void {
+    this.router.navigate(['/sign'], { queryParams: { planId: planId } });
+  }
 }

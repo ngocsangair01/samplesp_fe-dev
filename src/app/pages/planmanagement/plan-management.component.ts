@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -40,6 +40,8 @@ export class PlanManagementComponent implements OnInit {
   pageSizeOptions = [10, 20, 50, 100];
   pageSize = 10;
   currentPage = 1;
+
+  activeMenu: number | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -93,16 +95,39 @@ export class PlanManagementComponent implements OnInit {
   }
 
   nextPage(): void {
-      this.currentPage++;
-      this.search();
+    this.currentPage++;
+    this.search();
   }
 
   prevPage(): void {
-      this.currentPage--;
-      this.search();
+    this.currentPage--;
+    this.search();
   }
 
   createPlan(): void {
     this.router.navigate(['/plan/create']);
+  }
+
+  toggleDropdown(index: number, event: MouseEvent): void {
+    event.stopPropagation(); // tránh click đóng ngay lập tức
+    this.activeMenu = this.activeMenu === index ? null : index;
+  }
+
+  @HostListener('document:click')
+  closeDropdown(): void {
+    this.activeMenu = null;
+  }
+
+  viewPlan(id: number) {
+    console.log('Xem', id);
+  }
+  editPlan(id: number) {
+    console.log('Sửa', id);
+  }
+  createSign(planId: number) {
+    this.router.navigate(['/sign'], { queryParams: { planId: planId } });
+  }
+  deletePlan(id: number) {
+    console.log('Xoá', id);
   }
 }

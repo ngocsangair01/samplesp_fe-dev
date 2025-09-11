@@ -66,7 +66,16 @@
       </thead>
       <tbody>
         <tr *ngFor="let plan of plans; let i = index">
-          <td>...</td>
+          <td class="border p-2 relative action-cell">
+            <button class="btn-menu" (click)="toggleDropdown(i, $event)">⋯</button>
+
+            <ul *ngIf="activeMenu === i" class="menu-dropdown">
+              <li (click)="viewPlan(plan.planId)">Xem</li>
+              <li (click)="editPlan(plan.planId)">Sửa</li>
+              <li (click)="createSign(plan.planId)">Trình ký</li>
+              <li (click)="deletePlan(plan.planId)">Xoá</li>
+            </ul>
+          </td>
           <td>{{ i + 1 }}</td>
           <td>{{ plan.planName }}</td>
           <td>{{ plan.planType }}</td>

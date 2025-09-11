@@ -9,6 +9,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { PlanManagementComponent } from './pages/planmanagement/plan-management.component';
 import { CreatePlan } from './pages/plan/create-plan.component';
+import { Sign } from './pages/sign/sign.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { CreatePlan } from './pages/plan/create-plan.component';
     PlanManagementComponent,
     HomeComponent,
     ContactComponent,
-    CreatePlan
+    CreatePlan,
+    Sign
   ],
   imports: [
     BrowserModule,
