@@ -1,0 +1,231 @@
+{
+    "type": "SUCCESS",
+    "code": null,
+    "message": null,
+    "data": {
+        "planId": 23,
+        "planName": "Tuấn Anh gió tai abcdef",
+        "planType": "Annual",
+        "assignerId": "12345",
+        "assignerUnit": "Unit A",
+        "startDate": "2023-10-01T00:00:00.000+0000",
+        "endDate": "2023-12-31T00:00:00.000+0000",
+        "status": "DRAFT",
+        "basicTargetTaskBean": [
+            {
+                "basicTargetTaskId": 87,
+                "planId": null,
+                "targetGroup": "Group A1",
+                "targetName": "Target 1",
+                "kpiIndicator": "KPI-001",
+                "measurementMethod": "Survey",
+                "measurementUnit": "Percentage",
+                "weightPercent": 50.0,
+                "minValue": "10",
+                "expectedValue": "20",
+                "challengeValue": "30",
+                "startDate": "2023-10-01T00:00:00.000+0000",
+                "endDate": "2023-12-31T00:00:00.000+0000",
+                "executionUnit": "Unit B",
+                "executionFocalPoint": "John Doe",
+                "status": "In Progress",
+                "progress": 25.0,
+                "executionResult": 15.0,
+                "createdDate": "2025-09-12T10:12:33.000+0000",
+                "createdBy": "",
+                "updatedDate": null,
+                "updatedBy": null,
+                "deleted": false
+            },
+            {
+                "basicTargetTaskId": 88,
+                "planId": null,
+                "targetGroup": "Group A2",
+                "targetName": "Target 1",
+                "kpiIndicator": "KPI-001",
+                "measurementMethod": "Survey",
+                "measurementUnit": "Percentage",
+                "weightPercent": 50.0,
+                "minValue": "10",
+                "expectedValue": "20",
+                "challengeValue": "30",
+                "startDate": "2023-10-01T00:00:00.000+0000",
+                "endDate": "2023-12-31T00:00:00.000+0000",
+                "executionUnit": "Unit B",
+                "executionFocalPoint": "John Doe",
+                "status": "In Progress",
+                "progress": 25.0,
+                "executionResult": 15.0,
+                "createdDate": "2025-09-12T10:12:33.000+0000",
+                "createdBy": "",
+                "updatedDate": null,
+                "updatedBy": null,
+                "deleted": false
+            }
+        ],
+        "transformationTaskBean": [
+            {
+                "transformationTaskId": 87,
+                "planId": null,
+                "taskType": "Type A",
+                "targetGroup": "Group B1",
+                "content": "Transformation Task Content",
+                "objective": "Improve Efficiency",
+                "solutionAction": "Implement New Process",
+                "executionTimeQ1": null,
+                "executionTimeQ2": null,
+                "executionTimeQ3": null,
+                "executionTimeQ4": null,
+                "responsibleLeader": null,
+                "status": "Planned",
+                "executionResult": "Pending",
+                "createdDate": "2025-09-12T10:12:33.000+0000",
+                "createdBy": "",
+                "updatedDate": null,
+                "updatedBy": null,
+                "units": [
+                    {
+                        "createdDate": "2025-09-09T08:34:06.000+0000",
+                        "createdBy": "1",
+                        "updatedDate": null,
+                        "updatedBy": null,
+                        "organizationId": 1,
+                        "name": "Viễn thông quân đội"
+                    },
+                    {
+                        "createdDate": "2025-09-09T08:34:06.000+0000",
+                        "createdBy": "1",
+                        "updatedDate": null,
+                        "updatedBy": null,
+                        "organizationId": 2,
+                        "name": "Đơn vị 1"
+                    }
+                ],
+                "deleted": false
+            },
+            {
+                "transformationTaskId": 88,
+                "planId": null,
+                "taskType": "Type A",
+                "targetGroup": "Group B2",
+                "content": "Transformation Task Content",
+                "objective": "Improve Efficiency",
+                "solutionAction": "Implement New Process",
+                "executionTimeQ1": true,
+                "executionTimeQ2": true,
+                "executionTimeQ3": true,
+                "executionTimeQ4": true,
+                "responsibleLeader": null,
+                "status": "Planned",
+                "executionResult": "Pending",
+                "createdDate": "2025-09-12T10:12:33.000+0000",
+                "createdBy": "",
+                "updatedDate": null,
+                "updatedBy": null,
+                "units": [
+                    {
+                        "createdDate": "2025-09-09T08:34:06.000+0000",
+                        "createdBy": "1",
+                        "updatedDate": null,
+                        "updatedBy": null,
+                        "organizationId": 1,
+                        "name": "Viễn thông quân đội"
+                    },
+                    {
+                        "createdDate": "2025-09-09T08:34:06.000+0000",
+                        "createdBy": "1",
+                        "updatedDate": null,
+                        "updatedBy": null,
+                        "organizationId": 3,
+                        "name": "Công nghệ thông tin"
+                    }
+                ],
+                "deleted": false
+            }
+        ],
+        "additionalKeyTasksBean": [
+            {
+                "additionalKeyTasksId": 84,
+                "planId": null,
+                "taskType": "Type B",
+                "targetGroup": "Group C1",
+                "content": "Additional Task Content",
+                "objective": "Expand Coverage",
+                "solutionAction": "Deploy Resources",
+                "executionTimeQ1": null,
+                "executionTimeQ2": null,
+                "executionTimeQ3": null,
+                "executionTimeQ4": null,
+                "responsibleLeader": "Jane Smith",
+                "status": "Not Started",
+                "executionResult": "Pending",
+                "createdDate": "2025-09-12T10:12:33.000+0000",
+                "createdBy": "",
+                "updatedDate": null,
+                "updatedBy": null,
+                "units": [
+                    {
+                        "createdDate": "2025-09-09T08:34:06.000+0000",
+                        "createdBy": "1",
+                        "updatedDate": null,
+                        "updatedBy": null,
+                        "organizationId": 1,
+                        "name": "Viễn thông quân đội"
+                    },
+                    {
+                        "createdDate": "2025-09-09T08:34:06.000+0000",
+                        "createdBy": "1",
+                        "updatedDate": null,
+                        "updatedBy": null,
+                        "organizationId": 2,
+                        "name": "Đơn vị 1"
+                    },
+                    {
+                        "createdDate": "2025-09-09T08:34:06.000+0000",
+                        "createdBy": "1",
+                        "updatedDate": null,
+                        "updatedBy": null,
+                        "organizationId": 3,
+                        "name": "Công nghệ thông tin"
+                    }
+                ],
+                "deleted": false
+            },
+            {
+                "additionalKeyTasksId": 85,
+                "planId": null,
+                "taskType": "Type B",
+                "targetGroup": "Group C2",
+                "content": "Additional Task Content",
+                "objective": "Expand Coverage",
+                "solutionAction": "Deploy Resources",
+                "executionTimeQ1": true,
+                "executionTimeQ2": true,
+                "executionTimeQ3": true,
+                "executionTimeQ4": true,
+                "responsibleLeader": "Jane Smith",
+                "status": "Not Started",
+                "executionResult": "Pending",
+                "createdDate": "2025-09-12T10:12:33.000+0000",
+                "createdBy": "",
+                "updatedDate": null,
+                "updatedBy": null,
+                "units": [
+                    {
+                        "createdDate": "2025-09-09T08:34:06.000+0000",
+                        "createdBy": "1",
+                        "updatedDate": null,
+                        "updatedBy": null,
+                        "organizationId": 2,
+                        "name": "Đơn vị 1"
+                    }
+                ],
+                "deleted": false
+            }
+        ],
+        "createdDate": "2025-09-12T10:12:33.000+0000",
+        "createdBy": "",
+        "updatedDate": null,
+        "updatedBy": null
+    }
+}

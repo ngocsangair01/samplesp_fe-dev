@@ -9,6 +9,7 @@ import { PersonalPunishmentService } from '@app/core/services/punishment/persona
 import { SysCatService } from '@app/core/services/sys-cat/sys-cat.service';
 import { BaseComponent } from '@app/shared/components/base-component/base-component.component';
 import { CommonUtils, ValidationService } from '@app/shared/services';
+import {any} from "codelyzer/util/function";
 
 @Component({
   selector: 'personal-punishment-form',
@@ -16,69 +17,36 @@ import { CommonUtils, ValidationService } from '@app/shared/services';
   styleUrls: ['./plan-work-form.component.css']
 })
 export class PlanWorkFormComponent extends BaseComponent implements OnInit {
-  employeeId: number;
-  punishmentTypeList: any;
-  punishmentFormList: any;
-  partyPunishmentFormList: any;
-  decissionLevelList: any;
+  employerId: number;
+
+  demoData: any;
+
   empTypeList: any;
   formSave: FormGroup;
   punishmentId: any;
-  isParty: Boolean;
   isEdit: Boolean;
   empId: any;
+  basicTargetTaskBean:[];
+  transformationTaskBean:[];
+  additionalKeyTasksBean:[];
   formConfig = {
-    punishmentId: [''],
-    employeeId: ['', [ValidationService.required]],
-    organizationId: [''],
-    gender: [''],
-    birthYear: [''],
-    isPartyMember: [''],
-    signContractDate: [''],
-    empTypeId: [''],
-    joinCompanyDate: [''],
-    positionName: [''],
-    positionDate: [''],
-    enlistDate: [''],
-    joinPartyDate: [''],
-    officialJoinPartyDate: [''],
-    decissionNumber: ['', [ValidationService.required, ValidationService.maxLength(100)]],
-    signedDate: ['', [ValidationService.required, ValidationService.beforeCurrentDate]],
-    decissionLevelId: ['', [ValidationService.required]],
-    punishmentTypeId: ['', [ValidationService.required]],
-    signer: ['', [ValidationService.maxLength(100)]],
-    punishmentFormId: [''],
-    partyPunishmentFormId: [''],
-    physicalResponsibility: [''],
-    reason: ['', [ValidationService.required]],
-    note: [''],
+    planName:[''],
+    planType:[''],
+    employerId: ['', [ValidationService.required]],
+    employerUnit: [''],
+    startDate: ['', [ValidationService.required, ValidationService.beforeCurrentDate]],
+    endDate: ['', [ValidationService.required, ValidationService.beforeCurrentDate]],
+    creator:[''],
+    files:['']
   };
 
   constructor(
     private router: Router,
-    private empTypeService: EmpTypesService,
-    private sysCatService: SysCatService,
     public actr: ActivatedRoute,
     private app: AppComponent,
-    private personalPunishmentService: PersonalPunishmentService,
   ) {
-    super(null, CommonUtils.getPermissionCode("resource.punishment"));
-    this.sysCatService.getSysCatListBySysCatTypeIdSortOrderOrName(APP_CONSTANTS.PERSONAL_PUNISHMENT.CQD).subscribe(res => {
-      this.decissionLevelList = res.data;
-    });
-    this.sysCatService.getSysCatListBySysCatTypeIdSortOrderOrName(APP_CONSTANTS.PERSONAL_PUNISHMENT.LP).subscribe(res => {
-      this.punishmentTypeList = res.data;
-    });
-    this.sysCatService.getSysCatListBySysCatTypeIdSortOrderOrName(APP_CONSTANTS.PERSONAL_PUNISHMENT.KLCQ).subscribe(res => {
-      this.punishmentFormList = res.data;
-    });
-    this.sysCatService.getSysCatListBySysCatTypeIdSortOrderOrName(APP_CONSTANTS.PERSONAL_PUNISHMENT.KLD).subscribe(res => {
-      this.partyPunishmentFormList = res.data;
-    });
-    // Danh sách diện đối tượng
-    this.empTypeService.getListEmpType().subscribe(res => {
-      this.empTypeList = res
-    });
+    // super(null, CommonUtils.getPermissionCode("resource.punishment"));
+    super(null);
 
     const params = this.actr.snapshot.params;
     if (params) {
@@ -96,94 +64,238 @@ export class PlanWorkFormComponent extends BaseComponent implements OnInit {
         this.isEdit = true;
       }
     }
-    this.setFormValue();
+    this.loadDemoData();
   }
+  loadDemoData(): void {
+    this.demoData = {
+      "type": "SUCCESS",
+      "code": null,
+      "message": null,
+      "data": {
+        "planId": 23,
+        "planName": "Tuấn Anh gió tai abcdef",
+        "planType": "Annual",
+        "assignerId": "12345",
+        "assignerUnit": "Unit A",
+        "startDate": "2023-10-01T00:00:00.000+0000",
+        "endDate": "2023-12-31T00:00:00.000+0000",
+        "status": "DRAFT",
+        "basicTargetTaskBean": [
+          {
+            "basicTargetTaskId": 87,
+            "planId": null,
+            "targetGroup": "Group A1",
+            "targetName": "Target 1",
+            "kpiIndicator": "KPI-001",
+            "measurementMethod": "Survey",
+            "measurementUnit": "Percentage",
+            "weightPercent": 50.0,
+            "minValue": "10",
+            "expectedValue": "20",
+            "challengeValue": "30",
+            "startDate": "2023-10-01T00:00:00.000+0000",
+            "endDate": "2023-12-31T00:00:00.000+0000",
+            "executionUnit": "Unit B",
+            "executionFocalPoint": "John Doe",
+            "status": "In Progress",
+            "progress": 25.0,
+            "executionResult": 15.0,
+            "createdDate": "2025-09-12T10:12:33.000+0000",
+            "createdBy": "",
+            "updatedDate": null,
+            "updatedBy": null,
+            "deleted": false
+          },
+          {
+            "basicTargetTaskId": 88,
+            "planId": null,
+            "targetGroup": "Group A2",
+            "targetName": "Target 1",
+            "kpiIndicator": "KPI-001",
+            "measurementMethod": "Survey",
+            "measurementUnit": "Percentage",
+            "weightPercent": 50.0,
+            "minValue": "10",
+            "expectedValue": "20",
+            "challengeValue": "30",
+            "startDate": "2023-10-01T00:00:00.000+0000",
+            "endDate": "2023-12-31T00:00:00.000+0000",
+            "executionUnit": "Unit B",
+            "executionFocalPoint": "John Doe",
+            "status": "In Progress",
+            "progress": 25.0,
+            "executionResult": 15.0,
+            "createdDate": "2025-09-12T10:12:33.000+0000",
+            "createdBy": "",
+            "updatedDate": null,
+            "updatedBy": null,
+            "deleted": false
+          }
+        ],
+        "transformationTaskBean": [
+          {
+            "transformationTaskId": 87,
+            "planId": null,
+            "taskType": "Type A",
+            "targetGroup": "Group B1",
+            "content": "Transformation Task Content",
+            "objective": "Improve Efficiency",
+            "solutionAction": "Implement New Process",
+            "executionTimeQ1": null,
+            "executionTimeQ2": null,
+            "executionTimeQ3": null,
+            "executionTimeQ4": null,
+            "responsibleLeader": null,
+            "status": "Planned",
+            "executionResult": "Pending",
+            "createdDate": "2025-09-12T10:12:33.000+0000",
+            "createdBy": "",
+            "updatedDate": null,
+            "updatedBy": null,
+            "units": [
+              {
+                "createdDate": "2025-09-09T08:34:06.000+0000",
+                "createdBy": "1",
+                "updatedDate": null,
+                "updatedBy": null,
+                "organizationId": 1,
+                "name": "Viễn thông quân đội"
+              },
+              {
+                "createdDate": "2025-09-09T08:34:06.000+0000",
+                "createdBy": "1",
+                "updatedDate": null,
+                "updatedBy": null,
+                "organizationId": 2,
+                "name": "Đơn vị 1"
+              }
+            ],
+            "deleted": false
+          }
+        ],
+        "additionalKeyTasksBean": [
+          {
+            "additionalKeyTasksId": 84,
+            "planId": null,
+            "taskType": "Type B",
+            "targetGroup": "Group C1",
+            "content": "Additional Task Content",
+            "objective": "Expand Coverage",
+            "solutionAction": "Deploy Resources",
+            "executionTimeQ1": null,
+            "executionTimeQ2": null,
+            "executionTimeQ3": null,
+            "executionTimeQ4": null,
+            "responsibleLeader": "Jane Smith",
+            "status": "Not Started",
+            "executionResult": "Pending",
+            "createdDate": "2025-09-12T10:12:33.000+0000",
+            "createdBy": "",
+            "updatedDate": null,
+            "updatedBy": null,
+            "units": [
+              {
+                "createdDate": "2025-09-09T08:34:06.000+0000",
+                "createdBy": "1",
+                "updatedDate": null,
+                "updatedBy": null,
+                "organizationId": 1,
+                "name": "Viễn thông quân đội"
+              },
+              {
+                "createdDate": "2025-09-09T08:34:06.000+0000",
+                "createdBy": "1",
+                "updatedDate": null,
+                "updatedBy": null,
+                "organizationId": 2,
+                "name": "Đơn vị 1"
+              },
+              {
+                "createdDate": "2025-09-09T08:34:06.000+0000",
+                "createdBy": "1",
+                "updatedDate": null,
+                "updatedBy": null,
+                "organizationId": 3,
+                "name": "Công nghệ thông tin"
+              }
+            ],
+            "deleted": false
+          },
+          {
+            "additionalKeyTasksId": 85,
+            "planId": null,
+            "taskType": "Type B",
+            "targetGroup": "Group C2",
+            "content": "Additional Task Content",
+            "objective": "Expand Coverage",
+            "solutionAction": "Deploy Resources",
+            "executionTimeQ1": true,
+            "executionTimeQ2": true,
+            "executionTimeQ3": true,
+            "executionTimeQ4": true,
+            "responsibleLeader": "Jane Smith",
+            "status": "Not Started",
+            "executionResult": "Pending",
+            "createdDate": "2025-09-12T10:12:33.000+0000",
+            "createdBy": "",
+            "updatedDate": null,
+            "updatedBy": null,
+            "units": [
+              {
+                "createdDate": "2025-09-09T08:34:06.000+0000",
+                "createdBy": "1",
+                "updatedDate": null,
+                "updatedBy": null,
+                "organizationId": 2,
+                "name": "Đơn vị 1"
+              }
+            ],
+            "deleted": false
+          }
+        ],
+        "createdDate": "2025-09-12T10:12:33.000+0000",
+        "createdBy": "",
+        "updatedDate": null,
+        "updatedBy": null
+      }
+    };
+    this.formConfig.planName[0] = this.demoData.data.planName;
+    this.formConfig.planType[0] = this.demoData.data.planType;
+    this.formConfig.employerId[0] = this.demoData.data.assignerId;
+    this.formConfig.employerUnit[0] = this.demoData.data.assignerUnit;
+    this.formConfig.startDate[0] = this.demoData.data.startDate;
+    this.formConfig.endDate[0] = this.demoData.data.endDate;
+    this.formConfig.creator[0] = this.demoData.data.assignerId;
+    this.additionalKeyTasksBean = this.demoData.data.additionalKeyTasksBean;
+    this.transformationTaskBean = this.demoData.data.transformationTaskBean;
+    this.basicTargetTaskBean = this.demoData.data.basicTargetTaskBean;
+  }
+
 
   public buildForms(data) {
     this.formSave = this.buildForm(data, this.formConfig);
     const filesControl = new FileControl(null);
-    if (data) {
-      if (data.fileAttachment && data.fileAttachment.personalPunishmentFiles) {
-        filesControl.setFileAttachment(data.fileAttachment.personalPunishmentFiles);
-      }
-    }
+    // if (data) {
+    //   if (data.fileAttachment && data.fileAttachment.personalPunishmentFiles) {
+    //     filesControl.setFileAttachment(data.fileAttachment.personalPunishmentFiles);
+    //   }
+    // }
     this.formSave.addControl('files', filesControl);
   }
 
-  public setFormValue() {
-    if (this.punishmentId && this.punishmentId > 0) {
-      this.personalPunishmentService.findOne(this.punishmentId).subscribe(
-        res => {
-          this.empId = res.data.employeeId;
-          if (this.personalPunishmentService.requestIsSuccess(res)) {
-            if (res.data.isPartyMember === 1) {
-              this.isParty = true;
-            } else {
-              this.isParty = false;
-            }
-            this.buildForms(res.data);
-            this.formSave.removeControl('empTypeId');
-            this.formSave.addControl('empTypeId', new FormControl(res.data.staffTypeId));
-          }
-        }
-      );
-    }
-  }
   public goBack() {
 
       this.router.navigate(['/plan-management/plan-work-management']);
 
   }
 
-  public goView(punishmentId: any) {
-    // Neu di tu menu quan ly ky luat thi load lai man tim kiem quan ly ki luat
-    if (this.personalPunishmentService.isEmployee) {
-      this.personalPunishmentService.isEmployee = false;
-      this.router.navigate(['/employee/curriculum-vitae/', this.empId, 'punishment']);
-    } else {
-      this.router.navigate([`/monitoring-inspection/personal-punishment-managerment/edit/${punishmentId}`]);
-    }
-  }
 
-  public processSaveOrUpdate() {
-    if (!CommonUtils.isValidForm(this.formSave)) {
-      return;
-    }
-    if (this.formSave.controls['punishmentFormId'].value === null && this.formSave.controls['partyPunishmentFormId'].value === null) {
-      this.app.warningMessage("personalPunishment.punishmentFormEitherPartyPunishmentForm");
-      return;
-    }
-    this.app.confirmMessage(null, () => {
-      this.personalPunishmentService.saveOrUpdateFormFile(this.formSave.value)
-        .subscribe(res => {
-          if (this.personalPunishmentService.requestIsSuccess(res) && res.data && res.data.punishmentId) {
-            this.goView(res.data.punishmentId);
-          }
-        });
-    }, () => { });
-  }
 
   get f() {
     return this.formSave.controls;
   }
 
-  public genData(event: any) {
-    this.buildFormEmp(event.selectField);
-  }
+  public hello(){}
 
-  public buildFormEmp(employeeId) {
-    this.personalPunishmentService.getInfoOfEmp(employeeId)
-      .subscribe(res => {
-        if (this.personalPunishmentService.requestIsSuccess(res)) {
-          if (CommonUtils.nvl(res.data.isPartyMember) > 0) {
-            this.isParty = true;
-          } else {
-            this.isParty = false;
-          }
-          this.buildForms(res.data);
-          this.formSave.removeControl('gender');
-          this.formSave.addControl('gender', new FormControl(res.data.gender - 1));
-        }
-      });
-  }
+
 }
