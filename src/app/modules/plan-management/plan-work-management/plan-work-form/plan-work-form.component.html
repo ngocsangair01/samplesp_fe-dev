@@ -5,8 +5,8 @@
       <div>
         <img alt="back" class="img-fluid" src="./../../../../../../assets/images/home/Mask_Group_18824.png"
              (click)="goBack();">
-        <span class="title" translate> personalPunishment.titleAdd</span>
-        <span class="title" translate> personalPunishment.titleEdit</span>
+        <span *ngIf="!isEdit" class="title" translate> plan.work.save.titleAdd</span>
+        <span *ngIf="isEdit" class="title" translate> plan.work.save.titleEdit</span>
       </div>
     </div>
     <div class="right-nav-bar pull-right left-option">
@@ -154,7 +154,7 @@
     <div class="panel-body panel-table table-container">
       <p-table #ptable [value]="basicTargetTaskBean" [paginator]="true" (onLazyLoad)="processSearch($event)"
                [lazy]="true"
-               [rows]="changeRow" [totalRecords]="resultList.recordsTotal" [scrollable]="true"
+               [rows]="changeRow" [totalRecords]="basicTargetTaskBean.length" [scrollable]="true"
                [lazyLoadOnInit]="false"
                tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
                [resizableColumns]="true">
@@ -319,431 +319,323 @@
 
 
 <!--===============Chuyen dich=======================-->
-<!--<div id="listArea" [ngClass]="isShowVertical?'display-list-vertical':''"-->
-<!--     [ngStyle]="{'width': isShowVertical && !isShowHideVertical ? '100%' : '','height': isShowVertical && !isShowHideVertical ? '85vh' : ''}">-->
-<!--  <div [ngClass]="isShowVertical?'panel panel-default display-max-vertical-height':'panel panel-default'">-->
-<!--    <div class="panel-heading vt-relative vt-panel-heading-table">-->
-<!--      <strong>-->
-<!--        <img *ngIf="isShowVertical && !isShowHideVertical" alt="next" class="img-fluid icon-show-hide-search"-->
-<!--             src="./../../../../../../assets/images/home/Mask_Group_24371.png" (click)="closeBasicSearch()">-->
-<!--        {{ 'plan.work.save.table2.title' | translate }}-->
-<!--      </strong>-->
-<!--      <div>-->
-<!--        <button type="button" class="btn btn-sm vt-btn btn-submit"-->
-<!--                *ngIf="hasPermission('action.insert')"-->
-<!--                (click)="hello()"-->
-<!--                [innerHTML]="'common.button.icon.addNew' | translate"></button>-->
-<!--        <button type="button" class="btn btn-sm vt-btn" *ngIf="hasPermission('action.import')"-->
-<!--                (click)="hello()"-->
-<!--                [innerHTML]="'personalPunishment.importButton' | translate"></button>-->
-<!--        <button type="button" class="btn btn-sm vt-btn" *ngIf="hasPermission('action.export')"-->
-<!--                (click)="hello()"-->
-<!--                [innerHTML]="'common.button.icon.exportFile' | translate"></button>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="panel-body panel-table table-container">-->
-<!--      <p-table #ptable [value]="resultList.data" [paginator]="true" (onLazyLoad)="processSearch($event)"-->
-<!--               [lazy]="true"-->
-<!--               [rows]="changeRow" [totalRecords]="resultList.recordsTotal" [scrollable]="true"-->
-<!--               [lazyLoadOnInit]="false"-->
-<!--               tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"-->
-<!--               [resizableColumns]="true">-->
-<!--        <ng-template pTemplate="colgroup" let-columns>-->
-<!--          <colgroup>-->
-<!--            <col style="width: 50px;">-->
-<!--            <col style="width: 50px;">-->
-<!--            <col style="width: 200px;">-->
-<!--            <col style="width: 200px;">-->
-<!--            <col style="width: 200px;">-->
-<!--            <col style="width: 200px;">-->
-<!--            <col style="width: 100px;">-->
-<!--            <col style="width: 100px;">-->
-<!--            <col style="width: 100px;">-->
-<!--            <col style="width: 100px;">-->
-<!--            <col style="width: 200px;">-->
-<!--          </colgroup>-->
-<!--        </ng-template>-->
-<!--        <ng-template pTemplate="header">-->
-<!--          <tr>-->
-<!--            <th rowspan="2" pResizableColumn></th>-->
-<!--            <th rowspan="2" pResizableColumn>{{ 'plan.work.save.table2.col1' | translate }}</th>-->
-<!--            <th rowspan="2" [pSortableColumn]="'orgName'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table2.col2' | translate }}-->
-<!--              <p-sortIcon [field]="'orgName'"></p-sortIcon>-->
-<!--            </th>-->
-<!--            <th rowspan="2" [pSortableColumn]="'orgCurrentName'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table2.col3' | translate }}-->
-<!--              <p-sortIcon [field]="'orgCurrentName'"></p-sortIcon>-->
-<!--            </th>-->
-<!--            <th rowspan="2" [pSortableColumn]="'employeeCode'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table2.col4' | translate }}-->
-<!--              <p-sortIcon [field]="'employeeCode'"></p-sortIcon>-->
-<!--            </th>-->
-<!--            <th rowspan="2" [pSortableColumn]="'employeeName'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table2.col5' | translate }}-->
-<!--              <p-sortIcon [field]="'employeeName'"></p-sortIcon>-->
-<!--            </th>-->
-<!--            <th colspan="4" class="vt-align-center" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table2.col6' | translate }}-->
-<!--            </th>-->
-<!--            <th rowspan="2" [pSortableColumn]="'gender'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table2.col7' | translate }}-->
-<!--              <p-sortIcon [field]="'gender'"></p-sortIcon>-->
-<!--            </th>-->
-<!--          </tr>-->
-<!--          <tr>-->
-<!--            <th rowspan="2" [pSortableColumn]="'gender'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table2.col61' | translate }}-->
-<!--              <p-sortIcon [field]="'gender'"></p-sortIcon>-->
-<!--            </th>-->
-<!--            <th [pSortableColumn]="'gender'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table2.col62' | translate }}-->
-<!--              <p-sortIcon [field]="'gender'"></p-sortIcon>-->
-<!--            </th>-->
-<!--            <th [pSortableColumn]="'gender'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table2.col63' | translate }}-->
-<!--              <p-sortIcon [field]="'gender'"></p-sortIcon>-->
-<!--            </th>-->
-<!--            <th [pSortableColumn]="'gender'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table2.col64' | translate }}-->
-<!--              <p-sortIcon [field]="'gender'"></p-sortIcon>-->
-<!--            </th>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
-<!--        <ng-template pTemplate="body" let-item let-index="rowIndex+1">-->
-<!--          &lt;!&ndash;body&ndash;&gt;-->
-<!--          <tr>-->
-<!--            <td class="vt-align-center" style="overflow: initial !important;">-->
-<!--              <div ngbDropdown class="d-inline-block">-->
-<!--                <div ngbDropdownToggle class="vt-action-hover">-->
-<!--                  <img class="menu-icon" src="./../../../assets/images/home/Icon.svg">-->
-<!--                </div>-->
-<!--                <div ngbDropdownMenu class="vt-border-radius">-->
-<!--                  &lt;!&ndash; Sửa &ndash;&gt;-->
-<!--                  <button *ngIf="hasPermission('action.update') && hello()" class="dropdown-item"-->
-<!--                          (click)="hello()"-->
-<!--                          [innerHTML]="'common.button.table.acteditdropdown' | translate">-->
-<!--                  </button>-->
-<!--                  &lt;!&ndash; Xóa &ndash;&gt;-->
-<!--                  <button *ngIf="hasPermission('action.delete') && hello()" class="dropdown-item"-->
-<!--                          (click)="processDelete(item)"-->
-<!--                          [innerHTML]="'common.button.icon.delete' | translate">-->
-<!--                  </button>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </td>-->
-<!--            <td class="vt-align-center">{{ index }}</td>-->
-<!--            <td class="vt-align-left" [title]="item.orgName">-->
-<!--              {{ item.orgName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.orgCurrentName">-->
-<!--              {{ item.orgCurrentName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.employeeCode">-->
-<!--              {{ item.employeeCode }}-->
-<!--            </td>-->
-<!--            <td [title]="item.employeeName">-->
-<!--              {{ item.employeeName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.isPartyMember">-->
-<!--              <i *ngIf="item.isPartyMember === 1" class="fas fa-check table-icon color-info"></i>-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.gender">-->
-<!--              {{ item.gender === 0 ? "Nam" : "Nữ" }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.birthYear">-->
-<!--              {{ item.birthYear }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.empTypeName">-->
-<!--              {{ item.empTypeName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.signContractDate">-->
-<!--              {{ item.signContractDate | displayDate }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.positionName">-->
-<!--              {{ item.positionName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.positionDate">-->
-<!--              {{ item.positionDate | displayDate }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.enlistDate">-->
-<!--              {{ item.enlistDate | displayDate }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.joinCompanyDate">-->
-<!--              {{ item.joinCompanyDate | displayDate }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.joinPartyDate">-->
-<!--              {{ item.joinPartyDate | displayDate }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.officialJoinPartyDate">-->
-<!--              {{ item.officialJoinPartyDate | displayDate }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.decissionNumber">-->
-<!--              {{ item.decissionNumber }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left">-->
-<!--              <a *ngFor="let data of item.fileAttachment.file"-->
-<!--                 style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 200px; display: block; overflow: hidden"-->
-<!--                 (click)="hello()">-->
-<!--                - {{ data.fileName }}-->
-<!--              </a>-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.signedDate">-->
-<!--              {{ item.signedDate | displayDate }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.decissionLevelName">-->
-<!--              {{ item.decissionLevelName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.signer">-->
-<!--              {{ item.signer }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.punishmentTypeName">-->
-<!--              {{ item.punishmentTypeName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.reason">-->
-<!--              {{ item.reason }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.physicalResponsibility">-->
-<!--              {{ item.physicalResponsibility }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.punishmentFormName">-->
-<!--              {{ item.punishmentFormName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.partyPunishmentFormName">-->
-<!--              {{ item.partyPunishmentFormName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.note">-->
-<!--              {{ item.note }}-->
-<!--            </td>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
+<div id="listArea" [ngClass]="isShowVertical?'display-list-vertical':''"
+     [ngStyle]="{'width': isShowVertical && !isShowHideVertical ? '100%' : '','height': isShowVertical && !isShowHideVertical ? '85vh' : ''}">
+  <div [ngClass]="isShowVertical?'panel panel-default display-max-vertical-height':'panel panel-default'">
+    <div class="panel-heading vt-relative vt-panel-heading-table">
+      <strong>
+        <img *ngIf="isShowVertical && !isShowHideVertical" alt="next" class="img-fluid icon-show-hide-search"
+             src="./../../../../../../assets/images/home/Mask_Group_24371.png" (click)="closeBasicSearch()">
+        {{ 'plan.work.save.table2.title' | translate }}
+      </strong>
+      <div>
+        <button type="button" class="btn btn-sm vt-btn btn-submit"
+                *ngIf="hasPermission('action.insert')"
+                (click)="hello()"
+                [innerHTML]="'common.button.icon.addNew' | translate"></button>
+        <button type="button" class="btn btn-sm vt-btn" *ngIf="hasPermission('action.import')"
+                (click)="hello()"
+                [innerHTML]="'personalPunishment.importButton' | translate"></button>
+        <button type="button" class="btn btn-sm vt-btn" *ngIf="hasPermission('action.export')"
+                (click)="hello()"
+                [innerHTML]="'common.button.icon.exportFile' | translate"></button>
+      </div>
+    </div>
+    <div class="panel-body panel-table table-container">
+      <p-table #ptable [value]="transformationTaskBean" [paginator]="true" (onLazyLoad)="processSearch($event)"
+               [lazy]="true"
+               [rows]="changeRow" [totalRecords]="transformationTaskBean.length" [scrollable]="true"
+               [lazyLoadOnInit]="false"
+               tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+               [resizableColumns]="true">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col style="width: 50px;">
+            <col style="width: 50px;">
+            <col style="width: 200px;">
+            <col style="width: 200px;">
+            <col style="width: 200px;">
+            <col style="width: 200px;">
+            <col style="width: 100px;">
+            <col style="width: 100px;">
+            <col style="width: 100px;">
+            <col style="width: 100px;">
+            <col style="width: 200px;">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th rowspan="2" pResizableColumn></th>
+            <th rowspan="2" pResizableColumn>{{ 'plan.work.save.table2.col1' | translate }}</th>
+            <th rowspan="2" [pSortableColumn]="'targetGroup'" pResizableColumn>
+              {{ 'plan.work.save.table2.col2' | translate }}
+              <p-sortIcon [field]="'targetGroup'"></p-sortIcon>
+            </th>
+            <th rowspan="2" [pSortableColumn]="'content'" pResizableColumn>
+              {{ 'plan.work.save.table2.col3' | translate }}
+              <p-sortIcon [field]="'content'"></p-sortIcon>
+            </th>
+            <th rowspan="2" [pSortableColumn]="'objective'" pResizableColumn>
+              {{ 'plan.work.save.table2.col4' | translate }}
+              <p-sortIcon [field]="'objective'"></p-sortIcon>
+            </th>
+            <th rowspan="2" [pSortableColumn]="'solutionAction'" pResizableColumn>
+              {{ 'plan.work.save.table2.col5' | translate }}
+              <p-sortIcon [field]="'solutionAction'"></p-sortIcon>
+            </th>
+            <th colspan="4" class="vt-align-center" pResizableColumn>
+              {{ 'plan.work.save.table2.col6' | translate }}
+            </th>
+            <th rowspan="2" [pSortableColumn]="'units[0].name'" pResizableColumn>
+              {{ 'plan.work.save.table2.col7' | translate }}
+              <p-sortIcon [field]="'units[0].name'"></p-sortIcon>
+            </th>
+          </tr>
+          <tr>
+            <th rowspan="2" [pSortableColumn]="'executionTimeQ1'" pResizableColumn>
+              {{ 'plan.work.save.table2.col61' | translate }}
+              <p-sortIcon [field]="'executionTimeQ1'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'executionTimeQ2'" pResizableColumn>
+              {{ 'plan.work.save.table2.col62' | translate }}
+              <p-sortIcon [field]="'executionTimeQ2'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'executionTimeQ3'" pResizableColumn>
+              {{ 'plan.work.save.table2.col63' | translate }}
+              <p-sortIcon [field]="'executionTimeQ3'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'executionTimeQ4'" pResizableColumn>
+              {{ 'plan.work.save.table2.col64' | translate }}
+              <p-sortIcon [field]="'executionTimeQ4'"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+          <!--body-->
+          <tr>
+            <td class="vt-align-center" style="overflow: initial !important;">
+              <div ngbDropdown class="d-inline-block">
+                <div ngbDropdownToggle class="vt-action-hover">
+                  <img class="menu-icon" src="./../../../assets/images/home/Icon.svg">
+                </div>
+                <div ngbDropdownMenu class="vt-border-radius">
+                  <!-- Sửa -->
+                  <button *ngIf="hasPermission('action.update') && hello()" class="dropdown-item"
+                          (click)="hello()"
+                          [innerHTML]="'common.button.table.acteditdropdown' | translate">
+                  </button>
+                  <!-- Xóa -->
+                  <button *ngIf="hasPermission('action.delete') && hello()" class="dropdown-item"
+                          (click)="processDelete(item)"
+                          [innerHTML]="'common.button.icon.delete' | translate">
+                  </button>
+                </div>
+              </div>
+            </td>
+            <td class="vt-align-center">{{ index }}</td>
+            <td class="vt-align-left" [title]="item.targetGroup">
+              {{ item.targetGroup }}
+            </td>
+            <td class="vt-align-left" [title]="item.content">
+              {{ item.content }}
+            </td>
+            <td class="vt-align-center" [title]="item.objective">
+              {{ item.objective }}
+            </td>
+            <td [title]="item.solutionAction">
+              {{ item.solutionAction }}
+            </td>
+            <td class="vt-align-center" [title]="item.executionTimeQ1">
+              <i *ngIf="item.executionTimeQ1 === 1" class="fas fa-check table-icon color-info"></i>
+            </td>
+            <td class="vt-align-center" [title]="item.executionTimeQ2">
+              <i *ngIf="item.executionTimeQ2 === 1" class="fas fa-check table-icon color-info"></i>
+            </td>
+            <td class="vt-align-center" [title]="item.executionTimeQ3">
+              <i *ngIf="item.executionTimeQ3 === 1" class="fas fa-check table-icon color-info"></i>
+            </td>
+            <td class="vt-align-center" [title]="item.executionTimeQ4">
+              <i *ngIf="item.executionTimeQ4 === 1" class="fas fa-check table-icon color-info"></i>
+            </td>
+            <td class="vt-align-center" [title]="item.units[0].name">
+              {{ item.units[0].name  }}
+            </td>
 
-<!--        <ng-template pTemplate="emptymessage">-->
-<!--          <tr class="emptymessage">-->
-<!--            <td [attr.colspan]="10" [innerHTML]="'app.noRecords' | translate">-->
-<!--            </td>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
-<!--        <ng-template pTemplate="paginatorleft">-->
-<!--          <table-footer (changeRow)="onTablePageChange($event)"-->
-<!--                        [resultList]="resultList"></table-footer>-->
-<!--        </ng-template>-->
-<!--      </p-table>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr class="emptymessage">
+            <td [attr.colspan]="10" [innerHTML]="'app.noRecords' | translate">
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+          <table-footer (changeRow)="onTablePageChange($event)"
+                        [resultList]="resultList"></table-footer>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
 
 <!--===============Cac nhiem vu trong tam khac=======================-->
-<!--<div id="listArea" [ngClass]="isShowVertical?'display-list-vertical':''"-->
-<!--     [ngStyle]="{'width': isShowVertical && !isShowHideVertical ? '100%' : '','height': isShowVertical && !isShowHideVertical ? '85vh' : ''}">-->
-<!--  <div [ngClass]="isShowVertical?'panel panel-default display-max-vertical-height':'panel panel-default'">-->
-<!--    <div class="panel-heading vt-relative vt-panel-heading-table">-->
-<!--      <strong>-->
-<!--        <img *ngIf="isShowVertical && !isShowHideVertical" alt="next" class="img-fluid icon-show-hide-search"-->
-<!--             src="./../../../../../../assets/images/home/Mask_Group_24371.png" (click)="closeBasicSearch()">-->
-<!--        {{ 'plan.work.save.table3.title' | translate }}-->
-<!--      </strong>-->
-<!--      <div>-->
-<!--        <button type="button" class="btn btn-sm vt-btn btn-submit"-->
-<!--                *ngIf="hasPermission('action.insert')"-->
-<!--                (click)="hello()"-->
-<!--                [innerHTML]="'common.button.icon.addNew' | translate"></button>-->
-<!--        <button type="button" class="btn btn-sm vt-btn" *ngIf="hasPermission('action.import')"-->
-<!--                (click)="hello()"-->
-<!--                [innerHTML]="'personalPunishment.importButton' | translate"></button>-->
-<!--        <button type="button" class="btn btn-sm vt-btn" *ngIf="hasPermission('action.export')"-->
-<!--                (click)="hello()"-->
-<!--                [innerHTML]="'common.button.icon.exportFile' | translate"></button>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="panel-body panel-table table-container">-->
-<!--      <p-table #ptable [value]="resultList.data" [paginator]="true" (onLazyLoad)="processSearch($event)"-->
-<!--               [lazy]="true"-->
-<!--               [rows]="changeRow" [totalRecords]="resultList.recordsTotal" [scrollable]="true"-->
-<!--               [lazyLoadOnInit]="false"-->
-<!--               tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"-->
-<!--               [resizableColumns]="true">-->
-<!--        <ng-template pTemplate="colgroup" let-columns>-->
-<!--          <colgroup>-->
-<!--            <col style="width: 50px;">-->
-<!--            <col style="width: 50px;">-->
-<!--            <col style="width: 200px;">-->
-<!--            <col style="width: 200px;">-->
-<!--            <col style="width: 200px;">-->
-<!--            <col style="width: 100px;">-->
-<!--            <col style="width: 100px;">-->
-<!--            <col style="width: 100px;">-->
-<!--            <col style="width: 100px;">-->
-<!--            <col style="width: 200px;">-->
-<!--            <col style="width: 200px;">-->
-<!--          </colgroup>-->
-<!--        </ng-template>-->
-<!--        <ng-template pTemplate="header">-->
-<!--          <tr>-->
-<!--            <th rowspan="2" pResizableColumn></th>-->
-<!--            <th rowspan="2" pResizableColumn>{{ 'plan.work.save.table3.col1' | translate }}</th>-->
-<!--            <th rowspan="2" [pSortableColumn]="'orgName'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table2.col2' | translate }}-->
-<!--              <p-sortIcon [field]="'orgName'"></p-sortIcon>-->
-<!--            </th>-->
-<!--            <th rowspan="2" [pSortableColumn]="'orgCurrentName'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table3.col3' | translate }}-->
-<!--              <p-sortIcon [field]="'orgCurrentName'"></p-sortIcon>-->
-<!--            </th>-->
-<!--            <th rowspan="2" [pSortableColumn]="'employeeCode'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table3.col4' | translate }}-->
-<!--              <p-sortIcon [field]="'employeeCode'"></p-sortIcon>-->
-<!--            </th>-->
-<!--            <th colspan="4" class="vt-align-center" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table3.col5' | translate }}-->
-<!--            </th>-->
-<!--            <th rowspan="2" [pSortableColumn]="'gender'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table3.col6' | translate }}-->
-<!--              <p-sortIcon [field]="'gender'"></p-sortIcon>-->
-<!--            </th>-->
-<!--            <th rowspan="2" [pSortableColumn]="'employeeName'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table3.col7' | translate }}-->
-<!--              <p-sortIcon [field]="'employeeName'"></p-sortIcon>-->
-<!--            </th>-->
-<!--          </tr>-->
-<!--          <tr>-->
-<!--            <th rowspan="2" [pSortableColumn]="'gender'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table3.col51' | translate }}-->
-<!--              <p-sortIcon [field]="'gender'"></p-sortIcon>-->
-<!--            </th>-->
-<!--            <th [pSortableColumn]="'gender'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table3.col52' | translate }}-->
-<!--              <p-sortIcon [field]="'gender'"></p-sortIcon>-->
-<!--            </th>-->
-<!--            <th [pSortableColumn]="'gender'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table3.col53' | translate }}-->
-<!--              <p-sortIcon [field]="'gender'"></p-sortIcon>-->
-<!--            </th>-->
-<!--            <th [pSortableColumn]="'gender'" pResizableColumn>-->
-<!--              {{ 'plan.work.save.table3.col54' | translate }}-->
-<!--              <p-sortIcon [field]="'gender'"></p-sortIcon>-->
-<!--            </th>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
-<!--        <ng-template pTemplate="body" let-item let-index="rowIndex+1">-->
-<!--          &lt;!&ndash;body&ndash;&gt;-->
-<!--          <tr>-->
-<!--            <td class="vt-align-center" style="overflow: initial !important;">-->
-<!--              <div ngbDropdown class="d-inline-block">-->
-<!--                <div ngbDropdownToggle class="vt-action-hover">-->
-<!--                  <img class="menu-icon" src="./../../../assets/images/home/Icon.svg">-->
-<!--                </div>-->
-<!--                <div ngbDropdownMenu class="vt-border-radius">-->
-<!--                  &lt;!&ndash; Sửa &ndash;&gt;-->
-<!--                  <button *ngIf="hasPermission('action.update') && hello()" class="dropdown-item"-->
-<!--                          (click)="hello()"-->
-<!--                          [innerHTML]="'common.button.table.acteditdropdown' | translate">-->
-<!--                  </button>-->
-<!--                  &lt;!&ndash; Xóa &ndash;&gt;-->
-<!--                  <button *ngIf="hasPermission('action.delete') && hello()" class="dropdown-item"-->
-<!--                          (click)="processDelete(item)"-->
-<!--                          [innerHTML]="'common.button.icon.delete' | translate">-->
-<!--                  </button>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </td>-->
-<!--            <td class="vt-align-center">{{ index }}</td>-->
-<!--            <td class="vt-align-left" [title]="item.orgName">-->
-<!--              {{ item.orgName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.orgCurrentName">-->
-<!--              {{ item.orgCurrentName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.employeeCode">-->
-<!--              {{ item.employeeCode }}-->
-<!--            </td>-->
-<!--            <td [title]="item.employeeName">-->
-<!--              {{ item.employeeName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.isPartyMember">-->
-<!--              <i *ngIf="item.isPartyMember === 1" class="fas fa-check table-icon color-info"></i>-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.gender">-->
-<!--              {{ item.gender === 0 ? "Nam" : "Nữ" }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.birthYear">-->
-<!--              {{ item.birthYear }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.empTypeName">-->
-<!--              {{ item.empTypeName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.signContractDate">-->
-<!--              {{ item.signContractDate | displayDate }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.positionName">-->
-<!--              {{ item.positionName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.positionDate">-->
-<!--              {{ item.positionDate | displayDate }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.enlistDate">-->
-<!--              {{ item.enlistDate | displayDate }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.joinCompanyDate">-->
-<!--              {{ item.joinCompanyDate | displayDate }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.joinPartyDate">-->
-<!--              {{ item.joinPartyDate | displayDate }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.officialJoinPartyDate">-->
-<!--              {{ item.officialJoinPartyDate | displayDate }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.decissionNumber">-->
-<!--              {{ item.decissionNumber }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left">-->
-<!--              <a *ngFor="let data of item.fileAttachment.file"-->
-<!--                 style="color: rgb(0, 153, 255); white-space: nowrap; text-overflow: ellipsis; max-width: 200px; display: block; overflow: hidden"-->
-<!--                 (click)="hello()">-->
-<!--                - {{ data.fileName }}-->
-<!--              </a>-->
-<!--            </td>-->
-<!--            <td class="vt-align-center" [title]="item.signedDate">-->
-<!--              {{ item.signedDate | displayDate }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.decissionLevelName">-->
-<!--              {{ item.decissionLevelName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.signer">-->
-<!--              {{ item.signer }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.punishmentTypeName">-->
-<!--              {{ item.punishmentTypeName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.reason">-->
-<!--              {{ item.reason }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.physicalResponsibility">-->
-<!--              {{ item.physicalResponsibility }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.punishmentFormName">-->
-<!--              {{ item.punishmentFormName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.partyPunishmentFormName">-->
-<!--              {{ item.partyPunishmentFormName }}-->
-<!--            </td>-->
-<!--            <td class="vt-align-left" [title]="item.note">-->
-<!--              {{ item.note }}-->
-<!--            </td>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
+<div id="listArea" [ngClass]="isShowVertical?'display-list-vertical':''"
+     [ngStyle]="{'width': isShowVertical && !isShowHideVertical ? '100%' : '','height': isShowVertical && !isShowHideVertical ? '85vh' : ''}">
+  <div [ngClass]="isShowVertical?'panel panel-default display-max-vertical-height':'panel panel-default'">
+    <div class="panel-heading vt-relative vt-panel-heading-table">
+      <strong>
+        <img *ngIf="isShowVertical && !isShowHideVertical" alt="next" class="img-fluid icon-show-hide-search"
+             src="./../../../../../../assets/images/home/Mask_Group_24371.png" (click)="closeBasicSearch()">
+        {{ 'plan.work.save.table3.title' | translate }}
+      </strong>
+      <div>
+        <button type="button" class="btn btn-sm vt-btn btn-submit"
+                *ngIf="hasPermission('action.insert')"
+                (click)="hello()"
+                [innerHTML]="'common.button.icon.addNew' | translate"></button>
+        <button type="button" class="btn btn-sm vt-btn" *ngIf="hasPermission('action.import')"
+                (click)="hello()"
+                [innerHTML]="'personalPunishment.importButton' | translate"></button>
+        <button type="button" class="btn btn-sm vt-btn" *ngIf="hasPermission('action.export')"
+                (click)="hello()"
+                [innerHTML]="'common.button.icon.exportFile' | translate"></button>
+      </div>
+    </div>
+    <div class="panel-body panel-table table-container">
+      <p-table #ptable [value]="additionalKeyTasksBean" [paginator]="true" (onLazyLoad)="processSearch($event)"
+               [lazy]="true"
+               [rows]="changeRow" [totalRecords]="additionalKeyTasksBean.length" [scrollable]="true"
+               [lazyLoadOnInit]="false"
+               tableStyleClass="table table-wrapper table-hover table-striped b-t b-b"
+               [resizableColumns]="true">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col style="width: 50px;">
+            <col style="width: 50px;">
+            <col style="width: 200px;">
+            <col style="width: 200px;">
+            <col style="width: 200px;">
+            <col style="width: 100px;">
+            <col style="width: 100px;">
+            <col style="width: 100px;">
+            <col style="width: 100px;">
+            <col style="width: 200px;">
+            <col style="width: 200px;">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th rowspan="2" pResizableColumn></th>
+            <th rowspan="2" pResizableColumn>{{ 'plan.work.save.table3.col1' | translate }}</th>
+            <th rowspan="2" [pSortableColumn]="'targetGroup'" pResizableColumn>
+              {{ 'plan.work.save.table2.col2' | translate }}
+              <p-sortIcon [field]="'targetGroup'"></p-sortIcon>
+            </th>
+            <th rowspan="2" [pSortableColumn]="'content'" pResizableColumn>
+              {{ 'plan.work.save.table3.col3' | translate }}
+              <p-sortIcon [field]="'content'"></p-sortIcon>
+            </th>
+            <th rowspan="2" [pSortableColumn]="'objective'" pResizableColumn>
+              {{ 'plan.work.save.table3.col4' | translate }}
+              <p-sortIcon [field]="'objective'"></p-sortIcon>
+            </th>
+            <th colspan="4" class="vt-align-center" pResizableColumn>
+              {{ 'plan.work.save.table3.col5' | translate }}
+            </th>
+            <th rowspan="2" [pSortableColumn]="'responsibleLeader'" pResizableColumn>
+              {{ 'plan.work.save.table3.col6' | translate }}
+              <p-sortIcon [field]="'responsibleLeader'"></p-sortIcon>
+            </th>
+            <th rowspan="2" [pSortableColumn]="'employeeName'" pResizableColumn>
+              {{ 'plan.work.save.table3.col7' | translate }}
+              <p-sortIcon [field]="'employeeName'"></p-sortIcon>
+            </th>
+          </tr>
+          <tr>
+            <th rowspan="2" [pSortableColumn]="'executionTimeQ1'" pResizableColumn>
+              {{ 'plan.work.save.table3.col51' | translate }}
+              <p-sortIcon [field]="'executionTimeQ1'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'executionTimeQ2'" pResizableColumn>
+              {{ 'plan.work.save.table3.col52' | translate }}
+              <p-sortIcon [field]="'executionTimeQ2'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'executionTimeQ3'" pResizableColumn>
+              {{ 'plan.work.save.table3.col53' | translate }}
+              <p-sortIcon [field]="'executionTimeQ3'"></p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'executionTimeQ4'" pResizableColumn>
+              {{ 'plan.work.save.table3.col54' | translate }}
+              <p-sortIcon [field]="'executionTimeQ4'"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+          <!--body-->
+          <tr>
+            <td class="vt-align-center" style="overflow: initial !important;">
+              <div ngbDropdown class="d-inline-block">
+                <div ngbDropdownToggle class="vt-action-hover">
+                  <img class="menu-icon" src="./../../../assets/images/home/Icon.svg">
+                </div>
+                <div ngbDropdownMenu class="vt-border-radius">
+                  <!-- Sửa -->
+                  <button *ngIf="hasPermission('action.update') && hello()" class="dropdown-item"
+                          (click)="hello()"
+                          [innerHTML]="'common.button.table.acteditdropdown' | translate">
+                  </button>
+                  <!-- Xóa -->
+                  <button *ngIf="hasPermission('action.delete') && hello()" class="dropdown-item"
+                          (click)="processDelete(item)"
+                          [innerHTML]="'common.button.icon.delete' | translate">
+                  </button>
+                </div>
+              </div>
+            </td>
+            <td class="vt-align-center">{{ index }}</td>
+            <td class="vt-align-left" [title]="item.targetGroup">
+              {{ item.targetGroup }}
+            </td>
+            <td class="vt-align-left" [title]="item.content">
+              {{ item.content }}
+            </td>
+            <td class="vt-align-center" [title]="item.objective">
+              {{ item.objective }}
+            </td>
 
-<!--        <ng-template pTemplate="emptymessage">-->
-<!--          <tr class="emptymessage">-->
-<!--            <td [attr.colspan]="10" [innerHTML]="'app.noRecords' | translate">-->
-<!--            </td>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
-<!--        <ng-template pTemplate="paginatorleft">-->
-<!--          <table-footer (changeRow)="onTablePageChange($event)"-->
-<!--                        [resultList]="resultList"></table-footer>-->
-<!--        </ng-template>-->
-<!--      </p-table>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+            <td class="vt-align-center" [title]="item.executionTimeQ1">
+              <i *ngIf="item.executionTimeQ1 === 1" class="fas fa-check table-icon color-info"></i>
+            </td>
+            <td class="vt-align-center" [title]="item.executionTimeQ2">
+              <i *ngIf="item.executionTimeQ2 === 1" class="fas fa-check table-icon color-info"></i>
+            </td>
+            <td class="vt-align-center" [title]="item.executionTimeQ3">
+              <i *ngIf="item.executionTimeQ3 === 1" class="fas fa-check table-icon color-info"></i>
+            </td>
+            <td class="vt-align-center" [title]="item.executionTimeQ4">
+              <i *ngIf="item.executionTimeQ4 === 1" class="fas fa-check table-icon color-info"></i>
+            </td>
+            <td class="vt-align-center" [title]="item.responsibleLeader">
+              {{ item.responsibleLeader  }}
+            </td>
+            <td class="vt-align-center" [title]="item.units[0].name">
+              {{ item.units[0].name  }}
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr class="emptymessage">
+            <td [attr.colspan]="10" [innerHTML]="'app.noRecords' | translate">
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+          <table-footer (changeRow)="onTablePageChange($event)"
+                        [resultList]="resultList"></table-footer>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
