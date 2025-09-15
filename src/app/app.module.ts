@@ -21,21 +21,7 @@ import { NgxWebstorageModule} from 'ngx-webstorage';
 // start thanhlq6 bo sung gon song khi click
 import { RippleModule } from '@progress/kendo-angular-ripple';
 import { AuthSsoModule } from './modules/auth-sso/auth-sso.module';
-import { MassOrganizationModule } from './modules/mass-organization/mass-organization.module';
 import { AssessmentLayoutComponent } from './layouts/assessment-layout/assessment-layout.component';
-import { AssessmentPeriodModule } from './modules/employee/staff-assessment/assessment-period/assessment-period.module';
-import { AssessmentSignatureComponent } from './modules/employee/staff-assessment/assessment-signature/assessment-signature.component';
-import { AssessmentSignImageComponent } from './modules/employee/staff-assessment/assessment-sign-image/assessment-sign-image.component';
-import { AssessmentEvaluateEmployeeAgainComponent } from './modules/employee/staff-assessment/assessment/assessment-evaluate-employee-again/assessment-evaluate-employee-again.component';
-import {AssessmentHistoryLogComponent} from "@app/modules/employee/staff-assessment/assessment/assessment-history-log/assessment-history-log.component";
-import {AssessmentHistoryLogComponent2} from "@app/modules/employee/staff-assessment/assessment/assessment-history-log2/assessment-history-log2.component";
-import {
-    AssessmentHistoryLogV2Component
-} from "@app/modules/employee/staff-assessment/assessment/assessment-history-log/assessment-history-log-v2.component";
-import { AssessmentSignPreviewModalComponent } from './modules/employee/staff-assessment/assessment-sign-image/preview-modal-sign/assessment-sign-preview-modal.component';
-import { AssessmentSignPreviewModalComponent2 } from './modules/employee/staff-assessment/assessment/evaluation-process/preview-modal-sign2/assessment-sign-preview-modal2.component';
-import { EvaluationProcessComponent } from './modules/employee/staff-assessment/assessment/evaluation-process/evaluation-process.component';
-import { AssessmentSignSyntheticModal } from './modules/employee/staff-assessment/assessment-monitor/assessment-monitor-form/assessment-sign-synthetic-modal.component';
 import { HomeMenuComponent } from './layouts/home-menu/home-menu.component';
 import {EmployeeResolver} from "@app/shared/services/employee.resolver";
 // end thanhlq6
@@ -71,16 +57,6 @@ export function initL10n(l10nLoader: L10nLoader): Function {
     ContentLayoutComponent,
     AuthLayoutComponent,
     AssessmentLayoutComponent,
-    AssessmentSignatureComponent,
-    AssessmentSignImageComponent,
-    AssessmentEvaluateEmployeeAgainComponent,
-    AssessmentHistoryLogComponent,
-    AssessmentHistoryLogComponent2,
-    AssessmentHistoryLogV2Component,
-    AssessmentSignPreviewModalComponent,
-    AssessmentSignPreviewModalComponent2,
-    EvaluationProcessComponent,
-    AssessmentSignSyntheticModal,
     HomeMenuComponent
   ],
   imports: [
@@ -103,9 +79,7 @@ export function initL10n(l10nLoader: L10nLoader): Function {
     RippleModule,
     // app
     AppRoutingModule,
-    TranslationModule.forRoot(l10nConfig),
-    MassOrganizationModule,
-    AssessmentPeriodModule,
+    TranslationModule.forRoot(l10nConfig)
   ],
   providers: [
       EmployeeResolver,
@@ -119,16 +93,6 @@ export function initL10n(l10nLoader: L10nLoader): Function {
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    AssessmentSignatureComponent,
-    AssessmentSignImageComponent,
-    AssessmentEvaluateEmployeeAgainComponent,
-    AssessmentHistoryLogComponent,
-    AssessmentHistoryLogComponent2,
-    AssessmentHistoryLogV2Component,
-    EvaluationProcessComponent,
-    AssessmentSignPreviewModalComponent,
-    AssessmentSignPreviewModalComponent2,
-    AssessmentSignSyntheticModal
   ]
 })
 export class AppModule {

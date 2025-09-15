@@ -407,6 +407,9 @@
                     <button type="button" *ngIf="hasPermission('action.export')" class="btn btn-sm vt-btn"
                             (click)="processExport()"
                             [innerHTML]="'common.button.icon.exportFile' | translate"></button>
+                    <button type="button" *ngIf="hasPermission('action.import')" class="btn btn-sm vt-btn"
+                          (click)="openFormImport()"
+                          [innerHTML]="'Import file'"></button>
                 </div>
             </div>
             <div class="panel-body panel-table table-container">

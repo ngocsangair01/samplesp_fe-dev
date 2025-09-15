@@ -5,8 +5,12 @@ import { BaseComponent } from '@app/shared/components/base-component/base-compon
 import { ValidationService, CommonUtils } from '@app/shared/services';
 import { CurriculumVitaeService } from '@app/core/services/employee/curriculum-vitae.service';
 import { EmpTypesService } from '@app/core/services/emp-type.service';
-import { ACTION_FORM } from '@app/core';
+import {ACTION_FORM, DEFAULT_MODAL_OPTIONS} from '@app/core';
 import { RetiredContactService } from '@app/core/services/employee/retired-contact.service';
+import {
+  RetiredImportModalComponent
+} from "@app/modules/employee/employee-retired/retired-import-modal/retired-import-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'employee-retired-search',
@@ -57,10 +61,11 @@ export class EmployeeRetiredSearchComponent extends BaseComponent implements OnI
         private empTypeService: EmpTypesService,
         private router: Router,
         public actr: ActivatedRoute,
+        public modalService: NgbModal
     ) {
         super(null, CommonUtils.getPermissionCode("resource.employeeManager"));
         this.setMainService(retiredContactService);
-        this.formSearch = this.buildForm({}, this.formConfig, ACTION_FORM.VIEW, 
+        this.formSearch = this.buildForm({}, this.formConfig, ACTION_FORM.VIEW,
             [ValidationService.notAffter('dateOfRetiredFrom', 'dateOfRetiredTo', 'generalInformation.label.retiredDateTo')]);
     }
 
@@ -106,6 +111,17 @@ export class EmployeeRetiredSearchComponent extends BaseComponent implements OnI
         this.retiredContactService.export(params).subscribe(res => {
             saveAs(res, 'retired_contact.xlsx');
         });
+    }
+
+    public openFormImport() {
+      const modalRef = this.modalService.open(RetiredImportModalComponent, DEFAULT_MODAL_OPTIONS);
+      modalRef.result.then((result) => {
+        if (!result) {
+          return;
+        }
+        this.processSearch();
+        return;
+      });
     }
 
     setFormSearchValue(warningType) {

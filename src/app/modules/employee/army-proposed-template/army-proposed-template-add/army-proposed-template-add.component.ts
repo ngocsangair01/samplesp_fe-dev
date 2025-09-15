@@ -9,7 +9,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HelperService } from '@app/shared/services/helper.service';
 import { APP_CONSTANTS } from '@app/core';
 import { ArmyProposedTemplateService } from '@app/core/services/employee/army-proposed-template.service';
-import { ReportDynamicService } from '@app/modules/reports/report-dynamic/report-dynamic.service';
 
 @Component({
   selector: 'army-proposed-template-add',
@@ -49,7 +48,6 @@ export class ArmyProposedTemplateAddComponent extends BaseComponent implements O
   constructor(
     public activeModal: NgbActiveModal,
     private armyProposedTemplateService: ArmyProposedTemplateService,
-    public reportDynamicService: ReportDynamicService,
     public actr: ActivatedRoute,
     public app: AppComponent,
     private helperService: HelperService
@@ -72,7 +70,7 @@ export class ArmyProposedTemplateAddComponent extends BaseComponent implements O
 
   /**
    * Set form value after pop-up
-   * @param data 
+   * @param data
    */
   private setFormValue(data) {
     if (data.armyProposedTemplateId) {
@@ -100,7 +98,7 @@ export class ArmyProposedTemplateAddComponent extends BaseComponent implements O
       return;
     }
     this.formSave.get('armySubTemplateList').setValue(this.formSubTemplate.value);
-    
+
     this.app.confirmMessage(null, () => { // on accept
       this.armyProposedTemplateService.saveOrUpdateFormFile(this.formSave.value)
         .subscribe(res => {

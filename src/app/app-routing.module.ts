@@ -4,7 +4,6 @@ import {ContentLayoutComponent} from './layouts/content-layout/content-layout.co
 import {CONTENT_ROUTES} from '@app/shared';
 import {AuthGuard} from '@app/core';
 import {AssessmentLayoutComponent} from './layouts/assessment-layout/assessment-layout.component';
-import {ASSESSMENT_ROUTES} from './shared/routes/assessment-layout.routes';
 import {HomeMenuComponent} from './layouts/home-menu/home-menu.component';
 
 const routes: Routes = [
@@ -30,7 +29,6 @@ const routes: Routes = [
         path: '',
         component: AssessmentLayoutComponent,
         canActivate: [AuthGuard], // Should be replaced with actual auth guard
-        children: ASSESSMENT_ROUTES,
         runGuardsAndResolvers: 'always'
     }, {
         path: 'auth-sso',

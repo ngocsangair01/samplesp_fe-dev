@@ -1,6 +1,0 @@
-<div  *ngIf="hasPermission('action.view')">
-  <send-warning-emp-file-request></send-warning-emp-file-request>
-</div>
-<div *ngIf="!hasPermission('action.view')">
-  {{'common.haveNoPermission' | translate}}
-</div>

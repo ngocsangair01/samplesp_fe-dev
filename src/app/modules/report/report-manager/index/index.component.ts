@@ -15,7 +15,6 @@ import { RejectFormComponent } from '../reject-form/reject-form.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { APP_CONSTANTS, LARGE_MODAL_OPTIONS, REPORT_SUBMISSION_STATUS, REPORT_SUBMISSION_TYPE,DEFAULT_MODAL_OPTIONS, ACTION_FORM, MAP_YCBC_OBJECT_TYPE } from '@app/core';
 import { ReportPreviewModalComponent } from '../preview-modal/report-preview-modal.component';
-import { VofficeSigningPreviewModalComponent } from '@app/modules/voffice-signing/preview-modal/voffice-signing-preview-modal.component';
 import { reportContentReview } from './report-content-review/report-content-review';
 import { ReportManagerHistoryComponent } from '../report-manager-history/report-manager-history.component';
 import { TranslationService } from 'angular-l10n';
@@ -367,8 +366,6 @@ export class IndexComponent extends BaseComponent implements OnInit {
     modalRef.componentInstance.isBlobFile = isBlobFile;
   }
   async viewVofficeFile(transcode) {
-    const modalRef = this.modalService.open(VofficeSigningPreviewModalComponent, LARGE_MODAL_OPTIONS);
-    modalRef.componentInstance.transCode = transcode;
   }
 
   /**
@@ -389,7 +386,7 @@ export class IndexComponent extends BaseComponent implements OnInit {
 
   public actionShowHistory(rowData) {
       const modalRef = this.modalService.open(ReportManagerHistoryComponent, DEFAULT_MODAL_OPTIONS);
-      modalRef.componentInstance.reportSubmissionId = rowData.reportSubmissionId;      
+      modalRef.componentInstance.reportSubmissionId = rowData.reportSubmissionId;
   }
 
   handleChangeBusinessType() {

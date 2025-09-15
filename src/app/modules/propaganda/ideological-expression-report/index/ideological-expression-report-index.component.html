@@ -1,6 +1,0 @@
-<div *hasPermission="[this, 'action.view || action.viewAll']">
-  <ideological-expression-report-form></ideological-expression-report-form>
-</div>
-<div *ngIf="!hasPermission('action.view')">
-  {{'common.haveNoPermission' | translate}}
-</div>

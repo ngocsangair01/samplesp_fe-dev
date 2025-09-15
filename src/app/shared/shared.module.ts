@@ -111,7 +111,6 @@ import { MultiOrgSelectorModalComponent } from './components/multi-org-selector/
 import { MultiPartyOrgSelectorComponent } from './components/multi-party-org-selector/multi-party-org-selector.component';
 import { MultiPartyOrgSelectorModalComponent } from './components/multi-party-org-selector/multi-party-org-selector-modal/multi-party-org-selector-modal.component';
 import { HasPermissionDirective } from './directive/has-permission.directive';
-import { VofficeSigningPreviewModalComponent } from '@app/modules/voffice-signing/preview-modal/voffice-signing-preview-modal.component';
 import { ScheduleSelectorComponent } from './components/schedule-selector/schedule-selector.component';
 import { TableInputComponent } from './components/table-input/table-input.component';
 import { TableViewComponent } from './components/table-view/table-view.component';
@@ -133,10 +132,6 @@ import { ReportMultiMassOrgSelectorModalComponent } from './components/report-mu
 import { ReportMultiMassOrgSelectorComponent } from './components/report-multi-mass-org-selector/report-multi-mass-org-selector.component';
 import { ApprovalHistoryModalComponent } from './components/approval-history/approval-history.component';
 import { FollowOrgTreeComponent } from './components/follow-org-tree/follow-org-tree.component';
-import {PassSignModalComponent} from "@app/modules/voffice-signing/passSign-modal/pass-sign-modal.component";
-import {
-  VofficeSigningPreviewModalComponentWithoutWatermark
-} from "@app/modules/voffice-signing/preview-modal-without-watermark/voffice-signing-preview-modal.component-without-watermark";
 import { MultiFileChooserV2Component } from './components/file-chooser/multi-file-chooser-v2.component';
 import {
   ParentThoroughContentPickerComponent
@@ -306,9 +301,6 @@ import {
     ApprovalHistoryModalComponent,
 
     // Component prevew file tr�nh k�
-    VofficeSigningPreviewModalComponent,
-    VofficeSigningPreviewModalComponentWithoutWatermark,
-    PassSignModalComponent,
     ScheduleSelectorComponent,
     TableInputComponent,
     TableViewComponent,
@@ -480,9 +472,6 @@ import {
     ReportMultiMassOrgSelectorModalComponent,
     ReportMultiMassOrgSelectorComponent,
     ApprovalHistoryModalComponent,
-    VofficeSigningPreviewModalComponent,
-    VofficeSigningPreviewModalComponentWithoutWatermark,
-    PassSignModalComponent,
     RewardGeneralModalComponent,
     RewardPartyOrganizationComponent,
     ReportPreviewCertificateComponentS,

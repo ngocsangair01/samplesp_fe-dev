@@ -11,9 +11,7 @@ import { SignIndexComponent } from './sign-index/sign-index.component';
 import { MultipleSignComponent } from './multiple-sign/multiple-sign';
 import { SignPreviewFileModalComponent } from './multiple-sign/preview-modal/sign-preview-file-modal.component';
 import { ReportPreviewModalComponent } from './multiple-sign/preview-modal2/report-preview-modal.component';
-import {
-  PreviewFileThoroughContentModalComponent
-} from "@app/modules/employee/thorough-content/preview-modal/preview-file-thorough-content-modal.component";
+
 
 @NgModule({
   declarations: [SignComponent, SignIndexComponent, MultipleSignComponent, SignPreviewFileModalComponent, ReportPreviewModalComponent],

@@ -41,13 +41,13 @@ export class RetiredContactService extends BasicService {
     const url = `${this.serviceUrl}/${empId}/party-member`;
     return this.getRequest(url);
   }
-  
+
   // /**
   //  * saveOrUpdate
   //  */
   //  public saveOrUpdate(item: any): Observable<any> {
   //   const url = `${this.serviceUrl}`;
-  //   return this.postRequest(url, CommonUtils.convertData(item));  
+  //   return this.postRequest(url, CommonUtils.convertData(item));
   // }
 
   public getOtherPartyList(employeeId: number) {
@@ -75,7 +75,7 @@ export class RetiredContactService extends BasicService {
 
   /**
    * Lấy ra danh sách nhân viên theo đơn vị
-   * @param data 
+   * @param data
    */
   public getListEmpSendWarning(data?: any) {
     const searchData = CommonUtils.convertData(data);
@@ -83,10 +83,10 @@ export class RetiredContactService extends BasicService {
     const url = `${this.serviceUrl}/list-emp-send-warning`;
     return this.getRequest(url, {params: buildParams});
   }
-  
+
   /**
    * Gửi thông báo cập nhật hồ sơ
-   * @param data 
+   * @param data
    */
   public sendWarningEmpFile(data: any): Observable<any> {
     const param = CommonUtils.convertData(data);
@@ -96,7 +96,7 @@ export class RetiredContactService extends BasicService {
 
   /**
    * Lấy thông tin chức danh của nhân viên
-   * @param employeeId 
+   * @param employeeId
    */
   public getPositionByEmployeeId(employeeId: number) {
     const empId = CommonUtils.nvl(employeeId);
@@ -106,7 +106,7 @@ export class RetiredContactService extends BasicService {
 
   /**
    * Lấy thông tin chức danh của nhân viên
-   * @param employeeId 
+   * @param employeeId
    */
   public getListEmpInsuranceProcessByEmployeeId(employeeId: number, event?: any): Observable<any> {
     const empId = CommonUtils.nvl(employeeId);
@@ -158,5 +158,17 @@ export class RetiredContactService extends BasicService {
   public getEmployeeInfoById(employeeId: number) {
     const url = `${this.serviceUrl}/get-employee-info-by-id/${employeeId}`;
     return this.getRequest(url);
+  }
+
+  // download template to import cán bộ hưu trí
+  public  downloadTemplateImport() {
+    const url = `${this.serviceUrl}/download-template-import`;
+    return this.getRequest(url,{responseType: 'blob'});
+  }
+
+  public processImport(data): Observable<any> {
+    const url = `${this.serviceUrl}/import`;
+    const formdata = CommonUtils.convertFormFile(data);
+    return this.postRequest(url, formdata);
   }
 }

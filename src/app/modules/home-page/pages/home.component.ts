@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { BaseComponent } from '@app/shared/components/base-component/base-component.component';
 import { CommonUtils } from '@app/shared/services/common-utils.service';
 import { AppParamService } from '../../../core/services/app-param/app-param.service';
-import { WarningManagerService } from '../../reports/warning-manager/warning-manager.service';
 import { DashboardService } from '../service/dash-board-service';
 
 @Component({
@@ -23,7 +22,6 @@ export class HomeComponent extends BaseComponent implements OnInit {
     listIndex: any[] = [];
     constructor(
         private dashboardService: DashboardService,
-        private warningManagerService: WarningManagerService,
         private appParamService: AppParamService,
         private router: Router
     ) {
@@ -218,7 +216,7 @@ export class HomeComponent extends BaseComponent implements OnInit {
 
         });
         this.getStatistic();
-        
+
         this.appParamService.getListBranchCode("BRANCH_CODE").subscribe(
             res => {
                 this.branchList = res.data;
@@ -314,13 +312,13 @@ export class HomeComponent extends BaseComponent implements OnInit {
     }
 
     getWarning(warningType: String) {
-        this.warningManagerService.getWarning(warningType).subscribe(res => {
-            if (res.data) {
-                this.listWarning = res.data;
-            } else {
-                this.listWarning = [];
-            }
-        })
+        // this.warningManagerService.getWarning(warningType).subscribe(res => {
+        //     if (res.data) {
+        //         this.listWarning = res.data;
+        //     } else {
+        //         this.listWarning = [];
+        //     }
+        // })
 
     }
 
@@ -330,10 +328,10 @@ export class HomeComponent extends BaseComponent implements OnInit {
         };
         if (warningType != null) {
             if (warningType == 1) {
-                this.warningManagerService.export(warningManagerForm)
-                    .subscribe(res => {
-                        saveAs(res, this.getNow() + "_" + name + ".xlsx");
-                    });
+                // this.warningManagerService.export(warningManagerForm)
+                //     .subscribe(res => {
+                //         saveAs(res, this.getNow() + "_" + name + ".xlsx");
+                //     });
             } else if (!CommonUtils.isNullOrEmpty(url)) {
                 this.router.navigate([url]);
             }

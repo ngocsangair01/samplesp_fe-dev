@@ -7,7 +7,6 @@ import { AppComponent } from '@app/app.component';
 import { ReportSubmissionService } from '@app/core/services/report/report-submission.service';
 import { DialogService } from 'primeng/api';
 import { EmpSubmitComponent } from '../emp-submit/emp-submit-dialog.component';
-import { VofficeSigningPreviewModalComponent } from '@app/modules/voffice-signing/preview-modal/voffice-signing-preview-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SignDocumentService } from '@app/core/services/sign-document/sign-document.service';
 import { Thickness } from '@syncfusion/ej2-ng-diagrams';
@@ -308,8 +307,6 @@ export class IndexComponent extends BaseComponent implements OnInit {
   }
 
   previewFileSigning(signDocumentId) {
-    const modalRef = this.modalService.open(VofficeSigningPreviewModalComponent, LARGE_MODAL_OPTIONS);
-    modalRef.componentInstance.id = signDocumentId;
   }
 
   async onOpendSign(rowData) {
@@ -356,7 +353,7 @@ export class IndexComponent extends BaseComponent implements OnInit {
     this.isMasO = false;
     this.isOrg = false;
     this.isLabel = false;
-    
+
     const mapParCode = MAP_YCBC_OBJECT_TYPE;
     if (!rewardType) {
       return;
@@ -397,7 +394,7 @@ export class IndexComponent extends BaseComponent implements OnInit {
 
   public actionShowHistory(rowData) {
     const modalRef = this.modalService.open(ReportSubmissionHistoryComponent, DEFAULT_MODAL_OPTIONS);
-    modalRef.componentInstance.reportSubmissionId = rowData.reportSubmissionId;      
+    modalRef.componentInstance.reportSubmissionId = rowData.reportSubmissionId;
   }
 
   public syncSign(rowData:any) {

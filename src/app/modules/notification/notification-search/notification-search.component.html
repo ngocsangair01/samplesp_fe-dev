@@ -72,7 +72,7 @@
             </div>
           </div>
         </div>
-        <div class="panel-footer vt-area-button" >
+        <div class="panel-footer vt-area-button">
           <button type="submit" class="btn btn-sm btn-info" (click)="processSearch()"  [innerHTML]="'common.button.icon.search' | translate" > </button>
           <button type="button" *ngIf="hasPermission('action.insert')" class="btn btn-sm btn-info" (click)="prepareSaveOrUpdate()"  [innerHTML]="'common.button.icon.addNew' | translate"> </button>
           <button type="button" *ngIf="hasPermission('action.export')" class="btn btn-sm btn-info" (click)="processExport()" [innerHTML]="'common.button.icon.exportFile' | translate"> </button>

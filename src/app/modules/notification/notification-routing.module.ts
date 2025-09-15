@@ -1,4 +1,3 @@
-import { NotificationSearchComponent } from './notification-search/notification-search.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NotificationAddComponent } from './notification-add/notification-add.component';

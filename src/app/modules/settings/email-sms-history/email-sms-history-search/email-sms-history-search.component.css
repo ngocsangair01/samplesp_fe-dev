@@ -1,6 +1,0 @@
-.title-truncate{
-    display: -webkit-box;
-    -webkit-line-clamp: 10;
-    overflow: hidden !important;
-    -webkit-box-orient: vertical;
-}
